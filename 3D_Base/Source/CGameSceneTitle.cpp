@@ -1,0 +1,39 @@
+#include "CGameSceneTitle.h"
+#include "CGame.h"
+
+
+
+
+CGameSceneTitle::CGameSceneTitle(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
+	:CGameScene::CGameScene(Hwnd,Dx9,Dx11, m_Camera)
+{
+	m_pTSprite = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TITLE);
+	m_pTImg = new CUIObject();
+	m_pTImg->SetScale( WND_W,WND_H,0);
+	m_pTImg->AttachSprite(*m_pTSprite);
+}
+
+CGameSceneTitle::~CGameSceneTitle()
+{
+	SAFE_DELETE(m_pTImg);
+}
+
+void CGameSceneTitle::Update()
+{
+	if (GetAsyncKeyState('Z') & 0x8000) {
+		
+		SenenChang(enScene::GameMain, CSceneChange::TransitionType::Fade, 60, 60);
+		
+	}
+
+}
+
+void CGameSceneTitle::Draw()
+{
+	m_pDx11->SetDepth(false);
+
+	Projection();
+	m_pTImg->Draw();
+	m_pDx11->SetDepth(true);
+
+}

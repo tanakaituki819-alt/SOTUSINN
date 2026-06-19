@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{2804deab-b91b-4c6a-b40e-66d10f6e9cfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{1bb71fa2-ca03-4c8a-90bc-1afb861340bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Game">
+      <UniqueIdentifier>{c8f72c0a-bfba-4055-beda-e3ca10f2aae8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject">
+      <UniqueIdentifier>{49e677ec-8c93-46f5-a6e2-c953a17b879f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Main">
+      <UniqueIdentifier>{07d5bf43-99c1-4863-9dfa-34c160367045}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\UIObject">
+      <UniqueIdentifier>{4aedd4ca-14d5-452b-8323-246ff6ddeeaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject">
+      <UniqueIdentifier>{f9243b77-640e-467e-9a8b-19dbc257c19f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\SpriteObject">
+      <UniqueIdentifier>{3088401b-c296-4733-b41e-146ef150be24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\SpriteObject\Explosion">
+      <UniqueIdentifier>{b12a0e0a-b072-4b08-b26f-7c5ec5c4bae5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character">
+      <UniqueIdentifier>{31867ca6-d665-427e-ae19-d48a84a1046a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Character\Enemy">
+      <UniqueIdentifier>{fea6095c-39d7-49b1-8f40-4abd93dd1c2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\BoundingSphere">
+      <UniqueIdentifier>{6530fed8-eb6e-4517-84d3-08a54ba9082e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\StaticMeshObject\Shot">
+      <UniqueIdentifier>{aef6bbd3-9c2b-426b-8665-d942221041cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene">
+      <UniqueIdentifier>{7435f70e-8b88-415e-b727-0253b1a60961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\触る必要のないもの">
+      <UniqueIdentifier>{3429748e-29bf-4747-bb96-2baa5a2cf725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\触る必要のないもの\DirectX">
+      <UniqueIdentifier>{1faae27a-f570-44b4-b306-9dfb6827019c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CSceneChange">
+      <UniqueIdentifier>{1aa4f385-1911-4ba9-b68d-3f937ab59f1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CSceneChange\CSceneTransitionRenderer">
+      <UniqueIdentifier>{9ca3cbea-0aaa-4cbc-a9eb-6dafed12d280}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CSceneChange\CSceneTransitionRenderer\CFadeSceneTransition">
+      <UniqueIdentifier>{de26633e-3bc1-42f0-8d8a-5841339ab10e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneTitle">
+      <UniqueIdentifier>{5652fd8a-e915-4977-83d8-61019f623a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\継承元クラス">
+      <UniqueIdentifier>{f7c985e0-1a96-485b-b9a9-d81d57a525cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain">
+      <UniqueIdentifier>{e5dc353c-0966-428b-9e92-aeeb1ef1d59b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CSceneChange\CSceneTransitionRenderer\CSceneTransitionRenderer">
+      <UniqueIdentifier>{b23d7071-0f2a-4f14-82a1-0fd457b96272}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CSceneChange\CSceneTransitionRenderer\CSceneTransition">
+      <UniqueIdentifier>{843fe49f-abdc-482d-8a2c-d5d1ccf6f6ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj">
+      <UniqueIdentifier>{b3325233-f551-4dbb-bee4-75c6f9ee4f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CGuround">
+      <UniqueIdentifier>{acd8ebeb-d66e-49ce-85e7-5157df57a3fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\GameObject\CStaticMeshObjObject">
+      <UniqueIdentifier>{2d15caa6-ef4f-47ab-bf4e-122305bf8d0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer">
+      <UniqueIdentifier>{45c72a19-600d-49a8-bce5-9106b30f41c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン">
+      <UniqueIdentifier>{cf90e729-0eca-488f-97df-e8932ecc9ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager">
+      <UniqueIdentifier>{68b47208-54db-44f4-bd31-219056f25e9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite">
+      <UniqueIdentifier>{e3f31d57-ed4c-4472-9762-0d2b705a5f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite">
+      <UniqueIdentifier>{65f1a49c-3477-4037-b0a9-650d1d377d50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite\Sprite2D">
+      <UniqueIdentifier>{d207ee6a-a00d-4832-9df8-132414e2ecca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite\Sprite3D">
+      <UniqueIdentifier>{4badeaf2-a12d-4620-94f5-8a58bbd9dcd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite\DebugText">
+      <UniqueIdentifier>{92ba2874-fe25-4909-823b-9ce07466861c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite\CStaticObjMesh">
+      <UniqueIdentifier>{6fd8e31e-4cec-42c7-bb63-1cb60378ffce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite\CSpriteBlock">
+      <UniqueIdentifier>{f881ce01-e091-48a1-aadf-2dd7a80319b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite\CSpriteTriangle">
+      <UniqueIdentifier>{14e06fb1-9f96-42f6-97d4-641824094271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSpriteManager\Sprite\Sprite\StaticMesh">
+      <UniqueIdentifier>{8b43b4c8-b368-4f92-97aa-010456e21fec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\CSoundManager">
+      <UniqueIdentifier>{5fc2406f-5390-400c-a3f9-30792ae1196b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\シングルトン\Effect">
+      <UniqueIdentifier>{82012b12-ffab-41f3-8b78-85a3f6bb2f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CSceneChange\シーンチェンジ制御">
+      <UniqueIdentifier>{73a5f5bd-2404-4e40-b97e-c180e0eb9fee}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\CDirectX11.cpp">
+      <Filter>Source\触る必要のないもの\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGame.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameObject.cpp">
+      <Filter>Source\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSpriteObject.cpp">
+      <Filter>Source\GameObject\SpriteObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CMain.cpp">
+      <Filter>Source\Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSprite3D.cpp">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\Sprite3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CExplosion.cpp">
+      <Filter>Source\GameObject\SpriteObject\Explosion</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSprite2D.cpp">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\Sprite2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CUIObject.cpp">
+      <Filter>Source\GameObject\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CDebugText.cpp">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\DebugText</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CDirectX9.cpp">
+      <Filter>Source\触る必要のないもの\DirectX</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CStaticMesh.cpp">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\StaticMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CStaticMeshObject.cpp">
+      <Filter>Source\GameObject\StaticMeshObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CCharacter.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CEnemy.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Character\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CBoundingSphere.cpp">
+      <Filter>Source\BoundingSphere</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CShot.cpp">
+      <Filter>Source\GameObject\StaticMeshObject\Shot</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSound.cpp">
+      <Filter>Source\シングルトン\CSoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSoundManager.cpp">
+      <Filter>Source\シングルトン\CSoundManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\stdafx.cpp">
+      <Filter>Source\触る必要のないもの</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\WinMain.cpp">
+      <Filter>Source\触る必要のないもの</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSpriteManager.cpp">
+      <Filter>Source\シングルトン\CSpriteManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CFadeSceneTransition.cpp">
+      <Filter>Source\CSceneChange\CSceneTransitionRenderer\CFadeSceneTransition</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameSceneTitle.cpp">
+      <Filter>Source\CGameScene\CGameSceneTitle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameScene.cpp">
+      <Filter>Source\CGameScene\継承元クラス</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameSceneGameMain.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSceneTransitionRenderer.cpp">
+      <Filter>Source\CSceneChange\CSceneTransitionRenderer\CSceneTransitionRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSceneTransition.cpp">
+      <Filter>Source\CSceneChange\CSceneTransitionRenderer\CSceneTransition</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CStaticObjMesh.cpp">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\CStaticObjMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSpriteBlock.cpp">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\CSpriteBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSpriteTriangle.cpp">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\CSpriteTriangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CStaticMeshObjObject.cpp">
+      <Filter>Source\GameObject\CStaticMeshObjObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGround.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CGuround</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPlayer.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CCamera.cpp">
+      <Filter>Source\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RawInput.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Effect.cpp">
+      <Filter>Source\シングルトン\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CSceneChange.cpp">
+      <Filter>Source\CSceneChange\シーンチェンジ制御</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\CDirectX11.h">
+      <Filter>Source\触る必要のないもの\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGame.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameObject.h">
+      <Filter>Source\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSpriteObject.h">
+      <Filter>Source\GameObject\SpriteObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CMain.h">
+      <Filter>Source\Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSprite3D.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\Sprite3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Global.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CExplosion.h">
+      <Filter>Source\GameObject\SpriteObject\Explosion</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSprite2D.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\Sprite2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CUIObject.h">
+      <Filter>Source\GameObject\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CDebugText.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\DebugText</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CDirectX9.h">
+      <Filter>Source\触る必要のないもの\DirectX</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CStaticMesh.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\StaticMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CStaticMeshObject.h">
+      <Filter>Source\GameObject\StaticMeshObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CCharacter.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CEnemy.h">
+      <Filter>Source\GameObject\StaticMeshObject\Character\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CBoundingSphere.h">
+      <Filter>Source\BoundingSphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CShot.h">
+      <Filter>Source\GameObject\StaticMeshObject\Shot</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSound.h">
+      <Filter>Source\シングルトン\CSoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSoundManager.h">
+      <Filter>Source\シングルトン\CSoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\stdafx.h">
+      <Filter>Source\触る必要のないもの</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MyMacro.h">
+      <Filter>Source\触る必要のないもの</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSpriteManager.h">
+      <Filter>Source\シングルトン\CSpriteManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CFadeSceneTransition.h">
+      <Filter>Source\CSceneChange\CSceneTransitionRenderer\CFadeSceneTransition</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameSceneTitle.h">
+      <Filter>Source\CGameScene\CGameSceneTitle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameScene.h">
+      <Filter>Source\CGameScene\継承元クラス</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameSceneGameMain.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSceneTransitionRenderer.h">
+      <Filter>Source\CSceneChange\CSceneTransitionRenderer\CSceneTransitionRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSceneTransition.h">
+      <Filter>Source\CSceneChange\CSceneTransitionRenderer\CSceneTransition</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CStaticObjMesh.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\CStaticObjMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\tiny_obj_loader.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\CStaticObjMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSpriteBlock.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\CSpriteBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSpriteTriangle.h">
+      <Filter>Source\シングルトン\CSpriteManager\Sprite\Sprite\CSpriteTriangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CStaticMeshObjObject.h">
+      <Filter>Source\GameObject\CStaticMeshObjObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGround.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CGuround</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPlayer.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CCamera.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\enScene.h">
+      <Filter>Source\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RawInput.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Effect.h">
+      <Filter>Source\シングルトン\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CSceneChange.h">
+      <Filter>Source\CSceneChange\シーンチェンジ制御</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Data\Shader\Sprite3D.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shader\Sprite2D.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shader\DebugText.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="Data\Shader\StaticMesh.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
