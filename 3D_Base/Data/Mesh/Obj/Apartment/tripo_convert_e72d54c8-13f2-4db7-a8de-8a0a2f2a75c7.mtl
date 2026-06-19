@@ -1,0 +1,16 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl tripo_mat_e72d54c8-13f2-4db7-a8de-8a0a2f2a75c7
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd tripo_image_e72d54c8-13f2-4db7-a8de-8a0a2f2a75c7_0_0.jpg
+map_Ns skyscraper_roughness.JPEG
+map_Pr skyscraper_roughness.JPEG
+map_refl skyscraper_metallic.JPEG
+map_Pm skyscraper_metallic.JPEG
+map_Bump -bm 1.000000 tripo_node_92373322-66e1-4f15-8783-1410b04761b7_Normal_Bake.jpg
