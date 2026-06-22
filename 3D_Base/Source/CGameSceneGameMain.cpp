@@ -59,10 +59,10 @@ void CGameSceneGameMain::Update()
 
 	static int i = 0;
 	i += 6;
-	if (GetAsyncKeyState('V') & 0x0001) {
+	if (GetAsyncKeyState('C') & 0x0001) {
 		handle=Effect::Play(D3DXVECTOR3(0.f, 0.f, 0.f));
 	}
-	if (GetAsyncKeyState('C') & 0x0001 ) {
+	if (GetAsyncKeyState('V') & 0x0001 ) {
 		Effect::StopAll();
 		handle = -1;
 	}
