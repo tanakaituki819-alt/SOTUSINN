@@ -127,6 +127,9 @@
     <Filter Include="Source\CSceneChange\シーンチェンジ制御">
       <UniqueIdentifier>{73a5f5bd-2404-4e40-b97e-c180e0eb9fee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CXInput">
+      <UniqueIdentifier>{2823f09c-559b-4d76-a0f9-7731efc4ec94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -242,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="Source\CSceneChange.cpp">
       <Filter>Source\CSceneChange\シーンチェンジ制御</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CXInput.cpp">
+      <Filter>Source\CXInput</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="Source\CSceneChange.h">
       <Filter>Source\CSceneChange\シーンチェンジ制御</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CXInput.h">
+      <Filter>Source\CXInput</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
