@@ -6,7 +6,7 @@ CCharacterUI::CCharacterUI()
 	//画像読み込み、ポジションの設定、スケール設定.
 	m_pPlayerUI[0] = CSpriteManager::GetSprite2D(CSpMLstiImg::Img_Player1);
 	m_pPlayerUI[0]->SetPosition	(D3DXVECTOR3(64.f, 64.f, 1.f)	);
-	m_pPlayerUI[0]->SetScale	(D3DXVECTOR3(300.f, 500.f, 0.f)	);
+	m_pPlayerUI[0]->SetScale	(D3DXVECTOR3(1, 1, 0.f)	);
 
 	m_pPlayerUI[1] = CSpriteManager::GetSprite2D(CSpMLstiImg::Img_Player2);
 	m_pPlayerUI[1]->SetPosition	(D3DXVECTOR3(64.f * 5, 64.f, 1.f));
