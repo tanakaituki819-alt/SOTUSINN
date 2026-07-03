@@ -187,6 +187,7 @@
     <ClCompile Include="Source\CFadeSceneTransition.cpp" />
     <ClCompile Include="Source\CXInput.cpp" />
     <ClCompile Include="Source\Effect.cpp" />
+    <ClCompile Include="Source\CPlayerSetupUi.cpp" />
     <ClCompile Include="Source\RawInput.cpp" />
     <ClCompile Include="Source\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -236,6 +237,7 @@
     <ClInclude Include="Source\enScene.h" />
     <ClInclude Include="Source\Global.h" />
     <ClInclude Include="Source\MyMacro.h" />
+    <ClInclude Include="Source\CPlayerSetupUi.h" />
     <ClInclude Include="Source\RawInput.h" />
     <ClInclude Include="Source\stdafx.h" />
     <ClInclude Include="Source\tiny_obj_loader.h" />

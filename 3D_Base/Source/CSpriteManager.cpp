@@ -183,19 +183,24 @@ void CSpriteManager::Load2D()
 
 	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {10, 1}, {1, 1} } });
 
-	//プレイヤーフォント.																									//表示幅高さ、元画像サイズ.切り取りサイズ.
+	//プレイヤーフォント.																									//表示幅高さ、元画像サイズ、切り取りサイズ.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playerfont),		_T("Data\\Texture\\Playerfont.png"),		{ {1, 1, 1}, {196, 184}, {196, 46  } } });	
 	//キャラクターの顔差分.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playericon),		_T("Data\\Texture\\Playericon.png"),		{ {1, 1, 1}, {384, 384}, {96, 96   } } });
 	//プレイヤーバックグラウンド.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_PlayerBackground),_T("Data\\Texture\\PlayerBackground.png"),	{ {1, 1, 1}, {800, 600}, {800 / 4, 600 } } });
 	//プレイヤー1~4までの立ち絵.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Player1),		_T("Data\\Texture\\Player1.png"),		{ {1, 1, 1}, {196, 184}, {196 /	2, 184 } } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Player2),		_T("Data\\Texture\\Player2.png"),		{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Player3),		_T("Data\\Texture\\Player3.png"),		{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Player4),		_T("Data\\Texture\\Player4.png"),		{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Player1),			_T("Data\\Texture\\Player1.png"),			{ {1, 1, 1}, {196, 184}, {196 /	2, 184 } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Player2),			_T("Data\\Texture\\Player2.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Player3),			_T("Data\\Texture\\Player3.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Player4),			_T("Data\\Texture\\Player4.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
+	//和室の背景.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_BackGround),		_T("Data\\Texture\\BackGround.png"),		{ {1, 1, 1}, {1920, 1080}, {1920, 1080 } } });
 
 
+	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
+		return a.listNo < b.listNo;
+		});
 
 }
 

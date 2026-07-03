@@ -133,6 +133,9 @@
     <Filter Include="Source\CGameScene\CGameScenePlayerSetup\CharacterUI">
       <UniqueIdentifier>{b7504323-2b48-423d-8065-01144e570a92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi">
+      <UniqueIdentifier>{388dec59-346a-46d5-9065-a793aae97f8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -254,6 +257,10 @@
     </ClCompile>
     <ClCompile Include="Source\CCharacterUI.cpp">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CXInput.cpp" />
+    <ClCompile Include="Source\CPlayerSetupUi.cpp">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +392,10 @@
     </ClInclude>
     <ClInclude Include="Source\CCharacterUI.h">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CXInput.h" />
+    <ClInclude Include="Source\CPlayerSetupUi.h">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -36,6 +36,7 @@ public:
 		Img_Playerfont,			//プレイヤーフォント.
 		Img_Playericon,			//プレイヤーアイコン
 		Img_PlayerBackground,	//プレイヤーバックグラウンド.
+		Img_BackGround,			//和室背景.
 		Img_Player1,			//プレイヤー1.
 		Img_Player2,			//プレイヤー2.
 		Img_Player3,			//プレイヤー3.
