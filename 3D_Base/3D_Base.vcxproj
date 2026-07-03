@@ -155,6 +155,7 @@
     <ClCompile Include="Source\CCharacterUI.cpp" />
     <ClCompile Include="Source\CEnemy.cpp" />
     <ClCompile Include="Source\CGameScene.cpp" />
+    <ClCompile Include="Source\CGameSceneBarrgeEncounter.cpp" />
     <ClCompile Include="Source\CGameSceneGameMain.cpp" />
     <ClCompile Include="Source\CGameSceneTitle.cpp" />
     <ClCompile Include="Source\CGround.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="Source\CCharacterUI.h" />
     <ClInclude Include="Source\CEnemy.h" />
     <ClInclude Include="Source\CGameScene.h" />
+    <ClInclude Include="Source\CGameSceneBarrgeEncounter.h" />
     <ClInclude Include="Source\CGameSceneGameMain.h" />
     <ClInclude Include="Source\CGameSceneTitle.h" />
     <ClInclude Include="Source\CGround.h" />
