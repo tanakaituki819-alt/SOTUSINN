@@ -99,3 +99,9 @@ struct SPRITE_STATE
 //	_In_   const D3DXVECTOR3* pV, // 回転軸となる方向ベクトル（正規化必須）
 //	_In_   FLOAT Angle            // 回転角度（ラジアン単位）
 //);
+
+//長さに変換
+//D3DXVec3Length
+
+//正規化
+//D3DXVec3Normalize();

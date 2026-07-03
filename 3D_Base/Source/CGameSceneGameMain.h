@@ -18,6 +18,8 @@ private:
 	//当たり判定確認
 	void CheckCollision();
 
+	CXInput* CONTROLA[4];
+
 	CStaticMesh* m_pStaticMeshBSphere;	//バウンディングスフィア(当たり判定用).
 	CGround* m_pGround;
 	CPlayer* m_pPlayer;

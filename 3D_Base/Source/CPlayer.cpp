@@ -13,6 +13,16 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
+	if (MyController->IsConnect()==true) {
+		D3DXVECTOR2 VECT = {static_cast<FLOAT>( MyController->GetRThumbX()) ,static_cast<FLOAT>(MyController->GetRThumbY())};
+		D3DXVec2Normalize(&VECT,&VECT);
+		m_Position.x += VECT.x;
+		m_Position.z += m_Position.y;
+			
+
+
+
+	}
 	if (GetAsyncKeyState('W') & 0x8000) {
 		m_Position.y += Speed;
 	}
