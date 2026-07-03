@@ -34,7 +34,7 @@ struct VS_OUTPUT
     float4 Pos : SV_Position;
     float3 Normal : TEXCOORD0;
     float2 UV : TEXCOORD1;
-    float3 Light : TEXCOORD2;
+    float4 Light : TEXCOORD2;
     float3 EyeVector : TEXCOORD3;
     float4 PosWorld : TEXCOORD4;
     float4 Color : COLOR;
@@ -60,8 +60,8 @@ VS_OUTPUT VS_Main(
 
 	//ライト方向:
 	// ディレクショナルライトは、どこでも同じ方向.位置は無関係.
-    output.Light = normalize(g_vLightDir);
-
+    output.Light.xyz = normalize(g_vLightDir.xyz);
+    output.Light.w = g_vLightDir.w; // w（強さ）をそのままピクセルシェーダへ送る
     output.PosWorld = mul(Pos, g_mW);
 
 	//視線ベクトル:
@@ -84,18 +84,19 @@ float4 PS_Main(VS_OUTPUT input) : SV_Target
 
 	//環境光　※１.
     float4 ambient = texColor * g_Ambient;
-
+    
 	//拡散反射光 ※２.
-    float NL = saturate(dot(input.Normal, input.Light));
+    float NL = saturate(dot(input.Normal, input.Light.xyz));
     float4 diffuse = (g_Diffuse / 2 + texColor / 2) * NL;
 
 	//鏡面反射光 ※３.
-    float3 reflect = normalize(2 * NL * input.Normal - input.Light);
+    float3 reflect = normalize(2 * NL * input.Normal - input.Light.xyz);
     float4 specular =
 		pow(saturate(dot(reflect, input.EyeVector)), 4) * g_Specular;
 
 	//最終色　※１，２，３の合計.
-    float4 Color = ambient + diffuse + specular;
+    float4 Color = ambient + (diffuse + specular) * input.Light.w;
+   // Color.a = 0.5;
     return Color;
 }
 

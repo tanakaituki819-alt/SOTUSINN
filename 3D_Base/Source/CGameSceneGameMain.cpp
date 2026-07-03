@@ -17,7 +17,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	//ライト情報.
 
 	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	// ライト方向.
-
+	m_Light.fIntensity = 1;
 
 
 

@@ -174,8 +174,10 @@ bool CXInput::IsKeyCore( WORD GamePad, const XINPUT_STATE& State )
 WORD CXInput::GenerateGamePadValue( KEY key )
 {
 	// 範囲外の場合はアサート出す.
-	if( key < KEY::FIRST || KEY::LAST < key ){
-		_ASSERT_EXPR( false, L"キーの範囲外を指定" );
-	}
+	//if( key < KEY::FIRST || KEY::L.AST < key ){
+
+	//	_ASSERT_EXPR( false, L"キーの範囲外を指定" );
+
+	//}
 	return KEY_TABLE[key];
 }

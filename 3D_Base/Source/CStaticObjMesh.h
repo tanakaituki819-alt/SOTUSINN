@@ -150,7 +150,10 @@ public:
 	// 【変更後】レイとの当たり判定用の頂点配列を取得.
 	const std::vector<VERTEX>& GetMeshForRay() const { return m_ModelForRay.Vertices; }
 
+	void SetisCOLOR(bool is) { isCOLOR = is; };
 
+	void SetLightCOLOR(D3DXVECTOR3 COLORE) { 
+		LightCOLOR = COLORE; };
 private:
 	//メッシュ読み込み.
 
@@ -172,6 +175,7 @@ private:
 
 	//レンダリング関数(クラス内でのみ使用する).
 	void RenderMesh( D3DXMATRIX& mWorld, D3DXMATRIX& mView, D3DXMATRIX& mProj );
+
 
 private:
 	//Dx9.
@@ -208,4 +212,8 @@ private:
 	D3DXVECTOR3		m_Rotation;	//回転値(x,y,z).
 								//※x=Pitch, y=Yaw, z=Roll.
 	D3DXVECTOR3		m_Scale;	//拡大縮小値(x,y,z等倍).
+
+	bool isCOLOR;
+	D3DXVECTOR3 LightCOLOR;
+	void Multiply(D3DXVECTOR4* base, D3DXVECTOR3* multiplier);
  };

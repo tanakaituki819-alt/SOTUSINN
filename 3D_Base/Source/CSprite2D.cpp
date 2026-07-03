@@ -24,6 +24,8 @@ CSprite2D::CSprite2D()
 	, m_SpriteState		()
 	, m_PatternNo		()
 	, m_PatternMax		()
+	, isCOLOR(false)
+	, COLOR()
 {
 }
 
@@ -70,6 +72,38 @@ HRESULT CSprite2D::Init(
 	}
 	//サンプラ作成.
 	if( FAILED( CreateSampler() ) )
+	{
+		return E_FAIL;
+	}
+
+	return S_OK;
+}
+
+HRESULT CSprite2D::Init2(CDirectX11& pDx11, LPCTSTR lpFileName, SPRITE_STATE& pSs)
+{
+	m_pDx11 = &pDx11;
+	m_pDevice11 = m_pDx11->GetDevice();		//実態は別のところにある.他とも共有している.
+	m_pContext11 = m_pDx11->GetContext();	//実態は別のところにある.他とも共有している.
+
+	m_SpriteState = pSs;
+
+	//シェーダ作成.
+	if (FAILED(CreateShader()))
+	{
+		return E_FAIL;
+	}
+	//板ポリゴン作成.
+	if (FAILED(CreateModel2()))
+	{
+		return E_FAIL;
+	}
+	//テクスチャ作成.
+	if (FAILED(CreateTexture(lpFileName)))
+	{
+		return E_FAIL;
+	}
+	//サンプラ作成.
+	if (FAILED(CreateSampler()))
 	{
 		return E_FAIL;
 	}
@@ -285,6 +319,56 @@ HRESULT CSprite2D::CreateModel()
 	return S_OK;
 }
 
+HRESULT CSprite2D::CreateModel2()
+{
+	float w = m_SpriteState.Disp.x / 2;
+	float h = m_SpriteState.Disp.y / 2;
+
+	float u = m_SpriteState.Stride.w / m_SpriteState.Base.w;	//１マスあたりの幅.
+	float v = m_SpriteState.Stride.h / m_SpriteState.Base.h;	//１マスあたりの高さ.
+
+	//x,yそれぞれの最大マス数.
+	m_PatternMax.x =
+		static_cast<SHORT>(m_SpriteState.Base.w / m_SpriteState.Stride.w);
+	m_PatternMax.y =
+		static_cast<SHORT>(m_SpriteState.Base.h / m_SpriteState.Stride.h);
+
+	//板ポリ(四角形)の頂点を作成.
+	VERTEX vertices[] =
+	{
+		//頂点座標(x,y,z)				 UV座標(u,v)
+		D3DXVECTOR3(-w,   h, 0.0f), D3DXVECTOR2(0.0f,    v),	//頂点１(左下).
+		D3DXVECTOR3(-w, -h, 0.0f), D3DXVECTOR2(0.0f, 0.0f),	//頂点２(左上).
+		D3DXVECTOR3(w,   h, 0.0f), D3DXVECTOR2(u,    v),	//頂点３(右下).
+		D3DXVECTOR3(w,-h, 0.0f), D3DXVECTOR2(u, 0.0f)	//頂点４(右上).
+	};
+	//最大要素数を算出する.
+	UINT uVerMax = sizeof(vertices) / sizeof(vertices[0]);
+
+	//バッファ構造体.
+	D3D11_BUFFER_DESC bd;
+	bd.Usage = D3D11_USAGE_DEFAULT;		//使用方法（デフォルト）.
+	bd.ByteWidth = sizeof(VERTEX) * uVerMax;	//頂点のサイズ.
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;	//頂点バッファとして扱う.
+	bd.CPUAccessFlags = 0;	//CPUからはアクセスしない.
+	bd.MiscFlags = 0;	//その他のフラグ（未使用）.
+	bd.StructureByteStride = 0;	//構造体のサイズ（未使用）.
+
+	//サブリソースデータ構造体.
+	D3D11_SUBRESOURCE_DATA InitData;
+	InitData.pSysMem = vertices;	//板ポリの頂点をセット.
+
+	//頂点バッファの作成.
+	if (FAILED(m_pDevice11->CreateBuffer(
+		&bd, &InitData, &m_pVertexBuffer)))
+	{
+		_ASSERT_EXPR(false, _T("頂点バッファ作成失敗"));
+		return E_FAIL;
+	}
+
+	return S_OK;
+}
+
 //テクスチャ作成.
 HRESULT CSprite2D::CreateTexture( LPCTSTR lpFileName )
 {
@@ -375,8 +459,16 @@ void CSprite2D::Render()
 		cb.mWorld = m;
 
 		//カラー.
-		cb.Color = D3DXVECTOR4( 1.0f, 1.0f, 1.0f, m_Alpha );
-
+		cb.Color; 
+		if (isCOLOR) {
+			cb.Color.x = COLOR.x;
+			cb.Color.y = COLOR.y;
+			cb.Color.z= COLOR.y;
+			cb.Color.w = m_Alpha;
+		}
+		else {
+		cb.Color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
+		}
 		//テクスチャ座標(UV座標).
 		//１マスあたりの割合にパターン番号(マス目)をかけて座標を設定する.
 		cb.UV.x = m_SpriteState.Stride.w / m_SpriteState.Base.w
@@ -423,4 +515,11 @@ void CSprite2D::Render()
 	//アルファブレンド無効にする.
 	m_pDx11->SetAlphaBlend( false );
 
+}
+
+void CSprite2D::Multiply(D3DXVECTOR4* base, D3DXVECTOR3* multiplier)
+{
+	base->x *= multiplier->x;
+	base->y *= multiplier->y;
+	base->z *= multiplier->z;
 }

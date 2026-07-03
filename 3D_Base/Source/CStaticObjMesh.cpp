@@ -39,36 +39,38 @@ const TCHAR SHADER_NAME[] = _T( "Data\\Shader\\StaticMesh.hlsl" );
 
 //コンストラクタ.
 CStaticObjMesh::CStaticObjMesh()
-	: m_pDx9				( nullptr )
-	, m_pDevice9			( nullptr )
+	: m_pDx9(nullptr)
+	, m_pDevice9(nullptr)
 
-	, m_pDx11				( nullptr )
-	, m_pDevice11			( nullptr )
-	, m_pContext11			( nullptr )
+	, m_pDx11(nullptr)
+	, m_pDevice11(nullptr)
+	, m_pContext11(nullptr)
 
-	, m_pVertexShader		( nullptr )
-	, m_pVertexLayout		( nullptr )
-	, m_pPixelShader		( nullptr )
+	, m_pVertexShader(nullptr)
+	, m_pVertexLayout(nullptr)
+	, m_pPixelShader(nullptr)
 
-	, m_pCBufferPerMesh		( nullptr )
-	, m_pCBufferPerMaterial	( nullptr )
-	, m_pCBufferPerFrame	( nullptr )
+	, m_pCBufferPerMesh(nullptr)
+	, m_pCBufferPerMaterial(nullptr)
+	, m_pCBufferPerFrame(nullptr)
 
-	, m_pVertexBuffer		( nullptr )
-	, m_ppIndexBuffer		( nullptr )
-	, m_pSampleLinear		( nullptr )
+	, m_pVertexBuffer(nullptr)
+	, m_ppIndexBuffer(nullptr)
+	, m_pSampleLinear(nullptr)
 
-	, m_Model				()
-	, m_ModelForRay			()
+	, m_Model()
+	, m_ModelForRay()
 
-	, m_pMaterials			( nullptr )
-	, m_NumAttr				()
-	, m_AttrID				()
-	, m_EnableTexture		( false )
+	, m_pMaterials(nullptr)
+	, m_NumAttr()
+	, m_AttrID()
+	, m_EnableTexture(false)
 
-	, m_Position			()
-	, m_Rotation			()
-	, m_Scale				( 1.0f, 1.0f, 1.0f )
+	, m_Position()
+	, m_Rotation()
+	, m_Scale(1.0f, 1.0f, 1.0f)
+	, isCOLOR(false)
+	, LightCOLOR()
 {
 }
 
@@ -322,20 +324,20 @@ HRESULT CStaticObjMesh::CreateIndexBuffer()
 		m_ppIndexBuffer[No] = nullptr;
 	}
 
-	// 🔴 新ロジック: CPU側の std::vector 配列からダイレクトに生成
+	
 	for (DWORD No = 0; No < m_Model.NumMaterials; No++)
 	{
-		// そのマテリアルIDがどのポリゴンにも割り当てられていなければスキップ
+		//そのマテリアルIDがどのポリゴンにも割り当てられていなければスキップ
 		if (m_Model.MaterialIndices[No].empty()) continue;
 
 		bd.Usage = D3D11_USAGE_DEFAULT;
-		// 🔴 vectorの要素数から正確なバイト幅を算出
+		// vectorの要素数から正確なバイト幅を算出
 		bd.ByteWidth = sizeof(DWORD) * static_cast<UINT>(m_Model.MaterialIndices[No].size());
 		bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		bd.CPUAccessFlags = 0;
 		bd.MiscFlags = 0;
 
-		// 🔴 vector の内部バッファの先頭ポインタ(.data())をそのままハードウェアに転送
+		//vector の内部バッファの先頭ポインタ(.data())をそのままハードウェアに転送
 		InitData.pSysMem = m_Model.MaterialIndices[No].data();
 
 		if (FAILED(m_pDevice11->CreateBuffer(&bd, &InitData, &m_ppIndexBuffer[No])))
@@ -355,15 +357,15 @@ HRESULT CStaticObjMesh::CreateVertexBuffer()
 	D3D11_BUFFER_DESC	bd;
 	D3D11_SUBRESOURCE_DATA	InitData;
 
-	// 🔴 新ロジック: 自作の std::vector からダイレクトに作成
+	//std::vector からダイレクトに作成
 	bd.Usage = D3D11_USAGE_DEFAULT;
-	// 🔴 VERTEXのサイズ × 配列の要素数
+	//VERTEXのサイズ × 配列の要素数
 	bd.ByteWidth = sizeof(VERTEX) * static_cast<UINT>(m_Model.Vertices.size());
 	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
 
-	// 🔴 vector の内部ポインタからデータをダイレクトにグラフィックスカードへ送信
+	//vectorの内部ポインタからデータをダイレクトにグラフィックスカードへ送信
 	InitData.pSysMem = m_Model.Vertices.data();
 
 	if (FAILED(m_pDevice11->CreateBuffer(&bd, &InitData, &m_pVertexBuffer)))
@@ -415,9 +417,7 @@ void CStaticObjMesh::Release()
 	//マテリアル解放.
 	if (m_pMaterials != nullptr) { delete[] m_pMaterials; m_pMaterials = nullptr; }
 
-	// 🔴 変更後: DirectX 9 のオブジェクト解放処理群を完全に削除
-	// (std::vector はオブジェクト破棄時に C++ の標準仕様でメモリが自動解放されるため処理不要)
-
+	
 	SAFE_RELEASE(m_pSampleLinear);
 	SAFE_RELEASE(m_pVertexBuffer);
 
@@ -682,7 +682,9 @@ void CStaticObjMesh::Render(
 		//ライト方向の正規化(ノーマライズ）.
 		// ※モデルからライトへ向かう方向. ディレクショナルライトで重要な要素.
 		D3DXVec4Normalize( &cb.vLightDir, &cb.vLightDir );
+		cb.vLightDir.w = Light.fIntensity;
 
+		
 		memcpy_s(
 			pData.pData,	//コピー先のバッファ.
 			pData.RowPitch,	//コピー先のバッファサイズ.
@@ -753,7 +755,7 @@ void CStaticObjMesh::RenderMesh(
 	UINT offset = 0;
 	m_pContext11->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 
-	// 🛠️ ここから下のループ処理を、以下の「安全な実装」に丸ごと差し替えてください
+
 	for (DWORD No = 0; No < m_NumAttr; No++)
 	{
 		// 1. 描画対象のマテリアルIDを確定させる
@@ -777,6 +779,10 @@ void CStaticObjMesh::RenderMesh(
 			CBUFFER_PER_MATERIAL cb;
 			// データを matID で一貫して参照
 			cb.Diffuse = m_pMaterials[matID].Diffuse;
+			if (isCOLOR) {
+				Multiply(&cb.Diffuse, &LightCOLOR);
+			}
+
 			cb.Ambient = m_pMaterials[matID].Ambient;
 			cb.Specular = m_pMaterials[matID].Specular;
 
@@ -804,3 +810,12 @@ void CStaticObjMesh::RenderMesh(
 		m_pContext11->DrawIndexed(indexCount, 0, 0);
 	}
 }
+
+void CStaticObjMesh::Multiply(D3DXVECTOR4* base, D3DXVECTOR3* multiplier)
+{
+	base->x *= multiplier->x;
+	base->y *= multiplier->y;
+	base->z *= multiplier->z;
+	//base->w *= multiplier->w;
+}
+

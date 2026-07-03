@@ -52,8 +52,9 @@ VS_OUTPUT VS_Main(
 //画面上に評されるピクセル（ドット1つ分）の色を決定する.
 float4 PS_Main( VS_OUTPUT input ) : SV_Target
 {
+	
 	float4 color = g_Texture.Sample( g_samLinear, input.UV );//色を返す.
-
+    color.rgb *= g_Color.rgb;
 	//プログラム制御のα値をテクスチャが持っているα値にかけ合わせる.
 	color.a *= g_Color.a;
 
