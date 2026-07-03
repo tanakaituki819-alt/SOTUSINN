@@ -18,6 +18,13 @@
 #endif
 //エイリアスを用意
 //コードが長くなって読みずらいため
+// 
+//コードの下のほうで定義しているほかのコードではEFE::で使える
+//namespace {
+//	using EFE = Effect::enList;
+//}
+
+
 namespace {
 	namespace Es = ::Effekseer;
 	using EsManagerRef = ::Es::ManagerRef;
@@ -29,11 +36,7 @@ namespace {
 	using EsHandle = ::Es::Handle;
 	using EsRenderefRef = ::EffekseerRendererDX11::RendererRef;
 	using  EsRenderef = ::EffekseerRendererDX11::Renderer;
-}
-
-
-
-
+} 
 /*
 *フリーソフト　Effekseerのデータを使うためのクラス
 *sigleton（シングルトン::デザインパターンの１つで）作成
@@ -41,6 +44,15 @@ namespace {
 
 class Effect
 {
+public:
+	//エフェクト種類列挙型
+	enum enList
+	{
+		Test0 = 0,	//仮で設定
+		Test1,			//仮で設定
+		Test2,			//仮で設定
+		Max				//最大数
+	};
 public:
 
 	~Effect();
@@ -52,8 +64,7 @@ public:
 		return &s_Instance;
 	}
 public:
-	//生成やコピーを禁止する
-	Effect();
+
 	//コピーコンストラクタによるコピーを禁止する
 	Effect(const Effect& rhs) = delete;
 	//代入演算子によるコピーを禁止する
@@ -67,19 +78,22 @@ public:
 	//描画
 	void Draw(const D3DXMATRIX&mView, const D3DXMATRIX&mProj, const LIGHT&lLight, const CAMERA&camera);
 
-	//変換系
+	//-------------------------------------.
+	//	変換系.
+	//-------------------------------------.
+	//vec3.
 	::EsVec3 ToEfkVector3(const D3DXVECTOR3* pSrcVec3Dx);
-	D3DXVECTOR3 ToDxVector3(const EsVec3* pSrcVec3efk);
+	D3DXVECTOR3 ToDxVector3(const ::EsVec3* pSrcVec3Efk);
 	//matrix(行列)
-	::EsMatrix ToEfkMatorix(const D3DXMATRIX* pSrcMatDx);
-	D3DXMATRIX ToDxMatorix(const EsMatrix* pSrcMatEfk);
-/// <summary>
-/// 制御系
-/// </summary>
+	::EsMatrix ToEfkMatrix(const D3DXMATRIX* pSrcMatDx);
+	D3DXMATRIX ToDxMatrix(const ::EsMatrix* pSrcMatEfk);
+	//-------------------------------------.
+	//	制御系.
+	//-------------------------------------.
 	//再生
-	static ::EsHandle Play(const D3DXVECTOR3& pos) {
+	static ::EsHandle Play(enList list, const D3DXVECTOR3& pos) {
 		Effect* pE = Effect::GetInstance();
-		return pE->m_pManager->Play(pE->m_pEffect, pos.x, pos.y, pos.z);
+		return pE->m_pManager->Play(pE->m_pEffect[list], pos.x, pos.y, pos.z);
 	}
 	//停止
 	static void Stop(::EsHandle handle) {
@@ -120,7 +134,8 @@ public:
 private:
 	//開放
 	HRESULT Releasdara();
-
+	//生成やコピーを禁止する
+	Effect();
 	//ビュー行列の設定
 	void SetViewMatrix(const D3DXMATRIX& mView);
 	//プロジェクション行列の設定
@@ -132,6 +147,8 @@ private:
 	::EsManagerRef	m_pManager;
 	::EsRenderefRef m_pRender;
 	//エフェクトの数だけ必要
-	::EsEffecRef	m_pEffect;
+	::EsEffecRef	m_pEffect[enList::Max];
 };
-
+namespace {
+	using EFE = Effect::enList;
+}

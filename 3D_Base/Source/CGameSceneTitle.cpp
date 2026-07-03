@@ -29,6 +29,23 @@ void CGameSceneTitle::Draw()
 {
 	m_pDx11->SetDepth(false);
 	Projection();
+
+	m_pTImg->m_pSprite->SetisCOLOR(true);
+	static float r, g, b = 0;
+	r += rand() % 100 / 1000.f;
+	g += rand() % 100 / 1000.f;
+	b += rand() % 100 / 1000.f;
+	if (r > 1) {
+		r--;
+	}
+	if (g > 1) {
+		g--;
+	}
+	if (b > 1) {
+		b--;
+	}
+
+	m_pTImg->m_pSprite->SetCOLOR({ r,g,b });
 	m_pTImg->Draw();
 	m_pDx11->SetDepth(true);
 }

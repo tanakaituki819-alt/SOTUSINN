@@ -32,6 +32,7 @@ public:
 		m_PatternNo.x = x;
 		m_PatternNo.y = y;
 	}
+	CSprite2D* m_pSprite;
 protected:
 	//CGameObjectから継承した関数.
 	//final これ以降はoverrideさせない.
@@ -39,6 +40,7 @@ protected:
 			LIGHT& Light, CAMERA& Camera) override final;
 
 protected:
-	CSprite2D*	m_pSprite;
+	
+	
 	POINTS		m_PatternNo;	//パターン番号(マス目).
 };

@@ -26,10 +26,12 @@ public:
 	 D3DXVECTOR3 GetLookPosition() { return m_Camera.Look; }
 	 D3DXMATRIX&  GetView() { return m_mView; };
 
+	 void SetUpVec(D3DXVECTOR3 Set) { m_vUpVec = Set; }
 private:
 	//カメラ情報.
 	CAMERA			m_Camera;
-	D3DXVECTOR3 Vec;		//ビュー
+	D3DXVECTOR3 m_Vec;		//ビュー
 	D3DXMATRIX		m_mView;	//ビュー(カメラ)行列.
+	D3DXVECTOR3	m_vUpVec;
 };
 

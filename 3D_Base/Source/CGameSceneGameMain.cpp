@@ -11,20 +11,20 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 {
 
 	//カメラ座標.
-	m_pCamera->SetPosition(D3DXVECTOR3(0.f, 0.f, -5.f));
+	m_pCamera->SetPosition(D3DXVECTOR3(0.f, 10.f, 0.f));
 	m_pCamera->SetLookPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
-
+	m_pCamera->SetUpVec(D3DXVECTOR3(0.f, 0.f, 1.f));//前が上
 	//ライト情報.
 
 	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	// ライト方向.
+	m_Light.fIntensity = 1;//	ライトパワー
 
-
-
-
+	CONTROLA[0] = new CXInput(0);
+	
 	
 	m_pGround = new CGround();
 	m_pPlayer = new CPlayer();
-
+	m_pPlayer->SetXInput(CONTROLA[0]);
 	//エフェクト
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
@@ -60,7 +60,7 @@ void CGameSceneGameMain::Update()
 	static int i = 0;
 	i += 6;
 	if (GetAsyncKeyState('C') & 0x0001) {
-		handle=Effect::Play(D3DXVECTOR3(0.f, 0.f, 0.f));
+		handle=Effect::Play(EFE::Test0,D3DXVECTOR3(0.f, 0.f, 0.f));
 	}
 	if (GetAsyncKeyState('V') & 0x0001 ) {
 		Effect::StopAll();

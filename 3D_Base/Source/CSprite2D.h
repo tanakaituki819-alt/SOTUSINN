@@ -40,7 +40,7 @@ public:
 
 	//初期化.
 	HRESULT Init(CDirectX11& pDx11, LPCTSTR lpFileName, SPRITE_STATE& pSs );
-
+	HRESULT Init2(CDirectX11& pDx11, LPCTSTR lpFileName, SPRITE_STATE& pSs);
 	//解放.
 	void Release();
 
@@ -48,6 +48,7 @@ public:
 	HRESULT CreateShader();
 	//モデル作成.
 	HRESULT CreateModel();
+	HRESULT CreateModel2();
 	//テクスチャ作成.
 	HRESULT CreateTexture( LPCTSTR lpFileName );
 	//サンプラ作成.
@@ -88,7 +89,11 @@ public:
 	}
 	//最大パターン数(マス目)を取得.
 	POINTS GetPatternMax() const { return m_PatternMax; }
+	void SetisCOLOR(bool is) { isCOLOR = is; };
 
+	void SetCOLOR(D3DXVECTOR3 COLORE) {
+		COLOR = COLORE;
+	};
 private:
 	CDirectX11*				m_pDx11;
 	ID3D11Device*			m_pDevice11;
@@ -115,4 +120,8 @@ private:
 	SPRITE_STATE	m_SpriteState;	//スプライト情報.
 	POINTS			m_PatternNo;	//パターン番号(マス目).
 	POINTS			m_PatternMax;	//最大パターン(マスの最大値).
+
+	bool isCOLOR;
+	D3DXVECTOR3 COLOR;
+	void Multiply(D3DXVECTOR4* base, D3DXVECTOR3* multiplier);
 };

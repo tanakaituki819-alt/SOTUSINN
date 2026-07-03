@@ -8,7 +8,7 @@ constexpr int EFFECT_INSTANS_MAX = 1000;
 Effect::Effect()
 	:m_pManager(nullptr)
 	, m_pRender(nullptr)
-	, m_pEffect(nullptr)
+	, m_pEffect()
 {
 }
 Effect::~Effect()
@@ -47,11 +47,31 @@ HRESULT Effect::Create(ID3D11Device* pDevice, ID3D11DeviceContext* pContext)
 
 HRESULT Effect::LoadData()
 {
-	m_pEffect = ::EsEffect::Create(m_pManager, u"Data\\Effekseer\\Laser01.efk");
-	//u""は、UTF-16エンコードの文字リテラルで、const char16_t*に代入可能
-	if (m_pEffect==nullptr) {
-		_ASSERT_EXPR(false, L"エフェクト読み込み失敗");
-		return E_FAIL;
+	struct EffectList
+	{
+		enList listNo;				//enList列挙型を設定.
+		const char16_t path[256];	//ファイルの名前(パス付き).
+	};
+	EffectList EList[] =
+	{
+		{ enList::Test0,	u"Data\\Effekseer\\Laser01.efk"	},
+		{ enList::Test1,	u"Data\\Effekseer\\Simple_Sprite_BillBoard.efk"	},
+		{ enList::Test2,	u"Data\\Effekseer\\Simple_Turbulence_Fireworks.efk"	},
+	};
+	//配列の最大要素数を算出(配列全体のサイズ／配列１つ分のサイズ).
+	int list_max = sizeof(EList) / sizeof(EList[0]);
+	for (int i = 0; i < list_max; i++) {
+
+		int listNo = EList[i].listNo;
+
+		//エフェクトの読み込み.
+		m_pEffect[listNo] = ::EsEffect::Create(m_pManager, EList[i].path);
+		//u""は、UTF-16エンコーディングの文字列リテラルで、const char16_t* に代入可能.
+
+		if (m_pEffect[listNo] == nullptr) {
+			_ASSERT_EXPR(false, L"エフェクト読み込み失敗");
+			return E_FAIL;
+		}
 	}
 	return S_OK;
 }
@@ -65,7 +85,7 @@ void Effect::SetViewMatrix(const D3DXMATRIX& mView)
 {
 
 	::EsMatrix EsCamMat;//カメラ行列
-	EsCamMat = ToEfkMatorix(&mView);
+	EsCamMat = ToEfkMatrix(&mView);
 
 	//カメラ行列を設定する
 	m_pRender->SetCameraMatrix(EsCamMat);
@@ -75,7 +95,7 @@ void Effect::SetViewMatrix(const D3DXMATRIX& mView)
 void Effect::SetProjectionMatrix(const D3DXMATRIX& mProj)
 {
 	::EsMatrix EsProjMat;//プロジェクション行列
-	EsProjMat = ToEfkMatorix(&mProj);
+	EsProjMat = ToEfkMatrix(&mProj);
 	//プロジェクション行列を設定する
 	m_pRender->SetProjectionMatrix(EsProjMat);
 }
@@ -118,7 +138,7 @@ D3DXVECTOR3 Effect::ToDxVector3(const EsVec3* pSrcVec3efk)
 	return D3DXVECTOR3(pSrcVec3efk->X, pSrcVec3efk->Y, pSrcVec3efk->Z);
 }
 
-::EsMatrix Effect::ToEfkMatorix(const D3DXMATRIX* pSrcMatDx)
+::EsMatrix Effect::ToEfkMatrix(const D3DXMATRIX* pSrcMatDx)
 {
 	::EsMatrix OutMat;
 
@@ -156,7 +176,7 @@ OutMat.Values[3][3] = pSrcMatDx->m[3][3];
 	return OutMat;
 }
 
-D3DXMATRIX Effect::ToDxMatorix(const EsMatrix* pSrcMatEfk)
+D3DXMATRIX Effect::ToDxMatrix(const EsMatrix* pSrcMatEfk)
 {
 	D3DXMATRIX OutMat;
 

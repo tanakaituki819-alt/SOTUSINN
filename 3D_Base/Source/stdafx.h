@@ -18,3 +18,5 @@
 #include"CSpriteManager.h"
 
 #include "enScene.h"
+
+#include"CXInput.h"

@@ -185,6 +185,7 @@
     <ClCompile Include="Source\CStaticObjMesh.cpp" />
     <ClCompile Include="Source\CUIObject.cpp" />
     <ClCompile Include="Source\CFadeSceneTransition.cpp" />
+    <ClCompile Include="Source\CXInput.cpp" />
     <ClCompile Include="Source\Effect.cpp" />
     <ClCompile Include="Source\RawInput.cpp" />
     <ClCompile Include="Source\stdafx.cpp">
@@ -230,6 +231,7 @@
     <ClInclude Include="Source\CStaticObjMesh.h" />
     <ClInclude Include="Source\CUIObject.h" />
     <ClInclude Include="Source\CFadeSceneTransition.h" />
+    <ClInclude Include="Source\CXInput.h" />
     <ClInclude Include="Source\Effect.h" />
     <ClInclude Include="Source\enScene.h" />
     <ClInclude Include="Source\Global.h" />

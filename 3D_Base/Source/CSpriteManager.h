@@ -52,6 +52,7 @@ public:
 
 	enum class enMeshObjList
 	{
+		ROBO,//ロボット
 		FighterJet,//戦闘機（プレイヤー）
 		Monster,//モンスター
 		GOZIRA,//
@@ -59,7 +60,7 @@ public:
 		Grassland,//草原
 		Missile,//ミサイル
 		HATO,//鳩
-		ROBO,//ロボット
+		
 		ROBOShot,//射撃ポーズロボット
 		ROBO＿Hi,//高ポリゴンロボット
 		DefenseBase,//防衛拠点
@@ -94,6 +95,9 @@ public:
 	static void DeleteObjMesh(enMeshObjList No);//obj
 	void AllDelete() { GetInstance()->allDelete(); };
 private:
+	void Load2D();
+	void Load3D();
+
 	 void allDelete();
 	struct ImgList
 	{
