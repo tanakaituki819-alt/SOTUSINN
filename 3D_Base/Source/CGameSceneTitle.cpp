@@ -1,9 +1,6 @@
 #include "CGameSceneTitle.h"
 #include "CGame.h"
 
-
-
-
 CGameSceneTitle::CGameSceneTitle(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	:CGameScene::CGameScene(Hwnd,Dx9,Dx11, m_Camera)
 {
@@ -22,7 +19,7 @@ void CGameSceneTitle::Update()
 {
 	if (GetAsyncKeyState('Z') & 0x8000) {
 		
-		SenenChang(enScene::GameMain, CSceneChange::TransitionType::Fade, 60, 60);
+		SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
 		
 	}
 
@@ -31,7 +28,6 @@ void CGameSceneTitle::Update()
 void CGameSceneTitle::Draw()
 {
 	m_pDx11->SetDepth(false);
-
 	Projection();
 
 	m_pTImg->m_pSprite->SetisCOLOR(true);
@@ -52,5 +48,4 @@ void CGameSceneTitle::Draw()
 	m_pTImg->m_pSprite->SetCOLOR({ r,g,b });
 	m_pTImg->Draw();
 	m_pDx11->SetDepth(true);
-
 }

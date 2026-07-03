@@ -33,7 +33,14 @@ public:
 		DefenseBaseHP,//防衛拠点HP
 		DefenseBaseHPback,//防衛拠点HPの後ろ
 		Digit0_9,//0-9まで;
-	
+		Img_Playerfont,			//プレイヤーフォント.
+		Img_Playericon,			//プレイヤーアイコン
+		Img_PlayerBackground,	//プレイヤーバックグラウンド.
+		Img_Player1,			//プレイヤー1.
+		Img_Player2,			//プレイヤー2.
+		Img_Player3,			//プレイヤー3.
+		Img_Player4,			//プレイヤー4.
+		Img_Xbox,				//Xboxコントローラー.
 		MAX
 	};
 	//ｘファイル
