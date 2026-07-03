@@ -7,7 +7,7 @@
 #include "CStaticMesh.h"
 #include"CStaticObjMesh.h"
 
-
+//一番下にコード短縮用のネームスペースがあります
 class CSpriteManager
 {
 public:
@@ -135,3 +135,7 @@ private:
 	CStaticObjMesh* StaticObjMesh[static_cast <int>(enMeshObjList::MAX)];
 };
 
+namespace {
+	using CSpM = CSpriteManager;
+	using CSpMLstiImg = CSpriteManager::enImagList;
+}
