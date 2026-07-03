@@ -1,11 +1,11 @@
-#include "CGameSceneBarrgeEncounter.h"
+#include "CBarrgeEncounter.h"
 
-CGameSceneBarrgeEncounter::CGameSceneBarrgeEncounter()
+CBarrgeEncounter::CBarrgeEncounter()
 	: m_Barrage_MAX (10)
 
 {
 }
 
-CGameSceneBarrgeEncounter::~CGameSceneBarrgeEncounter()
+CBarrgeEncounter::~CBarrgeEncounter()
 {
 }

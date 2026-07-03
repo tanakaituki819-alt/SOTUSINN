@@ -133,6 +133,9 @@
     <Filter Include="Source\CGameScene\CGameScenePlayerSetup\CharacterUI">
       <UniqueIdentifier>{b7504323-2b48-423d-8065-01144e570a92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\BarrgeEncounter">
+      <UniqueIdentifier>{e559094e-6aad-43e1-9aa7-bc2f93768424}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -254,6 +257,10 @@
     </ClCompile>
     <ClCompile Include="Source\CCharacterUI.cpp">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CXInput.cpp" />
+    <ClCompile Include="Source\CBarrgeEncounter.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\BarrgeEncounter</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -385,6 +392,10 @@
     </ClInclude>
     <ClInclude Include="Source\CCharacterUI.h">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CXInput.h" />
+    <ClInclude Include="Source\CBarrgeEncounter.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\BarrgeEncounter</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

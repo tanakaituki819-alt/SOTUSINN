@@ -3,11 +3,11 @@
 //-----------------------------.
 //	連打対決クラス.
 //-----------------------------.
-class CGameSceneBarrgeEncounter
+class CBarrgeEncounter
 {
 public:
-	CGameSceneBarrgeEncounter();
-	~CGameSceneBarrgeEncounter();
+	CBarrgeEncounter();
+	~CBarrgeEncounter();
 
 private:
 	int m_Barrage_MAX;	//連打MAX値

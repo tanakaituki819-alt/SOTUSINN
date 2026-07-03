@@ -196,13 +196,13 @@
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\CBarrgeEncounter.h" />
     <ClInclude Include="Source\CBoundingSphere.h" />
     <ClInclude Include="Source\CCamera.h" />
     <ClInclude Include="Source\CCharacter.h" />
     <ClInclude Include="Source\CCharacterUI.h" />
     <ClInclude Include="Source\CEnemy.h" />
     <ClInclude Include="Source\CGameScene.h" />
-    <ClInclude Include="Source\CGameSceneBarrgeEncounter.h" />
     <ClInclude Include="Source\CGameSceneGameMain.h" />
     <ClInclude Include="Source\CGameSceneTitle.h" />
     <ClInclude Include="Source\CGround.h" />
