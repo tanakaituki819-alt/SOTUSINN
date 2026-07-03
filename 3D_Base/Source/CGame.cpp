@@ -1,6 +1,7 @@
 #include "CGame.h"
 #include"CGameSceneTitle.h"
 #include"CGameSceneGameMain.h"
+#include "CGameScenePlayerSetup.h"
 
 #include "enScene.h"
 #include "CSoundManager.h"
@@ -38,7 +39,7 @@ void CGame::Create()
 {
 	RawInput::firstSetting(m_hWnd);
 	CSpriteManager::LoadDeat(*m_pDx11,*m_pDx9);
-	m_pGeamScene = new CGameSceneTitle(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+	m_pGeamScene = new CGameScenePlayerSetup(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
 }
@@ -154,7 +155,11 @@ void CGame::ChangeScene()
 			SAFE_DELETE(m_pGeamScene);
 			m_pGeamScene = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
 			break;
-	
+		case enScene::PlayerSetUp:
+			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
+			SAFE_DELETE(m_pGeamScene);
+			m_pGeamScene = new CGameScenePlayerSetup(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			break;
 
 		}
 	

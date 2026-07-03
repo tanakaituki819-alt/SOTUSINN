@@ -127,6 +127,12 @@
     <Filter Include="Source\CSceneChange\シーンチェンジ制御">
       <UniqueIdentifier>{73a5f5bd-2404-4e40-b97e-c180e0eb9fee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameScenePlayerSetup">
+      <UniqueIdentifier>{5cd7893f-5b75-4774-bd4b-a754123b8ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameScenePlayerSetup\CharacterUI">
+      <UniqueIdentifier>{b7504323-2b48-423d-8065-01144e570a92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -242,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="Source\CSceneChange.cpp">
       <Filter>Source\CSceneChange\シーンチェンジ制御</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameScenePlayerSetup.cpp">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CCharacterUI.cpp">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +379,12 @@
     </ClInclude>
     <ClInclude Include="Source\CSceneChange.h">
       <Filter>Source\CSceneChange\シーンチェンジ制御</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameScenePlayerSetup.h">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CCharacterUI.h">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
