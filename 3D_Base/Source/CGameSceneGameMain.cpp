@@ -47,7 +47,7 @@ CGameSceneGameMain::~CGameSceneGameMain()
 void CGameSceneGameMain::Update()
 {
 
-
+	CONTROLA[0]->Update();
 
 
 	m_pGround->Update();

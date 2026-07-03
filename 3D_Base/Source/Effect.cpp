@@ -55,8 +55,7 @@ HRESULT Effect::LoadData()
 	EffectList EList[] =
 	{
 		{ enList::Test0,	u"Data\\Effekseer\\Laser01.efk"	},
-		{ enList::Test1,	u"Data\\Effekseer\\Simple_Sprite_BillBoard.efk"	},
-		{ enList::Test2,	u"Data\\Effekseer\\Simple_Turbulence_Fireworks.efk"	},
+	
 	};
 	//配列の最大要素数を算出(配列全体のサイズ／配列１つ分のサイズ).
 	int list_max = sizeof(EList) / sizeof(EList[0]);

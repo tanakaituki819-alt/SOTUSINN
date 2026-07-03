@@ -35,7 +35,7 @@ CSprite2D* CSpriteManager::GetSprite2D(enImagList No)
 {
 	int NO = static_cast<int>(No);
 
-	SPRITE_STATE ST = { {1,1,0} ,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Base,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Stride};
+	SPRITE_STATE ST = CSpriteManager::GetInstance()->Img_List[NO].SPRITE;
 	if(CSpriteManager::GetInstance()->Sprite2D[NO]==nullptr) {
 		GetInstance()->Sprite2D[NO] = new CSprite2D();
 		if (CSpriteManager::GetInstance()->Img_List[NO].centralstandards == true) {
