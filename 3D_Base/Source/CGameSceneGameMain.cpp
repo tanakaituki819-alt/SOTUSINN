@@ -24,7 +24,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	
 	m_pGround = new CGround();
 	m_pPlayer = new CPlayer();
-	m_pPlayer->SetXInput(*CONTROLA[0]);
+	m_pPlayer->SetXInput(CONTROLA[0]);
 	//エフェクト
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
