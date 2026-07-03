@@ -16,7 +16,7 @@ public:
 	void Draw()override;
 
 private:
-	CUIObject* m_pPfontImg;
-	CCharacterUI* m_pCharacterUI;
+	CUIObject*		m_pBackImg;
+	CCharacterUI*	m_pCharacterUI;
 };
 

@@ -188,7 +188,7 @@ void CSpriteManager::Load2D()
 	//キャラクターの顔差分.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playericon),		_T("Data\\Texture\\Playericon.png"),		{ {1, 1, 1}, {384, 384}, {96, 96   } } });
 	//プレイヤーバックグラウンド.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_PlayerBackground),_T("Data\\Texture\\PlayerBackground.png"),	{ {1, 1, 1}, {800, 600}, {200, 150 } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_PlayerBackground),_T("Data\\Texture\\PlayerBackground.png"),	{ {1, 1, 1}, {800, 600}, {800 / 4, 600 } } });
 	//プレイヤー1~4までの立ち絵.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player1),		_T("Data\\Texture\\Player1.png"),		{ {1, 1, 1}, {196, 184}, {196 /	2, 184 } } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player2),		_T("Data\\Texture\\Player2.png"),		{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
