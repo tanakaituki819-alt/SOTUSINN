@@ -1,18 +1,18 @@
 #pragma once
 #include "CUIObject.h"
 
-class CPlayerSetupUi
+class CPlayerSetupUI
 	: public CUIObject
 {
 public:
 	//---------------------------
 	//	定数宣言.
 	//---------------------------
-	static const int Ui_Max = 3;
+	static const int Ui_Max = 4;
 
 public:
-	CPlayerSetupUi();
-	~CPlayerSetupUi()override;
+	CPlayerSetupUI();
+	~CPlayerSetupUI()override;
 
 	void Update()override;
 	void Draw()override;

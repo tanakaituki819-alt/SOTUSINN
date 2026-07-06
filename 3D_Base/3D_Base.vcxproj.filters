@@ -259,7 +259,7 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\CXInput.cpp" />
-    <ClCompile Include="Source\CPlayerSetupUi.cpp">
+    <ClCompile Include="Source\CPlayerSetupUI.cpp">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
     </ClCompile>
   </ItemGroup>
@@ -394,7 +394,7 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\CharacterUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\CXInput.h" />
-    <ClInclude Include="Source\CPlayerSetupUi.h">
+    <ClInclude Include="Source\CPlayerSetupUI.h">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
     </ClInclude>
   </ItemGroup>
