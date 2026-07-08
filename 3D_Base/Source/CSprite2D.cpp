@@ -463,7 +463,7 @@ void CSprite2D::Render()
 		if (isCOLOR) {
 			cb.Color.x = COLOR.x;
 			cb.Color.y = COLOR.y;
-			cb.Color.z= COLOR.y;
+			cb.Color.z= COLOR.z;
 			cb.Color.w = m_Alpha;
 		}
 		else {

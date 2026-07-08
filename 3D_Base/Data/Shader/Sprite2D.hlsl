@@ -54,7 +54,9 @@ float4 PS_Main( VS_OUTPUT input ) : SV_Target
 {
 	
 	float4 color = g_Texture.Sample( g_samLinear, input.UV );//色を返す.
-    color.rgb *= g_Color.rgb;
+    color.r *= g_Color.r;
+    color.g *= g_Color.g;
+    color.b *= g_Color.b;
 	//プログラム制御のα値をテクスチャが持っているα値にかけ合わせる.
 	color.a *= g_Color.a;
 

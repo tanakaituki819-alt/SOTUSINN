@@ -48,9 +48,6 @@ CSprite2D* CSpriteManager::GetSprite2D(enImagList No)
 				CSpriteManager::GetInstance()->Img_List[NO].path, ST);
 		}
 	}
-
-
-
 	return GetInstance()->Sprite2D[NO];
 }
 
