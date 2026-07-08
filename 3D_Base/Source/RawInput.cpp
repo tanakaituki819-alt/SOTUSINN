@@ -249,10 +249,10 @@ void RawInput::upd()
     MouseHOILLNow = 0;
     MouseMovement = { 0,0 };
 
-    //AllocConsole();
-    //FILE* pFile;
-    ////stdout（標準出力）を新しく作成したコンソールにリダイレクト
-    //freopen_s(&pFile, "CONOUT$", "w", stdout);
-    //std::cout << MouseMove.x << std::endl;
-    //std::cout << MouseMove.y << std::endl;
+    AllocConsole();
+    FILE* pFile;
+    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
+    freopen_s(&pFile, "CONOUT$", "w", stdout);
+    ////std::cout << MouseMove.x << std::endl;
+    ////std::cout << MouseMove.y << std::endl;
 }
