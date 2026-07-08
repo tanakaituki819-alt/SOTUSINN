@@ -155,6 +155,7 @@
     <ClCompile Include="Source\CCharacterUI.cpp" />
     <ClCompile Include="Source\CEnemy.cpp" />
     <ClCompile Include="Source\CGameScene.cpp" />
+    <ClCompile Include="Source\CBarrgeEncounter.cpp" />
     <ClCompile Include="Source\CGameSceneGameMain.cpp" />
     <ClCompile Include="Source\CGameSceneTitle.cpp" />
     <ClCompile Include="Source\CGround.cpp" />
@@ -196,6 +197,7 @@
     <ClCompile Include="Source\WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\CBarrgeEncounter.h" />
     <ClInclude Include="Source\CBoundingSphere.h" />
     <ClInclude Include="Source\CCamera.h" />
     <ClInclude Include="Source\CCharacter.h" />

@@ -19,7 +19,7 @@ void CPlayer::Update()
 		m_Position.x += VECT.x;
 		m_Position.z += m_Position.y;
 			
-
+		MyController->IsDown(CXInput::A, true);
 
 
 	}
