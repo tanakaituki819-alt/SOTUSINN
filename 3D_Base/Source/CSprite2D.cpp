@@ -396,9 +396,9 @@ HRESULT CSprite2D::CreateSampler()
 	ZeroMemory( &samDesc, sizeof( samDesc ) );
 	samDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;//リニアフィルタ（線形補間）.
 						//POINT:高速だが粗い.
-	samDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;	//ラッピングモード（WRAP:繰り返し）.
-	samDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	samDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;	//ラッピングモード（WRAP:繰り返し）.
+	samDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
 	//MIRROR: 反転繰り返し.
 	//CLAMP : 端の模様を引き伸ばす.
 	//BORDER: 別途境界色を決める.

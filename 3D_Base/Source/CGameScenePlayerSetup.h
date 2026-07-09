@@ -3,6 +3,7 @@
 #include "CUIObject.h"
 #include "CCharacterUI.h"
 #include "CPlayerSetupUI.h"
+#include "CGameRdyUI.h"
 /***************************************
 *	コントローラー接続ゲームシーンクラス.
 **/
@@ -20,5 +21,6 @@ private:
 	CUIObject*		m_pBackImg;
 	CCharacterUI*	m_pCharacterUI;
 	CPlayerSetupUI* m_pPlayerSetupUI;
+	CGameRdyUI*		m_pGameRdyUI;
 };
 

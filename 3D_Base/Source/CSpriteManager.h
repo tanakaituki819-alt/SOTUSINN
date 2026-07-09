@@ -41,7 +41,10 @@ public:
 		Img_Player2,			//プレイヤー2.
 		Img_Player3,			//プレイヤー3.
 		Img_Player4,			//プレイヤー4.
-		Img_Xbox,				//Xboxコントローラー.
+		Img_controller,			//Xboxコントローラー.
+		Img_Text,				//文字.
+		Img_Hand,				//いただきます用の手.
+		Img_Scroll,				//巻物UI.
 		MAX
 	};
 	//ｘファイル

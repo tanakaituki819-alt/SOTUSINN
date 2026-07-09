@@ -178,10 +178,10 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::DefenseBaseHP), _T("Data\\Texture\\DefenseBaseHP.png"), { {1, 1, 1}, {128, 128}, {128, 128} },true });
 	Img_List.push_back({ static_cast<int>(enImagList::DefenseBaseHPback), _T("Data\\Texture\\DefenseBaseHPback.png"), { {1, 1, 1}, {128, 128}, {128, 128} },true });
 
-	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {10, 1}, {1, 1} } });
+	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {10, 1}, {1, 1} } });
 
 	//プレイヤーフォント.																									//表示幅高さ、元画像サイズ、切り取りサイズ.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Playerfont),		_T("Data\\Texture\\Playerfont.png"),		{ {1, 1, 1}, {196, 184}, {196, 46  } } });	
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Playerfont),		_T("Data\\Texture\\Playerfont.png"),		{ {1, 1, 1}, {196, 184}, {196, 184 / 4 } } });	
 	//キャラクターの顔差分.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playericon),		_T("Data\\Texture\\Playericon.png"),		{ {1, 1, 1}, {384, 384}, {96, 96   } } });
 	//プレイヤーバックグラウンド.
@@ -191,9 +191,16 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player2),			_T("Data\\Texture\\Player2.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player3),			_T("Data\\Texture\\Player3.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player4),			_T("Data\\Texture\\Player4.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
+	//コントローラー.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_controller),		_T("Data\\Texture\\controller.png"),		{ {1, 1, 1}, {640, 360}, {640, 360 } } });
 	//和室の背景.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_BackGround),		_T("Data\\Texture\\BackGround.png"),		{ {1, 1, 1}, {1920, 1080}, {1920, 1080 } } });
-
+	//文字の表示.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Text),			_T("Data\\Texture\\Text.png"),				{ {1, 1, 1}, {360, 200}, {360, 200 / 2 } } });
+	//いただきます用の手.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Hand),			_T("Data\\Texture\\Hand.png"),				{ {1, 1, 1}, {130, 400}, {130, 400 / 2 } } });
+	//巻物UI.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Scroll),			_T("Data\\Texture\\Scroll.png"),			{ {1, 1, 1}, {600, 200}, {600, 200 } } });
 
 	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
 		return a.listNo < b.listNo;

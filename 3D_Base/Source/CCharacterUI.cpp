@@ -46,15 +46,15 @@ void CCharacterUI::Draw()
 		x -= 1;
 	}
 	//影.
-	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(16.f + 44, 48.f, 1.f));
-	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.5 + 44, 48.f, 1.f));
-	m_pPlayerUI[2]->SetPosition(D3DXVECTOR3(64.f * 10 + 44, 18.f, 1.f));
-	m_pPlayerUI[3]->SetPosition(D3DXVECTOR3(64.f * 15 + 33, 28.f, 1.f));
+	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(16.f + 36, 48.f, 1.f));
+	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.5 + 42, 48.f, 1.f));
+	m_pPlayerUI[2]->SetPosition(D3DXVECTOR3(64.f * 10 + 48, 19.f, 1.f));
+	m_pPlayerUI[3]->SetPosition(D3DXVECTOR3(64.f * 15 + 48, 29.f, 1.f));
 
-	m_pPlayerUI[0]->SetCOLOR({1,0,0});
-	m_pPlayerUI[1]->SetCOLOR({1,0,0});
-	m_pPlayerUI[2]->SetCOLOR({1,0,0});
-	m_pPlayerUI[3]->SetCOLOR({1,0,0});
+	m_pPlayerUI[0]->SetCOLOR({0,0,0});
+	m_pPlayerUI[1]->SetCOLOR({0,0,0});
+	m_pPlayerUI[2]->SetCOLOR({0,0,0});
+	m_pPlayerUI[3]->SetCOLOR({0,0,0});
 
 	for (int i = 0; i < PlayerMax; i++)
 	{
@@ -62,11 +62,11 @@ void CCharacterUI::Draw()
 		m_pPlayerUI[i]->Render();
 		m_pPlayerUI[i]->SetisCOLOR(false);
 	}
-	//おばちゃん本体.
-	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(16.f, 48.f, 1.f));
-	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.5, 48.f, 1.f));
-	m_pPlayerUI[2]->SetPosition(D3DXVECTOR3(64.f * 10, 18.f, 1.f));
-	m_pPlayerUI[3]->SetPosition(D3DXVECTOR3(64.f * 15, 28.f, 1.f));
+	//本体.
+	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(14.f, 48.2f, 1.f));
+	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.7, 48.f, 1.f));
+	m_pPlayerUI[2]->SetPosition(D3DXVECTOR3(64.f * 10.2, 19.f, 1.f));
+	m_pPlayerUI[3]->SetPosition(D3DXVECTOR3(64.f * 15.2, 29.f, 1.f));
 	std::cout << x << std::endl;
 
 	for (int i = 0; i < PlayerMax; i++)

@@ -5,10 +5,12 @@ CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX
 	:CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
 	, m_pCharacterUI	( nullptr )
 	, m_pPlayerSetupUI	( nullptr )
+	, m_pGameRdyUI		( nullptr )
 {
 	m_pBackImg			= new CUIObject();
 	m_pCharacterUI		= new CCharacterUI();
 	m_pPlayerSetupUI	= new CPlayerSetupUI();
+	m_pGameRdyUI		= new CGameRdyUI();
 	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//和室背景設定.
 	m_pBackImg->SetPosition	(0, 0, 0);
 	m_pBackImg->SetScale	(WND_W, WND_H,0);
@@ -19,6 +21,7 @@ CGameScenePlayerSetup::~CGameScenePlayerSetup()
 	SAFE_DELETE(m_pBackImg);
 	SAFE_DELETE(m_pCharacterUI);
 	SAFE_DELETE(m_pPlayerSetupUI);
+	SAFE_DELETE(m_pGameRdyUI);
 }
 
 void CGameScenePlayerSetup::Update()
@@ -31,5 +34,6 @@ void CGameScenePlayerSetup::Draw()
 	m_pBackImg->Draw();			//プレイヤーフォント描画.
 	m_pPlayerSetupUI->Draw();	//プレイヤーセットアップシーン関係の描画.
 	m_pCharacterUI->Draw();		//キャラクターUI描画.
+	m_pGameRdyUI->Draw();
 	m_pDx11->SetDepth(true);	//深度テスト有効.
 }

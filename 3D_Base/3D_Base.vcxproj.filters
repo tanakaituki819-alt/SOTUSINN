@@ -136,6 +136,9 @@
     <Filter Include="Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi">
       <UniqueIdentifier>{388dec59-346a-46d5-9065-a793aae97f8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameScenePlayerSetup\GameRdyUI">
+      <UniqueIdentifier>{ebaa4225-2410-445a-b6f0-4d78647d178d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -261,6 +264,10 @@
     <ClCompile Include="Source\CXInput.cpp" />
     <ClCompile Include="Source\CPlayerSetupUI.cpp">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CBarrgeEncounter.cpp" />
+    <ClCompile Include="Source\CGameRdyUI.cpp">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -396,6 +403,10 @@
     <ClInclude Include="Source\CXInput.h" />
     <ClInclude Include="Source\CPlayerSetupUI.h">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CBarrgeEncounter.h" />
+    <ClInclude Include="Source\CGameRdyUI.h">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
