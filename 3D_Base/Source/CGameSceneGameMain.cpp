@@ -32,7 +32,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 
-
+	m_pCing = new CIngredients();
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
@@ -88,8 +88,10 @@ void CGameSceneGameMain::Draw()
 
 
 	m_pGround->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
-	m_pPlayer->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
+
+	m_pCing->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+	m_pPlayer->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 	Effect::GetInstance()->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pDx11->SetDepth(false);

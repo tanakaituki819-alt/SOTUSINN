@@ -86,7 +86,14 @@ float4 PS_Main(VS_OUTPUT input) : SV_Target
     float4 ambient = texColor * g_Ambient;
     
 	//拡散反射光 ※２.
-    float NL = saturate(dot(input.Normal, input.Light.xyz));
+    
+     // メインの光
+    float NL1 = saturate(dot(input.Normal, input.Light.xyz));
+    // 裏側からの光（ライトの方向を反転させる）
+    float NL2 = saturate(dot(input.Normal, -input.Light.xyz));
+    
+    // メインの光に、裏からの光をうっすら（例えば0.3倍して）足す
+    float NL = NL1 + NL2 * 0.5;
     float4 diffuse = (g_Diffuse / 2 + texColor / 2) * NL;
 
 	//鏡面反射光 ※３.

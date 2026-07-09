@@ -160,6 +160,7 @@
     <ClCompile Include="Source\CGameSceneGameMain.cpp" />
     <ClCompile Include="Source\CGameSceneTitle.cpp" />
     <ClCompile Include="Source\CGround.cpp" />
+    <ClCompile Include="Source\CIngredients.cpp" />
     <ClCompile Include="Source\CPlayer.cpp" />
     <ClCompile Include="Source\CGameScenePlayerSetup.cpp" />
     <ClCompile Include="Source\CSceneChange.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="Source\CGameSceneGameMain.h" />
     <ClInclude Include="Source\CGameSceneTitle.h" />
     <ClInclude Include="Source\CGround.h" />
+    <ClInclude Include="Source\CIngredients.h" />
     <ClInclude Include="Source\CPlayer.h" />
     <ClInclude Include="Source\CGameScenePlayerSetup.h" />
     <ClInclude Include="Source\CSceneChange.h" />
