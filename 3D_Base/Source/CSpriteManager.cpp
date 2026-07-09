@@ -193,6 +193,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player4),			_T("Data\\Texture\\Player4.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
 	//和室の背景.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_BackGround),		_T("Data\\Texture\\BackGround.png"),		{ {1, 1, 1}, {1920, 1080}, {1920, 1080 } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 
 
 	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {

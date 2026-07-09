@@ -42,6 +42,7 @@ public:
 		Img_Player3,			//プレイヤー3.
 		Img_Player4,			//プレイヤー4.
 		Img_Xbox,				//Xboxコントローラー.
+		Img_Cusoru,				//カーソル
 		MAX
 	};
 	//ｘファイル

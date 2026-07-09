@@ -88,10 +88,10 @@ void CGameSceneGameMain::Draw()
 
 
 	m_pGround->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
-	m_pPlayer->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+
 
 	m_pCing->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
-
+	m_pPlayer->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 	Effect::GetInstance()->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pDx11->SetDepth(false);

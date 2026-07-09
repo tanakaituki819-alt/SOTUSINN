@@ -17,4 +17,5 @@ public:
 private:
 	D3DXVECTOR3 m_Pos;
 	CXInput* MyController;
+	CSprite3D* m_Cousor;
 };
