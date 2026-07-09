@@ -3,7 +3,7 @@
 #include"CGameScene.h"
 #include"CGround.h"
 #include"CPlayer.h"
-
+#include"CIngredients.h"
 class CGameSceneGameMain
 	:public CGameScene
 {
@@ -24,6 +24,7 @@ private:
 	CGround* m_pGround;
 	CPlayer* m_pPlayer;
 
+	CIngredients* m_pCing;
 };
 
 

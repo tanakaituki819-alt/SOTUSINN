@@ -140,6 +140,12 @@ HRESULT CStaticObjMesh::Init(
 
 
 
+void CStaticObjMesh::SetLightCOLOR256(D3DXVECTOR3 COLORE)
+{
+	LightCOLOR = COLORE/256;
+
+}
+
 bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const std::string& baseDir)
 {
 	tinyobj::attrib_t attrib;
@@ -776,16 +782,22 @@ void CStaticObjMesh::RenderMesh(
 			m_pContext11->Map(m_pCBufferPerMaterial,
 				0, D3D11_MAP_WRITE_DISCARD, 0, &pDataMat)))
 		{
+			D3DXVECTOR4 LC = { LightCOLOR.x,LightCOLOR.y,LightCOLOR.z,1 };
 			CBUFFER_PER_MATERIAL cb;
 			// データを matID で一貫して参照
 			cb.Diffuse = m_pMaterials[matID].Diffuse;
-			if (isCOLOR) {
-				Multiply(&cb.Diffuse, &LightCOLOR);
-			}
+			
 
 			cb.Ambient = m_pMaterials[matID].Ambient;
-			cb.Specular = m_pMaterials[matID].Specular;
+			if (isCOLOR) {
+				Multiply(&cb.Ambient, LC);
 
+			}
+			cb.Specular = m_pMaterials[matID].Specular;
+			if (isCOLOR) {
+				Multiply(&cb.Specular, LC);
+
+			}
 			memcpy_s(pDataMat.pData, pDataMat.RowPitch, (void*)&cb, sizeof(cb));
 			m_pContext11->Unmap(m_pCBufferPerMaterial, 0);
 		}
@@ -811,11 +823,11 @@ void CStaticObjMesh::RenderMesh(
 	}
 }
 
-void CStaticObjMesh::Multiply(D3DXVECTOR4* base, D3DXVECTOR3* multiplier)
+void CStaticObjMesh::Multiply(D3DXVECTOR4* base, D3DXVECTOR4 multiplier)
 {
-	base->x *= multiplier->x;
-	base->y *= multiplier->y;
-	base->z *= multiplier->z;
+	base->x *= multiplier.x;
+	base->y *= multiplier.y;
+	base->z *= multiplier.z;
 	//base->w *= multiplier->w;
 }
 

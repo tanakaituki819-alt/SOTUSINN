@@ -39,7 +39,8 @@ VS_OUTPUT VS_Main(
     output.Pos.x = (output.Pos.x / g_ViewPortW) * 2.f - 1.f;
     output.Pos.y = 1.f - (output.Pos.y / g_ViewPortH) * 2.f;	
 	
-	output.UV = UV;
+    float2 margin = 0.00001; // 狭める割合（0.01 = 1%）
+    output.UV = UV * (1.0 - margin * 2.0) + margin;
 	
 	//UVスクロール(UV座標を操作する).
     output.UV.x += g_UV.x;

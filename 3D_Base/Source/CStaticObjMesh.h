@@ -154,6 +154,7 @@ public:
 
 	void SetLightCOLOR(D3DXVECTOR3 COLORE) { 
 		LightCOLOR = COLORE; };
+	void SetLightCOLOR256(D3DXVECTOR3 COLORE);
 private:
 	//メッシュ読み込み.
 
@@ -215,5 +216,5 @@ private:
 
 	bool isCOLOR;
 	D3DXVECTOR3 LightCOLOR;
-	void Multiply(D3DXVECTOR4* base, D3DXVECTOR3* multiplier);
+	void Multiply(D3DXVECTOR4* base, D3DXVECTOR4 multiplier);
  };

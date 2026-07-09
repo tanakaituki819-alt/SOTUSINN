@@ -40,20 +40,5 @@ void CPlayer::Update()
 void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
 	m_pMesh->SetisCOLOR(true);
-	static float r, g, b = 0;
-	r += rand() % 100 / 1000.f;
-	g += rand() % 100 / 1000.f;
-	b += rand() % 100 / 1000.f;
-	if (r>1) {
-		r--;
-	}
-	if (g>1) {
-		g--;
-	}
-	if (b>1) {
-		b--;
-	}
-
-	m_pMesh->SetLightCOLOR({r,g,b});
 	CStaticMeshObjObject::Draw(View, Proj, Light, Camera);
 }
