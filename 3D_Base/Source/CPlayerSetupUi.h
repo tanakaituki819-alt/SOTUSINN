@@ -28,11 +28,15 @@ public:
 	//巻物UI.
 	void ScrollUI();
 
+	//コントローラー(XInput)のセット.
+	void SetXInput(CXInput* Input, int i) { m_pMyController[i] = Input; }
+
 private:
-	CSprite2D* m_pPlayerSetUpUI[Ui_Max];
-	CSprite2D* m_pPlayerNameUI[Ui_Max];
-	CSprite2D* m_pPlayercontrollerUI[Ui_Max];
-	CSprite2D* m_pTextUI[Text_Max];
-	CSprite2D* m_pScrollUI[Text_Max];
+	CSprite2D*	m_pPlayerSetUpUI[Ui_Max];
+	CSprite2D*	m_pPlayerNameUI	[Ui_Max];
+	CSprite2D*	m_pPlayercontrollerUI[Ui_Max];
+	CSprite2D*	m_pTextUI		[Text_Max];
+	CSprite2D*	m_pScrollUI		[Text_Max];
+	CXInput*	m_pMyController[Ui_Max];
 };
 

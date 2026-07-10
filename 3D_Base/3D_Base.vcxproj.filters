@@ -269,6 +269,7 @@
     <ClCompile Include="Source\CGameRdyUI.cpp">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CIngredients.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CDirectX11.h">
@@ -408,6 +409,7 @@
     <ClInclude Include="Source\CGameRdyUI.h">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CIngredients.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">

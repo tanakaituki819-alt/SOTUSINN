@@ -21,8 +21,6 @@ void CPlayer::Update()
 		m_Position.z += m_Position.y;
 			
 		MyController->IsDown(CXInput::A, true);
-
-
 	}
 	if (GetAsyncKeyState('W') & 0x8000) {
 		m_Position.z += Speed;

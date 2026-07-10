@@ -196,7 +196,7 @@ void CSpriteManager::Load2D()
 	//和室の背景.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_BackGround),		_T("Data\\Texture\\BackGround.png"),		{ {1, 1, 1}, {1920, 1080}, {1920, 1080 } } });
 	//文字の表示.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Text),			_T("Data\\Texture\\Text.png"),				{ {1, 1, 1}, {360, 200}, {360, 200 / 2 } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Text),			_T("Data\\Texture\\Text.png"),				{ {1, 1, 1}, {360, 500}, {360, 500 / 5 } } });
 	//いただきます用の手.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Hand),			_T("Data\\Texture\\Hand.png"),				{ {1, 1, 1}, {130, 400}, {130, 400 / 2 } } });
 	//巻物UI.
