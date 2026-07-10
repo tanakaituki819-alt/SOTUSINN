@@ -22,8 +22,6 @@ void CPlayer::Update()
 		m_Position.z += VECT.y;
 			
 		MyController->IsDown(CXInput::A, true);
-
-		//MyController->SetVibration(10000,10000);
 	}
 	if (GetAsyncKeyState('W') & 0x8000) {
 		m_Position.z += Speed;

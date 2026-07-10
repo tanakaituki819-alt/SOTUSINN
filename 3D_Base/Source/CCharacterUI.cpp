@@ -3,6 +3,7 @@
 #include <iostream>
 
 CCharacterUI::CCharacterUI()
+	: m_pMyController()
 {
 
 	//画像読み込み、ポジションの設定、スケール設定.
@@ -22,10 +23,6 @@ CCharacterUI::CCharacterUI()
 	m_pPlayerUI[3] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player4);
 	m_pPlayerUI[3]->SetPosition	(D3DXVECTOR3(64.f * 15, 28.f, 1.f));
 	m_pPlayerUI[3]->SetScale	(D3DXVECTOR3(270.f, 470.f, 0.f));
-
-
-
-
 }
 
 CCharacterUI::~CCharacterUI()
@@ -38,6 +35,12 @@ void CCharacterUI::Update()
 
 void CCharacterUI::Draw()
 {
+	CharacterShadowDraw();
+	CharacterDraw();
+}
+
+void CCharacterUI::CharacterDraw()
+{
 	static int x = 0;
 	if (GetAsyncKeyState('W') & 0x8000) {
 		x += 1;
@@ -45,16 +48,81 @@ void CCharacterUI::Draw()
 	if (GetAsyncKeyState('S') & 0x8000) {
 		x -= 1;
 	}
-	//影.
-	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(16.f + 36, 48.f, 1.f));
-	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.5 + 42, 48.f, 1.f));
+	//本体.
+	m_pPlayerUI[0]->SetAlpha(0.5f);
+	m_pPlayerUI[1]->SetAlpha(0.5f);
+	m_pPlayerUI[2]->SetAlpha(0.5f);
+	m_pPlayerUI[3]->SetAlpha(0.5f);
+
+	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(14.f, 178.f, 1.f));
+	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.7, 178.f, 1.f));
+	m_pPlayerUI[2]->SetPosition(D3DXVECTOR3(64.f * 10.2, 148.f, 1.f));
+	m_pPlayerUI[3]->SetPosition(D3DXVECTOR3(64.f * 15.2, 160.f, 1.f));
+	std::cout << x << std::endl;
+
+	if (m_pMyController[0]->IsConnect() == true)
+	{
+		m_pPlayerUI[0]->SetAlpha(1.f);
+	}
+	if (m_pMyController[1]->IsConnect() == true)
+	{
+		m_pPlayerUI[1]->SetAlpha(1.f);
+	}
+	if (m_pMyController[2]->IsConnect() == true)
+	{
+		m_pPlayerUI[2]->SetAlpha(1.f);
+	}
+	if (m_pMyController[3]->IsConnect() == true)
+	{
+		m_pPlayerUI[3]->SetAlpha(1.f);
+	}
+
+	for (int i = 0; i < PlayerMax; i++)
+	{
+		m_pPlayerUI[i]->Render();
+	}
+}
+
+void CCharacterUI::CharacterShadowDraw()
+{
+	static int x = 0;
+	if (GetAsyncKeyState('W') & 0x8000) {
+		x += 1;
+	}
+	if (GetAsyncKeyState('S') & 0x8000) {
+		x -= 1;
+	}
+	m_pPlayerUI[0]->SetAlpha(0.f);
+	m_pPlayerUI[1]->SetAlpha(0.f);
+	m_pPlayerUI[2]->SetAlpha(0.f);
+	m_pPlayerUI[3]->SetAlpha(0.f);
+
+	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(16.f + 36, 178.f, 1.f));
+	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.5 + 42, 178.f, 1.f));
 	m_pPlayerUI[2]->SetPosition(D3DXVECTOR3(64.f * 10 + 48, 19.f, 1.f));
 	m_pPlayerUI[3]->SetPosition(D3DXVECTOR3(64.f * 15 + 48, 29.f, 1.f));
 
-	m_pPlayerUI[0]->SetCOLOR({0,0,0});
-	m_pPlayerUI[1]->SetCOLOR({0,0,0});
-	m_pPlayerUI[2]->SetCOLOR({0,0,0});
-	m_pPlayerUI[3]->SetCOLOR({0,0,0});
+	m_pPlayerUI[0]->SetCOLOR({ 0,0,0 });
+	m_pPlayerUI[1]->SetCOLOR({ 0,0,0 });
+	m_pPlayerUI[2]->SetCOLOR({ 0,0,0 });
+	m_pPlayerUI[3]->SetCOLOR({ 0,0,0 });
+
+	if (m_pMyController[0]->IsConnect() == true)
+	{
+		m_pPlayerUI[0]->SetAlpha(1.f);
+	}
+	if (m_pMyController[1]->IsConnect() == true)
+	{
+		m_pPlayerUI[1]->SetAlpha(1.f);
+	}
+	if (m_pMyController[2]->IsConnect() == true)
+	{
+		m_pPlayerUI[2]->SetAlpha(1.f);
+	}
+	if (m_pMyController[3]->IsConnect() == true)
+	{
+		m_pPlayerUI[3]->SetAlpha(1.f);
+	}
 
 	for (int i = 0; i < PlayerMax; i++)
 	{
@@ -62,15 +130,5 @@ void CCharacterUI::Draw()
 		m_pPlayerUI[i]->Render();
 		m_pPlayerUI[i]->SetisCOLOR(false);
 	}
-	//本体.
-	m_pPlayerUI[0]->SetPosition(D3DXVECTOR3(14.f, 48.2f, 1.f));
-	m_pPlayerUI[1]->SetPosition(D3DXVECTOR3(64.f * 4.7, 48.f, 1.f));
-	m_pPlayerUI[2]->SetPosition(D3DXVECTOR3(64.f * 10.2, 19.f, 1.f));
-	m_pPlayerUI[3]->SetPosition(D3DXVECTOR3(64.f * 15.2, 29.f, 1.f));
-	std::cout << x << std::endl;
 
-	for (int i = 0; i < PlayerMax; i++)
-	{
-		m_pPlayerUI[i]->Render();
-	}
 }
