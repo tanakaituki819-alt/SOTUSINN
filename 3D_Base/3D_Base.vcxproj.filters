@@ -136,8 +136,8 @@
     <Filter Include="Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi">
       <UniqueIdentifier>{388dec59-346a-46d5-9065-a793aae97f8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CIngredients">
-      <UniqueIdentifier>{cd70f0be-7c3e-4662-a8db-2caa5c73dd86}</UniqueIdentifier>
+    <Filter Include="Source\CGameScene\CGameScenePlayerSetup\GameRdyUI">
+      <UniqueIdentifier>{ebaa4225-2410-445a-b6f0-4d78647d178d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -266,8 +266,8 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
     </ClCompile>
     <ClCompile Include="Source\CBarrgeEncounter.cpp" />
-    <ClCompile Include="Source\CIngredients.cpp">
-      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CIngredients</Filter>
+    <ClCompile Include="Source\CGameRdyUI.cpp">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -405,8 +405,8 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\PlayerSetupUi</Filter>
     </ClInclude>
     <ClInclude Include="Source\CBarrgeEncounter.h" />
-    <ClInclude Include="Source\CIngredients.h">
-      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CIngredients</Filter>
+    <ClInclude Include="Source\CGameRdyUI.h">
+      <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
