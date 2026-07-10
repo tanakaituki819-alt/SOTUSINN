@@ -3,7 +3,7 @@
 CIngredients::CIngredients()
 	:IngredientsNo(Ingredients::none)
 {
-	m_pMesh = CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::GOZIRA);
+	m_pMesh = CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::ROBO);
 }
 
 CIngredients::~CIngredients()

@@ -212,13 +212,17 @@ void CSpriteManager::Load3D()
 	for (int i = 0;i < MeshList.size();i++) {
 		MESH_LIST[MeshList[i].listNo] = MeshList[i];
 	}
+	std::sort(MeshList.begin(), MeshList.end(), [](const auto& a, const auto& b) {
+		return a.listNo < b.listNo;
+		});
 
 	std::vector<StaticMeshList>MeshObjList;
 	//オブジェファイルの読み込み
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Grassland),_T("Data\\Mesh\\Obj\\Grassland\\Grassland.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::ROBO),_T("Data\\Mesh\\Obj\\ROBO\\RobotooFrito.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::NABE),_T("Data\\Mesh\\Obj\\NABE\\NABE.obj") });
 	for (int i = 0;i < MeshObjList.size();i++) {
-		MESH_OBJ_List[MeshObjList[i].listNo] = MESH_OBJ_List[i];
+		MESH_OBJ_List[MeshObjList[i].listNo] = MeshObjList[i];
 	}
 
 

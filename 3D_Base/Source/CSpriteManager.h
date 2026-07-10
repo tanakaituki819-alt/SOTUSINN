@@ -51,6 +51,7 @@ public:
 	{
 		ROBO,//ロボット
 		Grassland,//草原
+		NABE,
 		MAX
 	};
 

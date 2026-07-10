@@ -5,7 +5,7 @@ class CPlayer
 	:public  CStaticMeshObjObject
 {
 private:
-	static constexpr float Speed = 0.1;//サイズ
+	static constexpr float Speed = 0.1;//スピード
 
 public:
 	CPlayer();

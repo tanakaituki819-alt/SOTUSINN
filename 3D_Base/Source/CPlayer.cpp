@@ -15,14 +15,15 @@ CPlayer::~CPlayer()
 void CPlayer::Update()
 {
 	if (MyController->IsConnect()==true) {
-		D3DXVECTOR2 VECT = {static_cast<FLOAT>( MyController->GetRThumbX()) ,static_cast<FLOAT>(MyController->GetRThumbY())};
+		D3DXVECTOR2 VECT = {static_cast<FLOAT>( MyController->GetLThumbX()) ,static_cast<FLOAT>(MyController->GetLThumbY())};
 		D3DXVec2Normalize(&VECT,&VECT);
+		VECT *= Speed;
 		m_Position.x += VECT.x;
-		m_Position.z += m_Position.y;
+		m_Position.z += VECT.y;
 			
 		MyController->IsDown(CXInput::A, true);
 
-
+		//MyController->SetVibration(10000,10000);
 	}
 	if (GetAsyncKeyState('W') & 0x8000) {
 		m_Position.z += Speed;
@@ -42,7 +43,10 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 {
 	m_pMesh->SetisCOLOR(true);
 	//CStaticMeshObjObject::Draw(View, Proj, Light, Camera);
-	m_Position.y = 1;
+	
+	//重なって見えなくならないようにずらす
+	m_Position.y = 1+ MyController->GetPadID()*0.1;
+
 	m_Cousor->SetPosition(m_Position);
 	m_Cousor->SetRotation({ D3DXToRadian(90),0,0});
 	m_Cousor->SetScale(m_Scale);

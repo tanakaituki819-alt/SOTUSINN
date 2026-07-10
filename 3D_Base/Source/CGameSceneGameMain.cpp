@@ -6,7 +6,7 @@
 CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 :CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
 	, m_pGround(nullptr)
-	, m_pPlayer(nullptr)
+	, m_pPlayer()
 
 {
 
@@ -19,12 +19,17 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	// ライト方向.
 	m_Light.fIntensity = 1;//	ライトパワー
 
-	CONTROLA[0] = new CXInput(0);
+
 	
 	
 	m_pGround = new CGround();
-	m_pPlayer = new CPlayer();
-	m_pPlayer->SetXInput(CONTROLA[0]);
+	for (int i = 0;i < PlayerMax;i++) {
+		CONTROLA[i] = new CXInput(i);
+		m_pPlayer[i] = new CPlayer();
+		m_pPlayer[i]->SetXInput(CONTROLA[i]);
+	}
+
+
 	//エフェクト
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
@@ -41,17 +46,21 @@ CGameSceneGameMain::~CGameSceneGameMain()
 
 
 	SAFE_DELETE(m_pGround);
-	SAFE_DELETE(m_pPlayer);
+	for (int i = 0;i < PlayerMax;i++) {
+		SAFE_DELETE(m_pPlayer[i]);
+	}
 }
 
 void CGameSceneGameMain::Update()
 {
-
-	CONTROLA[0]->Update();
-
+	for (int i = 0;i < PlayerMax;i++) {
+		CONTROLA[i]->Update();
+	}
 
 	m_pGround->Update();
-	m_pPlayer->Update();
+	for (int i = 0;i < PlayerMax;i++) {
+		m_pPlayer[i]->Update();
+	}
 
 	
 	//エフェクト制御
@@ -91,7 +100,9 @@ void CGameSceneGameMain::Draw()
 
 
 	m_pCing->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
-	m_pPlayer->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+	for (int i = 0;i < PlayerMax;i++) {
+		m_pPlayer[i]->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+	}
 	Effect::GetInstance()->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pDx11->SetDepth(false);
@@ -104,7 +115,7 @@ void CGameSceneGameMain::Draw()
 void CGameSceneGameMain::UpdateBSpherePos()
 {
 	//当たり判定の中心座標を更新する.
-	m_pPlayer->UpdateBSpherePos();
+	//m_pPlayer->UpdateBSpherePos();
 
 }
 
