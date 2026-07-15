@@ -11,6 +11,7 @@ public:
 	CGameRdyUI();
 	~CGameRdyUI()override;
 
+	void Update()override;
 	void Draw()override;
 	void RightHand();
 	void LeftHand();
@@ -22,4 +23,7 @@ private:
 	CSprite2D*	m_pRightHand[hand_Max];
 	CSprite2D*	m_pLeftHand[hand_Max];
 	CXInput*	m_pController[hand_Max];
+	float		m_RightHandclap[hand_Max];
+	float		m_LeftHandclap[hand_Max];
+	bool		m_Handclapflag[hand_Max];
 };

@@ -39,7 +39,7 @@ void CGameScenePlayerSetup::Update()
 	{
 		m_pController[i]->Update();
 	}
-
+	m_pGameRdyUI->Update();
 	m_pPlayerSetupUI->Update();
 }
 
