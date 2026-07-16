@@ -145,6 +145,9 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients">
       <UniqueIdentifier>{303df4d3-dd61-4eda-94b7-a7451b2fc1ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\CPauseUI">
+      <UniqueIdentifier>{658d2550-6bca-4fa3-85d4-1e4be1a9fa8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -278,6 +281,16 @@
     <ClCompile Include="Source\CIngredients.cpp" />
     <ClCompile Include="Source\CIngredientsmanager.cpp" />
     <ClCompile Include="Source\Global.cpp" />
+    <ClCompile Include="Source\CIngredientsmanager.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CIngredients.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CIngredients.cpp" />
+    <ClCompile Include="Source\CPauseUI.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CPauseUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CDirectX11.h">
@@ -416,6 +429,16 @@
     <ClInclude Include="Source\CBarrgeEncounter.h" />
     <ClInclude Include="Source\CGameRdyUI.h">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CIngredientsmanager.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CIngredients.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CIngredients.h" />
+    <ClInclude Include="Source\CPauseUI.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CPauseUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\CIngredients.h" />
     <ClInclude Include="Source\CIngredientsmanager.h" />

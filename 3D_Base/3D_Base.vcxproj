@@ -162,6 +162,7 @@
     <ClCompile Include="Source\CIngredientsmanager.cpp" />
     <ClCompile Include="Source\CNabe.cpp" />
     <ClCompile Include="Source\CIngredients.cpp" />
+    <ClCompile Include="Source\CPauseUI.cpp" />
     <ClCompile Include="Source\CPlayer.cpp" />
     <ClCompile Include="Source\CGameScenePlayerSetup.cpp" />
     <ClCompile Include="Source\CSceneChange.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Source\CIngredientsmanager.h" />
     <ClInclude Include="Source\CNabe.h" />
     <ClInclude Include="Source\CIngredients.h" />
+    <ClInclude Include="Source\CPauseUI.h" />
     <ClInclude Include="Source\CPlayer.h" />
     <ClInclude Include="Source\CGameScenePlayerSetup.h" />
     <ClInclude Include="Source\CSceneChange.h" />

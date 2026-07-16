@@ -201,6 +201,10 @@ void CSpriteManager::Load2D()
 	//テキストフレーム.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TextFrame),		_T("Data\\Texture\\TextFrame.png"),			{ {1, 1, 1}, {500, 200}, {500, 200 } },true });
 
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	//ポーズ
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Pause),		_T("Data\\Texture\\Pause.png"),				{ {1, 1, 1}, {273, 75}, {273, 75} }});
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),		_T("Data\\Texture\\water.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 
