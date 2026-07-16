@@ -22,16 +22,7 @@ public:
 		Img_Fad,//フェード
 		Img_BackFire,//爆発
 		IMG_Shutter,//シャッター
-		IMG_Base,//拠点内
-		Img_BattleArea,
 		Img_STRBack,//星背景
-		Img_EnergyGaugeBase,//エネルギーの後ろ
-		Img_EnergyGauge,//エネルギーの前
-		Img_HPGaugeBase,//HPの後ろ
-		Img_HPGauge,//HP緑
-		Img_HPGauge1,//HP赤
-		DefenseBaseHP,//防衛拠点HP
-		DefenseBaseHPback,//防衛拠点HPの後ろ
 		Digit0_9,//0-9まで;
 		Img_Playerfont,			//プレイヤーフォント.
 		Img_Playericon,			//プレイヤーアイコン
@@ -47,6 +38,7 @@ public:
 		Img_Scroll,				//巻物UI.
 		Img_Xbox,				//Xboxコントローラー.
 		Img_Cusoru,				//カーソル
+		Img_Water,				//なべの中
 		Img_WhiteBack,			//白画像.
 		Img_TextFrame,			//テキストのフレーム.
 		MAX
@@ -61,19 +53,8 @@ public:
 	enum class enMeshObjList
 	{
 		ROBO,//ロボット
-		FighterJet,//戦闘機（プレイヤー）
-		Monster,//モンスター
-		GOZIRA,//
-		Apartment,//アパート
 		Grassland,//草原
-		Missile,//ミサイル
-		HATO,//鳩
-		
-		ROBOShot,//射撃ポーズロボット
-		ROBO＿Hi,//高ポリゴンロボット
-		DefenseBase,//防衛拠点
-		Beam,//ビーム
-
+		NABE,
 		MAX
 	};
 
@@ -131,9 +112,11 @@ private:
 	//代入演算子によるコピーを禁止する
 	CSpriteManager& operator=(CSpriteManager& rhs) = delete;
 	//↑この3つの演算子のセットでシングルトン化が成立する
-	std::vector <ImgList> Img_List;
-	std::vector <StaticMeshList> MeshList;
-	std::vector<StaticMeshList>MeshObjList;
+
+
+	ImgList IMG_LIST[static_cast <int>(enImagList::MAX)];
+	StaticMeshList MESH_LIST[static_cast <int>(enImagList::MAX)];
+	StaticMeshList MESH_OBJ_List[static_cast <int>(enImagList::MAX)];
 
 	CSprite2D*			Sprite2D[static_cast <int>(enImagList::MAX)];
 	CSprite3D*			Sprite3D[static_cast <int>(enImagList::MAX)];
@@ -142,7 +125,7 @@ private:
 	CStaticMesh* StaticMesh[static_cast <int>(enMeshList::MAX)];
 	CStaticObjMesh* StaticObjMesh[static_cast <int>(enMeshObjList::MAX)];
 };
-
+//コードの短縮用
 namespace {
 	using CSpM = CSpriteManager;
 	using CSpMLstiImg = CSpriteManager::enImagList;

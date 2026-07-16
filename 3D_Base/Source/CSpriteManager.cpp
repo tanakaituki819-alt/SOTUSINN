@@ -35,17 +35,17 @@ CSprite2D* CSpriteManager::GetSprite2D(enImagList No)
 {
 	int NO = static_cast<int>(No);
 
-	SPRITE_STATE ST = CSpriteManager::GetInstance()->Img_List[NO].SPRITE;
+	SPRITE_STATE ST = CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE;
 	if(CSpriteManager::GetInstance()->Sprite2D[NO]==nullptr) {
 		GetInstance()->Sprite2D[NO] = new CSprite2D();
-		if (CSpriteManager::GetInstance()->Img_List[NO].centralstandards == true) {
+		if (CSpriteManager::GetInstance()->IMG_LIST[NO].centralstandards == true) {
 			GetInstance()->Sprite2D[NO]->Init2(*(CSpriteManager::GetInstance()->Dx11),
-				CSpriteManager::GetInstance()->Img_List[NO].path, ST);
+				CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
 
 		}
 		else {
 			GetInstance()->Sprite2D[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
-				CSpriteManager::GetInstance()->Img_List[NO].path, ST);
+				CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
 		}
 	}
 	return GetInstance()->Sprite2D[NO];
@@ -54,11 +54,11 @@ CSprite2D* CSpriteManager::GetSprite2D(enImagList No)
 CSprite3D* CSpriteManager::GetSprite3D(enImagList No)
 {
 	int NO = static_cast<int>(No);
-	SPRITE_STATE ST = { {1,1,0} ,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Base,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Stride };
+	SPRITE_STATE ST = { {1,1,0} ,CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE.Base,CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE.Stride };
 	if (CSpriteManager::GetInstance()->Sprite3D[NO] == nullptr) {
 		GetInstance()->Sprite3D[NO] = new CSprite3D();
 		GetInstance()->Sprite3D[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
-			CSpriteManager::GetInstance()->Img_List[NO].path, ST);
+			CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
 
 	}
 	return GetInstance()->Sprite3D[NO];
@@ -67,11 +67,11 @@ CSprite3D* CSpriteManager::GetSprite3D(enImagList No)
 CSpriteBlock* CSpriteManager::GetSpriteBlock(enImagList No)
 {
 	int NO = static_cast<int>(No);
-	SPRITE_STATE ST = { {1,1,0} ,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Base,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Stride };
+	SPRITE_STATE ST = { {1,1,0} ,CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE.Base,CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE.Stride };
 	if (CSpriteManager::GetInstance()->SpriteBlock[NO] == nullptr) {
 		GetInstance()->SpriteBlock[NO] = new CSpriteBlock();
 		GetInstance()->SpriteBlock[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
-			CSpriteManager::GetInstance()->Img_List[NO].path, ST);
+			CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
 	}
 	return GetInstance()->SpriteBlock[NO];
 }
@@ -79,11 +79,11 @@ CSpriteBlock* CSpriteManager::GetSpriteBlock(enImagList No)
 CSpriteTriangle* CSpriteManager::GetSpriteTriangle(enImagList No)
 {
 	int NO = static_cast<int>(No);
-	SPRITE_STATE ST = { {1,1,1} ,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Base,CSpriteManager::GetInstance()->Img_List[NO].SPRITE.Stride };
+	SPRITE_STATE ST = { {1,1,1} ,CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE.Base,CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE.Stride };
 	if (CSpriteManager::GetInstance()->SpriteTriangle[NO] == nullptr) {
 		GetInstance()->SpriteTriangle[NO] = new CSpriteTriangle();
 		GetInstance()->SpriteTriangle[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
-			CSpriteManager::GetInstance()->Img_List[NO].path, ST);
+			CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
 
 	}
 
@@ -101,7 +101,7 @@ CStaticMesh* CSpriteManager::GetMesh(enMeshList No)
 		GetInstance()->StaticMesh[NO] = new CStaticMesh();
 
 		GetInstance()->StaticMesh[NO]->Init(*(CSpriteManager::GetInstance()->Dx9), *(CSpriteManager::GetInstance()->Dx11),
-			CSpriteManager::GetInstance()->MeshList[NO].path);
+			CSpriteManager::GetInstance()->MESH_LIST[NO].path);
 	}
 	return GetInstance()->StaticMesh[NO];
 }
@@ -112,7 +112,7 @@ CStaticObjMesh* CSpriteManager::GetObjMesh(enMeshObjList No)
 	if (CSpriteManager::GetInstance()->StaticObjMesh[NO] == nullptr) {
 		GetInstance()->StaticObjMesh[NO] = new CStaticObjMesh();
 		GetInstance()->StaticObjMesh[NO]->Init(*(CSpriteManager::GetInstance()->Dx9), *(CSpriteManager::GetInstance()->Dx11),
-			CSpriteManager::GetInstance()->MeshObjList[NO].path);
+			CSpriteManager::GetInstance()->MESH_OBJ_List[NO].path);
 	}
 	return GetInstance()->StaticObjMesh[NO];
 }
@@ -156,6 +156,8 @@ void CSpriteManager::DeleteObjMesh(enMeshObjList No)
 
 void CSpriteManager::Load2D()
 {
+	std::vector <ImgList> Img_List;
+
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TITLE), _T("Data\\Texture\\T_IMG.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_GameClear), _T("Data\\Texture\\G_C_IMG.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_GameOver), _T("Data\\Texture\\G_O_IMG.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
@@ -163,21 +165,12 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Fad), _T("Data\\Texture\\IMG_Fad.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_BackFire), _T("Data\\Texture\\explosion.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Shutter), _T("Data\\Texture\\IMG_Shutter.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_BattleArea), _T("Data\\Texture\\BatoruEria.png"), { {1, 1, 1}, {128, 128}, {128, 128} } });
-	Img_List.push_back({ static_cast<int>(enImagList::IMG_Base), _T("Data\\Texture\\base.jpg"), { {1, 1, 1}, {128, 128}, {128, 128} } });
-
-
-	Img_List.push_back({ static_cast<int>(enImagList::Img_EnergyGaugeBase), _T("Data\\Texture\\EnergyGaugeBase.png"), { {1, 1, 1}, {128, 128}, {128, 128} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_EnergyGauge), _T("Data\\Texture\\EnergyGauge.png"), { {1, 1, 1}, {128, 128}, {128, 128} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_HPGaugeBase), _T("Data\\Texture\\HPGaugeBase.png"), { {1, 1, 1}, {128, 128}, {128, 128} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_HPGauge), _T("Data\\Texture\\HPGauge.png"), { {1, 1, 1}, {128, 128}, {128, 128} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_HPGauge1), _T("Data\\Texture\\HPGauge1.png"), { {1, 1, 1}, {128, 128}, {128, 128} } });
 
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_STRBack), _T("Data\\Texture\\STRBack.png"), { {1, 1, 1}, {128, 128}, {128, 128} },true });
-	Img_List.push_back({ static_cast<int>(enImagList::DefenseBaseHP), _T("Data\\Texture\\DefenseBaseHP.png"), { {1, 1, 1}, {128, 128}, {128, 128} },true });
-	Img_List.push_back({ static_cast<int>(enImagList::DefenseBaseHPback), _T("Data\\Texture\\DefenseBaseHPback.png"), { {1, 1, 1}, {128, 128}, {128, 128} },true });
 
+
+	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {10, 1}, {1, 1} } });
 	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {10, 1}, {1, 1} } });
 
 	//プレイヤーフォント.																									//表示幅高さ、元画像サイズ、切り取りサイズ.
@@ -187,7 +180,7 @@ void CSpriteManager::Load2D()
 	//プレイヤーバックグラウンド.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_PlayerBackground),_T("Data\\Texture\\PlayerBackground.png"),	{ {1, 1, 1}, {800, 600}, {800 / 4, 600 } } });
 	//プレイヤー1~4までの立ち絵.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Player1),			_T("Data\\Texture\\Player1.png"),			{ {1, 1, 1}, {196, 184}, {196 /	2, 184 } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Player1),			_T("Data\\Texture\\Player1.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184 } } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player2),			_T("Data\\Texture\\Player2.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player3),			_T("Data\\Texture\\Player3.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Player4),			_T("Data\\Texture\\Player4.png"),			{ {1, 1, 1}, {196, 184}, {196 / 2, 184  } } });
@@ -209,55 +202,55 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TextFrame),		_T("Data\\Texture\\TextFrame.png"),			{ {1, 1, 1}, {500, 200}, {500, 200 } },true });
 
 
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),		_T("Data\\Texture\\water.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 
-	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
-		return a.listNo < b.listNo;
-		});
-
+	
+	for (int i = 0;i < Img_List.size();i++) {
+		IMG_LIST[Img_List[i].listNo] = Img_List[i];
+	}
 }
 
 void CSpriteManager::Load3D()
 {
+	std::vector <StaticMeshList> MeshList;
+
 	//Mehshも
 	MeshList.push_back({ static_cast<int>(enMeshList::Sphere),_T("Data\\Collision\\Sphere.x") });
 
+	for (int i = 0;i < MeshList.size();i++) {
+		MESH_LIST[MeshList[i].listNo] = MeshList[i];
+	}
 	std::sort(MeshList.begin(), MeshList.end(), [](const auto& a, const auto& b) {
 		return a.listNo < b.listNo;
 		});
 
+	std::vector<StaticMeshList>MeshObjList;
 	//オブジェファイルの読み込み
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::GOZIRA),_T("Data\\Mesh\\Obj\\GOZIRA\\GOZIRA.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Apartment),_T("Data\\Mesh\\Obj\\Apartment\\Apartment.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::FighterJet),_T("Data\\Mesh\\Obj\\FighterJet\\FighterJet.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Grassland),_T("Data\\Mesh\\Obj\\Grassland\\Grassland.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Missile),_T("Data\\Mesh\\Obj\\Missile\\Missile.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Monster),_T("Data\\Mesh\\Obj\\Monster\\Monster.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::HATO),_T("Data\\Mesh\\Obj\\HATO\\HATO.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::ROBO),_T("Data\\Mesh\\Obj\\ROBO\\RobotooFrito.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::ROBO＿Hi),_T("Data\\Mesh\\Obj\\ROBOHi\\ROBOHi.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::DefenseBase),_T("Data\\Mesh\\Obj\\DefenseBase\\DefenseBase.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Beam),_T("Data\\Mesh\\Obj\\Beam\\Beam.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::ROBOShot),_T("Data\\Mesh\\Obj\\ROBOShot\\robot.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::NABE),_T("Data\\Mesh\\Obj\\NABE\\NABE.obj") });
 
-	std::sort(MeshObjList.begin(), MeshObjList.end(), [](const auto& a, const auto& b) {
-		return a.listNo < b.listNo;
-		});
+
+	for (int i = 0;i < MeshObjList.size();i++) {
+		MESH_OBJ_List[MeshObjList[i].listNo] = MeshObjList[i];
+	}
+
 
 
 }
 
 void CSpriteManager::allDelete()
 {
-	for (int i = 0;i < Img_List.size();i++) {
+	for (int i = 0;i < static_cast <int>(enImagList::MAX);i++) {
 		SAFE_DELETE(Sprite2D[i]);
 		SAFE_DELETE(Sprite3D[i]);
 		SAFE_DELETE(SpriteBlock[i]);
 		SAFE_DELETE(SpriteTriangle[i]);
 	}
-	for (int i = 0;i < MeshList.size();i++) {
+	for (int i = 0;i < static_cast <int>(enMeshList::MAX);i++) {
 		SAFE_DELETE(StaticMesh[i]);
 	}
-	for (int i = 0;i < MeshObjList.size();i++) {
+	for (int i = 0;i < static_cast <int>(enMeshObjList::MAX);i++) {
 		SAFE_DELETE(StaticObjMesh[i]);
 	}
 }

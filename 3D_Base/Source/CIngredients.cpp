@@ -1,17 +1,68 @@
 #include "CIngredients.h"
 
+namespace {
+	using CS = CSpriteManager;
+	using OL = CSpriteManager::enMeshObjList;
+}
+
 CIngredients::CIngredients()
 	:IngredientsNo(Ingredients::none)
+	, Nabe(nullptr)
 {
-	m_pMesh = CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::GOZIRA);
+	//短縮用
+	using  CS = CSpriteManager;
+	using  OL = CSpriteManager::enMeshObjList;
+
+	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::ROBO),0.3,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::Onion)] = { CS::GetObjMesh(OL::ROBO),0,{1,1,1},10 };
+
+
 }
 
 CIngredients::~CIngredients()
 {
 }
+void CIngredients::SetIngredients(int i)
+{
+
+	m_pMesh = IngredientsSetting[i].Mesh;
+	m_Scale = IngredientsSetting[i].Size;
+	if (IngredientsSetting[i].HitSize==0) {
+		m_pBSphere->CreatSphereForMesh(*m_pMesh);
+	}
+	else {
+		m_pBSphere->SetRadius(IngredientsSetting[i].HitSize);
+	}
+	Score = IngredientsSetting[i].Score;
+}
+
 
 void CIngredients::Update()
 {
+
+
+	m_Position.y-=0.01;
+	float Speed = 0.1;
+	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
+	if (Nabe!=nullptr) {
+		if (!D2CollizionXZ(calPos, 0.5, Nabe->GetPosition(), Nabe->GetSize() )) {
+
+			m_Position.x = m_OldPosition.x;
+
+		};
+		calPos = { m_OldPosition.x,0,m_Position.z };
+		
+		if (!D2CollizionXZ(calPos, 0.5, Nabe->GetPosition(), Nabe->GetSize() )) {
+		m_Position.z = m_OldPosition.z;
+		
+		};
+		if (m_Position.y <= Nabe->GetPosition().y + Nabe->GetNabeH()) {
+			m_Position.y = Nabe->GetPosition().y + Nabe->GetNabeH();
+		}
+	}
+
+	m_OldPosition = m_Position;
+
 }
 
 void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
@@ -38,3 +89,4 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 	//レンダリング.
 	m_pMesh->Render(View, Proj, Light, Camera.Position);
 }
+

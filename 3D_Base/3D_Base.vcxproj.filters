@@ -76,9 +76,6 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj">
       <UniqueIdentifier>{b3325233-f551-4dbb-bee4-75c6f9ee4f56}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CGuround">
-      <UniqueIdentifier>{acd8ebeb-d66e-49ce-85e7-5157df57a3fa}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source\GameObject\CStaticMeshObjObject">
       <UniqueIdentifier>{2d15caa6-ef4f-47ab-bf4e-122305bf8d0e}</UniqueIdentifier>
     </Filter>
@@ -138,6 +135,15 @@
     </Filter>
     <Filter Include="Source\CGameScene\CGameScenePlayerSetup\GameRdyUI">
       <UniqueIdentifier>{ebaa4225-2410-445a-b6f0-4d78647d178d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CNabe">
+      <UniqueIdentifier>{acd8ebeb-d66e-49ce-85e7-5157df57a3fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\CIngredientsmanager">
+      <UniqueIdentifier>{03c61ef1-f4cf-4e0d-835c-231ff5a4cdaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients">
+      <UniqueIdentifier>{303df4d3-dd61-4eda-94b7-a7451b2fc1ee}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\CGameScene\CGameScenePlayerSetup\TitleBackUI">
       <UniqueIdentifier>{4e358294-b5a1-4987-afeb-a62838752c54}</UniqueIdentifier>
@@ -240,8 +246,8 @@
     <ClCompile Include="Source\CStaticMeshObjObject.cpp">
       <Filter>Source\GameObject\CStaticMeshObjObject</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CGround.cpp">
-      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CGuround</Filter>
+    <ClCompile Include="Source\CNabe.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CNabe</Filter>
     </ClCompile>
     <ClCompile Include="Source\CPlayer.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer</Filter>
@@ -273,9 +279,6 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\CIngredients.cpp" />
-    <ClCompile Include="Source\CTitleBackUI.cpp">
-      <Filter>Source\CGameScene\CGameScenePlayerSetup\TitleBackUI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CDirectX11.h">
@@ -380,8 +383,8 @@
     <ClInclude Include="Source\CStaticMeshObjObject.h">
       <Filter>Source\GameObject\CStaticMeshObjObject</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CGround.h">
-      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CGuround</Filter>
+    <ClInclude Include="Source\CNabe.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CNabe</Filter>
     </ClInclude>
     <ClInclude Include="Source\CPlayer.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer</Filter>
@@ -416,9 +419,6 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\CIngredients.h" />
-    <ClInclude Include="Source\CTitleBackUI.h">
-      <Filter>Source\CGameScene\CGameScenePlayerSetup\TitleBackUI</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">

@@ -21,7 +21,7 @@ public:
 	void SetPosition(const D3DXVECTOR3& Pos){ m_Position = Pos;		}
 	//半径(長さ)を設定する.
 	void SetRadius(float Radius)			{ m_Radius = Radius;	}
-
+	float GetRadius() { return m_Radius; };
 private:
 	D3DXVECTOR3		m_Position;	//中心座標.
 	float			m_Radius;	//半径(長さ).
