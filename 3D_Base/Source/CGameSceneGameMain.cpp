@@ -11,7 +11,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 {
 
 	//カメラ座標.
-	m_pCamera->SetPosition(D3DXVECTOR3(0.f, 10.f, 0.f));
+	m_pCamera->SetPosition(D3DXVECTOR3(0.f, 10.f, -5.f));
 	m_pCamera->SetLookPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pCamera->SetUpVec(D3DXVECTOR3(0.f, 0.f, 1.f));//前が上
 	//ライト情報.
@@ -22,7 +22,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	
 	
-	m_pGround = new CGround();
+	m_pGround = new CNabe();
 	for (int i = 0;i < PlayerMax;i++) {
 		CONTROLA[i] = new CXInput(i);
 		m_pPlayer[i] = new CPlayer();
@@ -37,7 +37,8 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 
-	m_pCing = new CIngredients();
+	m_pCingM = new CIngredientsmanager();
+	m_pCingM->SetNabe(m_pGround);
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
@@ -61,21 +62,26 @@ void CGameSceneGameMain::Update()
 	for (int i = 0;i < PlayerMax;i++) {
 		m_pPlayer[i]->Update();
 	}
-
+	m_pCingM->Update();
 	
-	//エフェクト制御
-	static ::EsHandle handle = -1;
+	////エフェクト制御
+	//static ::EsHandle handle = -1;
 
-	static int i = 0;
-	i += 6;
-	if (GetAsyncKeyState('C') & 0x0001) {
-		handle=Effect::Play(EFE::Test0,D3DXVECTOR3(0.f, 0.f, 0.f));
+	//static int i = 0;
+	//i += 6;
+	//if (GetAsyncKeyState('C') & 0x0001) {
+	//	handle=Effect::Play(EFE::Test0,D3DXVECTOR3(0.f, 0.f, 0.f));
+	//}
+	//if (GetAsyncKeyState('V') & 0x0001 ) {
+	//	Effect::StopAll();
+	//	handle = -1;
+	//}
+
+	if (GetAsyncKeyState('C') & 0x8000) {
+		m_pCingM->Create();
 	}
-	if (GetAsyncKeyState('V') & 0x0001 ) {
-		Effect::StopAll();
-		handle = -1;
-	}
-	Effect::SetRotation(handle, D3DXVECTOR3(0.f,D3DXToRadian(i), 0.f));
+
+	//Effect::SetRotation(handle, D3DXVECTOR3(0.f,D3DXToRadian(i), 0.f));
 	UpdateBSpherePos();
 
 	CheckCollision();
@@ -99,7 +105,9 @@ void CGameSceneGameMain::Draw()
 	m_pGround->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 
-	m_pCing->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+	m_pCingM->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+
+	m_pGround->DrawWater(m_pCamera->GetView(), m_mProj);
 	for (int i = 0;i < PlayerMax;i++) {
 		m_pPlayer[i]->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 	}
@@ -116,7 +124,7 @@ void CGameSceneGameMain::UpdateBSpherePos()
 {
 	//当たり判定の中心座標を更新する.
 	//m_pPlayer->UpdateBSpherePos();
-
+	m_pCingM->UpdateBSpherePos();
 }
 
 void CGameSceneGameMain::CheckCollision()

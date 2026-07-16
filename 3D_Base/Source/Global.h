@@ -72,6 +72,7 @@ struct SPRITE_STATE
 	WHSIZE Stride;	//１コマあたりの幅高さ.
 };
 
+bool D2CollizionXZ(D3DXVECTOR3 pos, float SC, D3DXVECTOR3 pos2, float SC2);
 
 //よく使うもの
 //D3DXVECTOR3;//x,y,zの変数型

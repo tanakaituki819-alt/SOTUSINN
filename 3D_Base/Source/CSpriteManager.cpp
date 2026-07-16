@@ -197,6 +197,9 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),		_T("Data\\Texture\\water.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+
+	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
 	}
@@ -221,6 +224,8 @@ void CSpriteManager::Load3D()
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Grassland),_T("Data\\Mesh\\Obj\\Grassland\\Grassland.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::ROBO),_T("Data\\Mesh\\Obj\\ROBO\\RobotooFrito.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::NABE),_T("Data\\Mesh\\Obj\\NABE\\NABE.obj") });
+
+
 	for (int i = 0;i < MeshObjList.size();i++) {
 		MESH_OBJ_List[MeshObjList[i].listNo] = MeshObjList[i];
 	}

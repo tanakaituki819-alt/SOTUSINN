@@ -38,6 +38,7 @@ public:
 		Img_Scroll,				//巻物UI.
 		Img_Xbox,				//Xboxコントローラー.
 		Img_Cusoru,				//カーソル
+		Img_Water,				//なべの中
 		MAX
 	};
 	//ｘファイル
@@ -122,7 +123,7 @@ private:
 	CStaticMesh* StaticMesh[static_cast <int>(enMeshList::MAX)];
 	CStaticObjMesh* StaticObjMesh[static_cast <int>(enMeshObjList::MAX)];
 };
-
+//コードの短縮用
 namespace {
 	using CSpM = CSpriteManager;
 	using CSpMLstiImg = CSpriteManager::enImagList;

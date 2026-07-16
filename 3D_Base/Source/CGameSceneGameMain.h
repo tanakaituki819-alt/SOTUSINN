@@ -1,9 +1,9 @@
 #pragma once
 #pragma once
 #include"CGameScene.h"
-#include"CGround.h"
 #include"CPlayer.h"
 #include"CIngredients.h"
+#include "CIngredientsmanager.h"
 class CGameSceneGameMain
 	:public CGameScene
 {
@@ -23,10 +23,10 @@ private:
 	CXInput* CONTROLA[PlayerMax];
 
 	CStaticMesh* m_pStaticMeshBSphere;	//バウンディングスフィア(当たり判定用).
-	CGround* m_pGround;
+	CNabe* m_pGround;
 	CPlayer* m_pPlayer[PlayerMax];
 
-	CIngredients* m_pCing;
+	CIngredientsmanager* m_pCingM;
 };
 
 

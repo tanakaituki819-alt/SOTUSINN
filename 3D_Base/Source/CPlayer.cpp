@@ -5,6 +5,7 @@ CPlayer::CPlayer()
 	m_pMesh =CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::ROBO);
 	m_Rotation.y = D3DXToRadian(90);
 	m_Cousor = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_Cusoru);
+	Score = 0;
 }
 
 CPlayer::~CPlayer()
@@ -51,3 +52,12 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 	m_Cousor->Render(View, Proj);
 
 }
+
+void CPlayer::GetIngredients(CIngredients* YASAI)
+{
+	my_list.push_back(YASAI->GetIngredientsNo());
+	Score += YASAI->GetScore();
+
+}
+
+
