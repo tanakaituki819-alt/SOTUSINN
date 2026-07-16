@@ -21,9 +21,13 @@ CTitleBackUI::~CTitleBackUI()
 
 void CTitleBackUI::Update()
 {
-	if (m_pController[0]->IsDown(CXInput::B, true))
+	if (m_pController[0]->IsDown(CXInput::B, false))
 	{
 		m_TitleBackflag = true;
+	}
+	if (m_pController[0]->IsDown(CXInput::A, false))
+	{
+		m_TitleBackflag = false;
 	}
 }
 

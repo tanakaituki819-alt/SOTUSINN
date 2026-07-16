@@ -173,10 +173,12 @@ void CPlayerSetupUI::ScrollUI()
 	}
 	//タイトルに戻るUI.
 	m_pScrollUI[0]->SetPosition(D3DXVECTOR3(685, WND_H - 80.f, 0.f));
+	m_pScrollUI[0]->SetRotation(D3DXVECTOR3(0.f,0.f,0.f));
 	m_pScrollUI[0]->SetScale(D3DXVECTOR3(210.f, 100.f, 0.f));
 	m_pScrollUI[0]->Render();
 	//準備完了キャンセルUI.
 	m_pScrollUI[1]->SetPosition(D3DXVECTOR3(64.f * 13.9f, WND_H - 80.f, 0.f));
+	m_pScrollUI[1]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pScrollUI[1]->SetScale(D3DXVECTOR3(380.f, 100.f, 0.f));
 	m_pScrollUI[1]->Render();
 }

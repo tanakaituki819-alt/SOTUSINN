@@ -145,9 +145,6 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients">
       <UniqueIdentifier>{303df4d3-dd61-4eda-94b7-a7451b2fc1ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\CGameScene\CGameScenePlayerSetup\TitleBackUI">
-      <UniqueIdentifier>{4e358294-b5a1-4987-afeb-a62838752c54}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -279,6 +276,8 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClCompile>
     <ClCompile Include="Source\CIngredients.cpp" />
+    <ClCompile Include="Source\CIngredientsmanager.cpp" />
+    <ClCompile Include="Source\Global.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CDirectX11.h">
@@ -419,6 +418,7 @@
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\CIngredients.h" />
+    <ClInclude Include="Source\CIngredientsmanager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">

@@ -4,7 +4,6 @@
 #include "CCharacterUI.h"
 #include "CPlayerSetupUI.h"
 #include "CGameRdyUI.h"
-#include "CTitleBackUI.h"
 
 /***************************************
 *	コントローラー接続ゲームシーンクラス.
@@ -29,6 +28,5 @@ private:
 	CPlayerSetupUI* m_pPlayerSetupUI;
 	CGameRdyUI*		m_pGameRdyUI;
 	CXInput*		m_pController[Controller_Max];
-	CTitleBackUI*	m_pTitleBackUI;
 };
 
