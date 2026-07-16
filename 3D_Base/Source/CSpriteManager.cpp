@@ -196,6 +196,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Scroll),			_T("Data\\Texture\\Scroll.png"),			{ {1, 1, 1}, {600, 200}, {600, 200 } } });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	//ポーズ
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Pause),		_T("Data\\Texture\\Pause.png"),				{ {1, 1, 1}, {273, 75}, {273, 75} }});
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),		_T("Data\\Texture\\water.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 
