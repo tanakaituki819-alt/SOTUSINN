@@ -196,13 +196,18 @@ void CSpriteManager::Load2D()
 	//和室の背景.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_BackGround),		_T("Data\\Texture\\BackGround.png"),		{ {1, 1, 1}, {1920, 1080}, {1920, 1080 } } });
 	//文字の表示.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Text),			_T("Data\\Texture\\Text.png"),				{ {1, 1, 1}, {360, 500}, {360, 500 / 5 } } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Text),			_T("Data\\Texture\\Text.png"),				{ {1, 1, 1}, {360, 600}, {360, 600 / 6 } } });
 	//いただきます用の手.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Hand),			_T("Data\\Texture\\Hand.png"),				{ {1, 1, 1}, {130, 400}, {130, 400 / 2 } } });
 	//巻物UI.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Scroll),			_T("Data\\Texture\\Scroll.png"),			{ {1, 1, 1}, {600, 200}, {600, 200 } } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),			_T("Data\\Texture\\Cusoru.png"),			{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),			_T("Data\\Texture\\Cusoru.png"),			{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	//白い画像.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_WhiteBack),		_T("Data\\Texture\\WhiteBack.png"),			{ {1, 1, 1}, {1280, 720}, {1280, 720 } } });
+	//テキストフレーム.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TextFrame),		_T("Data\\Texture\\TextFrame.png"),			{ {1, 1, 1}, {500, 200}, {500, 200 } },true });
+
 
 
 	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {

@@ -4,11 +4,12 @@
 
 
 CPlayerSetupUI::CPlayerSetupUI()
-	: m_pPlayerSetUpUI()
-	, m_pPlayerNameUI()
-	, m_pPlayercontrollerUI()
-	, m_pTextUI()
-	, m_pScrollUI()
+	: m_pPlayerSetUpUI		()
+	, m_pPlayerNameUI		()
+	, m_pPlayercontrollerUI	()
+	, m_pTextUI				()
+	, m_pScrollUI			()
+	, m_pMyController		()
 {
 	//3つのスプライトを設定.
 	for (int i = 0; i < Ui_Max; i++)
@@ -150,11 +151,13 @@ void CPlayerSetupUI::TextUI()
 	//タイトルに戻るUI.
 	m_pTextUI[0]->SetPosition(D3DXVECTOR3(700.f, WND_H - 75.f, 0.f));
 	m_pTextUI[0]->SetScale(D3DXVECTOR3(300.f, 100.f, 0.f));
+	m_pTextUI[0]->SetRotation(D3DXVECTOR3(0.f,0.f,0.f));
 	m_pTextUI[0]->SetPatternNo(0.f, 2.f);
 	m_pTextUI[0]->Render();
 	//準備完了キャンセルUI.
 	m_pTextUI[1]->SetPosition(D3DXVECTOR3(64.f * 15.f - 32.f, WND_H - 75.f, 0.f));
 	m_pTextUI[1]->SetScale(D3DXVECTOR3(300.f, 100.f, 0.f));
+	m_pTextUI[1]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pTextUI[1]->SetPatternNo(0.f, 1.f);
 	m_pTextUI[1]->Render();
 }
