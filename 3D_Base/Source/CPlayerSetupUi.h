@@ -8,8 +8,8 @@ public:
 	//---------------------------
 	//	定数宣言.
 	//---------------------------
-	static const int Ui_Max = 4;
-	static const int Text_Max = 2;
+	static const int Ui_Max		= 4;
+	static const int Text_Max	= 2;
 public:
 	CPlayerSetupUI();
 	~CPlayerSetupUI()override;

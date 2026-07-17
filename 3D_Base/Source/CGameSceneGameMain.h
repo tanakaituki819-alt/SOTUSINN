@@ -3,6 +3,8 @@
 #include"CGameScene.h"
 #include"CPlayer.h"
 #include"CIngredients.h"
+#include "CPauseUI.h"
+
 #include "CIngredientsmanager.h"
 class CGameSceneGameMain
 	:public CGameScene
@@ -26,6 +28,11 @@ private:
 	CNabe* m_pGround;
 	CPlayer* m_pPlayer[PlayerMax];
 
+	CIngredients* m_pCing;
+
+	//ポーズ関連.
+	CPauseUI* m_pPauseUI;
+	bool m_Pause;
 	CIngredientsmanager* m_pCingM;
 };
 

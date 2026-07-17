@@ -34,7 +34,12 @@ public:
 		Img_Scroll,				//巻物UI.
 		Img_Xbox,				//Xboxコントローラー.
 		Img_Cusoru,				//カーソル
+		Img_Pause,				//ポーズ.
+		IMG_PauseOptions,		//ポーズ中の選択肢.
 		Img_Water,				//なべの中
+		Img_WhiteBack,			//白画像.
+		Img_TextFrame,			//テキストのフレーム.
+		Img_SelectionFrame,		//セレクトフレーム.
 		MAX
 	};
 	//ｘファイル

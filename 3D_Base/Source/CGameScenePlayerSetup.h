@@ -4,6 +4,7 @@
 #include "CCharacterUI.h"
 #include "CPlayerSetupUI.h"
 #include "CGameRdyUI.h"
+
 /***************************************
 *	コントローラー接続ゲームシーンクラス.
 **/

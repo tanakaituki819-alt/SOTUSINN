@@ -278,6 +278,8 @@
     <ClCompile Include="Source\CGameRdyUI.cpp">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CIngredients.cpp" />
+    <ClCompile Include="Source\CIngredientsmanager.cpp" />
     <ClCompile Include="Source\Global.cpp" />
     <ClCompile Include="Source\CIngredientsmanager.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>

@@ -5,9 +5,10 @@
 #include"Effect.h"
 CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 :CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
-	, m_pGround(nullptr)
-	, m_pPlayer()
-
+	, m_pGround		( nullptr )
+	, m_pPlayer		(  )
+	, m_pPauseUI	( nullptr )
+	, m_Pause		( false )
 {
 
 	//カメラ座標.
@@ -38,6 +39,12 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 
+	m_pCing = new CIngredients();
+
+	//ポーズUIの生成とコントローラーをセット.
+	m_pPauseUI = new CPauseUI();
+	m_pPauseUI->SetXInput(CONTROLA[0]);
+
 	m_pCingM = new CIngredientsmanager();
 	m_pCingM->SetNabe(m_pGround);
 }
@@ -45,7 +52,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 CGameSceneGameMain::~CGameSceneGameMain()
 {
 
-
+	SAFE_DELETE(m_pPauseUI);
 
 	SAFE_DELETE(m_pGround);
 	for (int i = 0;i < PlayerMax;i++) {
@@ -57,6 +64,39 @@ void CGameSceneGameMain::Update()
 {
 	for (int i = 0;i < PlayerMax;i++) {
 		CONTROLA[i]->Update();
+	}
+
+	//1Pがスタートボタンをしたらポーズ.
+	if (CONTROLA[0]->IsDown(CXInput::START, true))
+	{
+		m_Pause = !m_Pause;
+		if (m_Pause)
+		{
+			m_pPauseUI->OpenInit();
+		}
+	}
+	
+	//ポーズ中
+	if (m_Pause)
+	{
+		m_pPauseUI->Update();
+		
+		if (m_pPauseUI->IsDecided())
+		{
+			if (m_pPauseUI->GetSelect() == CPauseUI::enSelect::ReturnToTitle)
+			{
+				//タイトルに戻る
+				SenenChang(enScene::Title, CSceneChange::TransitionType::Fade, 60, 60);
+				m_Pause = false;
+			}
+			else
+			{
+				//ゲームに戻る.
+				m_Pause = false;
+				m_pPauseUI->CloseInit();
+			}
+		}
+		return;	//次に行かないように.
 	}
 
 	m_pGround->Update();
@@ -119,7 +159,15 @@ void CGameSceneGameMain::Draw()
 		m_pPlayer[i]->DrawUI();
 	}
 
+	//ポーズ
+	if (m_Pause)
+	{
+		m_pPauseUI->Draw();
+	}
+
 	m_pDx11->SetDepth(true);
+
+
 
 }
 

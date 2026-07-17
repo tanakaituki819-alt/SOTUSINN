@@ -8,17 +8,17 @@ CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX
 	, m_pGameRdyUI		( nullptr )
 {
 
-	m_pBackImg			= new CUIObject();
-	m_pCharacterUI		= new CCharacterUI();
+	m_pBackImg			= new CUIObject		();
+	m_pCharacterUI		= new CCharacterUI	();
 	m_pPlayerSetupUI	= new CPlayerSetupUI();
-	m_pGameRdyUI		= new CGameRdyUI();
+	m_pGameRdyUI		= new CGameRdyUI	();
 	for (int i = 0; i < Controller_Max; i++)
 	{
 		m_pController[i] = new CXInput(i);
 		m_pPlayerSetupUI->SetXInput(m_pController[i],i);
-		m_pCharacterUI->SetXInput(m_pController[i],i);
-		m_pCharacterUI->SetXInput(m_pController[i],i);
-		m_pGameRdyUI->SetXInput(m_pController[i],i);
+		m_pCharacterUI->SetXInput(m_pController	[i], i);
+		m_pCharacterUI->SetXInput(m_pController	[i], i);
+		m_pGameRdyUI->SetXInput(m_pController	[i], i);
 	}
 	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//和室背景設定.
 	m_pBackImg->SetPosition	(0, 0, 0);
@@ -35,11 +35,12 @@ CGameScenePlayerSetup::~CGameScenePlayerSetup()
 
 void CGameScenePlayerSetup::Update()
 {
+
 	for (int i = 0; i < Controller_Max; i++)
 	{
 		m_pController[i]->Update();
 	}
-
+	m_pGameRdyUI->Update();
 	m_pPlayerSetupUI->Update();
 }
 
