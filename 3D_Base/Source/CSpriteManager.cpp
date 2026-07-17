@@ -205,8 +205,10 @@ void CSpriteManager::Load2D()
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
-	//ポーズ
+	//箸休め中文字画像.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Pause),		_T("Data\\Texture\\Pause.png"),				{ {1, 1, 1}, {273, 75}, {273, 75} }});
+	//箸休め中の選択肢の画像.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_PauseOptions),		_T("Data\\Texture\\PauseOptions2.png"),		{ {1, 1, 1}, {490, 160}, {490, 160/2} } });
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),		_T("Data\\Texture\\water.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 
