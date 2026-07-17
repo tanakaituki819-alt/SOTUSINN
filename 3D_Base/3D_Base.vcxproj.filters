@@ -148,6 +148,9 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CPauseUI">
       <UniqueIdentifier>{658d2550-6bca-4fa3-85d4-1e4be1a9fa8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\CCollisionManager">
+      <UniqueIdentifier>{147ab572-1eab-4447-b250-ebd2163715b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
