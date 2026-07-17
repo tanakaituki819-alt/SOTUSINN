@@ -17,12 +17,8 @@ public:
 	enum class enImagList
 	{
 		Img_TITLE=0,
-		Img_GameClear,
-		Img_GameOver,
 		Img_Fad,//フェード
-		Img_BackFire,//爆発
 		IMG_Shutter,//シャッター
-		Img_STRBack,//星背景
 		Digit0_9,//0-9まで;
 		Img_Playerfont,			//プレイヤーフォント.
 		Img_Playericon,			//プレイヤーアイコン
@@ -53,6 +49,9 @@ public:
 		ROBO,//ロボット
 		Grassland,//草原
 		NABE,
+		S_NIKU,
+		S_NINZIN,
+		S_DAIKON,
 		MAX
 	};
 

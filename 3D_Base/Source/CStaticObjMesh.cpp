@@ -181,6 +181,12 @@ bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const st
 		for (size_t i = 0; i < materials.size(); i++) {
 			m_pMaterials[i].Diffuse = D3DXVECTOR4(materials[i].diffuse[0], materials[i].diffuse[1], materials[i].diffuse[2], 1.0f);
 			m_pMaterials[i].Ambient = D3DXVECTOR4(materials[i].ambient[0], materials[i].ambient[1], materials[i].ambient[2], 1.0f);
+
+	
+			float L= D3DXVec4Length(&m_pMaterials[i].Ambient);
+			if (L==0) {
+				m_pMaterials[i].Ambient= D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f); // 陰の部分が真っ黒にならないようにする
+			}
 			m_pMaterials[i].Specular = D3DXVECTOR4(materials[i].specular[0], materials[i].specular[1], materials[i].specular[2], 1.0f);
 			m_pMaterials[i].Emissive = D3DXVECTOR4(materials[i].emission[0], materials[i].emission[1], materials[i].emission[2], 1.0f);
 			m_pMaterials[i].Power = materials[i].shininess;

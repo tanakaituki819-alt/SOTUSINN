@@ -27,6 +27,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 		CONTROLA[i] = new CXInput(i);
 		m_pPlayer[i] = new CPlayer();
 		m_pPlayer[i]->SetXInput(CONTROLA[i]);
+		m_pPlayer[i]->SetPlayerNo(i);
 	}
 
 
@@ -114,7 +115,9 @@ void CGameSceneGameMain::Draw()
 	Effect::GetInstance()->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pDx11->SetDepth(false);
-
+	for (int i = 0;i < PlayerMax;i++) {
+		m_pPlayer[i]->DrawUI();
+	}
 
 	m_pDx11->SetDepth(true);
 

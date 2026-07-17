@@ -145,6 +145,9 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients">
       <UniqueIdentifier>{303df4d3-dd61-4eda-94b7-a7451b2fc1ee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI">
+      <UniqueIdentifier>{bb8b9c38-e125-4553-b762-47c31b6d503b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -281,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPlayerUI.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -426,6 +432,9 @@
     </ClInclude>
     <ClInclude Include="Source\CIngredients.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPlayerUI.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

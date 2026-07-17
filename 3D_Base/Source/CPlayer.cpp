@@ -6,11 +6,13 @@ CPlayer::CPlayer()
 	m_Rotation.y = D3DXToRadian(90);
 	m_Cousor = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_Cusoru);
 	Score = 0;
+	P_UI = new CPlayerUI();
+	PlayerNo = 0;
 }
 
 CPlayer::~CPlayer()
 {
-
+	SAFE_DELETE(P_UI);
 }
 
 void CPlayer::Update()
@@ -22,7 +24,11 @@ void CPlayer::Update()
 		m_Position.x += VECT.x;
 		m_Position.z += VECT.y;
 			
-		MyController->IsDown(CXInput::A, true);
+		if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
+			Score++;
+		}
+	
+		
 	}
 	if (GetAsyncKeyState('W') & 0x8000) {
 		m_Position.z += Speed;
@@ -51,6 +57,12 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 	m_Cousor->SetScale(m_Scale);
 	m_Cousor->Render(View, Proj);
 
+}
+
+void CPlayer::DrawUI()
+{
+	P_UI->SetPlayerNo(PlayerNo);
+	P_UI->Draw(Score);
 }
 
 void CPlayer::GetIngredients(CIngredients* YASAI)
