@@ -149,13 +149,13 @@ void CPlayerSetupUI::ControllerUI()
 void CPlayerSetupUI::TextUI()
 {	
 	//タイトルに戻るUI.
-	m_pTextUI[0]->SetPosition(D3DXVECTOR3(700.f, WND_H - 75.f, 0.f));
+	m_pTextUI[0]->SetPosition(D3DXVECTOR3(700.f, 638.f, 0.f));
 	m_pTextUI[0]->SetScale(D3DXVECTOR3(300.f, 100.f, 0.f));
 	m_pTextUI[0]->SetRotation(D3DXVECTOR3(0.f,0.f,0.f));
 	m_pTextUI[0]->SetPatternNo(0.f, 2.f);
 	m_pTextUI[0]->Render();
 	//準備完了キャンセルUI.
-	m_pTextUI[1]->SetPosition(D3DXVECTOR3(64.f * 15.f - 32.f, WND_H - 75.f, 0.f));
+	m_pTextUI[1]->SetPosition(D3DXVECTOR3(64.f * 15.f - 32.f, 638.f, 0.f));
 	m_pTextUI[1]->SetScale(D3DXVECTOR3(300.f, 100.f, 0.f));
 	m_pTextUI[1]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pTextUI[1]->SetPatternNo(0.f, 1.f);
@@ -164,20 +164,20 @@ void CPlayerSetupUI::TextUI()
 //巻物UI.
 void CPlayerSetupUI::ScrollUI()
 {
-	static int x = 0;
-	if (GetAsyncKeyState('W') & 0x8000) {
-		x += 1;
-	}
-	if (GetAsyncKeyState('S') & 0x8000) {
-		x -= 1;
-	}
+	//static int x = 0;
+	//if (GetAsyncKeyState('W') & 0x8000) {
+	//	x += 1;
+	//}
+	//if (GetAsyncKeyState('S') & 0x8000) {
+	//	x -= 1;
+	//}
 	//タイトルに戻るUI.
-	m_pScrollUI[0]->SetPosition(D3DXVECTOR3(685, WND_H - 80.f, 0.f));
+	m_pScrollUI[0]->SetPosition(D3DXVECTOR3(788, 683.f, 0.f));
 	m_pScrollUI[0]->SetRotation(D3DXVECTOR3(0.f,0.f,0.f));
 	m_pScrollUI[0]->SetScale(D3DXVECTOR3(210.f, 100.f, 0.f));
 	m_pScrollUI[0]->Render();
 	//準備完了キャンセルUI.
-	m_pScrollUI[1]->SetPosition(D3DXVECTOR3(64.f * 13.9f, WND_H - 80.f, 0.f));
+	m_pScrollUI[1]->SetPosition(D3DXVECTOR3(1082.f, 683.f, 0.f));
 	m_pScrollUI[1]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pScrollUI[1]->SetScale(D3DXVECTOR3(380.f, 100.f, 0.f));
 	m_pScrollUI[1]->Render();

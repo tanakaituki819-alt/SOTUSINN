@@ -42,6 +42,7 @@ public:
 		Img_Water,				//なべの中
 		Img_WhiteBack,			//白画像.
 		Img_TextFrame,			//テキストのフレーム.
+		Img_SelectionFrame,		//セレクトフレーム.
 		MAX
 	};
 	//ｘファイル
