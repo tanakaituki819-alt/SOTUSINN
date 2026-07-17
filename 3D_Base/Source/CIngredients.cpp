@@ -13,10 +13,10 @@ CIngredients::CIngredients()
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
 
-	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::ROBO),0.3,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::Onion)] = { CS::GetObjMesh(OL::ROBO),0,{1,1,1},10 };
-
-
+	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::S_NIKU),0.3,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::NIKU)] = { CS::GetObjMesh(OL::S_NIKU),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] = { CS::GetObjMesh(OL::S_DAIKON),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)] = { CS::GetObjMesh(OL::S_NINZIN),0,{1,1,1},10 };
 }
 
 CIngredients::~CIngredients()
@@ -80,6 +80,7 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 	static int t = 0;
 	t++;
 	m_pMesh->SetLightCOLOR({ static_cast<FLOAT>(sin(t) * 0.5 + 0.5),static_cast<FLOAT>(sin(t + D3DXToRadian(120)) * 0.5 + 0.5),static_cast<FLOAT>(sin(t + D3DXToRadian(240)) * 0.5 + 0.5) });
+	//m_pMesh->SetLightCOLOR256({ 247,121,60 });
 	if (GetAsyncKeyState('H') & 0x8000) {
 		m_pMesh->SetisCOLOR(true);
 	}

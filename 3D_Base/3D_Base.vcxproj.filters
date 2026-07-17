@@ -145,8 +145,8 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients">
       <UniqueIdentifier>{303df4d3-dd61-4eda-94b7-a7451b2fc1ee}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\CGameScene\CGameSceneGameMain\CPauseUI">
-      <UniqueIdentifier>{658d2550-6bca-4fa3-85d4-1e4be1a9fa8c}</UniqueIdentifier>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI">
+      <UniqueIdentifier>{bb8b9c38-e125-4553-b762-47c31b6d503b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CCollisionManager">
       <UniqueIdentifier>{147ab572-1eab-4447-b250-ebd2163715b8}</UniqueIdentifier>
@@ -290,9 +290,8 @@
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CIngredients.cpp" />
-    <ClCompile Include="Source\CPauseUI.cpp">
-      <Filter>Source\CGameScene\CGameSceneGameMain\CPauseUI</Filter>
+    <ClCompile Include="Source\CPlayerUI.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -439,12 +438,9 @@
     <ClInclude Include="Source\CIngredients.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CIngredients.h" />
-    <ClInclude Include="Source\CPauseUI.h">
-      <Filter>Source\CGameScene\CGameSceneGameMain\CPauseUI</Filter>
+    <ClInclude Include="Source\CPlayerUI.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CIngredients.h" />
-    <ClInclude Include="Source\CIngredientsmanager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">

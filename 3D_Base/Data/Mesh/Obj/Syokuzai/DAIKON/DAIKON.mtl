@@ -1,0 +1,13 @@
+# Blender 5.2.0 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl tripo_mat_051d0f5c
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/DaikonFBX_basecolor.JPEG
+map_Ns textures/DaikonFBX_roughness.JPEG
+map_Bump -bm 1.000000 textures/DaikonFBX_normal.JPEG

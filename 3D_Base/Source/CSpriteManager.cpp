@@ -159,19 +159,13 @@ void CSpriteManager::Load2D()
 	std::vector <ImgList> Img_List;
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TITLE), _T("Data\\Texture\\T_IMG.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_GameClear), _T("Data\\Texture\\G_C_IMG.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_GameOver), _T("Data\\Texture\\G_O_IMG.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Fad), _T("Data\\Texture\\IMG_Fad.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_BackFire), _T("Data\\Texture\\explosion.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Shutter), _T("Data\\Texture\\IMG_Shutter.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 
 
-	Img_List.push_back({ static_cast<int>(enImagList::Img_STRBack), _T("Data\\Texture\\STRBack.png"), { {1, 1, 1}, {128, 128}, {128, 128} },true });
-
-
-	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {10, 1}, {1, 1} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {10, 1}, {1, 1} } });
+	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {11, 1}, {1, 1} } });
+	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {11, 1}, {1, 1} } });
 
 	//プレイヤーフォント.																									//表示幅高さ、元画像サイズ、切り取りサイズ.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playerfont),		_T("Data\\Texture\\Playerfont.png"),		{ {1, 1, 1}, {196, 184}, {196, 184 / 4 } } });	
@@ -237,6 +231,11 @@ void CSpriteManager::Load3D()
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Grassland),_T("Data\\Mesh\\Obj\\Grassland\\Grassland.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::ROBO),_T("Data\\Mesh\\Obj\\ROBO\\RobotooFrito.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::NABE),_T("Data\\Mesh\\Obj\\NABE\\NABE.obj") });
+
+	//
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_NIKU),_T("Data\\Mesh\\Obj\\Syokuzai\\NIKU\\NIKU.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_NINZIN),_T("Data\\Mesh\\Obj\\Syokuzai\\NINZIN\\NINZIN.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_DAIKON),_T("Data\\Mesh\\Obj\\Syokuzai\\DAIKON\\DAIKON.obj") });
 
 
 	for (int i = 0;i < MeshObjList.size();i++) {

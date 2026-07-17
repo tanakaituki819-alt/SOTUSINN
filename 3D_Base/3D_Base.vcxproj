@@ -165,6 +165,7 @@
     <ClCompile Include="Source\CPauseUI.cpp" />
     <ClCompile Include="Source\CPlayer.cpp" />
     <ClCompile Include="Source\CGameScenePlayerSetup.cpp" />
+    <ClCompile Include="Source\CPlayerUI.cpp" />
     <ClCompile Include="Source\CSceneChange.cpp" />
     <ClCompile Include="Source\CSceneTransition.cpp" />
     <ClCompile Include="Source\CSceneTransitionRenderer.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="Source\CPauseUI.h" />
     <ClInclude Include="Source\CPlayer.h" />
     <ClInclude Include="Source\CGameScenePlayerSetup.h" />
+    <ClInclude Include="Source\CPlayerUI.h" />
     <ClInclude Include="Source\CSceneChange.h" />
     <ClInclude Include="Source\CSceneTransition.h" />
     <ClInclude Include="Source\CSceneTransitionRenderer.h" />

@@ -73,6 +73,7 @@ void CIngredientsmanager::Create()
 	CIngredients* now = new CIngredients;
 	now->SetNabe(Nabe);
 	now->SetPosition({static_cast<FLOAT>( rand() % 100+1)/100,5,static_cast<FLOAT>(rand() % 100+1) / 100 });
+	now->SetIngredients(rand()%4);
 	m_pIngredients.push_back(now);
 
 

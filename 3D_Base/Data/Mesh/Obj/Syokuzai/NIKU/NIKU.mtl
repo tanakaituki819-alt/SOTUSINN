@@ -1,0 +1,13 @@
+# Blender 5.2.0 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl tripo_mat_ab942b7c.008
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+illum 2
+map_Kd porkFBX_basecolor.PNG
+map_Ks porkFBX_roughness.PNG
+map_Ns porkFBX_metallic.PNG
+map_d porkFBX_basecolor.PNG
+map_Bump -bm 1.000000 porkFBX_normal.PNG

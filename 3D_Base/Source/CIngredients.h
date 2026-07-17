@@ -5,7 +5,9 @@
 #include "CNabe.h"
 enum class Ingredients {
 	none,
-	Onion,
+	NIKU,
+	NINZIN,
+	DAIKON,
 	MAX
 };
 

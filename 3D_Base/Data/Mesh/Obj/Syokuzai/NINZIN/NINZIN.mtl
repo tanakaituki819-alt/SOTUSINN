@@ -1,0 +1,13 @@
+# Blender 5.2.0 LTS MTL File: 'None'
+# www.blender.org
+
+newmtl tripo_mat_6abc821d
+Ka 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd textures/NinzinFBX_basecolor.JPEG
+map_Ns textures/NinzinFBX_roughness.JPEG
+map_Bump -bm 1.000000 textures/NinzinFBX_normal.JPEG

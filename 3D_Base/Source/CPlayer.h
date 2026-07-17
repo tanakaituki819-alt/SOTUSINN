@@ -3,6 +3,7 @@
 #include "CStaticMeshObjObject.h"
 #include <list>
 #include "CIngredients.h"
+#include "CPlayerUI.h"
 class CPlayer
 	:public  CStaticMeshObjObject
 {
@@ -16,7 +17,8 @@ public:
 	void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj,
 		LIGHT& Light, CAMERA& Camera) override;
 	void SetXInput( CXInput* Input) { MyController = Input; }
-
+	void DrawUI() ;
+	void SetPlayerNo(int No) { PlayerNo = No; };
 	void GetIngredients(CIngredients*  YASAI);
 	std::list<Ingredients>& GetAllIngredients() {return my_list;}
 private:
@@ -25,4 +27,6 @@ private:
 	CSprite3D* m_Cousor;
 	std::list<Ingredients> my_list;
 	int Score;
+	CPlayerUI* P_UI;
+	int PlayerNo;
 };
