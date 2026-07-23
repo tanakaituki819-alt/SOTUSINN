@@ -4,23 +4,15 @@
 
 
 CPlayerSetupUI::CPlayerSetupUI()
-	: m_pPlayerSetUpUI		()
-	, m_pPlayerNameUI		()
-	, m_pPlayercontrollerUI	()
-	, m_pTextUI				()
-	, m_pScrollUI			()
-	, m_pMyController		()
 {
 	//3つのスプライトを設定.
-	for (int i = 0; i < Ui_Max; i++)
-	{
+	for (int i = 0; i < Ui_Max; i++) {
 		m_pPlayerSetUpUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);	//背景.
 		m_pPlayerNameUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Playerfont);			//プレイヤー名前.
 		m_pPlayercontrollerUI[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_controller);			//コントローラーUI.
 	}
 	//テキストスプライトを設定.
-	for (int i = 0; i < Text_Max; i++)
-	{
+	for (int i = 0; i < Text_Max; i++) {
 		m_pTextUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);						//テキスト(文字).
 		m_pScrollUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);						//巻物.
 	}
@@ -98,20 +90,12 @@ void CPlayerSetupUI::PlayerNameUI()
 //プレイヤーのコントローラーUI.
 void CPlayerSetupUI::ControllerUI()
 {
-	static int x = 0;
-	if (GetAsyncKeyState('W') & 0x8000) {
-		x += 1;
-	}
-	if (GetAsyncKeyState('S') & 0x8000) {
-		x -= 1;
-	}
 	//プレイヤー1.
 	m_pPlayercontrollerUI[0]->SetAlpha(0.2f);
 	m_pPlayercontrollerUI[0]->SetPosition(D3DXVECTOR3(154.f, 100.f, 0.f));
 	m_pPlayercontrollerUI[0]->SetScale(D3DXVECTOR3(150.f, 75.f, 0.f));
-
-	if (m_pMyController[0]->IsConnect() == true)
-	{
+	//コントローラーが接続されているなら.
+	if (m_pMyController[0]->IsConnect() == true) {
 		m_pPlayercontrollerUI[0]->SetAlpha(1.0f);
 	}
 
@@ -120,9 +104,8 @@ void CPlayerSetupUI::ControllerUI()
 	m_pPlayercontrollerUI[1]->SetAlpha(0.2f);
 	m_pPlayercontrollerUI[1]->SetPosition(D3DXVECTOR3(64.f * 7.5f, 100.f, 0.f));
 	m_pPlayercontrollerUI[1]->SetScale(D3DXVECTOR3(150.f, 75.f, 0.f));
-	
-	if (m_pMyController[1]->IsConnect() == true)
-	{
+	//コントローラーが接続されているなら.
+	if (m_pMyController[1]->IsConnect() == true) {
 		m_pPlayercontrollerUI[1]->SetAlpha(1.0f);
 	}
 	m_pPlayercontrollerUI[1]->Render();
@@ -130,8 +113,8 @@ void CPlayerSetupUI::ControllerUI()
 	m_pPlayercontrollerUI[2]->SetAlpha(0.2f);
 	m_pPlayercontrollerUI[2]->SetPosition(D3DXVECTOR3(64.f *12.5f, 100.f, 0.f));
 	m_pPlayercontrollerUI[2]->SetScale(D3DXVECTOR3(150.f, 75.f, 0.f));
-	if (m_pMyController[2]->IsConnect() == true)
-	{
+	//コントローラーが接続されているなら.
+	if (m_pMyController[2]->IsConnect() == true) {
 		m_pPlayercontrollerUI[2]->SetAlpha(1.0f);
 	}
 	m_pPlayercontrollerUI[2]->Render();
@@ -139,8 +122,8 @@ void CPlayerSetupUI::ControllerUI()
 	m_pPlayercontrollerUI[3]->SetAlpha(0.2f);
 	m_pPlayercontrollerUI[3]->SetPosition(D3DXVECTOR3(64.f * 17.5f, 100.f, 0.f));
 	m_pPlayercontrollerUI[3]->SetScale(D3DXVECTOR3(150.f, 75.f, 0.f));
-	if (m_pMyController[3]->IsConnect() == true)
-	{
+	//コントローラーが接続されているなら.
+	if (m_pMyController[3]->IsConnect() == true) {
 		m_pPlayercontrollerUI[3]->SetAlpha(1.0f);
 	}
 	m_pPlayercontrollerUI[3]->Render();

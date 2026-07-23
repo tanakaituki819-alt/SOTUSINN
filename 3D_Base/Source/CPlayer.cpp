@@ -31,18 +31,21 @@ void CPlayer::Update()
 {
 	//コントローラーが接続されていれば.
 	if (MyController->IsConnect()==true) {
-		m_IsConnected = true;		//コントローラー接続状態に.
-		//回収中かつマヒ中でないなら
+		m_IsConnected = true;	//コントローラー接続状態に.
+		//回収中じゃないかつマヒ中でないなら
 		if (!m_IsCollecting && !m_IsParalysis) {
+			//左スティック動作.
 			D3DXVECTOR2 VECT = { static_cast<FLOAT>(MyController->GetLThumbX()) ,static_cast<FLOAT>(MyController->GetLThumbY()) };
 			D3DXVec2Normalize(&VECT, &VECT);
 			VECT *= Speed;
 			m_Position.x += VECT.x;
 			m_Position.z += VECT.y;
 		}
-		//Aボタンが押されれば.
-		if ( MyController->IsDown( CXInput::A, false )) {
-			m_IsCollecting = true;	//回収中へ.
+		//回収中じゃないかつマヒ中でないなら.
+		if (!m_IsCollecting && !m_IsParalysis) {
+			if (MyController->IsDown(CXInput::A, false)) {
+				m_IsCollecting = true;	//回収中へ.
+			}
 		}
 		//具材回収中なら.
 		if ( m_IsCollecting ) {
@@ -61,6 +64,7 @@ void CPlayer::Update()
 		if (m_IsParalysis) {
 			Paralysis();	//マヒ動作.
 		}
+		//スコア増加(仮).
 		if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
 			Score++;
 		}
@@ -69,24 +73,12 @@ void CPlayer::Update()
 	else {
 		m_IsConnected = false;	//コントローラー接続状態解除.
 	}
-	if (GetAsyncKeyState('W') & 0x8000) {
-		m_Position.z += Speed;
-	}
-	if (GetAsyncKeyState('S') & 0x8000) {
-		m_Position.z -= Speed;
-	}
-	if (GetAsyncKeyState('A') & 0x8000) {
-		m_Position.x -= Speed;
-	}
-	if (GetAsyncKeyState('D') & 0x8000) {
-		m_Position.x += Speed;
-	}
 }
 
 void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
 	m_pMesh->SetisCOLOR(true);
-	//回収状態じゃないなら.
+	//回収状態じゃないかつマヒ状態じゃないなら.
 	if (!m_IsCollecting && !m_IsParalysis) {
 		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす
 		m_Cousor->SetPosition(m_Position);					
@@ -121,13 +113,13 @@ void CPlayer::DrawUI()
 //マヒ状態処理.
 void CPlayer::Paralysis()
 {
-	m_ParalysisTimer++;
+	m_ParalysisTimer++;			//タイマー増加.
 	if (m_ParalysisTimer > 120) {
-		m_IsParalysis = false;   // マヒ解除
-		m_ParalysisTimer = 0;    // タイマーリセット
-		return;
+		m_IsParalysis = false;   //マヒ解除.
+		m_ParalysisTimer = 0;    //タイマーリセット.
+		return;	//以降通らなくていいのでリターン.
 	}
-	m_Position.y += sinf(m_ParalysisTimer * m_Speed) * m_Amount;
+	m_Position.y += sinf(m_ParalysisTimer * m_Speed) * m_Amount;	//マヒの動き.
 }
 //マヒ状態にするときに呼び出される.
 void CPlayer::OnTouchRawIngredient()

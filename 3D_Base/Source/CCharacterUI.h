@@ -18,10 +18,7 @@ public:
 
 	//コントローラー(XInput)のセット.
 	void SetXInput(CXInput* Input, int i) { m_pMyController[i] = Input; }
-
-
-
 private:
-	CSprite2D* m_pPlayerUI[PlayerMax];
-	CXInput* m_pMyController[PlayerMax];
+	CSprite2D*	m_pPlayerUI[PlayerMax]		= {};
+	CXInput*	m_pMyController[PlayerMax]  = {};
 };

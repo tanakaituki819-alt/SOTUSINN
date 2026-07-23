@@ -32,11 +32,11 @@ public:
 	void SetXInput(CXInput* Input, int i) { m_pMyController[i] = Input; }
 
 private:
-	CSprite2D*	m_pPlayerSetUpUI[Ui_Max];
-	CSprite2D*	m_pPlayerNameUI	[Ui_Max];
-	CSprite2D*	m_pPlayercontrollerUI[Ui_Max];
-	CSprite2D*	m_pTextUI		[Text_Max];
-	CSprite2D*	m_pScrollUI		[Text_Max];
-	CXInput*	m_pMyController[Ui_Max];
+	CSprite2D*	m_pPlayerSetUpUI	 [Ui_Max]	= {};	//プレイヤーセットアップ用UI
+	CSprite2D*	m_pPlayerNameUI		 [Ui_Max]	= {};	//プレイヤーの名前.
+	CSprite2D*	m_pPlayercontrollerUI[Ui_Max]	= {};	//コントローラー画像.
+	CSprite2D*	m_pTextUI			 [Text_Max]	= {};	//テキスト(文字)画像.
+	CSprite2D*	m_pScrollUI			 [Text_Max]	= {};	//巻物画像.
+	CXInput*	m_pMyController		 [Ui_Max]	= {};	//コントローラー.
 };
 

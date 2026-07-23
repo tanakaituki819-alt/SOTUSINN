@@ -9,7 +9,6 @@ CCollisionManager::CCollisionManager()
 
 CCollisionManager::~CCollisionManager()
 {
-
 	SAFE_DELETE(m_pIngredientsManager);
 }
 
@@ -26,6 +25,7 @@ void CCollisionManager::Update()
 			if (!m_pPlayer[i]->GetIsCollecting()) continue;
 			//具材のサイズ読み込み.
 			std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
+			//具材の最大数分.
 			for (auto& j: Ingredients) {
 				//プレイヤーと具材が接触する.
 				if (m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) {

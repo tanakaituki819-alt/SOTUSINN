@@ -3,26 +3,23 @@
 
 CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	:CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
-	, m_pCharacterUI	( nullptr )
-	, m_pPlayerSetupUI	( nullptr )
-	, m_pGameRdyUI		( nullptr )
 {
-
-	m_pBackImg			= new CUIObject		();
-	m_pCharacterUI		= new CCharacterUI	();
-	m_pPlayerSetupUI	= new CPlayerSetupUI();
-	m_pGameRdyUI		= new CGameRdyUI	();
-	for (int i = 0; i < Controller_Max; i++)
-	{
-		m_pController[i] = new CXInput(i);
-		m_pPlayerSetupUI->SetXInput(m_pController[i],i);
+	m_pBackImg			= new CUIObject		();	//背景.
+	m_pCharacterUI		= new CCharacterUI	();	//キャラクターのUI.
+	m_pPlayerSetupUI	= new CPlayerSetupUI();	//その他UI.
+	m_pGameRdyUI		= new CGameRdyUI	();	//ゲームlady確認UI.
+	//コントローラー最大数.
+	for (int i = 0; i < Controller_Max; i++) {
+		m_pController[i] = new CXInput(i);	
+		//コントローラーセット.
+		m_pPlayerSetupUI->SetXInput(m_pController[i],i);	
 		m_pCharacterUI->SetXInput(m_pController	[i], i);
 		m_pCharacterUI->SetXInput(m_pController	[i], i);
 		m_pGameRdyUI->SetXInput(m_pController	[i], i);
 	}
 	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//和室背景設定.
-	m_pBackImg->SetPosition	(0, 0, 0);
-	m_pBackImg->SetScale	(WND_W, WND_H,0);
+	m_pBackImg->SetPosition	(0, 0, 0);		
+	m_pBackImg->SetScale	(WND_W, WND_H,0);	//画面最大数のサイズ.
 }
 
 CGameScenePlayerSetup::~CGameScenePlayerSetup()
@@ -35,10 +32,9 @@ CGameScenePlayerSetup::~CGameScenePlayerSetup()
 
 void CGameScenePlayerSetup::Update()
 {
-
-	for (int i = 0; i < Controller_Max; i++)
-	{
-		m_pController[i]->Update();
+	//コントローラー最大分.
+	for (int i = 0; i < Controller_Max; i++) {
+		m_pController[i]->Update();	
 	}
 	m_pGameRdyUI->Update();
 	m_pPlayerSetupUI->Update();
