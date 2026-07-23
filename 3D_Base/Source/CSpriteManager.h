@@ -57,6 +57,7 @@ public:
 		S_NIKU,
 		S_NINZIN,
 		S_DAIKON,
+		Chopsticks,	//箸.
 		MAX
 	};
 

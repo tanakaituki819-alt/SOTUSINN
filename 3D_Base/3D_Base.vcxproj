@@ -153,6 +153,7 @@
     <ClCompile Include="Source\CCamera.cpp" />
     <ClCompile Include="Source\CCharacter.cpp" />
     <ClCompile Include="Source\CCharacterUI.cpp" />
+    <ClCompile Include="Source\CCollisionManager.cpp" />
     <ClCompile Include="Source\CEnemy.cpp" />
     <ClCompile Include="Source\CGameRdyUI.cpp" />
     <ClCompile Include="Source\CGameScene.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="Source\CCamera.h" />
     <ClInclude Include="Source\CCharacter.h" />
     <ClInclude Include="Source\CCharacterUI.h" />
+    <ClInclude Include="Source\CCollisionManager.h" />
     <ClInclude Include="Source\CEnemy.h" />
     <ClInclude Include="Source\CGameRdyUI.h" />
     <ClInclude Include="Source\CGameScene.h" />

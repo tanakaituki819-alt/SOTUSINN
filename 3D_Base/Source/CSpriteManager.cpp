@@ -236,6 +236,7 @@ void CSpriteManager::Load3D()
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_NIKU),_T("Data\\Mesh\\Obj\\Syokuzai\\NIKU\\NIKU.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_NINZIN),_T("Data\\Mesh\\Obj\\Syokuzai\\NINZIN\\NINZIN.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_DAIKON),_T("Data\\Mesh\\Obj\\Syokuzai\\DAIKON\\DAIKON.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Chopsticks),_T("Data\\Mesh\\Obj\\Chopsticks\\HaSi.obj") });
 
 
 	for (int i = 0;i < MeshObjList.size();i++) {

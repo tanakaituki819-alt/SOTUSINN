@@ -148,7 +148,7 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI">
       <UniqueIdentifier>{bb8b9c38-e125-4553-b762-47c31b6d503b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source\CGameScene\CGameSceneGameMain\CCollisionManager">
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\CollisionManager">
       <UniqueIdentifier>{147ab572-1eab-4447-b250-ebd2163715b8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -292,6 +292,10 @@
     </ClCompile>
     <ClCompile Include="Source\CPlayerUI.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPauseUI.cpp" />
+    <ClCompile Include="Source\CCollisionManager.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,6 +444,10 @@
     </ClInclude>
     <ClInclude Include="Source\CPlayerUI.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPauseUI.h" />
+    <ClInclude Include="Source\CCollisionManager.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

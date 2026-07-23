@@ -14,15 +14,15 @@ CPlayerSetupUI::CPlayerSetupUI()
 	//3つのスプライトを設定.
 	for (int i = 0; i < Ui_Max; i++)
 	{
-		m_pPlayerSetUpUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);
-		m_pPlayerNameUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Playerfont);
-		m_pPlayercontrollerUI[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_controller);
+		m_pPlayerSetUpUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);	//背景.
+		m_pPlayerNameUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Playerfont);			//プレイヤー名前.
+		m_pPlayercontrollerUI[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_controller);			//コントローラーUI.
 	}
 	//テキストスプライトを設定.
 	for (int i = 0; i < Text_Max; i++)
 	{
-		m_pTextUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);
-		m_pScrollUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);
+		m_pTextUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);						//テキスト(文字).
+		m_pScrollUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);						//巻物.
 	}
 }
 
@@ -164,13 +164,6 @@ void CPlayerSetupUI::TextUI()
 //巻物UI.
 void CPlayerSetupUI::ScrollUI()
 {
-	//static int x = 0;
-	//if (GetAsyncKeyState('W') & 0x8000) {
-	//	x += 1;
-	//}
-	//if (GetAsyncKeyState('S') & 0x8000) {
-	//	x -= 1;
-	//}
 	//タイトルに戻るUI.
 	m_pScrollUI[0]->SetPosition(D3DXVECTOR3(788, 683.f, 0.f));
 	m_pScrollUI[0]->SetRotation(D3DXVECTOR3(0.f,0.f,0.f));
