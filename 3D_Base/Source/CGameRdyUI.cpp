@@ -19,23 +19,23 @@ CGameRdyUI::CGameRdyUI()
 	//手の最大数分(4).
 	for (int i = 0; i < hand_Max; i++)
 	{
-		m_pRightHand[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Hand);		//手の画像.
-		m_pLeftHand[i]  = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Hand);		//手の画像.
-		m_pGamerdy[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);		//テキスト画像.
+		m_pRightHand[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Hand);			//手の画像.
+		m_pLeftHand[i]  = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Hand);			//手の画像.
+		m_pGamerdy[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);			//テキスト画像.
 	}
 	//テキスト最大数(3).
 	for (int i = 0; i < Text_Max; i++)
 	{
-		m_pTitleBackText[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);	//タイトルに戻るテキスト.
+		m_pTitleBackText[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);		//タイトルに戻るテキスト.
 	}
 	//フレームの最大数.
 	for (int i = 0; i < Frame_Max; i++)
 	{
-		m_pTextFrame[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TextFrame);	//テキストのフレーム.
+		m_pTextFrame[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TextFrame);		//テキストのフレーム.
 	}
-	m_pWhiteBack		= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_WhiteBack);			//白の背景画像.
-	m_pScroll			= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);				//巻物.
-	m_pSelectionFrame	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_SelectionFrame);		//セレクトフレーム.
+	m_pWhiteBack		= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_WhiteBack);		//白の背景画像.
+	m_pScroll			= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);			//巻物.
+	m_pSelectionFrame	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_SelectionFrame);	//セレクトフレーム.
 }
 
 CGameRdyUI::~CGameRdyUI()

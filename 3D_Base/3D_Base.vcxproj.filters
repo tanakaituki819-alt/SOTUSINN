@@ -148,6 +148,9 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI">
       <UniqueIdentifier>{bb8b9c38-e125-4553-b762-47c31b6d503b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\CollisionManager">
+      <UniqueIdentifier>{147ab572-1eab-4447-b250-ebd2163715b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
