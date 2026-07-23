@@ -205,7 +205,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_PauseOptions),		_T("Data\\Texture\\PauseOptions2.png"),		{ {1, 1, 1}, {490, 160}, {490, 160/2} } });
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),		_T("Data\\Texture\\water.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
-
+	//タイマー
+	Img_List.push_back({ static_cast<int>(enImagList::Img_RED),		_T("Data\\Texture\\RED.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];

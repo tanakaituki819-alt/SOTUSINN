@@ -26,6 +26,7 @@ public:
 		ALIGN16 D3DXVECTOR4	UV;			//UV座標（x,yのみ使用）.
 		ALIGN16 float fViewPortWidth;	//ビューポート幅.
 		ALIGN16 float fViewPortHeight;	//ビューポート高さ.
+		ALIGN16 float i;//用途によって違う
 	};
 	//頂点の構造体.
 	struct VERTEX
@@ -46,6 +47,7 @@ public:
 
 	//シェーダ作成.
 	HRESULT CreateShader();
+
 	//モデル作成.
 	HRESULT CreateModel();
 	HRESULT CreateModel2();
@@ -56,7 +58,7 @@ public:
 
 	//レンダリング用.
 	void Render();
-
+	void Render2(float i);
 	//座標情報を設定.
 	void SetPosition(const D3DXVECTOR3& Pos) {	m_Position = Pos;	}
 	//座標xを設定.
@@ -101,8 +103,13 @@ private:
 
 	ID3D11VertexShader*		m_pVertexShader;	//頂点シェーダ.
 	ID3D11InputLayout*		m_pVertexLayout;	//頂点レイアウト.
+
 	ID3D11PixelShader*		m_pPixelShader;		//ピクセルシェーダ.
 	ID3D11Buffer*			m_pConstantBuffer;	//コンスタントバッファ.
+
+	ID3D11PixelShader* m_pPixelShader2;		//ピクセルシェーダ.
+
+
 
 	ID3D11Buffer*			m_pVertexBuffer;	//頂点バッファ.
 

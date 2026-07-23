@@ -40,6 +40,7 @@ public:
 		Img_WhiteBack,			//白画像.
 		Img_TextFrame,			//テキストのフレーム.
 		Img_SelectionFrame,		//セレクトフレーム.
+		Img_RED,//タイマーの赤色
 		MAX
 	};
 	//ｘファイル

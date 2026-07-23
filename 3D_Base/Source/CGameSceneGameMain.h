@@ -4,6 +4,7 @@
 #include"CPlayer.h"
 #include"CIngredients.h"
 #include "CPauseUI.h"
+#include"CTimer.h"
 
 #include "CIngredientsmanager.h"
 class CGameSceneGameMain
@@ -29,6 +30,8 @@ private:
 	CPlayer* m_pPlayer[PlayerMax];
 
 	CIngredients* m_pCing;
+
+	CTimer* m_pTimer;
 
 	//ポーズ関連.
 	CPauseUI* m_pPauseUI;

@@ -151,6 +151,9 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CollisionManager">
       <UniqueIdentifier>{147ab572-1eab-4447-b250-ebd2163715b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\CTimer">
+      <UniqueIdentifier>{a19299eb-529e-4336-b7b6-8208b24884f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -297,6 +300,11 @@
     </ClCompile>
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CCollisionManager.cpp" />
+    <ClCompile Include="Source\CGameSceneWinnerResult.cpp" />
+    <ClCompile Include="Source\CTimer.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -447,6 +455,11 @@
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\CPauseUI.h" />
+    <ClInclude Include="Source\CCollisionManager.h" />
+    <ClInclude Include="Source\CGameSceneWinnerResult.h" />
+    <ClInclude Include="Source\CTimer.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">
