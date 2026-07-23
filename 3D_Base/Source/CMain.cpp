@@ -6,6 +6,11 @@
 //ウィンドウを画面中央で起動を有効にする.
 //#define ENABLE_WINDOWS_CENTERING
 
+//LoadPNGAsIconで使用している
+#include <gdiplus.h>
+#pragma comment(lib, "gdiplus.lib")
+
+
 //=================================================
 //	定数.
 //=================================================
@@ -28,6 +33,10 @@ CMain::CMain()
 {
 	m_pDx9 = new CDirectX9();
 	m_pDx11 = new CDirectX11();
+	// --- GDI+ の初期化（WinMainなどの最初で1回だけ呼ぶ） ---
+	ULONG_PTR gdiplusToken;
+	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
 }
 
 
@@ -160,16 +169,17 @@ HRESULT CMain::InitWindow(
 	WNDCLASSEX wc;
 	ZeroMemory( &wc, sizeof( wc ) );//初期化(0を設定).
 
-	wc.cbSize			= sizeof( wc );
-	wc.style			= CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc		= MsgProc;//WndProc;
-	wc.hInstance		= hInstance;
-	wc.hIcon			= LoadIcon( nullptr, IDI_APPLICATION );
-	wc.hCursor			= LoadCursor( nullptr, IDC_ARROW );
-	wc.hbrBackground	= (HBRUSH)GetStockObject( LTGRAY_BRUSH );
-	wc.lpszClassName	= APP_NAME;
-	wc.hIconSm			= LoadIcon( nullptr, IDI_APPLICATION );
-
+	wc.cbSize = sizeof(wc);
+	wc.style = CS_HREDRAW | CS_VREDRAW;
+	wc.lpfnWndProc = MsgProc;//WndProc;
+	wc.hInstance = hInstance;
+	//wc.hIcon = LoadIcon(nullptr, IDI_SHIELD);//下のアイコン
+	wc.hIcon = LoadPNGAsIcon(_T("Data\\ICON.png"));
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
+	wc.lpszClassName = APP_NAME;
+	wc.hIconSm = LoadIcon(nullptr, IDI_SHIELD);//ウインドウのアイコン
+	//wc.hIconSm = LoadPNGAsIcon(_T("Data\\ICON.png"));
 	//ウィンドウクラスをWindowsに登録.
 	if( !RegisterClassEx( &wc ) ) {
 		_ASSERT_EXPR( false, _T( "ウィンドウクラスの登録に失敗" ) );
@@ -279,4 +289,35 @@ LRESULT CALLBACK CMain::MsgProc(
 
 	//メインに返す情報.
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
+}
+
+HICON CMain::LoadPNGAsIcon(const wchar_t* filePath)
+{
+	HICON hIcon = nullptr;
+
+
+	// TCHAR(LPCTSTR) から GDI+ 用のワイド文字列(std::wstring)へ変換
+#ifdef UNICODE
+	// プロジェクトがUnicode設定ならそのまま使える
+	std::wstring wPath = filePath;
+#else
+	// プロジェクトがマルチバイト設定なら、ワイド文字列に変換する
+	std::wstring wPath;
+	int len = MultiByteToWideChar(CP_ACP, 0, filePath, -1, nullptr, 0);
+	if (len > 0) {
+		wPath.resize(len - 1);
+		MultiByteToWideChar(CP_ACP, 0, filePath, -1, &wPath[0], len);
+	}
+#endif
+
+	wPath = _T("Data\\ICON.png");
+	// 1. PNG画像を読み込む
+	Gdiplus::Bitmap* bitmap = Gdiplus::Bitmap::FromFile(wPath.c_str());
+	if (bitmap && bitmap->GetLastStatus() == Gdiplus::Ok) {
+		// 2. BitmapからHICON（アイコンハンドル）を作成
+		bitmap->GetHICON(&hIcon);
+		delete bitmap; // メモリ解放
+	}
+
+	return hIcon;
 }

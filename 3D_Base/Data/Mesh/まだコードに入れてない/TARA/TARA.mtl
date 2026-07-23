@@ -1,0 +1,16 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl tripo_mat_0c94e3ec-4eb2-4aab-8255-7874ec475857
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd tara_basecolor.JPEG
+map_Ns tara_roughness.JPEG
+map_Pr tara_roughness.JPEG
+map_refl tara_metallic.JPEG
+map_Pm tara_metallic.JPEG
+map_Bump -bm 1.000000 tara_normal.JPEG

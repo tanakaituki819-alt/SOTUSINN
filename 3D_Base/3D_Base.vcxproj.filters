@@ -278,8 +278,6 @@
     <ClCompile Include="Source\CGameRdyUI.cpp">
       <Filter>Source\CGameScene\CGameScenePlayerSetup\GameRdyUI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CIngredients.cpp" />
-    <ClCompile Include="Source\CIngredientsmanager.cpp" />
     <ClCompile Include="Source\Global.cpp" />
     <ClCompile Include="Source\CIngredientsmanager.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
@@ -289,6 +287,13 @@
     </ClCompile>
     <ClCompile Include="Source\CPlayerUI.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPauseUI.cpp" />
+    <ClCompile Include="Source\CIngredientsmanager.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CIngredients.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -438,6 +443,7 @@
     <ClInclude Include="Source\CPlayerUI.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\CPauseUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">

@@ -32,7 +32,8 @@ private:
 	static LRESULT CALLBACK MsgProc(
 		HWND hWnd, UINT uMsg,
 		WPARAM wParam, LPARAM lParam );
-
+	//PNGファイルをアイコンとして読み込む関数.
+	HICON LoadPNGAsIcon(const wchar_t* filePath);
 private:
 	HWND			m_hWnd;	//ウィンドウハンドル.
 	CDirectX9*		m_pDx9;	//DirectX9セットアップクラス.
