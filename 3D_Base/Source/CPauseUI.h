@@ -35,6 +35,7 @@ private:
 	CSprite2D* m_pPauseImg;							//箸休め画像
 	CSprite2D* m_pPauseOptionImg	[Option_MAX];	//箸休め中の選択肢.
 	CSprite2D* m_pPauseSelectionFrameImg;			//選択中の枠.
+	CSprite2D* m_pDimImg;							//暗幕.
 	enSelect m_Select;
 	bool m_Decided;			//決定フラグ
 	bool m_SticTitltOld;	//前フレームではスティックが倒れていたかどうか

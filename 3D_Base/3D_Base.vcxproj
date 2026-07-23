@@ -160,6 +160,7 @@
     <ClCompile Include="Source\CBarrgeEncounter.cpp" />
     <ClCompile Include="Source\CGameSceneGameMain.cpp" />
     <ClCompile Include="Source\CGameSceneTitle.cpp" />
+    <ClCompile Include="Source\CGameSceneWinnerResult.cpp" />
     <ClCompile Include="Source\CIngredientsmanager.cpp" />
     <ClCompile Include="Source\CNabe.cpp" />
     <ClCompile Include="Source\CIngredients.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Source\CGameScene.h" />
     <ClInclude Include="Source\CGameSceneGameMain.h" />
     <ClInclude Include="Source\CGameSceneTitle.h" />
+    <ClInclude Include="Source\CGameSceneWinnerResult.h" />
     <ClInclude Include="Source\CIngredientsmanager.h" />
     <ClInclude Include="Source\CNabe.h" />
     <ClInclude Include="Source\CIngredients.h" />
