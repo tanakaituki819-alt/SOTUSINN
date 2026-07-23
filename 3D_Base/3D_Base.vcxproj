@@ -204,6 +204,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\WinMain.cpp" />
+    <ClCompile Include="Source\CWinnerResultUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CBarrgeEncounter.h" />
@@ -260,6 +261,7 @@
     <ClInclude Include="Source\RawInput.h" />
     <ClInclude Include="Source\stdafx.h" />
     <ClInclude Include="Source\tiny_obj_loader.h" />
+    <ClInclude Include="Source\CWinnerResultUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\DebugText.hlsl">

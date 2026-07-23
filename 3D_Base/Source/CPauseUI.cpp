@@ -68,7 +68,7 @@ CPauseUI::~CPauseUI()
 void CPauseUI::Update()
 {
 
-#if 1
+#if 0
 	//実行中に動かすやつ
 	static float ananana=0;
 	static float ananana2=0;
@@ -166,7 +166,6 @@ void CPauseUI::Draw()
 	m_pDimImg->SetCOLOR({ 0.f, 0.f, 0.f });   //黒.
 	m_pDimImg->SetAlpha(0.6f);
 	m_pDimImg->Render();
-
 
 	//箸休め中画像
 	m_pPauseImg->SetPosition(D3DXVECTOR3(PausePosX, PausePosY, 1.f));

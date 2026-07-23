@@ -40,6 +40,8 @@ public:
 		Img_WhiteBack,			//白画像.
 		Img_TextFrame,			//テキストのフレーム.
 		Img_SelectionFrame,		//セレクトフレーム.
+		IMG_WinnerText,			//あっぱれ.
+		IMG_WinnerFont,			//背景の色付きプレイヤーフォント
 		Img_RED,//タイマーの赤色
 		MAX
 	};

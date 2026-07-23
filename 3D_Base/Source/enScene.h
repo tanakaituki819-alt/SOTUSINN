@@ -7,6 +7,5 @@ enum class enScene
 	BeforeGame,		//ゲーム前
 	PlayerSetUp,	//プレイヤーコントローラー接続画面.
 	GameMain,		//ゲーム中
-	GameOver,		//ゲームオーバー
-	GameClear,		//ゲームクリア
+	WinnnerResult,	//勝利者リザルト.
 };
