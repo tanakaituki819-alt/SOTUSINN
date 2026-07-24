@@ -32,7 +32,7 @@ void CTimer::Draw()
 	std::cout << m_TimeCount / 60;
 	std::cout << "__";
 	std::cout << static_cast<float>(m_TimeCount) / static_cast<float>(m_TimeMAX) << std::endl;
-
+	std::system("cls");
 
 	m_pbefore->Render2(static_cast<float>(m_TimeCount)/ static_cast<float>(m_TimeMAX));
 }

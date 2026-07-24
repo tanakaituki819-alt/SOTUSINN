@@ -3,7 +3,7 @@
 CPlayer::CPlayer()
 	: MyController		()
 {
-	m_pMesh =CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::ROBO);
+
 	m_Rotation.y = D3DXToRadian(90);
 	m_Cousor = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_Cusoru);
 	Score = 0;
@@ -72,7 +72,7 @@ void CPlayer::Update()
 
 void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
-	m_pMesh->SetisCOLOR(true);
+	//m_pMesh->SetisCOLOR(true);
 	//回収状態じゃないなら.
 	if (!m_IsCollecting) {
 		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす

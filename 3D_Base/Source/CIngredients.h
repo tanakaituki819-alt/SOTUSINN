@@ -8,6 +8,19 @@ enum class Ingredients {
 	NIKU,
 	NINZIN,
 	DAIKON,
+	ENOKI,//エノキ
+	HAKUSAI1,//白菜
+	HAKUSEI2,//白菜
+	KANI,//かに
+	KUMANOTE,//クマの手
+	NEGI,//ねぎ
+	ROBUSTER,//ロブスター
+	SAKANA,//リュウグウノツカイ
+	SITAKE,//シイタケ
+	TAI,//タイ
+	TARA,//タラ
+	TOUHU,//豆腐
+	UINNER,//ウインナー
 	MAX
 };
 
@@ -38,6 +51,6 @@ protected:
 	Ingredients IngredientsNo;
 	int Score ;
 	CNabe* Nabe;
-	IngredientsSetting IngredientsSetting[static_cast<int>(Ingredients::MAX)];
+	 IngredientsSetting IngredientsSetting[static_cast<int>(Ingredients::MAX)];
 
 };

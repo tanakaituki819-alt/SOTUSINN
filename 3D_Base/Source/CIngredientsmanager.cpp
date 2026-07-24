@@ -50,6 +50,7 @@ void CIngredientsmanager::Update()
 
 void CIngredientsmanager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
+
 	for (int i = 0; i < m_pIngredients.size(); i++) {
 	//	if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Live || AllBullet[i]->GetCharStatus() == enCharStatus::Dying) {
 			m_pIngredients[i]->Draw(View, Proj, Light, Camera);
@@ -73,7 +74,13 @@ void CIngredientsmanager::Create()
 	CIngredients* now = new CIngredients;
 	now->SetNabe(Nabe);
 	now->SetPosition({static_cast<FLOAT>( rand() % 100+1)/100,5,static_cast<FLOAT>(rand() % 100+1) / 100 });
-	now->SetIngredients(rand()%4);
+	static int c = -1;
+	c++;
+	if (c>=17) {
+		c = 0;
+	}
+
+	now->SetIngredients(c);
 	m_pIngredients.push_back(now);
 
 

@@ -232,15 +232,34 @@ void CSpriteManager::Load3D()
 
 	std::vector<StaticMeshList>MeshObjList;
 	//オブジェファイルの読み込み
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Grassland),_T("Data\\Mesh\\Obj\\Grassland\\Grassland.obj") });
-	MeshObjList.push_back({ static_cast<int>(enMeshObjList::ROBO),_T("Data\\Mesh\\Obj\\ROBO\\RobotooFrito.obj") });
+
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::NABE),_T("Data\\Mesh\\Obj\\NABE\\NABE.obj") });
 
 	//
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_NIKU),_T("Data\\Mesh\\Obj\\Syokuzai\\NIKU\\NIKU.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_NINZIN),_T("Data\\Mesh\\Obj\\Syokuzai\\NINZIN\\NINZIN.obj") });
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_DAIKON),_T("Data\\Mesh\\Obj\\Syokuzai\\DAIKON\\DAIKON.obj") });
+
+
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_ENOKI),_T("Data\\Mesh\\Obj\\Syokuzai\\ENOKI\\ENOKI.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_HAKUSAI1),_T("Data\\Mesh\\Obj\\Syokuzai\\HAKUSAI1\\HAKUSAI.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_HAKUSAI2),_T("Data\\Mesh\\Obj\\Syokuzai\\HAKUSAI2\\HAKUSAI.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_KANI),_T("Data\\Mesh\\Obj\\Syokuzai\\KANI\\Untitled.obj") });
+
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_KUMANOTE),_T("Data\\Mesh\\Obj\\Syokuzai\\KUMANOTE\\KUMANOTE.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_NEGI),_T("Data\\Mesh\\Obj\\Syokuzai\\NEGI\\NEGI.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_ROBUSTER),_T("Data\\Mesh\\Obj\\Syokuzai\\ROBUSTER\\ROBUSTER.obj") });
+
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_SAKANA),_T("Data\\Mesh\\Obj\\Syokuzai\\SAKANA\\SAKANA.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_SITAKE),_T("Data\\Mesh\\Obj\\Syokuzai\\SITAKE\\Untitled.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_TAI),_T("Data\\Mesh\\Obj\\Syokuzai\\TAI\\TAI.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_TARA),_T("Data\\Mesh\\Obj\\Syokuzai\\TARA\\TARA.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_TOUHU),_T("Data\\Mesh\\Obj\\Syokuzai\\TOUHU\\TOUHU.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::S_UINNER),_T("Data\\Mesh\\Obj\\Syokuzai\\UINNER\\UINNER.obj") });
+
+
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Chopsticks),_T("Data\\Mesh\\Obj\\Chopsticks\\HaSi.obj") });
+
 
 
 	for (int i = 0;i < MeshObjList.size();i++) {

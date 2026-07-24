@@ -256,4 +256,5 @@ void RawInput::upd()
     //使うならしたのだけでいい
     ////std::cout << MouseMove.x << std::endl;
     ////std::cout << MouseMove.y << std::endl;
+    //std::system("cls");//コンソールのリセット
 }

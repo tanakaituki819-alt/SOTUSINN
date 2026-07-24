@@ -8,6 +8,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 1.000000
 illum 2
-map_Kd 変換前/TofuFBX/textures/TofuFBX_basecolor.JPEG
-map_Ns 変換前/TofuFBX/textures/TofuFBX_roughness.JPEG
-map_Bump -bm 1.000000 変換前/TofuFBX/textures/TofuFBX_normal.JPEG
+map_Kd textures/TofuFBX_basecolor.JPEG
+map_Ns textures/TofuFBX_roughness.JPEG
+map_Bump -bm 1.000000 textures/TofuFBX_normal.JPEG
