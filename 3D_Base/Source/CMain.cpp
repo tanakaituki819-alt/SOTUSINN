@@ -129,7 +129,8 @@ void CMain::Loop()
 	float Rate = 0.0f;	//レート.
 	DWORD sync_old = timeGetTime();			//過去時間.
 	DWORD sync_now;							//現在時間.
-
+	DWORD i = 0;
+	int c = 0;
 	//時間処理のため、最小単位を1ミリ秒に変更.
 	timeBeginPeriod( 1 );
 	Rate = 1000.0f / static_cast<float>(FPS); //理想時間を算出.
@@ -149,11 +150,22 @@ void CMain::Loop()
 		}
 		else if( sync_now - sync_old >= Rate )
 		{
+			i += sync_now - sync_old;
 			sync_old = sync_now;	//現在時間に置き換え.
 
 			//更新処理.
 			Update();
+
+			if (i >= 1000)	//1秒経過.
+			{
+				std::cout << c << std::endl;
+				i = 0;	//現在の時間に更新.
+				c = 0;
+			}
+			c++;	//フレーム数UP.
+
 		}
+
 	}
 	//アプリケーションの終了.
 	Release();
