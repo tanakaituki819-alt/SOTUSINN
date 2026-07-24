@@ -17,9 +17,9 @@ public:
 	enum class enImagList
 	{
 		Img_TITLE=0,
-		Img_Fad,//フェード
-		IMG_Shutter,//シャッター
-		Digit0_9,//0-9まで;
+		Img_Fad,				//フェード
+		IMG_Shutter,			//シャッター
+		Digit0_9,				//0-9まで;
 		Img_Playerfont,			//プレイヤーフォント.
 		Img_Playericon,			//プレイヤーアイコン
 		Img_PlayerBackground,	//プレイヤーバックグラウンド.

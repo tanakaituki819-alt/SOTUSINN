@@ -5,10 +5,12 @@
 #include"Effect.h"
 CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 :CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
-	, m_pGround		( nullptr )
-	, m_pPlayer		(  )
-	, m_pPauseUI	( nullptr )
-	, m_Pause		( false )
+	, m_pGround				( nullptr )
+	, m_pPlayer				(  )
+	, m_pCollisionManager	()
+	, m_pPauseUI			( nullptr )
+	, m_Pause				( false )
+
 {
 
 	//カメラ座標.
@@ -16,13 +18,9 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pCamera->SetLookPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pCamera->SetUpVec(D3DXVECTOR3(0.f, 0.f, 1.f));//前が上
 	//ライト情報.
-
 	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	// ライト方向.
 	m_Light.fIntensity = 1;//	ライトパワー
 
-
-	
-	
 	m_pGround = new CNabe();
 	for (int i = 0;i < PlayerMax;i++) {
 		CONTROLA[i] = new CXInput(i);
@@ -30,17 +28,21 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 		m_pPlayer[i]->SetXInput(CONTROLA[i]);
 		m_pPlayer[i]->SetPlayerNo(i);
 	}
-
-
-	//エフェクト
+	//エフェクト.
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
-
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 
 	m_pCing = new CIngredients();
 
+	//当たり判定クラス.
+	m_pCollisionManager = new CCollisionManager();
+	for (int i = 0; i < PlayerMax; i++) {
+		m_pCollisionManager->SetPlyaer(*m_pPlayer[i],i);	//プレイヤー数分セット.
+	
+	}
+	
 	//ポーズUIの生成とコントローラーをセット.
 	m_pPauseUI = new CPauseUI();
 	m_pPauseUI->SetXInput(CONTROLA[0]);
@@ -50,15 +52,17 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	m_pTimer = new CTimer();
 	m_pTimer->SetTime(150 * 60);
+	m_pCollisionManager->SetIngredients(*m_pCingM);		//具材マネージャーセット
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
 {
 	SAFE_DELETE(m_pTimer);
 	SAFE_DELETE(m_pPauseUI);
+	SAFE_DELETE(m_pCollisionManager);
 
 	SAFE_DELETE(m_pGround);
-	for (int i = 0;i < PlayerMax;i++) {
+	for (int i = 0; i < PlayerMax; i++ ) {
 		SAFE_DELETE(m_pPlayer[i]);
 	}
 }
@@ -68,7 +72,7 @@ void CGameSceneGameMain::Update()
 	for (int i = 0;i < PlayerMax;i++) {
 		CONTROLA[i]->Update();
 	}
-
+	m_pCollisionManager->Update();
 	//1Pがスタートボタンをしたらポーズ.
 	if (CONTROLA[0]->IsDown(CXInput::START, true))
 	{

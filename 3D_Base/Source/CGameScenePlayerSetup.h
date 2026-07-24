@@ -23,10 +23,10 @@ public:
 
 
 private:
-	CUIObject*		m_pBackImg;
-	CCharacterUI*	m_pCharacterUI;
-	CPlayerSetupUI* m_pPlayerSetupUI;
-	CGameRdyUI*		m_pGameRdyUI;
-	CXInput*		m_pController[Controller_Max];
+	CUIObject*		m_pBackImg						= nullptr;
+	CCharacterUI*	m_pCharacterUI					= nullptr;
+	CPlayerSetupUI* m_pPlayerSetupUI				= nullptr;
+	CGameRdyUI*		m_pGameRdyUI					= nullptr;
+	CXInput*		m_pController[Controller_Max]   = {};
 };
 

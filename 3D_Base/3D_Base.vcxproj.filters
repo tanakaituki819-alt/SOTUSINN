@@ -306,6 +306,12 @@
     <ClCompile Include="Source\CTimer.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CIngredientsmanager.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CIngredients.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CDirectX11.h">

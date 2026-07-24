@@ -4,6 +4,7 @@
 #include"CPlayer.h"
 #include"CIngredients.h"
 #include "CPauseUI.h"
+#include "CCollisionManager.h"
 #include"CTimer.h"
 
 #include "CIngredientsmanager.h"
@@ -32,6 +33,9 @@ private:
 	CIngredients* m_pCing;
 
 	CTimer* m_pTimer;
+
+	//当たり判定クラス.
+	CCollisionManager* m_pCollisionManager;
 
 	//ポーズ関連.
 	CPauseUI* m_pPauseUI;
