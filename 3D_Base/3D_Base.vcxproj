@@ -160,6 +160,7 @@
     <ClCompile Include="Source\CBarrgeEncounter.cpp" />
     <ClCompile Include="Source\CGameSceneGameMain.cpp" />
     <ClCompile Include="Source\CGameSceneTitle.cpp" />
+    <ClCompile Include="Source\CGameSceneWinnerResult.cpp" />
     <ClCompile Include="Source\CIngredientsmanager.cpp" />
     <ClCompile Include="Source\CNabe.cpp" />
     <ClCompile Include="Source\CIngredients.cpp" />
@@ -190,6 +191,7 @@
     <ClCompile Include="Source\CStaticMeshObject.cpp" />
     <ClCompile Include="Source\CStaticMeshObjObject.cpp" />
     <ClCompile Include="Source\CStaticObjMesh.cpp" />
+    <ClCompile Include="Source\CTimer.cpp" />
     <ClCompile Include="Source\CUIObject.cpp" />
     <ClCompile Include="Source\CFadeSceneTransition.cpp" />
     <ClCompile Include="Source\CXInput.cpp" />
@@ -202,6 +204,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Source\WinMain.cpp" />
+    <ClCompile Include="Source\CWinnerResultUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CBarrgeEncounter.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="Source\CGameScene.h" />
     <ClInclude Include="Source\CGameSceneGameMain.h" />
     <ClInclude Include="Source\CGameSceneTitle.h" />
+    <ClInclude Include="Source\CGameSceneWinnerResult.h" />
     <ClInclude Include="Source\CIngredientsmanager.h" />
     <ClInclude Include="Source\CNabe.h" />
     <ClInclude Include="Source\CIngredients.h" />
@@ -245,6 +249,7 @@
     <ClInclude Include="Source\CStaticMeshObject.h" />
     <ClInclude Include="Source\CStaticMeshObjObject.h" />
     <ClInclude Include="Source\CStaticObjMesh.h" />
+    <ClInclude Include="Source\CTimer.h" />
     <ClInclude Include="Source\CUIObject.h" />
     <ClInclude Include="Source\CFadeSceneTransition.h" />
     <ClInclude Include="Source\CXInput.h" />
@@ -256,6 +261,7 @@
     <ClInclude Include="Source\RawInput.h" />
     <ClInclude Include="Source\stdafx.h" />
     <ClInclude Include="Source\tiny_obj_loader.h" />
+    <ClInclude Include="Source\CWinnerResultUI.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\DebugText.hlsl">

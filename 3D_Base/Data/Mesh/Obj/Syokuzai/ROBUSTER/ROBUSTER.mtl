@@ -1,0 +1,16 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl tripo_mat_d4c023ed-2340-455d-8687-f832e89683c5
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd lobster_basecolor.JPEG
+map_Ns lobster_roughness.JPEG
+map_Pr lobster_roughness.JPEG
+map_refl lobster_metallic.JPEG
+map_Pm lobster_metallic.JPEG
+map_Bump -bm 1.000000 lobster_normal.JPEG

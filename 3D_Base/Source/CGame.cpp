@@ -2,6 +2,7 @@
 #include"CGameSceneTitle.h"
 #include"CGameSceneGameMain.h"
 #include "CGameScenePlayerSetup.h"
+#include "CGameSceneWinnerResult.h"
 
 #include "enScene.h"
 #include "CSoundManager.h"
@@ -42,6 +43,7 @@ void CGame::Create()
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
 	m_pGeamScene = new CGameSceneGameMain(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+//	m_pGeamScene = new CGameSceneWinnerResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
 }
 
 //ロードデータ関数.
@@ -149,17 +151,25 @@ void CGame::ChangeScene()
 			SAFE_DELETE(m_pGeamScene);
 			m_pGeamScene = new CGameSceneTitle(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
 			break;
-	
+			//ゲームメインに変わるとき
 		case enScene::GameMain:
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
 			m_pGeamScene = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
 			break;
+			//プレイヤーセットアップに変わるとき
 		case enScene::PlayerSetUp:
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
 			m_pGeamScene = new CGameScenePlayerSetup(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
 			break;
+			//勝利者リザルトに変わるとき.
+		case enScene::WinnnerResult:
+			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
+			SAFE_DELETE(m_pGeamScene);
+			m_pGeamScene = new CGameSceneWinnerResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			break;
+			
 
 		}
 	

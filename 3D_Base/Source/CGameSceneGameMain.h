@@ -5,6 +5,7 @@
 #include"CIngredients.h"
 #include "CPauseUI.h"
 #include "CCollisionManager.h"
+#include"CTimer.h"
 
 #include "CIngredientsmanager.h"
 class CGameSceneGameMain
@@ -30,6 +31,8 @@ private:
 	CPlayer* m_pPlayer[PlayerMax];
 
 	CIngredients* m_pCing;
+
+	CTimer* m_pTimer;
 
 	//当たり判定クラス.
 	CCollisionManager* m_pCollisionManager;

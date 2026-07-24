@@ -3,7 +3,7 @@
 CPlayer::CPlayer()
 	: MyController		()
 {
-	m_pMesh =CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::ROBO);
+
 	m_Rotation.y = D3DXToRadian(90);
 	m_Cousor = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_Cusoru);
 	Score = 0;

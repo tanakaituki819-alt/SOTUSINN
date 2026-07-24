@@ -242,6 +242,39 @@ HRESULT CSprite2D::CreateShader()
 	}
 	SAFE_RELEASE( pCompiledShader );
 
+	//HLSLからピクセルシェーダのブロブを作成.
+	if (FAILED(
+		D3DX11CompileFromFile(
+			SHADER_NAME,		//シェーダファイル名（HLSLファイル）.
+			nullptr,			//マクロ定義の配列へのポインタ（未使用）.
+			nullptr,			//インクルードファイルを扱うインターフェイスへのポインタ（未使用）.
+			"PS_Main2",			//シェーダエントリーポイント関数の名前.
+			"ps_5_0",			//シェーダのモデルを指定する文字列（プロファイル）.
+			uCompileFlag,		//シェーダコンパイルフラグ.
+			0,					//エフェクトコンパイルフラグ（未使用）.
+			nullptr,			//スレッド ポンプ インターフェイスへのポインタ（未使用）.
+			&pCompiledShader,	//ブロブを格納するメモリへのポインタ.
+			&pErrors,			//エラーと警告一覧を格納するメモリへのポインタ.
+			nullptr)))			//戻り値へのポインタ（未使用）.
+	{
+		_ASSERT_EXPR(false, _T("hlsl読み込み失敗"));
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pErrors);
+
+	//上記で作成したブロブから「ピクセルシェーダ」を作成.
+	if (FAILED(
+		m_pDevice11->CreatePixelShader(
+			pCompiledShader->GetBufferPointer(),
+			pCompiledShader->GetBufferSize(),
+			nullptr,
+			&m_pPixelShader2)))	//(out)ピクセルシェーダ.
+	{
+		_ASSERT_EXPR(false, _T("ピクセルシェーダ作成失敗"));
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pCompiledShader);
+
 	//コンスタント（定数）バッファ作成.
 	//シェーダに特定の数値を送るバッファ.
 	D3D11_BUFFER_DESC cb;
@@ -514,6 +547,107 @@ void CSprite2D::Render()
 
 	//アルファブレンド無効にする.
 	m_pDx11->SetAlphaBlend( false );
+
+}
+void CSprite2D::Render2(float i)
+{
+	//ワールド行列.
+	D3DXMATRIX	mWorld;
+	D3DXMATRIX	mTrans, mRot, mScale;
+
+	//拡大縮小行列.
+	D3DXMatrixScaling(&mScale,
+		m_Scale.x, m_Scale.y, m_Scale.z);
+
+	//回転行列.
+	D3DXMATRIX mYaw, mPitch, mRoll;
+	D3DXMatrixRotationY(&mYaw, m_Rotation.y);
+	D3DXMatrixRotationX(&mPitch, m_Rotation.x);
+	D3DXMatrixRotationZ(&mRoll, m_Rotation.z);
+	mRot = mYaw * mPitch * mRoll;
+	//※Yaw, Pitch, Roll の掛ける順番を変えると結果も変わる.
+
+	//平行行列（平行移動）.
+	D3DXMatrixTranslation(&mTrans,
+		m_Position.x, m_Position.y, m_Position.z);
+
+	//ワールド座標変換.
+	//重要: 拡縮行列 * 回転行列 * 平行行列.
+	mWorld = mScale * mRot * mTrans;
+
+	//使用するシェーダの登録.
+	m_pContext11->VSSetShader(m_pVertexShader, nullptr, 0);
+	m_pContext11->PSSetShader(m_pPixelShader2, nullptr, 0);
+
+	//シェーダのコンスタントバッファに各種データを渡す.
+	D3D11_MAPPED_SUBRESOURCE pData;
+	SHADER_CONSTANT_BUFFER cb;	//コンスタントバッファ.
+	//バッファ内のデータの書き換え開始時にmap.
+	if (SUCCEEDED(
+		m_pContext11->Map(m_pConstantBuffer,
+			0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
+	{
+		//ワールド行列を渡す.
+		D3DXMATRIX m = mWorld;
+		D3DXMatrixTranspose(&m, &m);	//行列を転置する.
+		cb.mWorld = m;
+
+		//カラー.
+		cb.Color;
+		if (isCOLOR) {
+			cb.Color.x = COLOR.x;
+			cb.Color.y = COLOR.y;
+			cb.Color.z = COLOR.z;
+			cb.Color.w = m_Alpha;
+		}
+		else {
+			cb.Color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
+		}
+		//テクスチャ座標(UV座標).
+		//１マスあたりの割合にパターン番号(マス目)をかけて座標を設定する.
+		cb.UV.x = m_SpriteState.Stride.w / m_SpriteState.Base.w
+			* static_cast<float>(m_PatternNo.x);
+		cb.UV.y = m_SpriteState.Stride.h / m_SpriteState.Base.h
+			* static_cast<float>(m_PatternNo.y);
+
+		//ビューポートの幅、高さを渡す.
+		cb.fViewPortWidth = static_cast<float>(WND_W);
+		cb.fViewPortHeight = static_cast<float>(WND_H);
+		cb.i = i;
+		memcpy_s(pData.pData, pData.RowPitch,
+			(void*)(&cb), sizeof(cb));
+
+		m_pContext11->Unmap(m_pConstantBuffer, 0);
+	}
+
+	//このコンスタントバッファをどのシェーダで使うか？.
+	m_pContext11->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pContext11->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+
+	//頂点バッファをセット.
+	UINT stride = sizeof(VERTEX);	//データの間隔.
+	UINT offset = 0;
+	m_pContext11->IASetVertexBuffers(0, 1,
+		&m_pVertexBuffer, &stride, &offset);
+
+	//頂点インプットレイアウトをセット.
+	m_pContext11->IASetInputLayout(m_pVertexLayout);
+	//プリミティブ・トポロジーをセット.
+	m_pContext11->IASetPrimitiveTopology(
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	//テクスチャをシェーダに渡す.
+	m_pContext11->PSSetSamplers(0, 1, &m_pSampleLinear);
+	m_pContext11->PSSetShaderResources(0, 1, &m_pTexture);
+
+	//アルファブレンド有効にする.
+	m_pDx11->SetAlphaBlend(true);
+
+	//プリミティブをレンダリング.
+	m_pContext11->Draw(4, 0);//板ポリ（頂点4つ分）.
+
+	//アルファブレンド無効にする.
+	m_pDx11->SetAlphaBlend(false);
 
 }
 

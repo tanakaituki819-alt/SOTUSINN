@@ -1,0 +1,16 @@
+# Blender 5.0.1 MTL File: 'None'
+# www.blender.org
+
+newmtl tripo_mat_9787acbe-f357-474d-bb8d-d09bfcc5f452
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd HAKUSAI_basecolor.JPEG
+map_Ns HAKUSAI_roughness.JPEG
+map_Pr HAKUSAI_roughness.JPEG
+map_refl HAKUSAI_metallic.JPEG
+map_Pm HAKUSAI_metallic.JPEG
+map_Bump -bm 1.000000 HAKUSAI_normal.JPEG

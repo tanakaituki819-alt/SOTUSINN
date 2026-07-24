@@ -253,6 +253,8 @@ void RawInput::upd()
     FILE* pFile;
     //stdout（標準出力）を新しく作成したコンソールにリダイレクト
     freopen_s(&pFile, "CONOUT$", "w", stdout);
+    //使うならしたのだけでいい
     ////std::cout << MouseMove.x << std::endl;
     ////std::cout << MouseMove.y << std::endl;
+    //std::system("cls");//コンソールのリセット
 }

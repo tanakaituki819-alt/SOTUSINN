@@ -15,8 +15,23 @@ CIngredients::CIngredients()
 
 	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::S_NIKU),0.3,{1,1,1},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::NIKU)] = { CS::GetObjMesh(OL::S_NIKU),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] = { CS::GetObjMesh(OL::S_DAIKON),0,{1,1,1},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)] = { CS::GetObjMesh(OL::S_NINZIN),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] = { CS::GetObjMesh(OL::S_DAIKON),0,{1,1,1},10 };
+	
+	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)] = { CS::GetObjMesh(OL::S_ENOKI),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] = { CS::GetObjMesh(OL::S_HAKUSAI1),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] = { CS::GetObjMesh(OL::S_HAKUSAI2),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::KANI)] = { CS::GetObjMesh(OL::S_KANI),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::NEGI)] = { CS::GetObjMesh(OL::S_NEGI),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)] = { CS::GetObjMesh(OL::S_SAKANA),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)] = { CS::GetObjMesh(OL::S_SITAKE),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::TAI)] = { CS::GetObjMesh(OL::S_TAI),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::TARA)] = { CS::GetObjMesh(OL::S_TARA),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)] = { CS::GetObjMesh(OL::S_TOUHU),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::UINNER)] = { CS::GetObjMesh(OL::S_UINNER),0,{1,1,1},10 };
+
 }
 
 CIngredients::~CIngredients()

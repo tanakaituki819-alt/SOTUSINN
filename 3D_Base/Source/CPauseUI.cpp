@@ -48,23 +48,27 @@ CPauseUI::CPauseUI()
 
 	//選択中の枠画像の取得.
 	m_pPauseSelectionFrameImg = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_SelectionFrame);
+	
+	//背景
+	m_pDimImg = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Fad);
 }
 
 CPauseUI::~CPauseUI()
 {
 	//画像はここでは初期化しない.
-	m_pPauseImg			= nullptr;
+	m_pPauseImg	= nullptr;
 	for (int i = 0; i < Option_MAX; i++)
 	{
 		m_pPauseOptionImg[i] = nullptr;
 	}
 	m_pPauseSelectionFrameImg = nullptr;
+	m_pDimImg = nullptr;
 }
 
 void CPauseUI::Update()
 {
 
-#if 1
+#if 0
 	//実行中に動かすやつ
 	static float ananana=0;
 	static float ananana2=0;
@@ -150,10 +154,18 @@ void CPauseUI::Update()
 void CPauseUI::Draw()
 {
 	//読み込めてないなら消え失せろ
-	if (m_pPauseImg == nullptr || m_pPauseOptionImg[0] == nullptr || m_pPauseOptionImg[1] == nullptr)
+	if (m_pPauseImg == nullptr || m_pPauseOptionImg[0] == nullptr || m_pPauseOptionImg[1] == nullptr|| m_pPauseSelectionFrameImg == nullptr)
 	{
 		return;
 	}
+
+	//ポーズ中はゲームメインを暗くするための画像.
+	m_pDimImg->SetPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
+	m_pDimImg->SetScale(D3DXVECTOR3(WND_W, WND_H, 0.f));
+	m_pDimImg->SetisCOLOR(true);
+	m_pDimImg->SetCOLOR({ 0.f, 0.f, 0.f });   //黒.
+	m_pDimImg->SetAlpha(0.6f);
+	m_pDimImg->Render();
 
 	//箸休め中画像
 	m_pPauseImg->SetPosition(D3DXVECTOR3(PausePosX, PausePosY, 1.f));

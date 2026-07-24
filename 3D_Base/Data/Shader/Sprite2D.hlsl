@@ -16,6 +16,7 @@ cbuffer per_mesh : register( b0 )	//レジスタ番号.
 	float4	g_UV		: packoffset(c5);	//UV座標（xyしか使わない）.
 	float	g_ViewPortW	: packoffset(c6);	//ビューポート幅.
     float	g_ViewPortH	: packoffset(c7);	//ビューポート高さ.
+    float   g_i : packoffset(c8); //
 };
 
 //頂点シェーダの出力パラメータ.
@@ -62,4 +63,37 @@ float4 PS_Main( VS_OUTPUT input ) : SV_Target
 	color.a *= g_Color.a;
 
 	return color;
+}
+
+
+float4 PS_Main2(VS_OUTPUT input) : SV_Target
+{
+	
+	
+    float4 color = g_Texture.Sample(g_samLinear, input.UV); //色を返す.
+	
+    float2 Senter = input.UV - (0.5, 0.5);
+	// 円の外側を切り抜く場合（半径0.5の円）
+    if (length(Senter) > 0.5)
+    {
+        discard; // 円の外側は描画しない
+    }
+    // 12時の方向（真上）から時計回りに進めたい場合の計算:
+    float angle = atan2(Senter.x, -Senter.y);
+	
+	//角度を 0.0 ～ 1.0 の範囲に正規化 (0.0が真上、0.5が真下、1.0が一周)
+    float normalizedAngle = (angle + 3.141592) / (2.0 * 3.141592);
+	
+    if (normalizedAngle >1- g_i)
+    {
+        discard; // 判定範囲外ならピクセルを棄却
+    }
+	
+    color.r *= g_Color.r;
+    color.g *= g_Color.g;
+    color.b *= g_Color.b;
+	//プログラム制御のα値をテクスチャが持っているα値にかけ合わせる.
+    color.a *= g_Color.a;
+
+    return color;
 }

@@ -49,12 +49,15 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	m_pCingM = new CIngredientsmanager();
 	m_pCingM->SetNabe(m_pGround);
+
+	m_pTimer = new CTimer();
+	m_pTimer->SetTime(150 * 60);
 	m_pCollisionManager->SetIngredients(*m_pCingM);		//具材マネージャーセット
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
 {
-
+	SAFE_DELETE(m_pTimer);
 	SAFE_DELETE(m_pPauseUI);
 	SAFE_DELETE(m_pCollisionManager);
 
@@ -125,7 +128,7 @@ void CGameSceneGameMain::Update()
 	if (GetAsyncKeyState('C') & 0x8000) {
 		m_pCingM->Create();
 	}
-
+	m_pTimer->Update();
 	//Effect::SetRotation(handle, D3DXVECTOR3(0.f,D3DXToRadian(i), 0.f));
 	UpdateBSpherePos();
 
@@ -162,6 +165,7 @@ void CGameSceneGameMain::Draw()
 	for (int i = 0;i < PlayerMax;i++) {
 		m_pPlayer[i]->DrawUI();
 	}
+	m_pTimer->Draw();
 
 	//ポーズ
 	if (m_Pause)

@@ -40,6 +40,9 @@ public:
 		Img_WhiteBack,			//白画像.
 		Img_TextFrame,			//テキストのフレーム.
 		Img_SelectionFrame,		//セレクトフレーム.
+		IMG_WinnerText,			//あっぱれ.
+		IMG_WinnerFont,			//背景の色付きプレイヤーフォント
+		Img_RED,//タイマーの赤色
 		MAX
 	};
 	//ｘファイル
@@ -51,12 +54,23 @@ public:
 
 	enum class enMeshObjList
 	{
-		ROBO,//ロボット
-		Grassland,//草原
-		NABE,
-		S_NIKU,
-		S_NINZIN,
-		S_DAIKON,
+		NABE,//なべ
+		S_NIKU,//肉
+		S_NINZIN,//人参
+		S_DAIKON,//大根
+		S_ENOKI,//エノキ
+		S_HAKUSAI1,//白菜
+		S_HAKUSAI2,//白菜
+		S_KANI,//かに
+		S_KUMANOTE,//クマの手
+		S_NEGI,//ねぎ
+		S_ROBUSTER,//ロブスター
+		S_SAKANA,//リュウグウノツカイ
+		S_SITAKE,//シイタケ
+		S_TAI,//タイ
+		S_TARA,//タラ
+		S_TOUHU,//豆腐
+		S_UINNER,//ウインナー
 		Chopsticks,	//箸.
 		MAX
 	};
