@@ -77,7 +77,7 @@ void CPlayer::Update()
 
 void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
-	m_pMesh->SetisCOLOR(true);
+	/*m_pMesh->SetisCOLOR(true);*/
 	//回収状態じゃないかつマヒ状態じゃないなら.
 	if (!m_IsCollecting && !m_IsParalysis) {
 		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす
