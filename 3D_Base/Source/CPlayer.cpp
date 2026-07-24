@@ -63,6 +63,18 @@ void CPlayer::Update()
 		//マヒ中なら.
 		if (m_IsParalysis) {
 			Paralysis();	//マヒ動作.
+			//マヒUIが生成されていなければ.
+			if (!m_pPlayerParalysisUI) {
+				m_pPlayerParalysisUI = new CPlayerParalysisUI();	//インスタンス作成.
+				m_pPlayerParalysisUI->Paralysis(m_Position);		//プレイヤーのポジションを渡す.
+			}
+			m_pPlayerParalysisUI->Update();
+		}
+		else {
+			//マヒUIが生成されていれば.
+			if (m_pPlayerParalysisUI) {
+				SAFE_DELETE(m_pPlayerParalysisUI);	//破棄.
+			}
 		}
 		//スコア増加(仮).
 		if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
@@ -77,7 +89,6 @@ void CPlayer::Update()
 
 void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
-	/*m_pMesh->SetisCOLOR(true);*/
 	//回収状態じゃないかつマヒ状態じゃないなら.
 	if (!m_IsCollecting && !m_IsParalysis) {
 		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす
@@ -101,6 +112,13 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));
 			m_pChopsticks[i]->SetScale(2.f, 2.f, 2.f);
 			m_pChopsticks[i]->Draw(View, Proj, Light, Camera);
+		}
+	}
+	//マヒ中なら.
+	if (m_IsParalysis) {
+		//マヒUIが生成されていれば.
+		if (m_pPlayerParalysisUI) {
+			m_pPlayerParalysisUI->Draw(View, Proj);	//マヒUI描画
 		}
 	}
 }

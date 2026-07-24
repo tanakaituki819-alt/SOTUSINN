@@ -167,7 +167,7 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {11, 1}, {1, 1} } });
 	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {11, 1}, {1, 1} } });
 
-	//プレイヤーフォント.																									//表示幅高さ、元画像サイズ、切り取りサイズ.
+	//プレイヤーフォント.																									//初期サイズ、元画像サイズ、切り取りサイズ.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playerfont),		_T("Data\\Texture\\Playerfont.png"),		{ {1, 1, 1}, {196, 184}, {196, 184 / 4 } } });	
 	//キャラクターの顔差分.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playericon),		_T("Data\\Texture\\Playericon.png"),		{ {1, 1, 1}, {384, 384}, {96, 96   } } });
@@ -196,20 +196,21 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TextFrame),		_T("Data\\Texture\\TextFrame.png"),			{ {1, 1, 1}, {500, 200}, {500, 200 } },true });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_SelectionFrame),	_T("Data\\Texture\\SelectionFrame.png"),	{ {1, 1, 1}, {500, 200}, {500, 200 } },true });
 
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),		_T("Data\\Texture\\Cusoru.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),			_T("Data\\Texture\\Cusoru.png"),			{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),			_T("Data\\Texture\\Cusoru.png"),			{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	//箸休め中文字画像.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Pause),		_T("Data\\Texture\\Pause.png"),				{ {1, 1, 1}, {273, 75}, {273, 75} }});
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Pause),			_T("Data\\Texture\\Pause.png"),				{ {1, 1, 1}, {273, 75}, {273, 75} }});
 	//箸休め中の選択肢の画像.
-	Img_List.push_back({ static_cast<int>(enImagList::IMG_PauseOptions),		_T("Data\\Texture\\PauseOptions2.png"),		{ {1, 1, 1}, {490, 160}, {490, 160/2} } });
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_PauseOptions),	_T("Data\\Texture\\PauseOptions2.png"),		{ {1, 1, 1}, {490, 160}, {490, 160/2} } });
 
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),		_T("Data\\Texture\\water.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),			_T("Data\\Texture\\water.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	//タイマー
-	Img_List.push_back({ static_cast<int>(enImagList::Img_RED),		_T("Data\\Texture\\RED.png"),		{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
-
+	Img_List.push_back({ static_cast<int>(enImagList::Img_RED),				_T("Data\\Texture\\RED.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	//あっぱれの画像
-	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerText),		_T("Data\\Texture\\Winner.png"),		{ {1, 1, 1}, {260, 67}, {260, 67}} });
-	
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerText),		_T("Data\\Texture\\Winner.png"),			{ {1, 1, 1}, {260, 67},  {260, 67}} });
+	//ボタン.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush),		_T("Data\\Texture\\ButtonPush.png"),		{ {1, 1, 1}, {200, 700}, {200, 700 / 2 } }, true});
+
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
