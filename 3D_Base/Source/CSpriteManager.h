@@ -74,6 +74,7 @@ public:
 		S_TOUHU,//豆腐
 		S_UINNER,//ウインナー
 		Chopsticks,	//箸.
+		Chopsticks2,	//２つセット箸.
 		MAX
 	};
 

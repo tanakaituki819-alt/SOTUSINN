@@ -3,6 +3,7 @@
 enum class enScene
 {
 	None,			//なし
+	TitleSequence,	//タイトル前シーン.
 	Title,			//タイトル
 	BeforeGame,		//ゲーム前
 	PlayerSetUp,	//プレイヤーコントローラー接続画面.

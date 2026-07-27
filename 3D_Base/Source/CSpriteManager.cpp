@@ -265,6 +265,7 @@ void CSpriteManager::Load3D()
 
 
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Chopsticks),_T("Data\\Mesh\\Obj\\Chopsticks\\HaSi.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Chopsticks2),_T("Data\\Mesh\\Obj\\Chopsticks\\Chopsticks.obj") });
 
 
 

@@ -1,4 +1,5 @@
 #include "CGame.h"
+#include "CGameSceneTitleSequence.h"
 #include"CGameSceneTitle.h"
 #include"CGameSceneGameMain.h"
 #include "CGameScenePlayerSetup.h"
@@ -42,7 +43,7 @@ void CGame::Create()
 	CSpriteManager::LoadDeat(*m_pDx11,*m_pDx9);
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
-	m_pGeamScene = new CGameSceneGameMain(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+	m_pGeamScene = new CGameSceneTitleSequence(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
 //	m_pGeamScene = new CGameSceneWinnerResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
 }
 
@@ -145,6 +146,11 @@ void CGame::ChangeScene()
 {
 		switch (m_pGeamScene->ChangeScene())
 		{
+		case enScene::TitleSequence:
+			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
+			SAFE_DELETE(m_pGeamScene);
+			m_pGeamScene = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			break;
 			//タイトルに代わるとき
 		case enScene::Title:
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
