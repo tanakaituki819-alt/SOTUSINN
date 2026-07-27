@@ -101,15 +101,16 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 	else {
 		//お箸最大数分.
 		for (int i = 0; i < Chopsticks_Max; i++) {
-			//お箸1本目なら
+			//お箸1本目.
 			if (i == 0) {
 				m_pChopsticks[i]->SetPosition(m_Position.x +0.5f,m_Position.y + 1.f ,m_Position.z);
 			}
+			//2本目.
 			else {
 				//お箸の2本目を少しずらして表示する.
 				m_pChopsticks[i]->SetPosition(m_Position.x+ 0.5f,m_Position.y + 1.f ,m_Position.z + 0.2f);
 			}
-			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));
+			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));	//角度調整.
 			m_pChopsticks[i]->SetScale(2.f, 2.f, 2.f);
 			m_pChopsticks[i]->Draw(View, Proj, Light, Camera);
 		}
@@ -132,6 +133,7 @@ void CPlayer::DrawUI()
 void CPlayer::Paralysis()
 {
 	m_ParalysisTimer++;			//タイマー増加.
+	//タイマーが2秒経過すれば.
 	if (m_ParalysisTimer > 120) {
 		m_IsParalysis = false;   //マヒ解除.
 		m_ParalysisTimer = 0;    //タイマーリセット.
@@ -149,7 +151,6 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 {
 	my_list.push_back(YASAI->GetIngredientsNo());
 	Score += YASAI->GetScore();
-
 }
 
 
