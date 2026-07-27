@@ -1,13 +1,16 @@
 #include "CGameSceneTitle.h"
 #include "CGame.h"
 
+
 CGameSceneTitle::CGameSceneTitle(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	:CGameScene::CGameScene(Hwnd,Dx9,Dx11, m_Camera)
+	, m_pTitleUI(nullptr)
 {
 	m_pTSprite = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TITLE);
 	m_pTImg = new CUIObject();
 	m_pTImg->SetScale( WND_W,WND_H,0);
 	m_pTImg->AttachSprite(*m_pTSprite);
+	m_pTitleUI = new CTitleUI();
 }
 
 CGameSceneTitle::~CGameSceneTitle()
@@ -22,6 +25,9 @@ void CGameSceneTitle::Update()
 		SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
 		
 	}
+
+
+	m_pTitleUI->Update();
 
 }
 
@@ -47,5 +53,11 @@ void CGameSceneTitle::Draw()
 
 	m_pTImg->m_pSprite->SetCOLOR({ r,g,b });
 	m_pTImg->Draw();
+
+	m_pTitleUI->Draw();
+
 	m_pDx11->SetDepth(true);
+
+
+
 }

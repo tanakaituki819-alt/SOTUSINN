@@ -1,0 +1,121 @@
+#include "CTitleUI.h"
+
+//タイトル
+static constexpr float TITLE_POS_X = 20;
+static constexpr float TITLE_POS_Y = 80;
+static constexpr float TITLE_SCL_X = 1055;
+static constexpr float TITLE_SCL_Y = 180;
+//開始.
+static constexpr float START_POS_X = 955;
+static constexpr float START_POS_Y = 390;
+static constexpr float START_SCL_X = 800;
+static constexpr float START_SCL_Y = 135;
+//終了
+static constexpr float FINISH_POS_X = 950;
+static constexpr float FINISH_POS_Y = 500;
+static constexpr float FINISH_SCL_X = 800;
+static constexpr float FINISH_SCL_Y = 135;
+//鍋
+static constexpr float NABE_POS_X = 190;
+static constexpr float NABE_POS_Y = 260;
+static constexpr float NABE_SCL_X = 630;
+static constexpr float NABE_SCL_Y = 680;
+
+CTitleUI::CTitleUI()
+{
+	m_Title = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleBackground);	//背景.
+	for (int i = 0; i < Max; i++)
+	{
+		m_TitleText[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleText);	//背景.
+	}
+	m_Nabe = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleNabe);	//鍋
+}
+
+CTitleUI::~CTitleUI()
+{
+	m_Title = nullptr;
+	m_TitleText[0] = nullptr;
+	m_Nabe = nullptr;
+}
+
+void CTitleUI::Update()
+{
+}
+
+void CTitleUI::Draw()
+{
+	BackUI();
+	Title();
+	Start();
+	Finish();
+	Nabe();
+}
+
+//背景
+void CTitleUI::BackUI()
+{
+	m_Title->SetPosition(D3DXVECTOR3(0, 0, 0));
+	m_Title->SetScale(D3DXVECTOR3(WND_W, WND_H, 0));
+	m_Title->Render();
+}
+
+void CTitleUI::Title()
+{
+	m_TitleText[0]->SetPosition(D3DXVECTOR3(TITLE_POS_X, TITLE_POS_Y, 0));
+	m_TitleText[0]->SetScale(D3DXVECTOR3(TITLE_SCL_X, TITLE_SCL_Y, 0));
+	m_TitleText[0]->SetPatternNo(0.f, 0.f);
+	m_TitleText[0]->Render();
+}
+
+void CTitleUI::Start()
+{
+
+#if 1
+	//実行中に動かすやつ
+	static float ananana = 10;
+	static float ananana2 = 10;
+
+	if (GetAsyncKeyState('W') & 0x8000)
+	{
+		ananana--;
+	}
+	if (GetAsyncKeyState('S') & 0x8000)
+	{
+		ananana++;
+	}
+	if (GetAsyncKeyState('D') & 0x8000)
+	{
+		ananana2++;
+	}
+	if (GetAsyncKeyState('A') & 0x8000)
+	{
+		ananana2--;
+	}
+
+	FILE* pFile;
+	//stdout（標準出力）を新しく作成したコンソールにリダイレクト
+	freopen_s(&pFile, "CONOUT$", "w", stdout);
+	std::cout << ananana2 << std::endl;
+
+#endif
+
+	m_TitleText[1]->SetPosition(D3DXVECTOR3(START_POS_X, START_POS_Y, 0));
+	m_TitleText[1]->SetScale(D3DXVECTOR3(START_SCL_X, START_SCL_Y, 0));
+	m_TitleText[1]->SetPatternNo(0.f, 1.f);
+	m_TitleText[1]->Render();
+}
+
+void CTitleUI::Finish()
+{
+	m_TitleText[2]->SetPosition(D3DXVECTOR3(FINISH_POS_X, FINISH_POS_Y, 0));
+	m_TitleText[2]->SetScale(D3DXVECTOR3(FINISH_SCL_X, FINISH_SCL_Y, 0));
+	m_TitleText[2]->SetPatternNo(0.f, 2.f);
+	m_TitleText[2]->Render();
+}
+
+void CTitleUI::Nabe()
+{
+	m_Nabe->SetPosition(D3DXVECTOR3(NABE_POS_X, NABE_POS_Y, 0));
+	m_Nabe->SetScale(D3DXVECTOR3(NABE_SCL_X, NABE_SCL_Y, 0));
+	m_Nabe->Render();
+}

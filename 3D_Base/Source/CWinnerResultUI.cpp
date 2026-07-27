@@ -74,16 +74,15 @@ static constexpr Transform TRIO_P1_P3_P4_P4 = { 0.f,0.f,0.f,0.f };
 static constexpr Transform TRIO_P2_P3_P4_P2 = { 0.f,0.f,0.f,0.f };
 //レイヤー弐とプレイヤー参とプレイヤー肆が同率時のプレイヤー参の立ち絵
 static constexpr Transform TRIO_P2_P3_P4_P3 = { 0.f,0.f,0.f,0.f };
-
 //-4人同率-.
 //プレイヤー全員が同率の時のプレイヤー壱の立ち絵
-static constexpr Transform ALL_P1 = { 0.f,0.f,0.f,0.f };
+static constexpr Transform ALL_P1 = { 0.f,0.f,300.f,500.f };
 //プレイヤー全員が同率の時のプレイヤー弐の立ち絵
-static constexpr Transform ALL_P2 = { 0.f,0.f,0.f,0.f };
+static constexpr Transform ALL_P2 = { 100.f,0.f,300.f,500.f };
 //プレイヤー全員が同率の時のプレイヤー参の立ち絵
-static constexpr Transform ALL_P3 = { 0.f,0.f,0.f,0.f };
+static constexpr Transform ALL_P3 = { 200.f,0.f,300.f,500.f };
 //プレイヤー全員が同率の時のプレイヤー肆の立ち絵
-static constexpr Transform ALL_P4 = { 0.f,0.f,0.f,0.f };
+static constexpr Transform ALL_P4 = { 300.f,0.f,300.f,500.f };
 
 
 

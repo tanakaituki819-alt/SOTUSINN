@@ -216,6 +216,12 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerText),		_T("Data\\Texture\\Winner.png"),			{ {1, 1, 1}, {260, 67}, {260, 67}} });
 	//プレイヤーの色付きフォント.
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerFont),		_T("Data\\Texture\\WinnerFont.png"),		{ {1, 1, 1}, {226, 237}, {226, 237/4}} });
+	//タイトル背景.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleBackground),		_T("Data\\Texture\\Title.png"),		{ {1, 1, 1}, {539, 247}, {539, 247}} });
+	//タイトルテキスト.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleText),		_T("Data\\Texture\\TitleText.png"),		{ {1, 1, 1}, {650, 300}, {650, 300/3}} });
+	//タイトル鍋.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleNabe),		_T("Data\\Texture\\TitleNabe.png"),		{ {1, 1, 1}, {433, 577}, {433, 577}} });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
