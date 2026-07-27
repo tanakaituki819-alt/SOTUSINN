@@ -65,6 +65,18 @@ void CPlayer::Update()
 		//マヒ中なら.
 		if (m_IsParalysis) {
 			Paralysis();	//マヒ動作.
+			//マヒUIが生成されていなければ.
+			if (!m_pPlayerParalysisUI) {
+				m_pPlayerParalysisUI = new CPlayerParalysisUI();	//インスタンス作成.
+				m_pPlayerParalysisUI->Paralysis(m_Position);		//プレイヤーのポジションを渡す.
+			}
+			m_pPlayerParalysisUI->Update();
+		}
+		else {
+			//マヒUIが生成されていれば.
+			if (m_pPlayerParalysisUI) {
+				SAFE_DELETE(m_pPlayerParalysisUI);	//破棄.
+			}
 		}
 		//スコア増加(仮).
 		if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
@@ -79,7 +91,6 @@ void CPlayer::Update()
 
 void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
-	/*m_pMesh->SetisCOLOR(true);*/
 	//回収状態じゃないかつマヒ状態じゃないなら.
 	if (!m_IsCollecting && !m_IsParalysis) {
 		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす
@@ -98,17 +109,25 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 	else {
 		//お箸最大数分.
 		for (int i = 0; i < Chopsticks_Max; i++) {
-			//お箸1本目なら
+			//お箸1本目.
 			if (i == 0) {
 				m_pChopsticks[i]->SetPosition(m_Position.x +0.5f,m_Position.y + 1.f ,m_Position.z);
 			}
+			//2本目.
 			else {
 				//お箸の2本目を少しずらして表示する.
 				m_pChopsticks[i]->SetPosition(m_Position.x+ 0.5f,m_Position.y + 1.f ,m_Position.z + 0.2f);
 			}
-			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));
+			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));	//角度調整.
 			m_pChopsticks[i]->SetScale(2.f, 2.f, 2.f);
 			m_pChopsticks[i]->Draw(View, Proj, Light, Camera);
+		}
+	}
+	//マヒ中なら.
+	if (m_IsParalysis) {
+		//マヒUIが生成されていれば.
+		if (m_pPlayerParalysisUI) {
+			m_pPlayerParalysisUI->Draw(View, Proj);	//マヒUI描画
 		}
 	}
 }
@@ -122,6 +141,7 @@ void CPlayer::DrawUI()
 void CPlayer::Paralysis()
 {
 	m_ParalysisTimer++;			//タイマー増加.
+	//タイマーが2秒経過すれば.
 	if (m_ParalysisTimer > 120) {
 		m_IsParalysis = false;   //マヒ解除.
 		m_ParalysisTimer = 0;    //タイマーリセット.
@@ -139,7 +159,6 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 {
 	my_list.push_back(YASAI->GetIngredientsNo());
 	Score += YASAI->GetScore();
-
 }
 
 

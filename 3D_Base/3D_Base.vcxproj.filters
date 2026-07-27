@@ -154,6 +154,9 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\CTimer">
       <UniqueIdentifier>{a19299eb-529e-4336-b7b6-8208b24884f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI">
+      <UniqueIdentifier>{75a9b580-4f76-4018-a006-3d07e5c037d6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -301,7 +304,6 @@
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CCollisionManager.cpp" />
     <ClCompile Include="Source\CGameSceneWinnerResult.cpp" />
     <ClCompile Include="Source\CTimer.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
@@ -311,6 +313,13 @@
     </ClCompile>
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CWinnerResultUI.cpp" />
+    <ClCompile Include="Source\CCollisionManager.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPlayerParalysisUI.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -461,10 +470,16 @@
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\CPauseUI.h" />
-    <ClInclude Include="Source\CCollisionManager.h" />
     <ClInclude Include="Source\CGameSceneWinnerResult.h" />
     <ClInclude Include="Source\CTimer.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CWinnerResultUI.h" />
+    <ClInclude Include="Source\CCollisionManager.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPlayerParalysisUI.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

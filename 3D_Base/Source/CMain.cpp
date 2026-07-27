@@ -9,7 +9,7 @@
 //LoadPNGAsIconで使用している
 #include <gdiplus.h>
 #pragma comment(lib, "gdiplus.lib")
-
+#include <iostream>
 
 //=================================================
 //	定数.

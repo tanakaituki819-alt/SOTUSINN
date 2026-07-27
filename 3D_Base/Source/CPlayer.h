@@ -4,6 +4,8 @@
 #include <list>
 #include "CIngredients.h"
 #include "CPlayerUI.h"
+#include "CPlayerParalysisUI.h"
+
 class CPlayer
 	:public  CStaticMeshObjObject	//スタティックメッシュオブジェのオブジェクトを継承.
 {
@@ -43,6 +45,7 @@ private:
 	std::list<Ingredients>	my_list;						//リスト.
 	int						Score;							//スコア.
 	CPlayerUI*				P_UI;							//プレイヤーUI.
+	CPlayerParalysisUI*		m_pPlayerParalysisUI = nullptr;	//プレイヤーマヒ中のボタンUI.
 	int						PlayerNo;						//プレイヤーNo.
 	bool					m_IsCollecting	 = false;		//今回収中かどうか.
 	float					m_Collectingtime = 0;			//回収中のカウント.
