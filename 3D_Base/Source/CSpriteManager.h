@@ -44,6 +44,7 @@ public:
 		IMG_WinnerFont,			//背景の色付きプレイヤーフォント
 		Img_RED,				//タイマーの赤色
 		Img_ButtonPush,			//ボタン.
+		Img_ButtonPush2,		//ボタン.
 		MAX
 	};
 	//ｘファイル

@@ -2,7 +2,7 @@
 
 CPlayerParalysisUI::CPlayerParalysisUI()
 {
-	m_pSprite = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_ButtonPush);
+	m_pSprite = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_ButtonPush2);
 }
 
 CPlayerParalysisUI::~CPlayerParalysisUI()
@@ -35,13 +35,13 @@ void CPlayerParalysisUI::Update()
 void CPlayerParalysisUI::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj)
 {
 	m_pSprite->SetBillboard(true);
-	m_pSprite->SetScale(D3DXVECTOR3(1.f, 1.f, 2.f));
+	m_pSprite->SetScale(D3DXVECTOR3(2.f, 2.f, 1.f));
 	m_pSprite->Render(View, Proj);
 	m_pSprite->SetBillboard(false);
 }
 //プレイヤーのポジションを受け取る.
 void CPlayerParalysisUI::Paralysis(D3DXVECTOR3 Position)
 {
-	m_pSprite->SetPosition(D3DXVECTOR3(Position.x + 0.5f,Position.y + 1.0f,Position.z + 0.5f));
+	m_pSprite->SetPosition(D3DXVECTOR3(Position.x + 0.5f,Position.y + 0.5f,Position.z + 0.5f));
 }
 
