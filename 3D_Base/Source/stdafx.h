@@ -20,5 +20,3 @@
 #include "enScene.h"
 
 #include"CXInput.h"
-
-#include <iostream>
