@@ -31,6 +31,7 @@
 #include <stdlib.h>	//マルチバイト文字→Unicode文字変換で必要.
 #include <locale.h>
 
+#include "DirectXMath.h"
 
 //constexpr 関数 'fast_float::loop_parse_if_eight_digits' を定数式にすることはできません
 // が出たらC++17にすると治る
@@ -146,6 +147,59 @@ void CStaticObjMesh::SetLightCOLOR256(D3DXVECTOR3 COLORE)
 
 }
 
+D3DXVECTOR3 CStaticObjMesh::GetPos2D(D3DXMATRIX& mView, D3DXMATRIX& mProj)
+{
+	D3DXVECTOR3 Output;
+	D3DXVECTOR3 Pos = { 0,0,0 };//オブジェクトのどこを見るか
+	_D3DVIEWPORT9 Viewport{ 0 };//ビューポート
+	Viewport.X = 0;
+	Viewport.Y = 0;
+	Viewport.Width = static_cast<DWORD>(WND_W);
+	Viewport.Height = static_cast<DWORD>(WND_H);
+	Viewport.MinZ = 0.0f;
+	Viewport.MaxZ = 1.0f;
+
+	//ワールド行列、スケール行列、回転行列、平行移動行列.
+	D3DXMATRIX mWorld, mScale, mRot, mTran;
+	D3DXMATRIX mYaw, mPitch, mRoll;
+
+	//拡大縮小行列作成.
+	D3DXMatrixScaling(
+		&mScale,	//(out)計算結果.
+		m_Scale.x, m_Scale.y, m_Scale.z);	//x,y,zそれぞれの拡縮値.
+	//Y軸回転行列作成.
+	D3DXMatrixRotationY(&mYaw, m_Rotation.y);
+	//X軸回転行列作成.
+	D3DXMatrixRotationX(&mPitch, m_Rotation.x);
+	//Z軸回転行列作成.
+	D3DXMatrixRotationZ(&mRoll, m_Rotation.z);
+	//平行移動行列作成.
+	D3DXMatrixTranslation(
+		&mTran,	//(out)計算結果.
+		m_Position.x, m_Position.y, m_Position.z);	//x,y,z座標.
+
+	//回転行列を作成.
+	mRot = mYaw * mPitch * mRoll;
+
+	//ワールド行列作成.
+	//拡縮×回転×移動 ※順番がとても大切！！.
+	//mWorld = mScale * mRot ;
+	mWorld = mScale * mRot * mTran;
+	// 1. カメラ空間（ビュー空間）での位置を確認
+	D3DXMATRIX mWorldView = mWorld * mView;
+	D3DXVECTOR3 cameraSpacePos;
+	D3DXVec3TransformCoord(&cameraSpacePos, &Pos, &mWorldView);
+	D3DXVec3Project(&Output, &Pos, &Viewport, &mProj, &mView, &mWorld);
+
+
+
+
+
+	return Output;
+}
+
+
+
 bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const std::string& baseDir)
 {
 	tinyobj::attrib_t attrib;
@@ -201,7 +255,7 @@ bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const st
 			m_pMaterials[i].dwNumFace = 0;
 			m_pMaterials[i].pTexture = nullptr;
 
-			// 🔴 【最重要追加】マテリアルにテクスチャ名が書かれていたら、画像をロードする処理
+			// マテリアルにテクスチャ名が書かれていたら、画像をロードする処理
 			if (!materials[i].diffuse_texname.empty()) {
 				m_EnableTexture = true; // クラス全体のテクスチャ有効フラグを立てる
 

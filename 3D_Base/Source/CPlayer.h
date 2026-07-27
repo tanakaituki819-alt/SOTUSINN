@@ -52,4 +52,7 @@ private:
 	float					m_ParalysisMovetime = 0;		//マヒの動きをさせるためのタイム.
 	float					m_Speed  = 0.8f;				//震える速度.
 	float					m_Amount = 0.05f;				//震える大きさ.	
+
+
+	CSprite2D* KARI;
 };

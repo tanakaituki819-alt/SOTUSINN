@@ -86,6 +86,8 @@ public:
 	//ビルボード機能のON/OFF切り替え.
 	void SetBillboard(bool flag) { m_Billboard = flag; }
 
+	//使用前に、ポジションスケールローテーションを設定すること
+	D3DXVECTOR3 GetPos2D(D3DXMATRIX& mView, D3DXMATRIX& mProj);
 private:
 	CDirectX11*				m_pDx11;
 	ID3D11Device*			m_pDevice11;
