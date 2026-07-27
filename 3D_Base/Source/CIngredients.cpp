@@ -8,6 +8,9 @@ namespace {
 CIngredients::CIngredients()
 	:IngredientsNo(Ingredients::none)
 	, Nabe(nullptr)
+	, isBoiled(false)
+	, m_BoiledcMAX(0)
+	, m_Boiledc(0)
 {
 	//短縮用
 	using  CS = CSpriteManager;
@@ -49,6 +52,11 @@ void CIngredients::SetIngredients(int i)
 		m_pBSphere->SetRadius(IngredientsSetting[i].HitSize);
 	}
 	Score = IngredientsSetting[i].Score;
+
+	isBoiled = false;
+	m_Boiledc = 0;
+	m_BoiledcMAX = (15*(0.8+static_cast<float>(rand()%5)/10)) * 60;
+		
 }
 
 
@@ -78,6 +86,15 @@ void CIngredients::Update()
 
 	m_OldPosition = m_Position;
 
+	if (isBoiled==false) {
+
+		m_Boiledc ++;
+		if (m_Boiledc> m_BoiledcMAX) {
+			isBoiled = true;
+		}
+
+	}
+
 }
 
 void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
@@ -92,11 +109,8 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 	m_pMesh->SetScale(m_Scale);
 
 	m_pMesh->SetLightCOLOR256({ 127,51,0 });
-	static int t = 0;
-	t++;
-	m_pMesh->SetLightCOLOR({ static_cast<FLOAT>(sin(t) * 0.5 + 0.5),static_cast<FLOAT>(sin(t + D3DXToRadian(120)) * 0.5 + 0.5),static_cast<FLOAT>(sin(t + D3DXToRadian(240)) * 0.5 + 0.5) });
 	//m_pMesh->SetLightCOLOR256({ 247,121,60 });
-	if (GetAsyncKeyState('H') & 0x8000) {
+	if (isBoiled) {
 		m_pMesh->SetisCOLOR(true);
 	}
 	else {

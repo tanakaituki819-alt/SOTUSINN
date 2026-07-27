@@ -211,6 +211,9 @@ void CSpriteManager::Load2D()
 	//ボタン.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush),		_T("Data\\Texture\\ButtonPush.png"),		{ {1, 1, 1}, {200, 700}, {200, 700 / 2 } }, true});
 
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerText),		_T("Data\\Texture\\Winner.png"),		{ {1, 1, 1}, {260, 67}, {260, 67}} });
+	//プレイヤーの色付きフォント.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerFont),		_T("Data\\Texture\\WinnerFont.png"),		{ {1, 1, 1}, {226, 237}, {226, 237/4}} });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];

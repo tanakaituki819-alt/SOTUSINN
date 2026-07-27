@@ -7,7 +7,7 @@ class CPauseUI
 public:
 
 	static const int Option_MAX = 2;
-
+	
 public:
 	enum class enSelect
 	{

@@ -29,5 +29,7 @@ void CTimer::Draw()
 	m_pbefore->SetRotation(m_Rotation);
 	m_pbefore->SetAlpha(1);
 
+
+
 	m_pbefore->Render2(static_cast<float>(m_TimeCount)/ static_cast<float>(m_TimeMAX));
 }

@@ -52,5 +52,7 @@ protected:
 	int Score ;
 	CNabe* Nabe;
 	 IngredientsSetting IngredientsSetting[static_cast<int>(Ingredients::MAX)];
-
+	 bool isBoiled;//にえているか
+	 float m_Boiledc;
+	 float m_BoiledcMAX;
 };
