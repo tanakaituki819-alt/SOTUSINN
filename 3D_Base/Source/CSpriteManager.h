@@ -45,6 +45,9 @@ public:
 		Img_RED,				//タイマーの赤色
 		Img_ButtonPush,			//ボタン.
 		Img_ButtonPush2,		//ボタン.
+		Img_TitleBackground,	//タイトル背景
+		Img_TitleText,			//タイトルテキスト.
+		Img_TitleNabe,			//タイトルの鍋.
 		MAX
 	};
 	//ｘファイル
