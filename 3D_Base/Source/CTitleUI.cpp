@@ -1,5 +1,9 @@
 #include "CTitleUI.h"
+#include "CXInput.h"
+#include <iostream>
 
+//しきい値.
+static constexpr SHORT STICK_THRESHOLD = 16000;	//constexpr:コンパイル時に確定する定数
 //タイトル
 static constexpr float TITLE_POS_X = 20;
 static constexpr float TITLE_POS_Y = 80;
@@ -22,6 +26,10 @@ static constexpr float NABE_SCL_X = 630;
 static constexpr float NABE_SCL_Y = 680;
 
 CTitleUI::CTitleUI()
+	: m_Select			( enSelect::Start )
+	, m_Decided			( false )
+	, m_SticTitltOld	( false )
+	, m_pController		( nullptr )
 {
 	m_Title = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleBackground);	//背景.
 	for (int i = 0; i < Max; i++)
@@ -29,17 +37,74 @@ CTitleUI::CTitleUI()
 		m_TitleText[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleText);	//背景.
 	}
 	m_Nabe = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleNabe);	//鍋
+	m_Waribashi = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_TitleWaribashi);	//鍋
 }
 
 CTitleUI::~CTitleUI()
 {
 	m_Title = nullptr;
-	m_TitleText[0] = nullptr;
+	for (int i = 0; i < Max; i++)
+	{
+		m_TitleText[i] = nullptr;
+	}
 	m_Nabe = nullptr;
+
+	m_Waribashi = nullptr;
 }
 
 void CTitleUI::Update()
 {
+
+	if (m_pController == nullptr)
+	{
+		return;
+	}
+	if (m_pController->IsConnect() == false)
+	{
+		return;
+	}
+
+	//左スティックの縦方向.
+	SHORT y = m_pController->GetLThumbY();
+
+	//しきい値を超えて倒れているかどうか
+	bool StickTiltNow = (y > STICK_THRESHOLD) || (y < -STICK_THRESHOLD);
+
+	//エッジ検出
+	if (StickTiltNow && m_SticTitltOld == false)
+	{
+		//上に倒した.
+		if (y > STICK_THRESHOLD)
+		{
+			if (m_Select == enSelect::Start)
+			{
+				m_Select = enSelect::Fin;
+			}
+			else if (m_Select == enSelect::Fin)
+			{
+				m_Select = enSelect::Start;
+			}
+		}
+		else if (y < -STICK_THRESHOLD)
+		{
+			if (m_Select == enSelect::Start)
+			{
+				m_Select = enSelect::Fin;
+			}
+			else if (m_Select == enSelect::Fin)
+			{
+				m_Select = enSelect::Start;
+			}
+		}
+
+	}
+	m_SticTitltOld = StickTiltNow;
+
+	//Aボタンで決定.
+	if (m_pController->IsDown(CXInput::A, true))
+	{
+		m_Decided = true;
+	}
 }
 
 void CTitleUI::Draw()
@@ -49,6 +114,15 @@ void CTitleUI::Draw()
 	Start();
 	Finish();
 	Nabe();
+
+	if (m_Select == enSelect::Start)
+	{
+		STARTWaribashi();
+	}
+	else if (m_Select == enSelect::Fin)
+	{
+		FINWaribashi();
+	}
 }
 
 //背景
@@ -118,4 +192,18 @@ void CTitleUI::Nabe()
 	m_Nabe->SetPosition(D3DXVECTOR3(NABE_POS_X, NABE_POS_Y, 0));
 	m_Nabe->SetScale(D3DXVECTOR3(NABE_SCL_X, NABE_SCL_Y, 0));
 	m_Nabe->Render();
+}
+
+void CTitleUI::STARTWaribashi()
+{
+	m_Waribashi->SetPosition(D3DXVECTOR3(10, 10, 0));
+	m_Waribashi->SetScale(D3DXVECTOR3(100, 100, 0));
+	m_Waribashi->Render();
+}
+
+void CTitleUI::FINWaribashi()
+{
+	m_Waribashi->SetPosition(D3DXVECTOR3(10, 100, 0));
+	m_Waribashi->SetScale(D3DXVECTOR3(100, 100, 0));
+	m_Waribashi->Render();
 }

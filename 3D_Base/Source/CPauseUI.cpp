@@ -30,9 +30,7 @@ static constexpr float FrameSclX = 910;
 static constexpr float FrameSclY = 280;
 
 CPauseUI::CPauseUI()
-	:m_pPauseImg		( nullptr )
-	, m_pPauseOptionImg	(  )
-	, m_Select			( enSelect::ResumeGame )
+	: m_Select			( enSelect::ResumeGame )
 	, m_Decided			( false )
 	, m_SticTitltOld	( false )
 	,m_pController		( nullptr )

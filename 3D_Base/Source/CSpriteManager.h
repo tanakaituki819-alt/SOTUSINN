@@ -48,6 +48,7 @@ public:
 		Img_TitleBackground,	//タイトル背景
 		Img_TitleText,			//タイトルテキスト.
 		Img_TitleNabe,			//タイトルの鍋.
+		IMG_TitleWaribashi,		//タイトルの割りばし.
 		MAX
 	};
 	//ｘファイル
