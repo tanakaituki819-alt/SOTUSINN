@@ -43,6 +43,7 @@ public:
 		IMG_WinnerText,			//あっぱれ.
 		IMG_WinnerFont,			//背景の色付きプレイヤーフォント
 		Img_RED,				//タイマーの赤色
+		Img_Timer,				//タイマーの背景
 		Img_ButtonPush,			//ボタン.
 		Img_ButtonPush2,		//ボタン.
 		Img_TitleBackground,	//タイトル背景

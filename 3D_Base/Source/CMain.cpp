@@ -158,7 +158,7 @@ void CMain::Loop()
 
 			if (i >= 1000)	//1秒経過.
 			{
-				std::cout << c << std::endl;
+				//std::cout << c << std::endl;
 				i = 0;	//現在の時間に更新.
 				c = 0;
 			}

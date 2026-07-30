@@ -25,7 +25,11 @@ void CGameSceneTitle::Update()
 		SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
 		
 	}
+	if (GetAsyncKeyState('X') & 0x8000) {
 
+		SenenChang(enScene::GameMain, CSceneChange::TransitionType::Fade, 60, 60);
+
+	}
 
 	m_pTitleUI->Update();
 
