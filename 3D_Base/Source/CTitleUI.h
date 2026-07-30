@@ -19,6 +19,12 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	bool IsDecided() const { return m_Decided; }	//決定されたかどうか
+	enSelect GetSelect() const { return m_Select; }	//何が選ばれたか
+
+	//コントローラー
+	void SetXInput(CXInput* Input) { m_pController = Input; }
+
 	//背景.
 	void BackUI();
 
@@ -30,10 +36,13 @@ public:
 	void Finish();
 	//鍋
 	void Nabe();
-	//割りばし()
+	//割りばし(開始)
 	void STARTWaribashi();
-	//割りばし
+	//割りばし(終了)
 	void FINWaribashi();
+
+	//初期化
+	void Init();
 
 private:
 	enSelect m_Select;

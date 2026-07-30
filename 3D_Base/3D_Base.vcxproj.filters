@@ -157,6 +157,15 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI">
       <UniqueIdentifier>{75a9b580-4f76-4018-a006-3d07e5c037d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneWinnerResult">
+      <UniqueIdentifier>{c9e69c8f-3499-47f4-93fd-b8ea7c42e343}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneTitle\TitleUI">
+      <UniqueIdentifier>{dd1c496f-75bc-452b-8218-51618876d1b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneWinnerResult\WinnerResultUI">
+      <UniqueIdentifier>{1bca4043-4c1a-4123-a84a-825f5da94bc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -297,14 +306,12 @@
     <ClCompile Include="Source\CPlayerUI.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CPauseUI.cpp" />
     <ClCompile Include="Source\CIngredientsmanager.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
     </ClCompile>
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CGameSceneWinnerResult.cpp" />
     <ClCompile Include="Source\CTimer.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
     </ClCompile>
@@ -314,12 +321,23 @@
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CWinnerResultUI.cpp" />
     <ClCompile Include="Source\CCollisionManager.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
     </ClCompile>
     <ClCompile Include="Source\CPlayerParalysisUI.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CPauseUI.cpp">
+      <Filter>Source\CGameScene\CGameSceneGameMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CGameSceneWinnerResult.cpp">
+      <Filter>Source\CGameScene\CGameSceneWinnerResult</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CWinnerResultUI.cpp">
+      <Filter>Source\CGameScene\CGameSceneWinnerResult\WinnerResultUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CTitleUI.cpp">
+      <Filter>Source\CGameScene\CGameSceneTitle\TitleUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -469,17 +487,26 @@
     <ClInclude Include="Source\CPlayerUI.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CPauseUI.h" />
-    <ClInclude Include="Source\CGameSceneWinnerResult.h" />
     <ClInclude Include="Source\CTimer.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CWinnerResultUI.h" />
     <ClInclude Include="Source\CCollisionManager.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
     </ClInclude>
     <ClInclude Include="Source\CPlayerParalysisUI.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CPauseUI.h">
+      <Filter>Source\CGameScene\CGameSceneGameMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameSceneWinnerResult.h">
+      <Filter>Source\CGameScene\CGameSceneWinnerResult</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CWinnerResultUI.h">
+      <Filter>Source\CGameScene\CGameSceneWinnerResult\WinnerResultUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CTitleUI.h">
+      <Filter>Source\CGameScene\CGameSceneTitle\TitleUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
