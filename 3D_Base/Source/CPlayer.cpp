@@ -17,7 +17,7 @@ CPlayer::CPlayer()
 		m_pBSphere->SetRadius(0.1f);		//半径を変更.
 	}
 
-	KARI = CSpriteManager::GetSprite2D(CSpM::enImagList::Img_Playericon);
+	//KARI = CSpriteManager::GetSprite2D(CSpM::enImagList::Img_Playericon);
 }
 
 CPlayer::~CPlayer()
@@ -67,9 +67,11 @@ void CPlayer::Update()
 			Paralysis();	//マヒ動作.
 			//マヒUIが生成されていなければ.
 			if (!m_pPlayerParalysisUI) {
-				m_pPlayerParalysisUI = new CPlayerParalysisUI();	//インスタンス作成.
-				m_pPlayerParalysisUI->Paralysis(m_Position);		//プレイヤーのポジションを渡す.
+
+				m_pPlayerParalysisUI = new CPlayerParalysisUI();		//インスタンス作成.
 			}
+			m_Point3Dto2DConverter = { m_CousorPosition.x,m_CousorPosition.y,0.0 };
+			m_pPlayerParalysisUI->Paralysis(m_Point3Dto2DConverter);//プレイヤーのポジションを渡す.
 			m_pPlayerParalysisUI->Update();
 		}
 		else {
@@ -99,11 +101,11 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 		m_Cousor->SetScale(m_Scale);
 		m_Cousor->Render(View, Proj);
 
-		D3DXVECTOR3 i= m_Cousor->GetPos2D(View, Proj);
-		D3DXVECTOR3 c = { i.x,i.y,0.0 };
-		KARI->SetPosition(c);
-		KARI->SetScale({50,50,50});
-		KARI->Render();
+		m_CousorPosition = m_Cousor->GetPos2D(View, Proj);
+
+		//KARI->SetPosition(c);
+		//KARI->SetScale({50,50,50});
+		//KARI->Render();
 	}
 	//回収中.
 	else {
@@ -125,9 +127,10 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 	}
 	//マヒ中なら.
 	if (m_IsParalysis) {
+		
 		//マヒUIが生成されていれば.
-		if (m_pPlayerParalysisUI) {
-			m_pPlayerParalysisUI->Draw(View, Proj);	//マヒUI描画
+		if (m_pPlayerParalysisUI!=nullptr) {
+			m_pPlayerParalysisUI->Draw();	//マヒUI描画
 		}
 	}
 }
@@ -140,9 +143,13 @@ void CPlayer::DrawUI()
 //マヒ状態処理.
 void CPlayer::Paralysis()
 {
+	//Bボタンコントローラーが押されれば時間短縮.
+	if (MyController->IsUp(CXInput::B)) {
+		m_ParalysisTimer+= 10;	//タイマー増加.
+	}
 	m_ParalysisTimer++;			//タイマー増加.
 	//タイマーが2秒経過すれば.
-	if (m_ParalysisTimer > 120) {
+	if (m_ParalysisTimer > 180) {
 		m_IsParalysis = false;   //マヒ解除.
 		m_ParalysisTimer = 0;    //タイマーリセット.
 		return;	//以降通らなくていいのでリターン.

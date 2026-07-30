@@ -209,7 +209,7 @@ void CSpriteManager::Load2D()
 	//あっぱれの画像
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerText),		_T("Data\\Texture\\Winner.png"),			{ {1, 1, 1}, {260, 67},  {260, 67}} });
 	//ボタン.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush),		_T("Data\\Texture\\ButtonPush.png"),		{ {1, 1, 1}, {200, 700}, {200, 700 / 2 } }, true});
+	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush),		_T("Data\\Texture\\ButtonPush.png"),		{ {1, 1, 1}, {544, 1904}, {544, 1904 / 3 } }, true});
 	//ボタン2.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush2),		_T("Data\\Texture\\ButtonPush2.png"),		{ {1, 1, 1}, {896, 1178}, {896, 1178 / 2 } }, true});
 	//勝利者テキスト.

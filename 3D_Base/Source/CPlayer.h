@@ -55,4 +55,6 @@ private:
 	float					m_ParalysisMovetime  = 0;		//マヒの動きをさせるためのタイム.
 	float					m_Speed				 = 0.8f;	//震える速度.
 	float					m_Amount			 = 0.05f;	//震える大きさ.	
+	D3DXVECTOR3				m_CousorPosition	 = {};		//カーソルのポジションを入れる.
+	D3DXVECTOR3				m_Point3Dto2DConverter = {};	//ボタン連打を表示するポジション(3D座標から2Dように変換).
 };
