@@ -157,6 +157,12 @@
     <Filter Include="Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI">
       <UniqueIdentifier>{75a9b580-4f76-4018-a006-3d07e5c037d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneTitleSequence">
+      <UniqueIdentifier>{e36463cb-3cf1-4065-8ecd-01c09ab4b8f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\CGameScene\CGameSceneTitleSequence\TitleChopsticks">
+      <UniqueIdentifier>{fe1bd5aa-ac9c-42bc-905b-b4abdb8ec25d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CDirectX11.cpp">
@@ -321,6 +327,12 @@
     <ClCompile Include="Source\CPlayerParalysisUI.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\CGameSceneTitleSequence.cpp">
+      <Filter>Source\CGameScene\CGameSceneTitleSequence</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\CTitleChopsticks.cpp">
+      <Filter>Source\CGameScene\CGameSceneTitleSequence\TitleChopsticks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\CDirectX11.h">
@@ -480,6 +492,12 @@
     </ClInclude>
     <ClInclude Include="Source\CPlayerParalysisUI.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\PlayerParalysisUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CGameSceneTitleSequence.h">
+      <Filter>Source\CGameScene\CGameSceneTitleSequence</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\CTitleChopsticks.h">
+      <Filter>Source\CGameScene\CGameSceneTitleSequence\TitleChopsticks</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
