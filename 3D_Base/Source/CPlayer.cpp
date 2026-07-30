@@ -100,12 +100,7 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 		m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
 		m_Cousor->SetScale(m_Scale);
 		m_Cousor->Render(View, Proj);
-
-		m_CousorPosition = m_Cousor->GetPos2D(View, Proj);
-
-		//KARI->SetPosition(c);
-		//KARI->SetScale({50,50,50});
-		//KARI->Render();
+		m_CousorPosition = m_Cousor->GetPos2D(View, Proj);	//カーソルのポジションを2D用のポジションに変換する.
 	}
 	//回収中.
 	else {
