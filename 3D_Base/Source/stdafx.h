@@ -11,6 +11,7 @@
 #include <tchar.h>
 
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください
+#define NOMINMAX
 #include <Windows.h>
 #include "Global.h"
 #include "MyMacro.h"

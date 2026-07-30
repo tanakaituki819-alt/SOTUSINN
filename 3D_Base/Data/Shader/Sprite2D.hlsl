@@ -15,8 +15,8 @@ cbuffer per_mesh : register( b0 )	//レジスタ番号.
 	float4	g_Color		: packoffset(c4);	//色（RGBA:xyzw）.
 	float4	g_UV		: packoffset(c5);	//UV座標（xyしか使わない）.
 	float	g_ViewPortW	: packoffset(c6);	//ビューポート幅.
-    float	g_ViewPortH	: packoffset(c7);	//ビューポート高さ.
-    float   g_i : packoffset(c8); //
+    float g_ViewPortH : packoffset(c7); //ビューポート高さ.
+    float g_i : packoffset(c8); //
 };
 
 //頂点シェーダの出力パラメータ.
@@ -25,6 +25,7 @@ struct VS_OUTPUT
 {
 	float4	Pos		: SV_Position;	//座標（SV_:System-Value Semantics）.
 	float2	UV		: TEXCOORD0;	//UV座標.
+ 
 };
 
 //頂点シェーダ.
@@ -43,6 +44,7 @@ VS_OUTPUT VS_Main(
     float2 margin = 0.00001; // 狭める割合（0.01 = 1%）
     output.UV = UV * (1.0 - margin * 2.0) + margin;
 	
+ 
 	//UVスクロール(UV座標を操作する).
     output.UV.x += g_UV.x;
     output.UV.y += g_UV.y;
@@ -68,11 +70,16 @@ float4 PS_Main( VS_OUTPUT input ) : SV_Target
 
 float4 PS_Main2(VS_OUTPUT input) : SV_Target
 {
-	
+    float2 i = { g_UV.x, g_UV.y };
 	
     float4 color = g_Texture.Sample(g_samLinear, input.UV); //色を返す.
-	
-    float2 Senter = input.UV - (0.5, 0.5);
+    float2 UV2;
+    //float4=x,y,z,wまたはr,g,b,a(こんかいはｚを高さ、ｗを幅とする)
+    UV2 .x= (input.UV.x - g_UV.x) / max(g_UV.w, 0.0001f);
+    UV2.y = (input.UV.y - g_UV.y) / max(g_UV.z, 0.0001f);
+    // 常にポリゴンの中心 (0.5, 0.5) を原点としたベクトルにする
+    float2 Senter = UV2 - float2(0.5, 0.5);
+    
 	// 円の外側を切り抜く場合（半径0.5の円）
     if (length(Senter) > 0.5)
     {

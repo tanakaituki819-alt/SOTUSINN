@@ -29,22 +29,18 @@ CGameSceneTitle::~CGameSceneTitle()
 
 void CGameSceneTitle::Update()
 {
-	m_pController->Update();
-	m_pTitleUI->Update();
-
-	if (m_pTitleUI->IsDecided())
-	{
-		if (m_pTitleUI->GetSelect() == CTitleUI::enSelect::Start)
-		{
-			//準備画面へ.
-			SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
-		}
-		else
-		{
-			//タイトル前の動画へorゲーム完全終了の処理.(未定)//2026.07.30.
-
-		}
+	if (GetAsyncKeyState('Z') & 0x8000) {
+		
+		SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
+		
 	}
+	if (GetAsyncKeyState('X') & 0x8000) {
+
+		SenenChang(enScene::GameMain, CSceneChange::TransitionType::Fade, 60, 60);
+
+	}
+
+	m_pTitleUI->Update();
 
 }
 

@@ -158,7 +158,7 @@ void CSpriteManager::Load2D()
 {
 	std::vector <ImgList> Img_List;
 
-	Img_List.push_back({ static_cast<int>(enImagList::Img_TITLE), _T("Data\\Texture\\T_IMG.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TITLE), _T("Data\\Texture\\Title.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Fad), _T("Data\\Texture\\IMG_Fad.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Shutter), _T("Data\\Texture\\IMG_Shutter.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
@@ -205,7 +205,9 @@ void CSpriteManager::Load2D()
 
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),			_T("Data\\Texture\\water.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	//タイマー
-	Img_List.push_back({ static_cast<int>(enImagList::Img_RED),				_T("Data\\Texture\\RED.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_RED),				_T("Data\\Texture\\RED.png"),				{ {1, 1, 1}, {3, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Timer),			_T("Data\\Texture\\Timer.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	
 	//あっぱれの画像
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerText),		_T("Data\\Texture\\Winner.png"),			{ {1, 1, 1}, {260, 67},  {260, 67}} });
 	//ボタン.

@@ -15,7 +15,11 @@ public:
 	virtual void Draw()override;
 private:
 	CSprite2D* m_pbefore;
+
 	int m_TimeMAX;
 	int m_TimeCount;
 
+	double AlphaC;
+	//二次関数（0から１から０）で帰ってくるi=1で最大
+	float Quadraticfunction(float i);
 };

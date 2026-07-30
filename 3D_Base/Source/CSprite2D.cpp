@@ -508,6 +508,8 @@ void CSprite2D::Render()
 			* static_cast<float>(m_PatternNo.x);
 		cb.UV.y = m_SpriteState.Stride.h / m_SpriteState.Base.h
 			* static_cast<float>(m_PatternNo.y);
+		cb.UV.w = m_SpriteState.Stride.w / m_SpriteState.Base.w;
+		cb.UV.z = m_SpriteState.Stride.h / m_SpriteState.Base.h;
 
 		//ビューポートの幅、高さを渡す.
 		cb.fViewPortWidth	= static_cast<float>(WND_W);
@@ -609,7 +611,8 @@ void CSprite2D::Render2(float i)
 			* static_cast<float>(m_PatternNo.x);
 		cb.UV.y = m_SpriteState.Stride.h / m_SpriteState.Base.h
 			* static_cast<float>(m_PatternNo.y);
-
+		cb.UV.w = m_SpriteState.Stride.w / m_SpriteState.Base.w;
+		cb.UV.z = m_SpriteState.Stride.h / m_SpriteState.Base.h;
 		//ビューポートの幅、高さを渡す.
 		cb.fViewPortWidth = static_cast<float>(WND_W);
 		cb.fViewPortHeight = static_cast<float>(WND_H);
