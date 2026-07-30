@@ -1,6 +1,9 @@
 #pragma once
 #include"CGameScene.h"
 #include"CUIObject.h";
+#include "CTitleUI.h"
+#include "CXInput.h"
+
 class CGameSceneTitle
 	:public CGameScene
 {
@@ -12,5 +15,9 @@ public:
 private:
 	CSprite2D* m_pTSprite;
 	CUIObject* m_pTImg;
+
+private:
+	CTitleUI* m_pTitleUI;
+	CXInput* m_pController;	//コントローラー.
 };
 

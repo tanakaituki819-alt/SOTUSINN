@@ -40,6 +40,7 @@ private:
 	//ポーズ関連.
 	CPauseUI* m_pPauseUI;
 	bool m_Pause;
+
 	CIngredientsmanager* m_pCingM;
 };
 

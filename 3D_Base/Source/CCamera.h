@@ -11,6 +11,7 @@ public:
 
 
 	 void Update() ;
+	 void ViewUpdate();
 	 void SetPosition(D3DXVECTOR3 Camera) { m_Camera.Position= Camera; }
 	 void SetPositionX(float Camera) { m_Camera.Position.x= Camera; }
 	 void SetPositionY(float Camera) { m_Camera.Position.y = Camera; }

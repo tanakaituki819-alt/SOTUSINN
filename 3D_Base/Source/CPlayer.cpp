@@ -16,6 +16,8 @@ CPlayer::CPlayer()
 		m_pBSphere->CreatSphereForMesh(*CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::Chopsticks));	//スフィアのメッシュを設定.
 		m_pBSphere->SetRadius(0.1f);		//半径を変更.
 	}
+
+	KARI = CSpriteManager::GetSprite2D(CSpM::enImagList::Img_Playericon);
 }
 
 CPlayer::~CPlayer()
@@ -96,6 +98,12 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 		m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
 		m_Cousor->SetScale(m_Scale);
 		m_Cousor->Render(View, Proj);
+
+		D3DXVECTOR3 i= m_Cousor->GetPos2D(View, Proj);
+		D3DXVECTOR3 c = { i.x,i.y,0.0 };
+		KARI->SetPosition(c);
+		KARI->SetScale({50,50,50});
+		KARI->Render();
 	}
 	//回収中.
 	else {

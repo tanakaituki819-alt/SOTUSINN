@@ -155,6 +155,8 @@ public:
 	void SetLightCOLOR(D3DXVECTOR3 COLORE) { 
 		LightCOLOR = COLORE; };
 	void SetLightCOLOR256(D3DXVECTOR3 COLORE);
+	//使用前に、ポジションスケールローテーションを設定すること//ちなみにｚには奥行きが入っている
+	D3DXVECTOR3 GetPos2D( D3DXMATRIX& mView, D3DXMATRIX& mProj);
 private:
 	//メッシュ読み込み.
 

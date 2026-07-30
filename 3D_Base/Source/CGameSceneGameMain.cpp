@@ -16,7 +16,8 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	//カメラ座標.
 	m_pCamera->SetPosition(D3DXVECTOR3(0.f, 10.f, -5.f));
 	m_pCamera->SetLookPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
-	m_pCamera->SetUpVec(D3DXVECTOR3(0.f, 0.f, 1.f));//前が上
+	m_pCamera->SetUpVec(D3DXVECTOR3(0.f, 0.f,1.0f ));//前が上
+
 	//ライト情報.
 	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	// ライト方向.
 	m_Light.fIntensity = 1;//	ライトパワー

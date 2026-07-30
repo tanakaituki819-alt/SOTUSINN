@@ -28,3 +28,15 @@ void CCamera::Update()
 {
 }
 
+void CCamera::ViewUpdate()
+{
+	D3DXVECTOR3 cam_pos = m_Camera.Position;
+	D3DXVECTOR3 cam_look = m_Camera.Look;
+	D3DXVECTOR3	vUpVec = m_vUpVec;	//上方（ベクトル）.
+
+	//ビュー（カメラ）変換.
+	D3DXMatrixLookAtLH(
+		&m_mView,	//(out)ビュー計算結果.
+		&cam_pos, &cam_look, &vUpVec);
+}
+

@@ -1,23 +1,20 @@
 #pragma once
 #include "CUIObject.h"
 
-class CPauseUI
-	:public CUIObject
+class CTitleUI
+	: public CUIObject
 {
-public:
-
-	static const int Option_MAX = 2;
-	
 public:
 	enum class enSelect
 	{
-		ResumeGame,		//ゲームに戻る
-		ReturnToTitle,	//タイトルに戻る
+		Start,		//ゲームに戻る
+		Fin,	//タイトルに戻る
 	};
-
 public:
-	CPauseUI();
-	~CPauseUI()override;
+	static const int Max = 3;
+public:
+	CTitleUI();
+	~CTitleUI()override;
 
 	void Update()override;
 	void Draw()override;
@@ -28,16 +25,33 @@ public:
 	//コントローラー
 	void SetXInput(CXInput* Input) { m_pController = Input; }
 
-	void OpenInit();	//ポーズ画面を開くときの初期化
-	void CloseInit();	//ポーズ画面を閉じるときの初期化
+	//背景.
+	void BackUI();
+
+	//お先にいただきます
+	void Title();
+	//開始
+	void Start();
+	//終了
+	void Finish();
+	//鍋
+	void Nabe();
+	//割りばし(開始)
+	void STARTWaribashi();
+	//割りばし(終了)
+	void FINWaribashi();
+
+	//初期化
+	void Init();
 
 private:
-	CSprite2D* m_pPauseImg;							//箸休め画像
-	CSprite2D* m_pPauseOptionImg	[Option_MAX];	//箸休め中の選択肢.
-	CSprite2D* m_pPauseSelectionFrameImg;			//選択中の枠.
-	CSprite2D* m_pDimImg;							//fe^de.
 	enSelect m_Select;
 	bool m_Decided;			//決定フラグ
 	bool m_SticTitltOld;	//前フレームではスティックが倒れていたかどうか
 	CXInput* m_pController;	//コントローラー
+private:
+	CSprite2D* m_Title;
+	CSprite2D* m_TitleText[Max];
+	CSprite2D* m_Nabe;
+	CSprite2D* m_Waribashi;
 };

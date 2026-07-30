@@ -432,3 +432,53 @@ void CSprite3D::Render(
 	m_pDx11->SetAlphaBlend( false );
 
 }
+
+D3DXVECTOR3 CSprite3D::GetPos2D(D3DXMATRIX& mView, D3DXMATRIX& mProj)
+{
+	D3DXVECTOR3 Output;
+	D3DXVECTOR3 Pos = { 0,0,0 };//オブジェクトのどこを見るか
+	_D3DVIEWPORT9 Viewport{0};//ビューポート
+	Viewport.X = 0;
+	Viewport.Y = 0;
+	Viewport.Width = static_cast<DWORD>(WND_W);
+	Viewport.Height = static_cast<DWORD>(WND_H);
+	Viewport.MinZ = 0.0f;
+	Viewport.MaxZ = 1.0f;
+
+	//ワールド行列、スケール行列、回転行列、平行移動行列.
+	D3DXMATRIX mWorld, mScale, mRot, mTran;
+	D3DXMATRIX mYaw, mPitch, mRoll;
+
+	//拡大縮小行列作成.
+	D3DXMatrixScaling(
+		&mScale,	//(out)計算結果.
+		m_Scale.x, m_Scale.y, m_Scale.z);	//x,y,zそれぞれの拡縮値.
+	//Y軸回転行列作成.
+	D3DXMatrixRotationY(&mYaw, m_Rotation.y);
+	//X軸回転行列作成.
+	D3DXMatrixRotationX(&mPitch, m_Rotation.x);
+	//Z軸回転行列作成.
+	D3DXMatrixRotationZ(&mRoll, m_Rotation.z);
+	//平行移動行列作成.
+	D3DXMatrixTranslation(
+		&mTran,	//(out)計算結果.
+		m_Position.x, m_Position.y, m_Position.z);	//x,y,z座標.
+
+	//回転行列を作成.
+	mRot = mYaw * mPitch * mRoll;
+
+	//ワールド行列作成.
+	//拡縮×回転×移動 ※順番がとても大切！！.
+	//mWorld = mScale * mRot ;
+	mWorld = mScale * mRot * mTran;
+	// 1. カメラ空間（ビュー空間）での位置を確認
+	D3DXMATRIX mWorldView = mWorld * mView;
+	D3DXVECTOR3 cameraSpacePos;
+	D3DXVec3TransformCoord(&cameraSpacePos, &Pos, &mWorldView);
+	D3DXVec3Project(&Output, &Pos, &Viewport, &mProj, &mView, &mWorld);
+
+
+
+
+	return Output;
+}

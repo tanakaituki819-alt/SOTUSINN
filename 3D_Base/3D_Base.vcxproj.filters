@@ -303,14 +303,12 @@
     <ClCompile Include="Source\CPlayerUI.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CPauseUI.cpp" />
     <ClCompile Include="Source\CIngredientsmanager.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
     </ClCompile>
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CGameSceneWinnerResult.cpp" />
     <ClCompile Include="Source\CTimer.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
     </ClCompile>
@@ -320,7 +318,6 @@
     <ClCompile Include="Source\CIngredients.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CWinnerResultUI.cpp" />
     <ClCompile Include="Source\CCollisionManager.cpp">
       <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
     </ClCompile>
@@ -481,12 +478,9 @@
     <ClInclude Include="Source\CPlayerUI.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\GameMainObj\CPlayer\CPlayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CPauseUI.h" />
-    <ClInclude Include="Source\CGameSceneWinnerResult.h" />
     <ClInclude Include="Source\CTimer.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\CTimer</Filter>
     </ClInclude>
-    <ClInclude Include="Source\CWinnerResultUI.h" />
     <ClInclude Include="Source\CCollisionManager.h">
       <Filter>Source\CGameScene\CGameSceneGameMain\CollisionManager</Filter>
     </ClInclude>

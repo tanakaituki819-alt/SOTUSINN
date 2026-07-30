@@ -194,6 +194,7 @@
     <ClCompile Include="Source\CStaticMeshObjObject.cpp" />
     <ClCompile Include="Source\CStaticObjMesh.cpp" />
     <ClCompile Include="Source\CTimer.cpp" />
+    <ClCompile Include="Source\CTitleUI.cpp" />
     <ClCompile Include="Source\CUIObject.cpp" />
     <ClCompile Include="Source\CFadeSceneTransition.cpp" />
     <ClCompile Include="Source\CXInput.cpp" />
@@ -255,6 +256,7 @@
     <ClInclude Include="Source\CStaticMeshObjObject.h" />
     <ClInclude Include="Source\CStaticObjMesh.h" />
     <ClInclude Include="Source\CTimer.h" />
+    <ClInclude Include="Source\CTitleUI.h" />
     <ClInclude Include="Source\CUIObject.h" />
     <ClInclude Include="Source\CFadeSceneTransition.h" />
     <ClInclude Include="Source\CXInput.h" />

@@ -106,3 +106,12 @@ bool D2CollizionXZ(D3DXVECTOR3 pos, float SC, D3DXVECTOR3 pos2, float SC2);
 
 //正規化
 //D3DXVec3Normalize();
+
+//D3D3DXVECTOR3* D3DXVec3Project(
+//	D3DXVECTOR3* pOut,       // [out] 変換後の2D座標（Z成分には深度値が入る）
+//	const D3DXVECTOR3* pV,         // [in]  変換したい3D座標
+//	const D3DVIEWPORT9* pViewport, // [in]  ビューポート（画面サイズや描画範囲の情報）
+//	const D3DXMATRIX* pProjection, // [in]  射影（プロジェクション）行列
+//	const D3DXMATRIX* pView,       // [in]  ビュー行列
+//	const D3DXMATRIX* pWorld       // [in]  ワールド行列
+//);
