@@ -5,16 +5,25 @@
 CGameSceneTitle::CGameSceneTitle(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	:CGameScene::CGameScene(Hwnd,Dx9,Dx11, m_Camera)
 	, m_pTitleUI(nullptr)
+	, m_pController(nullptr)
 {
 	m_pTSprite = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TITLE);
+
 	m_pTImg = new CUIObject();
-	m_pTImg->SetScale( WND_W,WND_H,0);
+	m_pTImg->SetScale(WND_W, WND_H, 0);
 	m_pTImg->AttachSprite(*m_pTSprite);
+
+	m_pController = new CXInput(0);
+
 	m_pTitleUI = new CTitleUI();
+	m_pTitleUI->SetXInput(m_pController);
+	m_pTitleUI->Init();
 }
 
 CGameSceneTitle::~CGameSceneTitle()
 {
+	SAFE_DELETE(m_pController);
+	SAFE_DELETE(m_pTitleUI);
 	SAFE_DELETE(m_pTImg);
 }
 

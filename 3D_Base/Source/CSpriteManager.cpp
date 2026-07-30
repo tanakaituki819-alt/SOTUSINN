@@ -211,7 +211,7 @@ void CSpriteManager::Load2D()
 	//あっぱれの画像
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerText),		_T("Data\\Texture\\Winner.png"),			{ {1, 1, 1}, {260, 67},  {260, 67}} });
 	//ボタン.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush),		_T("Data\\Texture\\ButtonPush.png"),		{ {1, 1, 1}, {200, 700}, {200, 700 / 2 } }, true});
+	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush),		_T("Data\\Texture\\ButtonPush.png"),		{ {1, 1, 1}, {544, 1904}, {544, 1904 / 3 } }, true});
 	//ボタン2.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_ButtonPush2),		_T("Data\\Texture\\ButtonPush2.png"),		{ {1, 1, 1}, {896, 1178}, {896, 1178 / 2 } }, true});
 	//勝利者テキスト.
@@ -224,6 +224,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleText),		_T("Data\\Texture\\TitleText.png"),		{ {1, 1, 1}, {650, 300}, {650, 300/3}} });
 	//タイトル鍋.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleNabe),		_T("Data\\Texture\\TitleNabe.png"),		{ {1, 1, 1}, {433, 577}, {433, 577}} });
+	// タイトルの割りばし.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_TitleWaribashi),		_T("Data\\Texture\\waribashi.png"),		{ {1, 1, 1}, {500, 500}, {500, 500}} });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
@@ -273,6 +275,7 @@ void CSpriteManager::Load3D()
 
 
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Chopsticks),_T("Data\\Mesh\\Obj\\Chopsticks\\HaSi.obj") });
+	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Chopsticks2),_T("Data\\Mesh\\Obj\\Chopsticks\\Chopsticks.obj") });
 
 
 

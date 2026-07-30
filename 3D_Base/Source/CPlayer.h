@@ -45,17 +45,16 @@ private:
 	std::list<Ingredients>	my_list;						//リスト.
 	int						Score;							//スコア.
 	CPlayerUI*				P_UI;							//プレイヤーUI.
-	CPlayerParalysisUI*		m_pPlayerParalysisUI = nullptr;	//プレイヤーマヒ中のボタンUI.
 	int						PlayerNo;						//プレイヤーNo.
-	bool					m_IsCollecting	 = false;		//今回収中かどうか.
-	float					m_Collectingtime = 0;			//回収中のカウント.
-	bool					m_IsConnected	 = false;		//コントローラー接続中か判定.
-	bool					m_IsParalysis	 = false;		//マヒ中かどうか.
-	float					m_ParalysisTimer = 0;			//マヒ経過時間.
-	float					m_ParalysisMovetime = 0;		//マヒの動きをさせるためのタイム.
-	float					m_Speed  = 0.8f;				//震える速度.
-	float					m_Amount = 0.05f;				//震える大きさ.	
-
-
-	CSprite2D* KARI;
+	CPlayerParalysisUI*		m_pPlayerParalysisUI = nullptr;	//プレイヤーマヒ中のボタンUI.
+	bool					m_IsCollecting		 = false;	//今回収中かどうか.
+	float					m_Collectingtime	 = 0;		//回収中のカウント.
+	bool					m_IsConnected		 = false;	//コントローラー接続中か判定.
+	bool					m_IsParalysis		 = false;	//マヒ中かどうか.
+	float					m_ParalysisTimer	 = 0;		//マヒ経過時間.
+	float					m_ParalysisMovetime  = 0;		//マヒの動きをさせるためのタイム.
+	float					m_Speed				 = 0.8f;	//震える速度.
+	float					m_Amount			 = 0.05f;	//震える大きさ.	
+	D3DXVECTOR3				m_CousorPosition	 = {};		//カーソルのポジションを入れる.
+	D3DXVECTOR3				m_Point3Dto2DConverter = {};	//ボタン連打を表示するポジション(3D座標から2Dように変換).
 };

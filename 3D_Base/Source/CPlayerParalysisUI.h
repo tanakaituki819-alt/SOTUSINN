@@ -1,16 +1,16 @@
 #pragma once
-#include "CSpriteObject.h"
+#include "CUIObject.h"
 
 
 class CPlayerParalysisUI
-	: public CSpriteObject
+	: public CUIObject
 {
 public:
 	CPlayerParalysisUI();
 	~CPlayerParalysisUI()override;
 
 	void Update();
-	void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj)override;
+	void Draw()override;
 
 	void Paralysis(D3DXVECTOR3 Position);	//プレイヤーのポジションを受け取る.
 

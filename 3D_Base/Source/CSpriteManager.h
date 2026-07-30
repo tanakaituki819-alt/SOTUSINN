@@ -49,6 +49,7 @@ public:
 		Img_TitleBackground,	//タイトル背景
 		Img_TitleText,			//タイトルテキスト.
 		Img_TitleNabe,			//タイトルの鍋.
+		IMG_TitleWaribashi,		//タイトルの割りばし.
 		MAX
 	};
 	//ｘファイル
@@ -78,6 +79,7 @@ public:
 		S_TOUHU,//豆腐
 		S_UINNER,//ウインナー
 		Chopsticks,	//箸.
+		Chopsticks2,	//２つセット箸.
 		MAX
 	};
 
