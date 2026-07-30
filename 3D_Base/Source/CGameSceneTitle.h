@@ -2,6 +2,7 @@
 #include"CGameScene.h"
 #include"CUIObject.h";
 #include "CTitleUI.h"
+#include "CXInput.h"
 
 class CGameSceneTitle
 	:public CGameScene
@@ -17,6 +18,6 @@ private:
 
 private:
 	CTitleUI* m_pTitleUI;
-
+	CXInput* m_pController;	//コントローラー.
 };
 

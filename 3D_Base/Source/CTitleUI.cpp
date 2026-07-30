@@ -1,4 +1,5 @@
 #include "CTitleUI.h"
+#include "CSpriteManager.h"
 #include "CXInput.h"
 #include <iostream>
 
@@ -24,6 +25,13 @@ static constexpr float NABE_POS_X = 190;
 static constexpr float NABE_POS_Y = 260;
 static constexpr float NABE_SCL_X = 630;
 static constexpr float NABE_SCL_Y = 680;
+
+//選択肢
+static constexpr float WARIBASHI_POS_X = 760;
+static constexpr float WARIBASHI_START_POS_Y = 355;
+static constexpr float WARIBASHI_FIN_POS_Y = 465;
+static constexpr float WARIBASHI_SCL = 200;
+
 
 CTitleUI::CTitleUI()
 	: m_Select			( enSelect::Start )
@@ -133,6 +141,7 @@ void CTitleUI::BackUI()
 	m_Title->Render();
 }
 
+//「お先にいただきます!」.
 void CTitleUI::Title()
 {
 	m_TitleText[0]->SetPosition(D3DXVECTOR3(TITLE_POS_X, TITLE_POS_Y, 0));
@@ -140,45 +149,15 @@ void CTitleUI::Title()
 	m_TitleText[0]->SetPatternNo(0.f, 0.f);
 	m_TitleText[0]->Render();
 }
-
+//「開始」.
 void CTitleUI::Start()
 {
-
-#if 1
-	//実行中に動かすやつ
-	static float ananana = 10;
-	static float ananana2 = 10;
-
-	if (GetAsyncKeyState('W') & 0x8000)
-	{
-		ananana--;
-	}
-	if (GetAsyncKeyState('S') & 0x8000)
-	{
-		ananana++;
-	}
-	if (GetAsyncKeyState('D') & 0x8000)
-	{
-		ananana2++;
-	}
-	if (GetAsyncKeyState('A') & 0x8000)
-	{
-		ananana2--;
-	}
-
-	FILE* pFile;
-	//stdout（標準出力）を新しく作成したコンソールにリダイレクト
-	freopen_s(&pFile, "CONOUT$", "w", stdout);
-	std::cout << ananana2 << std::endl;
-
-#endif
-
 	m_TitleText[1]->SetPosition(D3DXVECTOR3(START_POS_X, START_POS_Y, 0));
 	m_TitleText[1]->SetScale(D3DXVECTOR3(START_SCL_X, START_SCL_Y, 0));
 	m_TitleText[1]->SetPatternNo(0.f, 1.f);
 	m_TitleText[1]->Render();
 }
-
+//「終了」.
 void CTitleUI::Finish()
 {
 	m_TitleText[2]->SetPosition(D3DXVECTOR3(FINISH_POS_X, FINISH_POS_Y, 0));
@@ -186,24 +165,31 @@ void CTitleUI::Finish()
 	m_TitleText[2]->SetPatternNo(0.f, 2.f);
 	m_TitleText[2]->Render();
 }
-
+//鍋の画像.
 void CTitleUI::Nabe()
 {
 	m_Nabe->SetPosition(D3DXVECTOR3(NABE_POS_X, NABE_POS_Y, 0));
 	m_Nabe->SetScale(D3DXVECTOR3(NABE_SCL_X, NABE_SCL_Y, 0));
 	m_Nabe->Render();
 }
-
+//「開始」の時の選択肢の割りばし.
 void CTitleUI::STARTWaribashi()
 {
-	m_Waribashi->SetPosition(D3DXVECTOR3(10, 10, 0));
-	m_Waribashi->SetScale(D3DXVECTOR3(100, 100, 0));
+	m_Waribashi->SetPosition(D3DXVECTOR3(WARIBASHI_POS_X, WARIBASHI_START_POS_Y, 0));
+	m_Waribashi->SetScale(D3DXVECTOR3(WARIBASHI_SCL, WARIBASHI_SCL, 0));
 	m_Waribashi->Render();
 }
-
+//「終了」の時の選択肢の割りばし.
 void CTitleUI::FINWaribashi()
 {
-	m_Waribashi->SetPosition(D3DXVECTOR3(10, 100, 0));
-	m_Waribashi->SetScale(D3DXVECTOR3(100, 100, 0));
+	m_Waribashi->SetPosition(D3DXVECTOR3(WARIBASHI_POS_X, WARIBASHI_FIN_POS_Y, 0));
+	m_Waribashi->SetScale(D3DXVECTOR3(WARIBASHI_SCL, WARIBASHI_SCL, 0));
 	m_Waribashi->Render();
+}
+//初期化.
+void CTitleUI::Init()
+{
+	m_Select = enSelect::Start;
+	m_Decided = false;
+	m_SticTitltOld = false;
 }
