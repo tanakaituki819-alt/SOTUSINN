@@ -171,6 +171,8 @@
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\GameRdyUI\CGameRdyUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\PlayerSetupUI\CPlayerSetupUi.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\TitleBackUI\CTitleBackUI.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneResult\CGameSceneResult.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneTitleSequence\CGameSceneTitleSequence.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneTitleSequence\TitleChopsticks\CTitleChopsticks.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneTitle\CGameSceneTitle.cpp" />
@@ -229,6 +231,8 @@
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\GameRdyUI\CGameRdyUI.h" />
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\PlayerSetupUI\CPlayerSetupUi.h" />
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\TitleBackUI\CTitleBackUI.h" />
+    <ClInclude Include="Source\GameScene\GameSceneResult\CGameSceneResult.h" />
+    <ClInclude Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.h" />
     <ClInclude Include="Source\GameScene\GameSceneTitleSequence\CGameSceneTitleSequence.h" />
     <ClInclude Include="Source\GameScene\GameSceneTitleSequence\TitleChopsticks\CTitleChopsticks.h" />
     <ClInclude Include="Source\GameScene\GameSceneTitle\CGameSceneTitle.h" />

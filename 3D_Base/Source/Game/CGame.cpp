@@ -4,6 +4,7 @@
 #include"GameScene\GameSceneGameMain\CGameSceneGameMain.h"
 #include "GameScene\GameScenePlayerSetup\CGameScenePlayerSetup.h"
 #include "GameScene\GameSceneWinnerResult\CGameSceneWinnerResult.h"
+#include "GameScene\GameSceneResult\CGameSceneResult.h"
 
 #include "Game\enScene.h"
 #include "SoundManager\CSoundManager.h"
@@ -43,8 +44,8 @@ void CGame::Create()
 	CSpriteManager::LoadDeat(*m_pDx11,*m_pDx9);
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
-	m_pGeamScene = new CGameSceneGameMain(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
-//	m_pGeamScene = new CGameSceneWinnerResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+//	m_pGeamScene = new CGameSceneGameMain(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+	m_pGeamScene = new CGameSceneResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
 }
 
 //ロードデータ関数.
