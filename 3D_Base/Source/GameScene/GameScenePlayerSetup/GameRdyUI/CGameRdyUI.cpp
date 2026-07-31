@@ -252,8 +252,9 @@ void CGameRdyUI::DrawGameRdy()
 	}
 	if (m_LeftHandclap[1] > 60 * 0.65f) {
 		m_pGamerdy[1]->SetAlpha(0.f);
-		m_pGamerdy[1]->SetPosition(D3DXVECTOR3(64.f * 4.6f + 31.f + m_LeftHandclap[1], 80.f, 0.f));
-		m_pGamerdy[1]->SetScale(D3DXVECTOR3(110.f, 130.f, 0.f));
+		m_pGamerdy[1]->SetPosition(D3DXVECTOR3(64.f * 4.6f + 31.f + m_LeftHandclap[1], 50.f, 0.f));
+		m_pGamerdy[1]->SetScale(D3DXVECTOR3(350.f, 170.f, 0.f));
+		m_pGamerdy[1]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.3f));
 		m_pGamerdy[1]->SetPatternNo(0.f, 5.f);
 		//コントローラーが接続されているか.
 		if (m_pController[1]->IsConnect() == true) {
@@ -264,8 +265,9 @@ void CGameRdyUI::DrawGameRdy()
 		//プレイヤー3.
 	if (m_LeftHandclap[2] > 60 * 0.65f) {
 		m_pGamerdy[2]->SetAlpha(0.f);
-		m_pGamerdy[2]->SetPosition(D3DXVECTOR3(64.f * 9.6f + 31.f + m_LeftHandclap[2], 80.f, 0.f));
-		m_pGamerdy[2]->SetScale(D3DXVECTOR3(110.f, 130.f, 0.f));
+		m_pGamerdy[2]->SetPosition(D3DXVECTOR3(64.f * 9.6f + 31.f + m_LeftHandclap[2], 50.f, 0.f));
+		m_pGamerdy[2]->SetScale(D3DXVECTOR3(350.f, 170.f, 0.f));
+		m_pGamerdy[2]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.3f));
 		m_pGamerdy[2]->SetPatternNo(0.f, 5.f);
 		//コントローラーが接続されているか.
 		if (m_pController[2]->IsConnect() == true) {
@@ -276,8 +278,9 @@ void CGameRdyUI::DrawGameRdy()
 		//プレイヤー4.
 	if (m_LeftHandclap[3] > 60 * 0.65f) {
 		m_pGamerdy[3]->SetAlpha(0.f);
-		m_pGamerdy[3]->SetPosition(D3DXVECTOR3(64.f * 14.6 + 31.f + m_LeftHandclap[3], 80.f, 0.f));
-		m_pGamerdy[3]->SetScale(D3DXVECTOR3(110.f, 130.f, 0.f));
+		m_pGamerdy[3]->SetPosition(D3DXVECTOR3(64.f * 14.6 + 31.f + m_LeftHandclap[3], 50.f, 0.f));
+		m_pGamerdy[3]->SetScale(D3DXVECTOR3(350.f, 170.f, 0.f));
+		m_pGamerdy[3]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.3f));
 		m_pGamerdy[3]->SetPatternNo(0.f, 5.f);
 		//コントローラーが接続されているか.
 		if (m_pController[3]->IsConnect() == true) {
@@ -296,6 +299,7 @@ void CGameRdyUI::DrawTitleBack()
 		m_pWhiteBack->SetPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
 		m_pWhiteBack->SetScale(D3DXVECTOR3(1280.f, 720.f, 0.f));
 		m_pWhiteBack->SetPatternNo(0.f, 0.f);
+		m_pWhiteBack->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 		m_pWhiteBack->Render();
 		//巻物.
 		m_pScroll->SetAlpha(1.f);
@@ -308,12 +312,14 @@ void CGameRdyUI::DrawTitleBack()
 		m_pTextFrame[0]->SetAlpha(1.f);
 		m_pTextFrame[0]->SetPosition(D3DXVECTOR3(400.f, 484.f, 0.f));
 		m_pTextFrame[0]->SetScale(D3DXVECTOR3(350.f, 150.f, 0.f));
+		m_pTextFrame[0]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 		m_pTextFrame[0]->SetPatternNo(0.f, 0.f);
 		m_pTextFrame[0]->Render();
 
 		m_pTextFrame[1]->SetAlpha(1.f);
 		m_pTextFrame[1]->SetPosition(D3DXVECTOR3(860.f, 484.f, 0.f));
 		m_pTextFrame[1]->SetScale(D3DXVECTOR3(350.f, 150.f, 0.f));
+		m_pTextFrame[1]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 		m_pTextFrame[1]->SetPatternNo(0.f, 0.f);
 		m_pTextFrame[1]->Render();
 
@@ -323,6 +329,7 @@ void CGameRdyUI::DrawTitleBack()
 			m_pSelectionFrame->SetAlpha(1.f);
 			m_pSelectionFrame->SetPosition(D3DXVECTOR3(860.f, 484.f, 0.f));
 			m_pSelectionFrame->SetScale(D3DXVECTOR3(358.f, 158.f, 0.f));
+			m_pSelectionFrame->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 			m_pSelectionFrame->Render();
 		}
 		//いいえを選択中なら.
@@ -331,6 +338,7 @@ void CGameRdyUI::DrawTitleBack()
 			m_pSelectionFrame->SetAlpha(1.f);
 			m_pSelectionFrame->SetPosition(D3DXVECTOR3(400.f, 484.f, 0.f));
 			m_pSelectionFrame->SetScale(D3DXVECTOR3(358.f, 158.f, 0.f));
+			m_pSelectionFrame->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 			m_pSelectionFrame->Render();
 		}
 
@@ -338,18 +346,21 @@ void CGameRdyUI::DrawTitleBack()
 		m_pTitleBackText[0]->SetAlpha(1.f);
 		m_pTitleBackText[0]->SetPosition(D3DXVECTOR3(340.f, 140.f, 0.f));
 		m_pTitleBackText[0]->SetScale(D3DXVECTOR3(600.f, 260.f, 0.f));
+		m_pTitleBackText[0]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 		m_pTitleBackText[0]->SetPatternNo(0.f, 0.f);
 		m_pTitleBackText[0]->Render();
 		//(はい)
 		m_pTitleBackText[1]->SetAlpha(1.f);
 		m_pTitleBackText[1]->SetPosition(D3DXVECTOR3(748.f, 432.f, 0.f));
 		m_pTitleBackText[1]->SetScale(D3DXVECTOR3(600.f, 150.f, 0.f));
+		m_pTitleBackText[1]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 		m_pTitleBackText[1]->SetPatternNo(0.f, 3.f);
 		m_pTitleBackText[1]->Render();
 		//(いいえ)
 		m_pTitleBackText[2]->SetAlpha(1.f);
 		m_pTitleBackText[2]->SetPosition(D3DXVECTOR3(262.f, 406.f, 0.f));
 		m_pTitleBackText[2]->SetScale(D3DXVECTOR3(600.f, 150.f, 0.f));
+		m_pTitleBackText[2]->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
 		m_pTitleBackText[2]->SetPatternNo(0.f, 4.f);
 		m_pTitleBackText[2]->Render();
 

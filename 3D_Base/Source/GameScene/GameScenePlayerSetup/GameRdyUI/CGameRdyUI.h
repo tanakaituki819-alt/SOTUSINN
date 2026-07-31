@@ -44,8 +44,8 @@ private:
 	float		m_RightHandclap	[hand_Max]	= {};		//右手の移動する数値.
 	float		m_LeftHandclap	[hand_Max]	= {};		//左手の移動する数値.
 	bool		m_Handclapflag	[hand_Max]	= {};		//手を合わせ終わったかのフラグ.
-	bool		m_TitleBackflag  = false;				//タイトルに戻る描画を出すかのフラグ.
-	bool		m_IsYesSelected  = false;				//(はい)、か、(いいえ)どちらを選んでいるか判定する.
-	bool		m_SelectTimeOver = false;				//セレクトフレームを動かしていいか.
-	int			m_SelectchangeTimer = 0;				//セレクトフレームを変更で期までのタイマー.
+	bool		m_TitleBackflag				= false;	//タイトルに戻る描画を出すかのフラグ.
+	bool		m_IsYesSelected				= false;	//(はい)、か、(いいえ)どちらを選んでいるか判定する.
+	bool		m_SelectTimeOver			= false;	//セレクトフレームを動かしていいか.
+	int			m_SelectchangeTimer			= 0;		//セレクトフレームを変更で期までのタイマー.
 };
