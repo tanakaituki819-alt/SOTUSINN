@@ -52,7 +52,7 @@ void CIngredients::SetIngredients(int i)
 		m_pBSphere->SetRadius(IngredientsSetting[i].HitSize);
 	}
 	Score = IngredientsSetting[i].Score;
-
+	Fallingforce = 0;
 	isBoiled = false;
 	m_Boiledc = 0;
 	m_BoiledcMAX = (15*(0.8+static_cast<float>(rand()%5)/10)) * 60;
@@ -63,8 +63,8 @@ void CIngredients::SetIngredients(int i)
 void CIngredients::Update()
 {
 
-
-	m_Position.y-=0.01;
+	Fallingforce += gravity;
+	m_Position.y-= Fallingforce;
 	float Speed = 0.1;
 	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
 	if (Nabe!=nullptr) {
@@ -80,7 +80,8 @@ void CIngredients::Update()
 		
 		};
 		if (m_Position.y <= Nabe->GetPosition().y + Nabe->GetNabeH()) {
-			m_Position.y = Nabe->GetPosition().y + Nabe->GetNabeH();
+			Fallingforce *= 0.5;
+			Fallingforce -= buoyancy;
 		}
 	}
 

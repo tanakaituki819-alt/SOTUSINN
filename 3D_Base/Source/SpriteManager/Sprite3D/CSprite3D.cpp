@@ -387,7 +387,16 @@ void CSprite3D::Render(
 		cb.mWVP = m;
 
 		//カラー.
-		cb.Color = D3DXVECTOR4( 1.0f, 1.0f, 1.0f, m_Alpha );
+		cb.Color;
+		if (isCOLOR) {
+			cb.Color.x = COLOR.x;
+			cb.Color.y = COLOR.y;
+			cb.Color.z = COLOR.z;
+			cb.Color.w = m_Alpha;
+		}
+		else {
+			cb.Color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
+		}
 
 		//テクスチャ座標(UV座標).
 		//１マスあたりの割合にパターン番号(マス目)をかけて座標を設定する.

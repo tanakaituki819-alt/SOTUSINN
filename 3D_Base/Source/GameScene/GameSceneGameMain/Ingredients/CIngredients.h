@@ -29,6 +29,8 @@ class CIngredients
 	:public  CStaticMeshObjObject
 {
 private:
+	static constexpr float gravity = 0.01;
+	static constexpr float buoyancy = 0.03;
 	struct IngredientsSetting
 	{
 		CStaticObjMesh* Mesh=nullptr;//つかうモデルの
@@ -55,4 +57,5 @@ protected:
 	 bool isBoiled;//にえているか
 	 float m_Boiledc;
 	 float m_BoiledcMAX;
+	 float Fallingforce;//落下力
 };
