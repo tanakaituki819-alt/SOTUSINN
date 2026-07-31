@@ -42,10 +42,10 @@ CTitleUI::CTitleUI()
 	m_Title = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleBackground);	//背景.
 	for (int i = 0; i < Max; i++)
 	{
-		m_TitleText[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleText);	//背景.
+		m_TitleText[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleText);	//テキスト.
 	}
 	m_Nabe = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleNabe);	//鍋
-	m_Waribashi = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_TitleWaribashi);	//鍋
+	m_Waribashi = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_TitleWaribashi);	//割りばし
 }
 
 CTitleUI::~CTitleUI()
