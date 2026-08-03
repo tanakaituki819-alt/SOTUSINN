@@ -188,6 +188,7 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Hand),			_T("Data\\Texture\\Hand.png"),				{ {1, 1, 1}, {130, 400}, {130, 400 / 2 } } });
 	//巻物UI.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Scroll),			_T("Data\\Texture\\Scroll.png"),			{ {1, 1, 1}, {600, 200}, {600, 200 } }, true});
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Scroll2),			_T("Data\\Texture\\Scroll2.png"),			{ {1, 1, 1}, {600, 200}, {600, 200 } }, true});
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Xbox),			_T("Data\\Texture\\Cusoru.png"),			{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Cusoru),			_T("Data\\Texture\\Cusoru.png"),			{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
 	//白い画像.

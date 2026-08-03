@@ -32,6 +32,7 @@ public:
 		Img_Text,				//文字.
 		Img_Hand,				//いただきます用の手.
 		Img_Scroll,				//巻物UI.
+		Img_Scroll2,			//巻物UI2.(片方がない)
 		Img_Xbox,				//Xboxコントローラー.
 		Img_Cusoru,				//カーソル
 		Img_Pause,				//ポーズ.
