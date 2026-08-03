@@ -95,6 +95,7 @@ public:
 		TCHAR			FileName[64];		//ファイル名.
 		std::vector<VERTEX> Vertices;		// 全頂点データ
 		std::vector<std::vector<DWORD>> MaterialIndices; // マテリアル毎のインデックス配列
+		ID3DXMesh* m_pMeshForRay;//レイとの当たり判定用
 		DWORD			NumMaterials;		//マテリアル数.
 
 		MY_MODEL()
@@ -148,7 +149,8 @@ public:
 	// 【変更後】頂点配列を取得.
 	const std::vector<VERTEX>& GetMesh() const { return m_Model.Vertices; }
 	// 【変更後】レイとの当たり判定用の頂点配列を取得.
-	const std::vector<VERTEX>& GetMeshForRay() const { return m_ModelForRay.Vertices; }
+	//const std::vector<VERTEX>& GetMeshForRay() const { return m_ModelForRay.Vertices; }
+	 ID3DXMesh* GetMeshForRay() const { return m_ModelForRay.m_pMeshForRay; }
 
 	void SetisCOLOR(bool is) { isCOLOR = is; };
 
@@ -157,6 +159,11 @@ public:
 	void SetLightCOLOR256(D3DXVECTOR3 COLORE);
 	//使用前に、ポジションスケールローテーションを設定すること//ちなみにｚには奥行きが入っている
 	D3DXVECTOR3 GetPos2D( D3DXMATRIX& mView, D3DXMATRIX& mProj);
+
+
+
+
+	bool CreateMeshForRay();
 private:
 	//メッシュ読み込み.
 

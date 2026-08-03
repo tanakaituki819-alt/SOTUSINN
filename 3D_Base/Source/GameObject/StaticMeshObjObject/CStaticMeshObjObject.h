@@ -35,6 +35,9 @@ public:
 	void UpdateBSpherePos() {
 		m_pBSphere->SetPosition(m_Position);
 	}
+	CStaticObjMesh* GetMesh() {
+		return m_pMesh;
+	}
 
 protected:
 	CStaticObjMesh* m_pMesh;

@@ -46,7 +46,8 @@ CSprite3D::~CSprite3D()
 HRESULT CSprite3D::Init(
 	CDirectX11& pDx11,
 	LPCTSTR lpFileName,
-	SPRITE_STATE& pSs)
+	SPRITE_STATE& pSs,
+	LPCTSTR lpFileName2 )
 {
 	m_pDx11 = &pDx11;
 	m_pDevice11 = m_pDx11->GetDevice();		//実態は別のところにある.他とも共有している.
@@ -65,7 +66,7 @@ HRESULT CSprite3D::Init(
 		return E_FAIL;
 	}
 	//テクスチャ作成.
-	if( FAILED( CreateTexture( lpFileName ) ) )
+	if( FAILED( CreateTexture( lpFileName, lpFileName2) ) )
 	{
 		return E_FAIL;
 	}
@@ -83,6 +84,7 @@ void CSprite3D::Release()
 {
 	SAFE_RELEASE( m_pSampleLinear );
 	SAFE_RELEASE( m_pTexture );
+	SAFE_RELEASE(m_pTexture2);
 	SAFE_RELEASE( m_pVertexBuffer );
 	SAFE_RELEASE( m_pConstantBuffer );
 	SAFE_RELEASE( m_pPixelShader );
@@ -176,38 +178,9 @@ HRESULT CSprite3D::CreateShader()
 	}
 	SAFE_RELEASE( pCompiledShader );
 
-	//HLSLからピクセルシェーダのブロブを作成.
-	if (FAILED(
-		D3DX11CompileFromFile(
-			SHADER_NAME,		//シェーダファイル名（HLSLファイル）.
-			nullptr,			//マクロ定義の配列へのポインタ（未使用）.
-			nullptr,			//インクルードファイルを扱うインターフェイスへのポインタ（未使用）.
-			"PS_Main",			//シェーダエントリーポイント関数の名前.
-			"ps_5_0",			//シェーダのモデルを指定する文字列（プロファイル）.
-			uCompileFlag,		//シェーダコンパイルフラグ.
-			0,					//エフェクトコンパイルフラグ（未使用）.
-			nullptr,			//スレッド ポンプ インターフェイスへのポインタ（未使用）.
-			&pCompiledShader,	//ブロブを格納するメモリへのポインタ.
-			&pErrors,			//エラーと警告一覧を格納するメモリへのポインタ.
-			nullptr )))			//戻り値へのポインタ（未使用）.
-	{
-		_ASSERT_EXPR( false, _T( "hlsl読み込み失敗" ) );
-		return E_FAIL;
-	}
-	SAFE_RELEASE( pErrors );
-
-	//上記で作成したブロブから「ピクセルシェーダ」を作成.
-	if (FAILED(
-		m_pDevice11->CreatePixelShader(
-			pCompiledShader->GetBufferPointer(),
-			pCompiledShader->GetBufferSize(),
-			nullptr,
-			&m_pPixelShader )))	//(out)ピクセルシェーダ.
-	{
-		_ASSERT_EXPR( false, _T( "ピクセルシェーダ作成失敗" ) );
-		return E_FAIL;
-	}
-	SAFE_RELEASE( pCompiledShader );
+	//HLSLからピクセルシェーダを作成.
+	CleatePixelShader("PS_Main", m_pPixelShader);
+	CleatePixelShader("PS_Main2",m_pPixelShader2);
 
 	//コンスタント（定数）バッファ作成.
 	//シェーダに特定の数値を送るバッファ.
@@ -286,23 +259,38 @@ HRESULT CSprite3D::CreateModel()
 	return S_OK;
 }
 
-//テクスチャ作成.
-HRESULT CSprite3D::CreateTexture( LPCTSTR lpFileName )
+HRESULT CSprite3D::CreateTexture(LPCTSTR lpFileName, LPCTSTR lpFileName2)
 {
 	//テクスチャ作成.
-	if( FAILED( D3DX11CreateShaderResourceViewFromFile(
+	if (FAILED(D3DX11CreateShaderResourceViewFromFile(
 		m_pDevice11,		//リソースを使用するデバイスのポインタ.
 		lpFileName,			//ファイル名.
 		nullptr, nullptr,
 		&m_pTexture,		//(out)テクスチャ.
-		nullptr ) ) )
+		nullptr)))
 	{
-		_ASSERT_EXPR( false, _T( "テクスチャ作成失敗" ) );
+		_ASSERT_EXPR(false, _T("テクスチャ作成失敗"));
 		return E_FAIL;
 	}
-
-	return S_OK;
+	//元の画像に対して波の模様や細かい質感（ディテール）を重ね合わせる画像//なければスキップ
+	if (lpFileName2!=nullptr) {
+		//テクスチャ作成.
+		if (FAILED(D3DX11CreateShaderResourceViewFromFile(
+			m_pDevice11,		//リソースを使用するデバイスのポインタ.
+			lpFileName2,			//ファイル名.
+			nullptr, nullptr,
+			&m_pTexture2,		//(out)テクスチャ.
+			nullptr)))
+		{
+			_ASSERT_EXPR(false, _T("テクスチャ作成失敗"));
+			return E_FAIL;
+		}
+		return S_OK;
+	}
+	
 }
+
+
 
 
 //サンプラ作成.
@@ -442,6 +430,120 @@ void CSprite3D::Render(
 
 }
 
+void CSprite3D::Render2(D3DXMATRIX& mView, D3DXMATRIX& mProj, D3DXVECTOR2 c)
+{
+	if (m_pPixelShader2==nullptr) {
+		Render(mView, mProj);
+		return;
+	}
+	//ワールド行列.
+	D3DXMATRIX	mWorld;
+	D3DXMATRIX	mTrans, mRot, mScale;
+
+	//拡大縮小行列.
+	D3DXMatrixScaling(&mScale,
+		m_Scale.x, m_Scale.y, m_Scale.z);
+
+	//回転行列.
+	D3DXMATRIX mYaw, mPitch, mRoll;
+	D3DXMatrixRotationY(&mYaw, m_Rotation.y);
+	D3DXMatrixRotationX(&mPitch, m_Rotation.x);
+	D3DXMatrixRotationZ(&mRoll, m_Rotation.z);
+	mRot = mYaw * mPitch * mRoll;
+	//※Yaw, Pitch, Roll の掛ける順番を変えると結果も変わる.
+
+	//平行行列（平行移動）.
+	D3DXMatrixTranslation(&mTrans,
+		m_Position.x, m_Position.y, m_Position.z);
+
+	//ワールド座標変換.
+	//重要: 拡縮行列 * 回転行列 * 平行行列.
+	mWorld = mScale * mRot * mTrans;
+
+	//ビルボード用.
+	if (m_Billboard == true) {
+		D3DXMATRIX CancelRotation = mView;//ビュー行列.
+		CancelRotation._41
+			= CancelRotation._42 = CancelRotation._43 = 0.0f;//xyzを0にする.
+		//CancelRotationの逆行列を求めます.
+		D3DXMatrixInverse(&CancelRotation, nullptr, &CancelRotation);
+		mWorld = CancelRotation * mWorld;
+	}
+
+	//使用するシェーダの登録.
+	m_pContext11->VSSetShader(m_pVertexShader, nullptr, 0);
+	m_pContext11->PSSetShader(m_pPixelShader2, nullptr, 0);
+
+	//シェーダのコンスタントバッファに各種データを渡す.
+	D3D11_MAPPED_SUBRESOURCE pData;
+	SHADER_CONSTANT_BUFFER cb;	//コンスタントバッファ.
+	//バッファ内のデータの書き換え開始時にmap.
+	if (SUCCEEDED(
+		m_pContext11->Map(m_pConstantBuffer,
+			0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
+	{
+		//ワールド,ビュー,プロジェクション行列を渡す.
+		D3DXMATRIX m = mWorld * mView * mProj;
+		D3DXMatrixTranspose(&m, &m);	//行列を転置する.
+		cb.mWVP = m;
+
+		//カラー.
+		cb.Color;
+		if (isCOLOR) {
+			cb.Color.x = COLOR.x;
+			cb.Color.y = COLOR.y;
+			cb.Color.z = COLOR.z;
+			cb.Color.w = m_Alpha;
+		}
+		else {
+			cb.Color = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
+		}
+
+		//テクスチャ座標(UV座標).
+		//１マスあたりの割合にパターン番号(マス目)をかけて座標を設定する.
+		cb.UV.x = m_SpriteState.Stride.w / m_SpriteState.Base.w
+			* static_cast<float>(m_PatternNo.x);
+		cb.UV.y = m_SpriteState.Stride.h / m_SpriteState.Base.h
+			* static_cast<float>(m_PatternNo.y);
+		cb.i.x = c.x;
+		cb.i.y = c.y;
+		memcpy_s(pData.pData, pData.RowPitch,
+			(void*)(&cb), sizeof(cb));
+
+		m_pContext11->Unmap(m_pConstantBuffer, 0);
+	}
+
+	//このコンスタントバッファをどのシェーダで使うか？.
+	m_pContext11->VSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+	m_pContext11->PSSetConstantBuffers(0, 1, &m_pConstantBuffer);
+
+	//頂点バッファをセット.
+	UINT stride = sizeof(VERTEX);	//データの間隔.
+	UINT offset = 0;
+	m_pContext11->IASetVertexBuffers(0, 1,
+		&m_pVertexBuffer, &stride, &offset);
+
+	//頂点インプットレイアウトをセット.
+	m_pContext11->IASetInputLayout(m_pVertexLayout);
+	//プリミティブ・トポロジーをセット.
+	m_pContext11->IASetPrimitiveTopology(
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+	//テクスチャをシェーダに渡す.
+	m_pContext11->PSSetSamplers(0, 1, &m_pSampleLinear);
+	m_pContext11->PSSetShaderResources(0, 1, &m_pTexture);
+	m_pContext11->PSSetShaderResources(1, 1, &m_pTexture2);
+	//アルファブレンド有効にする.
+	m_pDx11->SetAlphaBlend(true);
+
+	//プリミティブをレンダリング.
+	m_pContext11->Draw(4, 0);//板ポリ（頂点4つ分）.
+
+	//アルファブレンド無効にする.
+	m_pDx11->SetAlphaBlend(false);
+
+}
+
 D3DXVECTOR3 CSprite3D::GetPos2D(D3DXMATRIX& mView, D3DXMATRIX& mProj)
 {
 	D3DXVECTOR3 Output;
@@ -490,4 +592,48 @@ D3DXVECTOR3 CSprite3D::GetPos2D(D3DXMATRIX& mView, D3DXMATRIX& mProj)
 
 
 	return Output;
+}
+
+HRESULT CSprite3D::CleatePixelShader(LPCSTR EntrePoint, ID3D11PixelShader*& pTexture)
+{
+	ID3DBlob* pCompiledShader = nullptr;
+	ID3DBlob* pErrors = nullptr;
+	UINT uCompileFlag = 0;
+#ifdef _DEBUG
+	uCompileFlag =
+		D3D10_SHADER_DEBUG | D3D10_SHADER_SKIP_OPTIMIZATION;
+#endif//#ifdef _DEBUG
+	//HLSLからピクセルシェーダのブロブを作成.
+	if (FAILED(
+		D3DX11CompileFromFile(
+			SHADER_NAME,		//シェーダファイル名（HLSLファイル）.
+			nullptr,			//マクロ定義の配列へのポインタ（未使用）.
+			nullptr,			//インクルードファイルを扱うインターフェイスへのポインタ（未使用）.
+			EntrePoint,			//シェーダエントリーポイント関数の名前.
+			"ps_5_0",			//シェーダのモデルを指定する文字列（プロファイル）.
+			uCompileFlag,		//シェーダコンパイルフラグ.
+			0,					//エフェクトコンパイルフラグ（未使用）.
+			nullptr,			//スレッド ポンプ インターフェイスへのポインタ（未使用）.
+			&pCompiledShader,	//ブロブを格納するメモリへのポインタ.
+			&pErrors,			//エラーと警告一覧を格納するメモリへのポインタ.
+			nullptr)))			//戻り値へのポインタ（未使用）.
+	{
+		_ASSERT_EXPR(false, _T("hlsl読み込み失敗"));
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pErrors);
+
+	//上記で作成したブロブから「ピクセルシェーダ」を作成.
+	if (FAILED(
+		m_pDevice11->CreatePixelShader(
+			pCompiledShader->GetBufferPointer(),
+			pCompiledShader->GetBufferSize(),
+			nullptr,
+			&pTexture)))	//(out)ピクセルシェーダ.
+	{
+		_ASSERT_EXPR(false, _T("ピクセルシェーダ作成失敗"));
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pCompiledShader);
+
 }

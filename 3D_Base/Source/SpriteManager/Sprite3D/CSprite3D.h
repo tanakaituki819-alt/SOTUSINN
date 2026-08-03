@@ -1,5 +1,7 @@
 #pragma once
 
+//align()		: （強制的に）16byteで使用する.
+#define ALIGN16 _declspec(align(16))
 //警告についてのコード分析を無効にする.4005:再定義.
 #pragma warning(disable:4005)
 
@@ -20,6 +22,7 @@ public:
 		D3DXMATRIX	mWVP;		//ワールド,ビュー,プロジェクションの合成変換行列.	
 		D3DXVECTOR4	Color;		//カラー（RGBAの型に合わせる）.
 		D3DXVECTOR4	UV;			//UV座標（x,yのみ使用）.
+		ALIGN16 D3DXVECTOR4 i;//
 	};
 	//頂点の構造体.
 	struct VERTEX
@@ -33,7 +36,7 @@ public:
 	~CSprite3D();	//デストラクタ.
 
 	//初期化.
-	HRESULT Init(CDirectX11& pDx11, LPCTSTR lpFileName, SPRITE_STATE& pSs );
+	HRESULT Init(CDirectX11& pDx11, LPCTSTR lpFileName, SPRITE_STATE& pSs,LPCTSTR lpFileName2=nullptr );
 
 	//解放.
 	void Release();
@@ -43,13 +46,13 @@ public:
 	//モデル作成.
 	HRESULT CreateModel();
 	//テクスチャ作成.
-	HRESULT CreateTexture( LPCTSTR lpFileName );
+	HRESULT CreateTexture( LPCTSTR lpFileName, LPCTSTR lpFileName2);
 	//サンプラ作成.
 	HRESULT CreateSampler();
 
 	//レンダリング用.
 	void Render(D3DXMATRIX& mView, D3DXMATRIX& mProj);
-
+	void Render2(D3DXMATRIX& mView, D3DXMATRIX& mProj, D3DXVECTOR2 c);
 	//座標情報を設定.
 	void SetPosition(const D3DXVECTOR3& Pos) {	m_Position = Pos;	}
 	//座標xを設定.
@@ -102,11 +105,14 @@ private:
 	ID3D11VertexShader*		m_pVertexShader;	//頂点シェーダ.
 	ID3D11InputLayout*		m_pVertexLayout;	//頂点レイアウト.
 	ID3D11PixelShader*		m_pPixelShader;		//ピクセルシェーダ.
+	ID3D11PixelShader* m_pPixelShader2;		//ピクセルシェーダ.
 	ID3D11Buffer*			m_pConstantBuffer;	//コンスタントバッファ.
 
 	ID3D11Buffer*			m_pVertexBuffer;	//頂点バッファ.
 
 	ID3D11ShaderResourceView*	m_pTexture;			//テクスチャ.
+	ID3D11ShaderResourceView* m_pTexture2;			//テクスチャ2.
+
 	ID3D11SamplerState*			m_pSampleLinear;	//サンプラ:テクスチャに各種フィルタをかける.
 
 	D3DXVECTOR3		m_Position;		//座標.
@@ -125,4 +131,6 @@ private:
 
 	bool isCOLOR;//から変更するかのbool
 	D3DXVECTOR3 COLOR;
+
+	HRESULT CleatePixelShader(LPCSTR EntrePoint, ID3D11PixelShader*& pTexture);
 };

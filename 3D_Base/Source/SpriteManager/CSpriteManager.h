@@ -120,6 +120,7 @@ private:
 		LPCTSTR path;	//ファイルの名前(パス付)
 		SPRITE_STATE SPRITE;
 		bool centralstandards=false;//２Dスプライトの中央規準
+		LPCTSTR detailMapPath =nullptr;	//ファイルの名前(パス付)//元の画像に対して波の模様や細かい質感（ディテール）を重ね合わせる画像
 	};
 	struct StaticMeshList
 	{
