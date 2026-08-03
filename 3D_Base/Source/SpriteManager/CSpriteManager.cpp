@@ -158,13 +158,13 @@ void CSpriteManager::Load2D()
 {
 	std::vector <ImgList> Img_List;
 
-	Img_List.push_back({ static_cast<int>(enImagList::Img_TITLE), _T("Data\\Texture\\Title.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TITLE),			_T("Data\\Texture\\Title.png"),				{ {1, 1, 1}, {1280, 720}, {1280, 720} } });
 
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Fad), _T("Data\\Texture\\IMG_Fad.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
-	Img_List.push_back({ static_cast<int>(enImagList::IMG_Shutter), _T("Data\\Texture\\IMG_Shutter.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Fad),				_T("Data\\Texture\\IMG_Fad.png"),			{ {1, 1, 1}, {1280, 720}, {1280, 720} } });
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_Shutter),			_T("Data\\Texture\\IMG_Shutter.png"),		{ {1, 1, 1}, {1280, 720}, {1280, 720} } });
 
 
-	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {11, 1}, {1, 1} } });
+	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {11, 1}, {1, 1} } });
 	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {11, 1}, {1, 1} } });
 
 	//プレイヤーフォント.																									//初期サイズ、元画像サイズ、切り取りサイズ.
@@ -219,14 +219,17 @@ void CSpriteManager::Load2D()
 	//プレイヤーの色付きフォント.
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_WinnerFont),		_T("Data\\Texture\\WinnerFont.png"),		{ {1, 1, 1}, {226, 237}, {226, 237/4}} });
 	//タイトル背景.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleBackground),		_T("Data\\Texture\\Title.png"),		{ {1, 1, 1}, {539, 247}, {539, 247}} });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleBackground),	_T("Data\\Texture\\Title.png"),				{ {1, 1, 1}, {539, 247}, {539, 247}} });
 	//タイトルテキスト.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleText),		_T("Data\\Texture\\TitleText.png"),		{ {1, 1, 1}, {650, 300}, {650, 300/3}} });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleText),		_T("Data\\Texture\\TitleText.png"),			{ {1, 1, 1}, {650, 300}, {650, 300/3}} });
 	//タイトル鍋.
-	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleNabe),		_T("Data\\Texture\\TitleNabe.png"),		{ {1, 1, 1}, {433, 577}, {433, 577}} });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleNabe),		_T("Data\\Texture\\TitleNabe.png"),			{ {1, 1, 1}, {433, 577}, {433, 577}} });
 	// タイトルの割りばし.
-	Img_List.push_back({ static_cast<int>(enImagList::IMG_TitleWaribashi),		_T("Data\\Texture\\waribashi.png"),		{ {1, 1, 1}, {500, 500}, {500, 500}} });
-	
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_TitleWaribashi),	_T("Data\\Texture\\waribashi.png"),			{ {1, 1, 1}, {500, 500}, {500, 500}} });
+	//赤色の巻物.
+	Img_List.push_back({ static_cast<int>(enImagList::Img_ScrollRed),		_T("Data\\Texture\\ScrollRed.png"),			{ {1, 1, 1}, {780, 320}, {780, 320}} });
+
+
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
 	}

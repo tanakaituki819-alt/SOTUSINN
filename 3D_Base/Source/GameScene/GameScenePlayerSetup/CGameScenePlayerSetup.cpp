@@ -36,6 +36,13 @@ void CGameScenePlayerSetup::Update()
 	for (int i = 0; i < Controller_Max; i++) {
 		m_pController[i]->Update();	
 	}
+	if (m_pGameRdyUI->GetMainSceneChangeflag()) {
+		SenenChang(enScene::GameMain, CSceneChange::TransitionType::Fade, 60, 60);
+	}
+	if (m_pGameRdyUI->GetTitleSceneChangeflag()) {
+		SenenChang(enScene::Title, CSceneChange::TransitionType::Fade, 60, 60);
+	}
+
 	m_pGameRdyUI->Update();
 	m_pPlayerSetupUI->Update();
 }

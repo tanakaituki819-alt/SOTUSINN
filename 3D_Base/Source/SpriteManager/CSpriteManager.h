@@ -50,6 +50,7 @@ public:
 		Img_TitleText,			//タイトルテキスト.
 		Img_TitleNabe,			//タイトルの鍋.
 		IMG_TitleWaribashi,		//タイトルの割りばし.
+		Img_ScrollRed,			//赤色の巻物.(全員が準備完了になったときに表示するUIで使う).
 		MAX
 	};
 	//ｘファイル
