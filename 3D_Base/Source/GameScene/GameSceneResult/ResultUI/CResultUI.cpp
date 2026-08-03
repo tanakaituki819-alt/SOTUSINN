@@ -10,12 +10,14 @@ struct Transform {
 	D3DXVECTOR3 GetPos() const { return D3DXVECTOR3(posX, posY, 0.0f); }
 	D3DXVECTOR3 GetScl() const { return D3DXVECTOR3(sclX, sclY, 0.0f); }
 };
+//90度
+static constexpr float IMAGE_ROTATION_ANGLE = 1.5707963;
 
 //プレイヤー背景
-static constexpr Transform PLAYER_1_BACK = {  30.f,100.f,300.f,500.f };
-static constexpr Transform PLAYER_2_BACK = { 335.f,100.f,300.f,500.f };
-static constexpr Transform PLAYER_3_BACK = { 640.f,100.f,300.f,500.f };
-static constexpr Transform PLAYER_4_BACK = { 945.f,100.f,300.f,500.f };
+static constexpr Transform PLAYER_1_BACK = { 145.f,250.f,630.f,350.f };
+static constexpr Transform PLAYER_2_BACK = { 0,0,0.f,0.f };
+static constexpr Transform PLAYER_3_BACK = { 0,0,0.f,0.f };
+static constexpr Transform PLAYER_4_BACK = { 0,0,0.f,0.f };
 
 //プレイヤーアイコン
 static constexpr Transform PLAYER_1_ICON = {  32.f,102.f,0.f,0.f};
@@ -41,7 +43,7 @@ CResultUI::CResultUI()
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-        PlayerBack_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);	//プレイヤー背景.
+        PlayerBack_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll2);	//プレイヤー背景.
 		PlayerIcon_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Playericon);	//プレイヤーアイコン.
 	}
     for (int i = 0; i < MEDAL_MAM; i++)
@@ -627,24 +629,51 @@ void CResultUI::ResultBackUI()
 
 void CResultUI::PlayerBackUI()
 {
-    PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_BACK.GetPos()));
+    //実行中に動かすやつ
+    static float ananana = 10;
+    static float ananana2 = 10;
+
+    if (GetAsyncKeyState('W') & 0x8000)
+    {
+        ananana--;
+    }
+    if (GetAsyncKeyState('S') & 0x8000)
+    {
+        ananana++;
+    }
+    if (GetAsyncKeyState('D') & 0x8000)
+    {
+        ananana2++;
+    }
+    if (GetAsyncKeyState('A') & 0x8000)
+    {
+        ananana2--;
+    }
+
+    FILE* pFile;
+    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
+    freopen_s(&pFile, "CONOUT$", "w", stdout);
+    std::cout << ananana2 << std::endl;
+
+
+    PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(145, ananana2,0));
     PlayerBack_Img[0]->SetScale(D3DXVECTOR3(PLAYER_1_BACK.GetScl()));
-    PlayerBack_Img[0]->SetPatternNo(0, 0);
+    PlayerBack_Img[0]->SetRotationZ(IMAGE_ROTATION_ANGLE);
     PlayerBack_Img[0]->Render();
 
     PlayerBack_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_BACK.GetPos()));
     PlayerBack_Img[1]->SetScale(D3DXVECTOR3(PLAYER_2_BACK.GetScl()));
-    PlayerBack_Img[1]->SetPatternNo(1, 0);
+    PlayerBack_Img[0]->SetRotationZ(IMAGE_ROTATION_ANGLE);
     PlayerBack_Img[1]->Render();
 
     PlayerBack_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_BACK.GetPos()));
     PlayerBack_Img[2]->SetScale(D3DXVECTOR3(PLAYER_3_BACK.GetScl()));
-    PlayerBack_Img[2]->SetPatternNo(2, 0);
+    PlayerBack_Img[0]->SetRotationZ(IMAGE_ROTATION_ANGLE);
     PlayerBack_Img[2]->Render();
 
     PlayerBack_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_BACK.GetPos()));
     PlayerBack_Img[3]->SetScale(D3DXVECTOR3(PLAYER_4_BACK.GetScl()));
-    PlayerBack_Img[3]->SetPatternNo(3, 0);
+    PlayerBack_Img[0]->SetRotationZ(IMAGE_ROTATION_ANGLE);
     PlayerBack_Img[3]->Render();
 
 }
