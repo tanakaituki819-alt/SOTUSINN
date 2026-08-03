@@ -11,26 +11,57 @@ struct Transform {
 	D3DXVECTOR3 GetScl() const { return D3DXVECTOR3(sclX, sclY, 0.0f); }
 };
 
+//プレイヤー背景
+static constexpr Transform PLAYER_1_BACK = {  30.f,100.f,300.f,500.f };
+static constexpr Transform PLAYER_2_BACK = { 335.f,100.f,300.f,500.f };
+static constexpr Transform PLAYER_3_BACK = { 640.f,100.f,300.f,500.f };
+static constexpr Transform PLAYER_4_BACK = { 945.f,100.f,300.f,500.f };
+
+//プレイヤーアイコン
+static constexpr Transform PLAYER_1_ICON = {  32.f,102.f,0.f,0.f};
+static constexpr Transform PLAYER_2_ICON = { 337.f,102.f,0.f,0.f};
+static constexpr Transform PLAYER_3_ICON = { 642.f,102.f,0.f,0.f};
+static constexpr Transform PLAYER_4_ICON = { 947.f,102.f,0.f,0.f};
+static constexpr Transform PLAYER_ALL_ICON = { 0.f,0.f,125.f,125.f};
+
+//各プレイヤーのメダルポジション
+static constexpr float P1_MEDAL_POS_X = 177;
+static constexpr float P2_MEDAL_POS_X = 482;
+static constexpr float P3_MEDAL_POS_X = 787;
+static constexpr float P4_MEDAL_POS_X = 1092;
+static constexpr float MEDAL_Y = 90;
+
+//メダルの大きさ.
+static constexpr Transform ALL_MEDAL = { 0.f,0.f,100.f,140.f };
+
 CResultUI::CResultUI()
 	: Rank (0)
     , Count(0)
 {
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
-	for (int i = 0; i < Player_Max; i++)
+	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-        PlayerBack_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);	//背景.
+        PlayerBack_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);	//プレイヤー背景.
 		PlayerIcon_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Playericon);	//プレイヤーアイコン.
 	}
+    for (int i = 0; i < MEDAL_MAM; i++)
+    {
+        Medal_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_Medal);
+    }
 }
 
 CResultUI::~CResultUI()
 {
 	BackGround_Img = nullptr;
-	for (int i = 0; i < Player_Max; i++)
+	for (int i = 0; i < PLAYER_MAX; i++)
 	{
         PlayerBack_Img[i] = nullptr;
 		PlayerIcon_Img[i] = nullptr;
 	}
+    for (int i = 0; i < MEDAL_MAM; i++)
+    {
+        Medal_Img[i] = nullptr;
+    }
 }
 
 void CResultUI::Update()
@@ -53,6 +84,7 @@ void CResultUI::Update()
 void CResultUI::Draw()
 {
 	ResultBackUI();
+    PlayerBackUI();
 
     //修正必須!!.
 	//仮条件 2026.07.31
@@ -68,7 +100,7 @@ void CResultUI::Draw()
         Player1First();
         Player2First();
         Player3First();
-        Player4Second();
+        Player4Second();   
     }
     else if (Rank == 2)
     {
@@ -582,6 +614,8 @@ void CResultUI::Draw()
         Player4First();
     }
 
+    
+
 }
 
 void CResultUI::ResultBackUI()
@@ -591,52 +625,52 @@ void CResultUI::ResultBackUI()
 	BackGround_Img->Render();
 }
 
-void CResultUI::Player1BackUI()
+void CResultUI::PlayerBackUI()
 {
-    PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(0, 0, 0));
-    PlayerBack_Img[0]->SetScale(D3DXVECTOR3(100, 100, 0));
+    PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_BACK.GetPos()));
+    PlayerBack_Img[0]->SetScale(D3DXVECTOR3(PLAYER_1_BACK.GetScl()));
     PlayerBack_Img[0]->SetPatternNo(0, 0);
     PlayerBack_Img[0]->Render();
 
-}
+    PlayerBack_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_BACK.GetPos()));
+    PlayerBack_Img[1]->SetScale(D3DXVECTOR3(PLAYER_2_BACK.GetScl()));
+    PlayerBack_Img[1]->SetPatternNo(1, 0);
+    PlayerBack_Img[1]->Render();
 
-void CResultUI::Player2BackUI()
-{
-}
+    PlayerBack_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_BACK.GetPos()));
+    PlayerBack_Img[2]->SetScale(D3DXVECTOR3(PLAYER_3_BACK.GetScl()));
+    PlayerBack_Img[2]->SetPatternNo(2, 0);
+    PlayerBack_Img[2]->Render();
 
-void CResultUI::Player3BackUI()
-{
-}
+    PlayerBack_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_BACK.GetPos()));
+    PlayerBack_Img[3]->SetScale(D3DXVECTOR3(PLAYER_4_BACK.GetScl()));
+    PlayerBack_Img[3]->SetPatternNo(3, 0);
+    PlayerBack_Img[3]->Render();
 
-void CResultUI::Player4BackUI()
-{
 }
 
 void CResultUI::Player1Pos()
 {
-	PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(100, 0, 0));
+	PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON.GetPos()));
 }
-
 void CResultUI::Player2Pos()
 {
-	PlayerIcon_Img[1]->SetPosition(D3DXVECTOR3(200, 0, 0));
+    PlayerIcon_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON.GetPos()));
 }
-
 void CResultUI::Player3Pos()
 {
-	PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(300, 0, 0));
+    PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON.GetPos()));
 }
-
 void CResultUI::Player4Pos()
 {
-	PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(400, 0, 0));
+    PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_ICON.GetPos()));
 }
 
 void CResultUI::PlayerScl()
 {
-	for (int i = 0; i < Player_Max; i++)
+	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(100, 100, 0));
+		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(PLAYER_ALL_ICON.GetScl()));
 	}
 }
 
@@ -647,24 +681,25 @@ void CResultUI::Player1First()
 	PlayerScl();
 	PlayerIcon_Img[0]->SetPatternNo(0,0);
 	PlayerIcon_Img[0]->Render();
+    Medal_P1_1st_UI();
 }
-
 void CResultUI::Player1Second()
 {
 	Player1Pos();
 	PlayerScl();
 	PlayerIcon_Img[0]->SetPatternNo(1, 0);
 	PlayerIcon_Img[0]->Render();
+    Medal_P1_2nd_UI();
 }
-
 void CResultUI::Player1Third()
 {
 	Player1Pos();
 	PlayerScl();
 	PlayerIcon_Img[0]->SetPatternNo(2, 0);
 	PlayerIcon_Img[0]->Render();
-}
+    Medal_P1_3rd_UI();
 
+}
 void CResultUI::Player1Fourth()
 {
 	Player1Pos();
@@ -679,27 +714,27 @@ void CResultUI::Player2First()
 	PlayerScl();
 	PlayerIcon_Img[1]->SetPatternNo(0, 1);
 	PlayerIcon_Img[1]->Render();
+    Medal_P2_1st_UI();
 
 }
-
 void CResultUI::Player2Second()
 {
 	Player2Pos();
 	PlayerScl();
 	PlayerIcon_Img[1]->SetPatternNo(1, 1);
 	PlayerIcon_Img[1]->Render();
+    Medal_P2_2nd_UI();
 
 }
-
 void CResultUI::Player2Third()
 {
 	Player2Pos();
 	PlayerScl();
 	PlayerIcon_Img[1]->SetPatternNo(2, 1);
 	PlayerIcon_Img[1]->Render();
+    Medal_P2_3rd_UI();
 
 }
-
 void CResultUI::Player2Fourth()
 {
 	Player2Pos();
@@ -715,27 +750,24 @@ void CResultUI::Player3First()
 	PlayerScl();
 	PlayerIcon_Img[2]->SetPatternNo(0, 2);
 	PlayerIcon_Img[2]->Render();
-
+    Medal_P3_1st_UI();
 }
-
 void CResultUI::Player3Second()
 {
 	Player3Pos();
 	PlayerScl();
 	PlayerIcon_Img[2]->SetPatternNo(1, 2);
 	PlayerIcon_Img[2]->Render();
-
+    Medal_P3_2nd_UI();
 }
-
 void CResultUI::Player3Third()
 {
 	Player3Pos();
 	PlayerScl();
 	PlayerIcon_Img[2]->SetPatternNo(2, 2);
 	PlayerIcon_Img[2]->Render();
-
+    Medal_P3_3rd_UI();
 }
-
 void CResultUI::Player3Fourth()
 {
 	Player3Pos();
@@ -751,27 +783,24 @@ void CResultUI::Player4First()
 	PlayerScl();
 	PlayerIcon_Img[3]->SetPatternNo(0, 3);
 	PlayerIcon_Img[3]->Render();
-
+    Medal_P4_1st_UI();
 }
-
 void CResultUI::Player4Second()
 {
 	Player4Pos();
 	PlayerScl();
 	PlayerIcon_Img[3]->SetPatternNo(1, 3);
 	PlayerIcon_Img[3]->Render();
-
+    Medal_P4_2nd_UI();
 }
-
 void CResultUI::Player4Third()
 {
 	Player4Pos();
 	PlayerScl();
 	PlayerIcon_Img[3]->SetPatternNo(2, 3);
 	PlayerIcon_Img[3]->Render();
-
+    Medal_P4_3rd_UI();
 }
-
 void CResultUI::Player4Fourth()
 {
 	Player4Pos();
@@ -779,4 +808,93 @@ void CResultUI::Player4Fourth()
 	PlayerIcon_Img[3]->SetPatternNo(3, 3);
 	PlayerIcon_Img[3]->Render();
 
+}
+
+
+//プレイヤー壱のメダルUI
+void CResultUI::Medal_P1_1st_UI()
+{
+    Medal_Img[0]->SetPosition(D3DXVECTOR3(P1_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Gold_Render();
+}
+void CResultUI::Medal_P1_2nd_UI()
+{
+    Medal_Img[1]->SetPosition(D3DXVECTOR3(P1_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Silver_Render();
+}
+void CResultUI::Medal_P1_3rd_UI()
+{
+    Medal_Img[2]->SetPosition(D3DXVECTOR3(P1_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Bronze_Render();
+}
+
+//プレイヤー弐のメダルUI
+void CResultUI::Medal_P2_1st_UI()
+{
+    Medal_Img[0]->SetPosition(D3DXVECTOR3(P2_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Gold_Render();
+}
+void CResultUI::Medal_P2_2nd_UI()
+{
+    Medal_Img[1]->SetPosition(D3DXVECTOR3(P2_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Silver_Render();
+}
+void CResultUI::Medal_P2_3rd_UI()
+{
+    Medal_Img[2]->SetPosition(D3DXVECTOR3(P2_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Bronze_Render();
+}
+
+//プレイヤー参のメダルUI
+void CResultUI::Medal_P3_1st_UI()
+{
+    Medal_Img[0]->SetPosition(D3DXVECTOR3(P3_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Gold_Render();
+}
+void CResultUI::Medal_P3_2nd_UI()
+{
+    Medal_Img[1]->SetPosition(D3DXVECTOR3(P3_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Silver_Render();
+}
+void CResultUI::Medal_P3_3rd_UI()
+{
+    Medal_Img[2]->SetPosition(D3DXVECTOR3(P3_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Bronze_Render();
+}
+
+//プレイヤー肆のメダルUI
+void CResultUI::Medal_P4_1st_UI()
+{
+    Medal_Img[0]->SetPosition(D3DXVECTOR3(P4_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Gold_Render();
+}
+void CResultUI::Medal_P4_2nd_UI()
+{
+    Medal_Img[1]->SetPosition(D3DXVECTOR3(P4_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Silver_Render();
+}
+void CResultUI::Medal_P4_3rd_UI()
+{
+    Medal_Img[2]->SetPosition(D3DXVECTOR3(P4_MEDAL_POS_X, MEDAL_Y, 0));
+    Medal_Bronze_Render();
+}
+
+//メダルのスケール、パターンナンバー、レンダ関数をまとめた関数.
+void CResultUI::Medal_Gold_Render()
+{
+    Medal_Img[0]->SetScale(D3DXVECTOR3(ALL_MEDAL.GetScl()));
+    Medal_Img[0]->SetPatternNo(0.f, 0.f);
+    Medal_Img[0]->Render();
+}
+void CResultUI::Medal_Silver_Render()
+{
+    Medal_Img[1]->SetScale(D3DXVECTOR3(ALL_MEDAL.GetScl()));
+    Medal_Img[1]->SetPatternNo(1.f, 0.f);
+    Medal_Img[1]->Render();
+}
+void CResultUI::Medal_Bronze_Render()
+{
+    Medal_Img[2]->SetScale(D3DXVECTOR3(ALL_MEDAL.GetScl()));
+    Medal_Img[2]->SetPatternNo(2.f, 0.f);
+    Medal_Img[2]->Render();
 }

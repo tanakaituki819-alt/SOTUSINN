@@ -12,26 +12,16 @@ struct Transform {
 };
 
 //あっぱれ文字
-static constexpr float WinnerPosX = 145;
-static constexpr float WinnerPosY = 90;
-static constexpr float WinnerSclX = 300;
-static constexpr float WinnerSclY = 90;
+static constexpr Transform WINNER_FONT = { 145.f,90.f,300.f,90.f };
 
-//色付きプレイヤーフォントサイズ.
-static constexpr float PLAYER_FONT_SCL_X = 135;
-static constexpr float PLAYER_FONT_SCL_Y = 43;
 //色付きプレイヤーフォント１人目.
-static constexpr float PLAYER_FONT_FIRST_POS_X = 165;
-static constexpr float PLAYER_FONT_FIRST_POS_Y = 180;
+static constexpr Transform PLAYER_FIRST_FONT = { 165.f,180.f,135.f,43.f };
 //色付きプレイヤーフォント２人目.
-static constexpr float PLAYER_FONT_SECOND_POS_X = 304;
-static constexpr float PLAYER_FONT_SECOND_POS_Y = 166;
+static constexpr Transform PLAYER_SECOND_FONT = { 304.f,166.f,135.f,43.f };
 //色付きプレイヤーフォント3人目.
-static constexpr float PLAYER_FONT_THIRD_POS_X = 443;
-static constexpr float PLAYER_FONT_THIRD_POS_Y = 152;
+static constexpr Transform PLAYER_THIRD_FONT = { 443.f,152.f,135.f,43.f };
 //色付きプレイヤーフォント4人目.
-static constexpr float PLAYER_FONT_FOURTH_POS_X = 582;
-static constexpr float PLAYER_FONT_FOURTH_POS_Y = 138;
+static constexpr Transform PLAYER_FOURTH_FONT = { 582.f,138.f,135.f,43.f };
 
 //-単独1位-.
 //プレイヤー壱
@@ -95,12 +85,10 @@ CWinnerResultUI::CWinnerResultUI()
 	Player2_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player2);			//プレイヤー弐
 	Player3_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player3);			//プレイヤー参
 	Player4_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player4);			//プレイヤー肆
-
-	for (int i = 0; i < Font_Max; i++)
+	for (int i = 0; i < FONT_MAM; i++)
 	{
 		PlayerFont_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_WinnerFont);	//色付きプレイヤーフォント
 	}
-
 
 }
 
@@ -112,8 +100,7 @@ CWinnerResultUI::~CWinnerResultUI()
 	Player2_Img = nullptr;
 	Player3_Img = nullptr;
 	Player4_Img = nullptr;
-
-	for (int i = 0; i < Font_Max; i++)
+	for (int i = 0; i < FONT_MAM; i++)
 	{
 		PlayerFont_Img[i] = nullptr;
 	}
@@ -312,8 +299,8 @@ void CWinnerResultUI::WinnerResultBackUI()
 //あっぱれ.
 void CWinnerResultUI::WinnerTextUI()
 {
-	Winner_Img->SetPosition(D3DXVECTOR3(WinnerPosX, WinnerPosY, 0));
-	Winner_Img->SetScale(D3DXVECTOR3(WinnerSclX, WinnerSclY, 0));
+	Winner_Img->SetPosition(D3DXVECTOR3(WINNER_FONT.GetPos()));
+	Winner_Img->SetScale(D3DXVECTOR3(WINNER_FONT.GetScl()));
 	Winner_Img->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	Winner_Img->Render();
 }
@@ -529,8 +516,8 @@ void CWinnerResultUI::AllPlayerWinnerUI()
 //プレイヤー壱のプレイヤー文字
 void CWinnerResultUI::Player1FontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
+	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
 	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
 	PlayerFont_Img[0]->Render();
@@ -538,8 +525,8 @@ void CWinnerResultUI::Player1FontUI()
 //プレイヤー弐のプレイヤー文字
 void CWinnerResultUI::Player2FontUI()
 {
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
+	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
 	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
 	PlayerFont_Img[1]->Render();
@@ -547,8 +534,8 @@ void CWinnerResultUI::Player2FontUI()
 //プレイヤー参のプレイヤー文字
 void CWinnerResultUI::Player3FontUI()
 {
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
+	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
 	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
 	PlayerFont_Img[2]->Render();
@@ -556,8 +543,8 @@ void CWinnerResultUI::Player3FontUI()
 //プレイヤー肆のプレイヤー文字
 void CWinnerResultUI::Player4FontUI()
 {
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
@@ -565,14 +552,10 @@ void CWinnerResultUI::Player4FontUI()
 // プレイヤー壱とプレイヤー弐のプレイヤー文字.
 void CWinnerResultUI::Player1AndPlayer2FontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
+	Player1FontUI();
 
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
 	PlayerFont_Img[1]->Render();
@@ -580,14 +563,10 @@ void CWinnerResultUI::Player1AndPlayer2FontUI()
 //プレイヤー壱とプレイヤー参のプレイヤー文字.
 void CWinnerResultUI::Player1AndPlayer3FontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
+	Player1FontUI();
 
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
 	PlayerFont_Img[2]->Render();
@@ -595,14 +574,10 @@ void CWinnerResultUI::Player1AndPlayer3FontUI()
 //プレイヤー壱とプレイヤー肆のプレイヤー文字.
 void CWinnerResultUI::Player1AndPlayer4FontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
+	Player1FontUI();
 
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
@@ -610,14 +585,10 @@ void CWinnerResultUI::Player1AndPlayer4FontUI()
 //プレイヤー弐とプレイヤー参のプレイヤー文字.
 void CWinnerResultUI::Player2AndPlayer3FontUI()
 {
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
+	Player2FontUI();
 
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
 	PlayerFont_Img[2]->Render();
@@ -625,14 +596,10 @@ void CWinnerResultUI::Player2AndPlayer3FontUI()
 //プレイヤー弐とプレイヤー肆のプレイヤー文字.
 void CWinnerResultUI::Player2AndPlayer4FontUI()
 {
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
+	Player2FontUI();
 
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
@@ -640,14 +607,10 @@ void CWinnerResultUI::Player2AndPlayer4FontUI()
 //プレイヤー参とプレイヤー肆のプレイヤー文字.
 void CWinnerResultUI::Player3AndPlayer4FontUI()
 {
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
+	Player3FontUI();
 
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
@@ -655,20 +618,16 @@ void CWinnerResultUI::Player3AndPlayer4FontUI()
 // プレイヤー壱とプレイヤー弐とプレイヤー参のプレイヤー文字.
 void CWinnerResultUI::Player1AndPlayer2AndPlayer3FontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
+	Player1FontUI();
 
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
 	PlayerFont_Img[1]->Render();
 
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_THIRD_POS_X, PLAYER_FONT_THIRD_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
+	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_THIRD_FONT.GetScl()));
 	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
 	PlayerFont_Img[2]->Render();
@@ -677,20 +636,16 @@ void CWinnerResultUI::Player1AndPlayer2AndPlayer3FontUI()
 // プレイヤー壱とプレイヤー弐とプレイヤー肆のプレイヤー文字.
 void CWinnerResultUI::Player1AndPlayer2AndPlayer4FontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
+	Player1FontUI();
 
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
 	PlayerFont_Img[1]->Render();
 
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_THIRD_POS_X, PLAYER_FONT_THIRD_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
@@ -699,20 +654,16 @@ void CWinnerResultUI::Player1AndPlayer2AndPlayer4FontUI()
 // プレイヤー壱とプレイヤー参とプレイヤー肆のプレイヤー文字.
 void CWinnerResultUI::Player1AndPlayer3AndPlayer4FontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
+	Player1FontUI();
 
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
 	PlayerFont_Img[2]->Render();
 
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_THIRD_POS_X, PLAYER_FONT_THIRD_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
@@ -721,20 +672,16 @@ void CWinnerResultUI::Player1AndPlayer3AndPlayer4FontUI()
 // プレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
 void CWinnerResultUI::Player2AndPlayer3AndPlayer4FontUI()
 {
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
+	Player2FontUI();
 
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
 	PlayerFont_Img[2]->Render();
 
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_THIRD_POS_X, PLAYER_FONT_THIRD_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
@@ -742,27 +689,27 @@ void CWinnerResultUI::Player2AndPlayer3AndPlayer4FontUI()
 // プレイヤー壱とプレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
 void CWinnerResultUI::AllPlayerFontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FIRST_POS_X, PLAYER_FONT_FIRST_POS_Y, 0));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
+	Player1FontUI();
 
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FONT_SECOND_POS_X, PLAYER_FONT_SECOND_POS_Y, 0));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
+	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
 	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
 	PlayerFont_Img[1]->Render();
 
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FONT_THIRD_POS_X, PLAYER_FONT_THIRD_POS_Y, 0));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
+	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_THIRD_FONT.GetScl()));
 	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
 	PlayerFont_Img[2]->Render();
 
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FONT_FOURTH_POS_X, PLAYER_FONT_FOURTH_POS_Y, 0));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FONT_SCL_X, PLAYER_FONT_SCL_Y, 0));
+	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FOURTH_FONT.GetPos()));
+	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FOURTH_FONT.GetScl()));
 	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
 	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
 	PlayerFont_Img[3]->Render();
 }
+
+
+
+
