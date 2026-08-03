@@ -88,6 +88,12 @@ public:
 
 	//使用前に、ポジションスケールローテーションを設定すること
 	D3DXVECTOR3 GetPos2D(D3DXMATRIX& mView, D3DXMATRIX& mProj);
+
+	void SetisCOLOR(bool is) { isCOLOR = is; };
+
+	void SetCOLOR(D3DXVECTOR3 COLORE) {
+		COLOR = COLORE;
+	};
 private:
 	CDirectX11*				m_pDx11;
 	ID3D11Device*			m_pDevice11;
@@ -116,4 +122,7 @@ private:
 	POINTS			m_PatternMax;	//最大パターン(マスの最大値).
 
 	bool			m_Billboard;	//ビルボード有効無効.
+
+	bool isCOLOR;//から変更するかのbool
+	D3DXVECTOR3 COLOR;
 };
