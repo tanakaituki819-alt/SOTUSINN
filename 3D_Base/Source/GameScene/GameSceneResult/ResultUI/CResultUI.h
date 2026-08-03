@@ -5,7 +5,8 @@ class CResultUI
 	: public CUIObject
 {
 public:
-	static const int Player_Max = 4;
+	static const int PLAYER_MAX = 4;
+	static const int MEDAL_MAM = 3;
 public:
 	CResultUI();
 	~CResultUI()override;
@@ -15,14 +16,8 @@ public:
 	
 	//背景.
 	void ResultBackUI();
-	//プレイヤー壱の背景
-	void Player1BackUI();
-	//プレイヤー弐の背景
-	void Player2BackUI();
-	//プレイヤー参の背景
-	void Player3BackUI();
-	//プレイヤー肆の背景
-	void Player4BackUI();
+	//プレイヤーの背景
+	void PlayerBackUI();
 
 	//プレイヤー1の位置.
 	void Player1Pos();
@@ -71,10 +66,32 @@ public:
 	//プレイヤー肆が四位の時のアイコン.
 	void Player4Fourth();
 
+	//プレイヤー壱のメダルUI
+	void Medal_P1_1st_UI();
+	void Medal_P1_2nd_UI();
+	void Medal_P1_3rd_UI();
+	//プレイヤー弐のメダルUI
+	void Medal_P2_1st_UI();
+	void Medal_P2_2nd_UI();
+	void Medal_P2_3rd_UI();
+	//プレイヤー参のメダルUI
+	void Medal_P3_1st_UI();
+	void Medal_P3_2nd_UI();
+	void Medal_P3_3rd_UI();
+	//プレイヤー肆のメダルUI
+	void Medal_P4_1st_UI();
+	void Medal_P4_2nd_UI();
+	void Medal_P4_3rd_UI();
+	//メダルのスケール、パターンナンバー、レンダ関数をまとめた関数.
+	void Medal_Gold_Render();
+	void Medal_Silver_Render();
+	void Medal_Bronze_Render();
+
 private:
 	CSprite2D* BackGround_Img;
-	CSprite2D* PlayerBack_Img[Player_Max];
-	CSprite2D* PlayerIcon_Img[Player_Max];
+	CSprite2D* PlayerBack_Img[PLAYER_MAX];
+	CSprite2D* PlayerIcon_Img[PLAYER_MAX];
+	CSprite2D* Medal_Img[MEDAL_MAM];
 
 	int Rank;	//仮の条件のためのもの
 	int Count;	//仮の条件のためのもの

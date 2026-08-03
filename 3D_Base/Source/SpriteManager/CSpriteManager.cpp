@@ -225,11 +225,14 @@ void CSpriteManager::Load2D()
 	//タイトル鍋.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleNabe),		_T("Data\\Texture\\TitleNabe.png"),			{ {1, 1, 1}, {433, 577}, {433, 577}} });
 	// タイトルの割りばし.
+
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_TitleWaribashi),	_T("Data\\Texture\\waribashi.png"),			{ {1, 1, 1}, {500, 500}, {500, 500}} });
 	//赤色の巻物.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_ScrollRed),		_T("Data\\Texture\\ScrollRed.png"),			{ {1, 1, 1}, {780, 320}, {780, 320}} });
 
-
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_TitleWaribashi),		_T("Data\\Texture\\waribashi.png"),		{ {1, 1, 1}, {500, 500}, {500, 500}} });
+	//メダル
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_Medal),		_T("Data\\Texture\\medal.png"),		{ {1, 1, 1}, {5692, 3200}, {5692/3, 3200}} });
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
 	}
