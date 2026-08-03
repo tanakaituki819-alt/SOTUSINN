@@ -11,29 +11,29 @@ CIngredients::CIngredients()
 	, isBoiled(false)
 	, m_BoiledcMAX(0)
 	, m_Boiledc(0)
+	, m_buoyancy(0)
 {
 	//短縮用
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
 
-	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::S_NIKU),0.3,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::NIKU)] = { CS::GetObjMesh(OL::S_NIKU),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)] = { CS::GetObjMesh(OL::S_NINZIN),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] = { CS::GetObjMesh(OL::S_DAIKON),0,{1,1,1},10 };
-	
-	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)] = { CS::GetObjMesh(OL::S_ENOKI),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] = { CS::GetObjMesh(OL::S_HAKUSAI1),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] = { CS::GetObjMesh(OL::S_HAKUSAI2),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::KANI)] = { CS::GetObjMesh(OL::S_KANI),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::NEGI)] = { CS::GetObjMesh(OL::S_NEGI),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)] = { CS::GetObjMesh(OL::S_SAKANA),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)] = { CS::GetObjMesh(OL::S_SITAKE),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::TAI)] = { CS::GetObjMesh(OL::S_TAI),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::TARA)] = { CS::GetObjMesh(OL::S_TARA),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)] = { CS::GetObjMesh(OL::S_TOUHU),0,{1,1,1},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::UINNER)] = { CS::GetObjMesh(OL::S_UINNER),0,{1,1,1},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::none)] =		{ CS::GetObjMesh(OL::S_NIKU)	,0.3,	{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::NIKU)] =		{ CS::GetObjMesh(OL::S_NIKU)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)] =		{ CS::GetObjMesh(OL::S_NINZIN)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] =		{ CS::GetObjMesh(OL::S_DAIKON)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)] =		{ CS::GetObjMesh(OL::S_ENOKI)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] =	{ CS::GetObjMesh(OL::S_HAKUSAI1),0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] =	{ CS::GetObjMesh(OL::S_HAKUSAI2),0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::KANI)] =		{ CS::GetObjMesh(OL::S_KANI)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] =	{ CS::GetObjMesh(OL::S_KUMANOTE),0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::NEGI)] =		{ CS::GetObjMesh(OL::S_NEGI)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] =	{ CS::GetObjMesh(OL::S_ROBUSTER),0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)] =		{ CS::GetObjMesh(OL::S_SAKANA)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)] =		{ CS::GetObjMesh(OL::S_SITAKE)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::TAI)] =		{ CS::GetObjMesh(OL::S_TAI)		,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::TARA)] =		{ CS::GetObjMesh(OL::S_TARA)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)] =		{ CS::GetObjMesh(OL::S_TOUHU)	,0,		{1.5,1.5,1.5},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::UINNER)] =		{ CS::GetObjMesh(OL::S_UINNER)	,0,		{1.5,1.5,1.5},10 };
 
 }
 
@@ -42,7 +42,7 @@ CIngredients::~CIngredients()
 }
 void CIngredients::SetIngredients(int i)
 {
-
+	IngredientsNo = static_cast<Ingredients>(i);
 	m_pMesh = IngredientsSetting[i].Mesh;
 	m_Scale = IngredientsSetting[i].Size;
 	if (IngredientsSetting[i].HitSize==0) {
@@ -64,10 +64,11 @@ void CIngredients::Update()
 {
 
 	Fallingforce += gravity;
-	m_Position.y-= Fallingforce;
+
 	float Speed = 0.1;
 	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
 	if (Nabe!=nullptr) {
+		//鍋の外に出ないようにする
 		if (!D2CollizionXZ(calPos, 0.5, Nabe->GetPosition(), Nabe->GetSize() )) {
 
 			m_Position.x = m_OldPosition.x;
@@ -79,14 +80,27 @@ void CIngredients::Update()
 		m_Position.z = m_OldPosition.z;
 		
 		};
+		//水に沈んだ
 		if (m_Position.y <= Nabe->GetPosition().y + Nabe->GetNabeH()) {
-			Fallingforce *= 0.5;
-			Fallingforce -= buoyancy;
+		
+			Fallingforce *= 0.5;//液体による原則
+			// 2. 沈んでいる深さに応じた浮力の計算（深ければ深いほど浮力が強くなる）
+			float depth = Nabe->GetNabeH() - m_Position.y; // 沈んでいる深さ
+			float buoyancyFactor = 0.15f;               // 浮力の強さ調整用パラメータ
+
+			// 毎フレーム加算ではなく、深さに応じた固定の浮力を設定
+			m_buoyancy =  (depth * buoyancyFactor);
+
+			// 3. 落下力から浮力を引く（＝上向きの力を与える）
+			Fallingforce -= m_buoyancy;
+		}
+		else {
+			m_buoyancy = 0;
 		}
 	}
-
+	m_Position.y -= Fallingforce;
 	m_OldPosition = m_Position;
-
+	//にえていないなら
 	if (isBoiled==false) {
 
 		m_Boiledc ++;
@@ -109,13 +123,35 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 	m_pMesh->SetRotation(m_Rotation);
 	m_pMesh->SetScale(m_Scale);
 
-	m_pMesh->SetLightCOLOR256({ 127,51,0 });
+
+
 	//m_pMesh->SetLightCOLOR256({ 247,121,60 });
-	if (isBoiled) {
+	if (m_Boiledc > m_BoiledcMAX/2) {
+		D3DXVECTOR3 Coler= { 157,101,80 };
+		m_pMesh->SetLightCOLOR256(Coler);
+		if (IngredientsNo == Ingredients::KANI || IngredientsNo == Ingredients::ROBUSTER) {
+			Coler = { 200,150,150 };
+			m_pMesh->SetLightCOLOR256(Coler  );
+		}
+
 		m_pMesh->SetisCOLOR(true);
+		if (isBoiled) {
+			D3DXVECTOR3 Coler = { 107,41,0 };
+			m_pMesh->SetLightCOLOR256(Coler);
+			if (IngredientsNo == Ingredients::KANI || IngredientsNo == Ingredients::ROBUSTER) {
+				Coler = { 300,250,250 };
+				m_pMesh->SetLightCOLOR256(Coler);
+			}
+		}
+
+
 	}
 	else {
 		m_pMesh->SetisCOLOR(false);
+		if (IngredientsNo == Ingredients::KANI || IngredientsNo == Ingredients::ROBUSTER) {
+			m_pMesh->SetLightCOLOR256({ 0,0,0 });
+			m_pMesh->SetisCOLOR(true);
+		}
 	}
 	//レンダリング.
 	m_pMesh->Render(View, Proj, Light, Camera.Position);

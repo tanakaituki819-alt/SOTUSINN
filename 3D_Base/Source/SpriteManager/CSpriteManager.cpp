@@ -58,7 +58,7 @@ CSprite3D* CSpriteManager::GetSprite3D(enImagList No)
 	if (CSpriteManager::GetInstance()->Sprite3D[NO] == nullptr) {
 		GetInstance()->Sprite3D[NO] = new CSprite3D();
 		GetInstance()->Sprite3D[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
-			CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
+			CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST, CSpriteManager::GetInstance()->IMG_LIST[NO].detailMapPath);
 
 	}
 	return GetInstance()->Sprite3D[NO];
@@ -203,7 +203,7 @@ void CSpriteManager::Load2D()
 	//箸休め中の選択肢の画像.
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_PauseOptions),	_T("Data\\Texture\\PauseOptions2.png"),		{ {1, 1, 1}, {490, 160}, {490, 160/2} } });
 
-	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),			_T("Data\\Texture\\water.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_Water),			_T("Data\\Texture\\water.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true,_T("Data\\Texture\\Noise.png") });
 	//タイマー
 	Img_List.push_back({ static_cast<int>(enImagList::Img_RED),				_T("Data\\Texture\\RED.png"),				{ {1, 1, 1}, {3, 1}, {1, 1 } },true });
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Timer),			_T("Data\\Texture\\Timer.png"),				{ {1, 1, 1}, {1, 1}, {1, 1 } },true });

@@ -33,9 +33,11 @@ void CNabe::DrawWater(D3DXMATRIX& View, D3DXMATRIX& Proj)
 	Water->SetAlpha(0.5);
 	Water->SetCOLOR({140/256.0f,70/256.0f,20/256.0f });
 	Water->SetisCOLOR(true);
-	Water->SetScale({ m_Scale.x*2,m_Scale .z*2,m_Scale.y });
-
-	Water->Render(View,Proj);
+	Water->SetScale({ m_Scale.x*2.2f,m_Scale .z*2.2f,m_Scale.y });
+	static float i=0;
+	i += 0.5;
+	float MAX = 0.5;
+	Water->Render2(View,Proj,{ sin(D3DXToRadian(i))/static_cast<float>(M_PI)* MAX,cos(D3DXToRadian(i)) / static_cast<float>(M_PI) * MAX });
 	Water->SetisCOLOR(false);
 	Water->SetAlpha(1);
 }

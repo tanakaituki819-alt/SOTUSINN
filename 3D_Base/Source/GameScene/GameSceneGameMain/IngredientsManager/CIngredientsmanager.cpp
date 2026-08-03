@@ -33,6 +33,10 @@ void CIngredientsmanager::Update()
 						D3DXVECTOR3 Vec=m_pIngredients[i]->GetPosition() - m_pIngredients[c]->GetPosition();
 						D3DXVec3Normalize(&Vec,&Vec);
 						float Radius = m_pIngredients[i]->GetBSphere()->GetRadius() / 2 + m_pIngredients[c]->GetBSphere()->GetRadius() / 2;
+						if (Radius>0.05) {
+							Radius = 0.05;
+						}
+
 						m_pIngredients[i]->SetPosition({ m_pIngredients[i]->GetPosition() + ((Radius/2 ) * Vec) });
 						m_pIngredients[c]->SetPosition({ m_pIngredients[c]->GetPosition() + ((Radius/2 ) * -Vec) });
 						m_pIngredients[i]->UpdateBSpherePos();

@@ -134,7 +134,9 @@ HRESULT CStaticObjMesh::Init(
 	{
 		return E_FAIL;
 	}
-
+	if (CreateMeshForRay()==false) {
+		return E_FAIL;
+	}
 	return S_OK;
 }
 
@@ -199,6 +201,65 @@ D3DXVECTOR3 CStaticObjMesh::GetPos2D(D3DXMATRIX& mView, D3DXMATRIX& mProj)
 }
 
 
+
+
+
+bool CStaticObjMesh::CreateMeshForRay()
+{
+	if (!m_pDevice9) return false;
+
+	// 1. 全ポリゴン数（三角形の数）と全頂点数を算出
+	DWORD totalIndices = 0;
+	for (const auto& indices : m_Model.MaterialIndices) {
+		totalIndices += static_cast<DWORD>(indices.size());
+	}
+	DWORD numFaces = totalIndices / 3;
+	DWORD numVertices = static_cast<DWORD>(m_Model.Vertices.size());
+
+	if (numFaces == 0 || numVertices == 0) return false;
+
+	// 2. FVFの代わりに D3DVERTEXELEMENT9 で頂点レイアウトを定義する
+	D3DVERTEXELEMENT9 elements[] = {
+		// stream, offset, type, method, usage, usage_index
+		{ 0, 0,  D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0, 12, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_NORMAL,   0 },
+		{ 0, 24, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
+		D3DDECL_END() // 終端マーカー
+	};
+
+	// 3. FVFではなく D3DXCreateMesh を使用してメッシュ生成
+	SAFE_RELEASE(m_ModelForRay.m_pMeshForRay);
+	HRESULT hr = D3DXCreateMesh(
+		numFaces,
+		numVertices,
+		D3DXMESH_MANAGED,
+		elements,
+		m_pDevice9,
+		&m_ModelForRay.m_pMeshForRay
+	);
+
+	if (FAILED(hr)) return false;
+
+	// 4. 頂点バッファのコピー
+	VERTEX* pVerts = nullptr;
+	if (SUCCEEDED(m_ModelForRay.m_pMeshForRay->LockVertexBuffer(0, (void**)&pVerts))) {
+		memcpy(pVerts, m_Model.Vertices.data(), sizeof(VERTEX) * numVertices);
+		m_ModelForRay.m_pMeshForRay->UnlockVertexBuffer();
+	}
+
+	// 5. インデックスバッファのコピー
+	DWORD* pIndices = nullptr;
+	if (SUCCEEDED(m_ModelForRay.m_pMeshForRay->LockIndexBuffer(0, (void**)&pIndices))) {
+		DWORD offset = 0;
+		for (const auto& matIndices : m_Model.MaterialIndices) {
+			memcpy(pIndices + offset, matIndices.data(), sizeof(DWORD) * matIndices.size());
+			offset += static_cast<DWORD>(matIndices.size());
+		}
+		m_ModelForRay.m_pMeshForRay->UnlockIndexBuffer();
+	}
+
+	return true;
+}
 
 bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const std::string& baseDir)
 {
