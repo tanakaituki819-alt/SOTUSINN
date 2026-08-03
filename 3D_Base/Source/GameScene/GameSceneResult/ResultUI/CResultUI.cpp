@@ -155,7 +155,7 @@ void CResultUI::Draw()
         Player1First();
         Player2First();
         Player3First();
-        Player4Second();
+        Player4Second();   
     }
     else if (Rank == 2)
     {
@@ -669,6 +669,8 @@ void CResultUI::Draw()
         Player4First();
     }
 
+    
+
 }
 
 void CResultUI::ResultBackUI()
@@ -701,25 +703,20 @@ void CResultUI::PlayerBackUI()
     PlayerBack_Img[3]->SetRotationZ(IMAGE_ROTATION_ANGLE);
     PlayerBack_Img[3]->Render();
 
-void CResultUI::Player4BackUI()
-{
 }
 
 void CResultUI::Player1Pos()
 {
 	PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON.GetPos()));
 }
-
 void CResultUI::Player2Pos()
 {
     PlayerIcon_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON.GetPos()));
 }
-
 void CResultUI::Player3Pos()
 {
     PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON.GetPos()));
 }
-
 void CResultUI::Player4Pos()
 {
     PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_ICON.GetPos()));
@@ -742,7 +739,6 @@ void CResultUI::Player1First()
 	PlayerIcon_Img[0]->Render();
     Medal_P1_1st_UI();
 }
-
 void CResultUI::Player1Second()
 {
 	Player1Pos();
@@ -751,7 +747,6 @@ void CResultUI::Player1Second()
 	PlayerIcon_Img[0]->Render();
     Medal_P1_2nd_UI();
 }
-
 void CResultUI::Player1Third()
 {
 	Player1Pos();
@@ -762,6 +757,7 @@ void CResultUI::Player1Third()
 
 }
 
+}
 void CResultUI::Player1Fourth()
 {
 	Player1Pos();
@@ -779,7 +775,6 @@ void CResultUI::Player2First()
     Medal_P2_1st_UI();
 
 }
-
 void CResultUI::Player2Second()
 {
 	Player2Pos();
@@ -789,7 +784,6 @@ void CResultUI::Player2Second()
     Medal_P2_2nd_UI();
 
 }
-
 void CResultUI::Player2Third()
 {
 	Player2Pos();
@@ -799,7 +793,6 @@ void CResultUI::Player2Third()
     Medal_P2_3rd_UI();
 
 }
-
 void CResultUI::Player2Fourth()
 {
 	Player2Pos();
@@ -817,7 +810,6 @@ void CResultUI::Player3First()
 	PlayerIcon_Img[2]->Render();
     Medal_P3_1st_UI();
 }
-
 void CResultUI::Player3Second()
 {
 	Player3Pos();
@@ -826,7 +818,6 @@ void CResultUI::Player3Second()
 	PlayerIcon_Img[2]->Render();
     Medal_P3_2nd_UI();
 }
-
 void CResultUI::Player3Third()
 {
 	Player3Pos();
@@ -835,7 +826,6 @@ void CResultUI::Player3Third()
 	PlayerIcon_Img[2]->Render();
     Medal_P3_3rd_UI();
 }
-
 void CResultUI::Player3Fourth()
 {
 	Player3Pos();
@@ -853,7 +843,6 @@ void CResultUI::Player4First()
 	PlayerIcon_Img[3]->Render();
     Medal_P4_1st_UI();
 }
-
 void CResultUI::Player4Second()
 {
 	Player4Pos();
@@ -862,7 +851,6 @@ void CResultUI::Player4Second()
 	PlayerIcon_Img[3]->Render();
     Medal_P4_2nd_UI();
 }
-
 void CResultUI::Player4Third()
 {
 	Player4Pos();
@@ -871,7 +859,6 @@ void CResultUI::Player4Third()
 	PlayerIcon_Img[3]->Render();
     Medal_P4_3rd_UI();
 }
-
 void CResultUI::Player4Fourth()
 {
 	Player4Pos();
