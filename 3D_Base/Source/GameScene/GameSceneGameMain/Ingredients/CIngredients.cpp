@@ -71,7 +71,7 @@ void CIngredients::Update()
 {
 
 
-	float Speed = 0.1;
+	Fallingforce += gravity;
 	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
 	if (Nabe!=nullptr) {
 		//鍋の外に出ないようにする

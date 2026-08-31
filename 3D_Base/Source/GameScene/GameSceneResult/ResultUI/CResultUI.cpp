@@ -771,7 +771,6 @@ void CResultUI::Player1Third()
 
 }
 
-}
 void CResultUI::Player1Fourth()
 {
 	Player1Pos();
