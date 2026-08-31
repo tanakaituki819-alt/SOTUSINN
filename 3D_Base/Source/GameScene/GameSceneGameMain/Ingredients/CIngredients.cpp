@@ -70,19 +70,7 @@ void CIngredients::IsCollecting()
 void CIngredients::Update()
 {
 
-		Fallingforce += gravity;
-	
-	
-		m_IsCollecting = false;
-	}
-		m_IsCollecting = false;
-	}
-		m_IsCollecting = false;
-	}
-		m_IsCollecting = false;
-	}
-		m_IsCollecting = false;
-	}
+
 	float Speed = 0.1;
 	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
 	if (Nabe!=nullptr) {
