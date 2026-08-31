@@ -19,20 +19,20 @@ CIngredients::CIngredients()
 
 	IngredientsSetting[static_cast<int>(Ingredients::none)]		=		{ CS::GetObjMesh(OL::S_NIKU)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::NIKU)]		=		{ CS::GetObjMesh(OL::S_NIKU)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)]	=		{ CS::GetObjMesh(OL::S_NINZIN)	,0.4, {1.2,1.2,1.2}, {0,0,0},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)]	=		{ CS::GetObjMesh(OL::S_NINZIN)	,0.4, {1.f,1.f,1.f}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)]	=		{ CS::GetObjMesh(OL::S_DAIKON)	,0.4, {1.2,1.2,1.2}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)]	=		{ CS::GetObjMesh(OL::S_ENOKI)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] =		{ CS::GetObjMesh(OL::S_HAKUSAI1),0.4, {1.5,1.5,1.5}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] =		{ CS::GetObjMesh(OL::S_HAKUSAI2),0.4, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::KANI)]		=		{ CS::GetObjMesh(OL::S_KANI)	,0.5, {5,5,5},		 {-1,1,0},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::KANI)]		=		{ CS::GetObjMesh(OL::S_KANI)	,0.5, {4,4,4},		 {-1,D3DXToRadian(70),0},10};
 	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] =		{ CS::GetObjMesh(OL::S_KUMANOTE),0.4, {2,2,2},		 {D3DXToRadian(-50),D3DXToRadian(280),0},10};
 	IngredientsSetting[static_cast<int>(Ingredients::NEGI)]		=		{ CS::GetObjMesh(OL::S_NEGI)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] =		{ CS::GetObjMesh(OL::S_ROBUSTER),0.4, {5,5,5},		 {D3DXToRadian(-50),D3DXToRadian(200),0},10};
-	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	=		{ CS::GetObjMesh(OL::S_SAKANA)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	=		{ CS::GetObjMesh(OL::S_SAKANA)	,0.5, {6,6,6},		 {D3DXToRadian(-90),0,0},10};
 	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)]	=		{ CS::GetObjMesh(OL::S_SITAKE)	,0.4, {1.2,1.2,1.2}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::TAI)]		=		{ CS::GetObjMesh(OL::S_TAI)		,0.4, {2.5,2.5,2.5}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		=		{ CS::GetObjMesh(OL::S_TARA)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	=		{ CS::GetObjMesh(OL::S_TOUHU)	,0.4, {1.2,1.2,1.2}, {0,0,0},10 };
+	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	=		{ CS::GetObjMesh(OL::S_TOUHU)	,0.4, {1.f,1.f,1.f}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	=		{ CS::GetObjMesh(OL::S_UINNER)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
 
 }
@@ -60,12 +60,20 @@ void CIngredients::SetIngredients(int i)
 		
 }
 
+void CIngredients::IsCollecting()
+{
+	m_IsCollecting = true;	//回収中へ.
+}
+
 
 void CIngredients::Update()
 {
-
-	Fallingforce += gravity;
-
+	if (!m_IsCollecting) {
+		Fallingforce += gravity;
+	}
+	if (m_Position.y > 2.f) {
+		m_IsCollecting = false;
+	}
 	float Speed = 0.1;
 	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
 	if (Nabe!=nullptr) {

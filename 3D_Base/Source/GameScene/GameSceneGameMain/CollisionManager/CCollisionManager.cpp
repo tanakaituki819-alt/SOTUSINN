@@ -18,10 +18,10 @@ void CCollisionManager::Update()
 		//nullptrなら次の配列番号へ.
 		if (!m_pPlayer[i]) continue;
 		if (!m_pIngredientsManager)continue;
-		//プレイヤーにコントローラー接続がされているなら.
+		//プレイヤーにコントローラー接続が接続されていないのなら次のプレイヤーへ.
 		if (!m_pPlayer[i]->GetConnected()) continue;
 		{
-			//プレイヤーが回収中なら.
+			//プレイヤーが回収中でないなら次のプレイヤーへ.
 			if (!m_pPlayer[i]->GetIsCollecting()) continue;
 			//具材のサイズ読み込み.
 			std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
@@ -29,11 +29,20 @@ void CCollisionManager::Update()
 			for (auto& j: Ingredients) {
 				//プレイヤーと具材が接触する.
 				if (m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) {
-					m_pPlayer[i]->OnTouchRawIngredient();	//マヒ状態にする.
+					//具材が煮えていないなら.
+					if (!j->GetBoiledc()) {
+						m_pPlayer[i]->OnTouchRawIngredient();	//マヒ状態にする.
+					}
+					//具材が煮えている.
+					else {
+						//回収状態でないなら次のプレイヤーへ.
+						if (j->GetCollecting())continue;
+						m_pPlayer[i]->IngredientsGetter(j);	//具材を回収する.
+						j->IsCollecting();					//具材回収状態へ.
+					}
 				}
 			}
 		}
-
 	}
 }
 

@@ -80,6 +80,8 @@ void CPlayer::Update()
 				SAFE_DELETE(m_pPlayerParalysisUI);	//破棄.
 			}
 		}
+		//回収中の処理.
+		IngredientsCollecting();
 		//スコア増加(仮).
 		if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
 			Score++;
@@ -97,9 +99,12 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 	if (!m_IsCollecting && !m_IsParalysis) {
 		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす
 		m_Cousor->SetPosition(m_Position);					
-		m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
+		//m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
+		m_Cousor->SetRotation({ D3DXToRadian(135),0,0 });
 		m_Cousor->SetScale(m_Scale);
+		m_Cousor->SetBillboard(true);
 		m_Cousor->Render(View, Proj);
+		m_Cousor->SetBillboard(false);
 		m_CousorPosition = m_Cousor->GetPos2D(View, Proj);	//カーソルのポジションを2D用のポジションに変換する.
 	}
 	//回収中.
@@ -177,10 +182,27 @@ void CPlayer::OnTouchRawIngredient()
 	m_IsParalysis = true;	//マヒ状態にする.
 }
 
+void CPlayer::IngredientsGetter(CIngredients* Ingredients)
+{
+	m_pIngredients = Ingredients;
+	m_Position = { m_pIngredients->GetPosition() };
+}
+
+void CPlayer::IngredientsCollecting()
+{
+	if (!m_pIngredients)return;
+	if (m_Position.y < 2.f) {
+		m_Position.y += 0.1f;
+		m_pIngredients->SetPosition(m_Position);
+	}
+
+}
+
 void CPlayer::GetIngredients(CIngredients* YASAI)
 {
 	my_list.push_back(YASAI->GetIngredientsNo());
 	Score += YASAI->GetScore();
+	m_pIngredients = nullptr;
 }
 
 

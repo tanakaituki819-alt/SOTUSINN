@@ -64,8 +64,8 @@ void CIngredientsmanager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light,
 }
 
 void CIngredientsmanager::Create()
-{
-	int R = 6;
+{ 
+	int R = 5;
 	float NABE = 4*1.2;
 	int x = rand() % R;
 	int z = rand() % R;

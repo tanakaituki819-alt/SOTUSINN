@@ -47,8 +47,11 @@ public:
 		LIGHT& Light, CAMERA& Camera) override;
 	Ingredients GetIngredientsNo() const{ return IngredientsNo; };
 	int GetScore() const{return Score;}
+	bool GetBoiledc() { return isBoiled; }
+	bool GetCollecting() { return m_IsCollecting; }
 	void SetNabe(CNabe* CNabe) { Nabe = CNabe; }
 	void SetIngredients(int i);
+	void IsCollecting();
 protected:
 	D3DXVECTOR3 m_OldPosition;
 	Ingredients IngredientsNo;
@@ -60,4 +63,5 @@ protected:
 	 float m_Boiledc;
 	 float m_BoiledcMAX;
 	 float Fallingforce;//落下力
+	 bool	m_IsCollecting = false;	//回収中.
 };

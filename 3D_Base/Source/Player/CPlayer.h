@@ -36,6 +36,9 @@ public:
 	//今回収中かどうか.
 	bool GetIsCollecting() { return m_IsCollecting; }
 	//CBoundingSphere* GetTipBSphere();
+	void IngredientsGetter(CIngredients* Ingredients);
+	//具材回収中の処理.
+	void IngredientsCollecting();
 
 	void GetIngredients(CIngredients*  YASAI);
 	std::list<Ingredients>& GetAllIngredients() {return my_list;}
@@ -59,4 +62,6 @@ private:
 	float					m_Amount			 = 0.05f;	//震える大きさ.	
 	D3DXVECTOR3				m_CousorPosition	 = {};		//カーソルのポジションを入れる.
 	D3DXVECTOR3				m_Point3Dto2DConverter = {};	//ボタン連打を表示するポジション(3D座標から2Dように変換).
+
+	CIngredients*			m_pIngredients = nullptr;
 };
