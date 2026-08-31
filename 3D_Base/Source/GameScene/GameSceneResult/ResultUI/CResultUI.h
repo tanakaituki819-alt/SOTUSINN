@@ -7,6 +7,7 @@ class CResultUI
 public:
 	static const int PLAYER_MAX = 4;
 	static const int MEDAL_MAM = 3;
+	static const int FONT_MAM = 4;
 public:
 	CResultUI();
 	~CResultUI()override;
@@ -87,11 +88,58 @@ public:
 	void Medal_Silver_Render();
 	void Medal_Bronze_Render();
 
+	//プレイヤー壱のフォントUI.
+	void Font_P1_UI();
+	//プレイヤー弐のフォントUI.
+	void Font_P2_UI();
+	//プレイヤー参のフォントUI.
+	void Font_P3_UI();
+	//プレイヤー肆のフォントUI.
+	void Font_P4_UI();
+
+	//プレイヤー壱の各行.
+	void Font_P1_1st_UI();	//獲得ポイント.
+	void Font_P1_2nd_UI();	//具材ポイント.
+	void Font_P1_3rd_UI();	//高級具材ポイント.
+	void Font_P1_4th_UI();	//合計ポイント.
+	//プレイヤー弐の各行.
+	void Font_P2_1st_UI();
+	void Font_P2_2nd_UI();
+	void Font_P2_3rd_UI();
+	void Font_P2_4th_UI();
+	//プレイヤー参の各行.
+	void Font_P3_1st_UI();
+	void Font_P3_2nd_UI();
+	void Font_P3_3rd_UI();
+	void Font_P3_4th_UI();
+	//プレイヤー肆の各行.
+	void Font_P4_1st_UI();
+	void Font_P4_2nd_UI();
+	void Font_P4_3rd_UI();
+	void Font_P4_4th_UI();
+
+	//フォントのスケール、パターンナンバー、レンダ関数をまとめた関数.
+	void Font_1st_Render();	//獲得ポイント.
+	void Font_2nd_Render();	//具材ポイント.
+	void Font_3rd_Render();	//高級具材ポイント.
+	void Font_4th_Render();	//合計ポイント.
+
+	//数字と点の表示.
+	void DrawNumber(int Score, const D3DXVECTOR3& Pos);
+
+	//プレイヤーごとのスコア表示.
+	void Number_P1_UI();
+	void Number_P2_UI();
+	void Number_P3_UI();
+	void Number_P4_UI();
+
 private:
 	CSprite2D* BackGround_Img;
 	CSprite2D* PlayerBack_Img[PLAYER_MAX];
 	CSprite2D* PlayerIcon_Img[PLAYER_MAX];
 	CSprite2D* Medal_Img[MEDAL_MAM];
+	CSprite2D* Font_Img[FONT_MAM];
+	CSprite2D* Number_Img;
 
 	int Rank;	//仮の条件のためのもの
 	int Count;	//仮の条件のためのもの
