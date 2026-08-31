@@ -8,7 +8,6 @@
 #include <GameScene/GameSceneGameMain/Ingredients/CIngredients.h>
 #include <GameObject/StaticMeshObjObject/CStaticMeshObjObject.h>
 
-
 class CPlayer
 	:public  CStaticMeshObjObject	//スタティックメッシュオブジェのオブジェクトを継承.
 {
@@ -36,7 +35,7 @@ public:
 	bool GetConnected() { return m_IsConnected;}
 	//今回収中かどうか.
 	bool GetIsCollecting() { return m_IsCollecting; }
-
+	//CBoundingSphere* GetTipBSphere();
 
 	void GetIngredients(CIngredients*  YASAI);
 	std::list<Ingredients>& GetAllIngredients() {return my_list;}

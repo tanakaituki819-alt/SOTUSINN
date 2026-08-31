@@ -8,6 +8,7 @@ CGameSceneTitleSequence::CGameSceneTitleSequence(HWND Hwnd, CDirectX9* Dx9, CDir
 	m_pBackImg = new CUIObject();					//背景インスタンス作成.
 	m_pBackImg->SetScale(WND_W, WND_H, 100.f);		//スケール.
 	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//背景設定.
+
 }
 
 CGameSceneTitleSequence::~CGameSceneTitleSequence()
