@@ -669,8 +669,6 @@ void CResultUI::Draw()
         Player4First();
     }
 
-    
-
 }
 
 void CResultUI::ResultBackUI()
@@ -682,33 +680,6 @@ void CResultUI::ResultBackUI()
 
 void CResultUI::PlayerBackUI()
 {
-    //実行中に動かすやつ
-    static float ananana = 10;
-    static float ananana2 = 10;
-
-    if (GetAsyncKeyState('W') & 0x8000)
-    {
-        ananana--;
-    }
-    if (GetAsyncKeyState('S') & 0x8000)
-    {
-        ananana++;
-    }
-    if (GetAsyncKeyState('D') & 0x8000)
-    {
-        ananana2++;
-    }
-    if (GetAsyncKeyState('A') & 0x8000)
-    {
-        ananana2--;
-    }
-
-    FILE* pFile;
-    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
-    freopen_s(&pFile, "CONOUT$", "w", stdout);
-    std::cout << ananana << std::endl;
-
-
     PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_BACK.GetPos()));
     PlayerBack_Img[0]->SetScale(D3DXVECTOR3(PLAYER_1_BACK.GetScl()));
     PlayerBack_Img[0]->SetRotationZ(IMAGE_ROTATION_ANGLE);
