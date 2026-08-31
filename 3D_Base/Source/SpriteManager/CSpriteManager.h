@@ -53,6 +53,7 @@ public:
 		IMG_TitleWaribashi,		//タイトルの割りばし.
 		IMG_Medal,				//メダル.
 		IMG_ResultFont,			//リザルトで使用するフォント.
+		IMG_ReStart,			//もう一度プレイの文字.
 		MAX
 	};
 	//ｘファイル
