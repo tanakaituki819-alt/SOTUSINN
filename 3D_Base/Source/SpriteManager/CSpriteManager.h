@@ -32,6 +32,7 @@ public:
 		Img_Text,				//文字.
 		Img_Hand,				//いただきます用の手.
 		Img_Scroll,				//巻物UI.
+		Img_Scroll2,			//巻物UI2.(片方がない)
 		Img_Xbox,				//Xboxコントローラー.
 		Img_Cusoru,				//カーソル
 		Img_Pause,				//ポーズ.
@@ -51,6 +52,8 @@ public:
 		Img_TitleNabe,			//タイトルの鍋.
 		IMG_TitleWaribashi,		//タイトルの割りばし.
 		Img_ScrollRed,			//赤色の巻物.(全員が準備完了になったときに表示するUIで使う).
+		IMG_Medal,				//メダル.
+		IMG_ResultFont,			//リザルトで使用するフォント.
 		MAX
 	};
 	//ｘファイル
