@@ -30,7 +30,7 @@ void CNabe::DrawWater(D3DXMATRIX& View, D3DXMATRIX& Proj)
 {
 	Water->SetPosition({m_Position.x,m_Position.y+ NabeH,m_Position.z});
 	Water->SetRotationX(D3DXToRadian(90));
-	Water->SetAlpha(0.5);
+	Water->SetAlpha(0.9);
 	Water->SetCOLOR({140/256.0f,70/256.0f,20/256.0f });
 	Water->SetisCOLOR(true);
 	Water->SetScale({ m_Scale.x*2.2f,m_Scale .z*2.2f,m_Scale.y });
