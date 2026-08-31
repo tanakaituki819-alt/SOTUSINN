@@ -36,7 +36,10 @@ void CIngredientsmanager::Update()
 						if (Radius>0.05) {
 							Radius = 0.05;
 						}
-
+						//真上、真下なら左にずれる；
+						if (Vec.x == 0.f && Vec.z == 0.f && Vec.y != 0.f) {
+							Vec.x += 0.001;
+						}
 						m_pIngredients[i]->SetPosition({ m_pIngredients[i]->GetPosition() + ((Radius ) * Vec) });
 						m_pIngredients[c]->SetPosition({ m_pIngredients[c]->GetPosition() + ((Radius ) * -Vec) });
 						m_pIngredients[i]->UpdateBSpherePos();
@@ -56,9 +59,9 @@ void CIngredientsmanager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light,
 {
 
 	for (int i = 0; i < m_pIngredients.size(); i++) {
-	//	if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Live || AllBullet[i]->GetCharStatus() == enCharStatus::Dying) {
+		if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Live || m_pIngredients[i]->GetCharStatus() == enCharStatus::Dying) {
 			m_pIngredients[i]->Draw(View, Proj, Light, Camera);
-		//}
+		}
 
 	}
 }
@@ -71,23 +74,23 @@ void CIngredientsmanager::Create()
 	int z = rand() % R;
 	static int c = -1;
 	//再利用可能なら再利用
-	//for (int i = 0; i < m_pIngredients.size(); i++) {
-	//	if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Standby) {
-	//		m_pIngredients[i]->SetPosition({static_cast<FLOAT>(rand() % 100 + 1) / 100,5,static_cast<FLOAT>(rand() % 100 + 1) / 100});
-	//		m_pIngredients[i]->SetIngredients(c);
-	//		return;
-	//	}
-	//}
+	for (int i = 0; i < m_pIngredients.size(); i++) {
+		if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Standby) {
+			m_pIngredients[i]->SetPosition({static_cast<FLOAT>(rand() % 100 + 1) / 100,5,static_cast<FLOAT>(rand() % 100 + 1) / 100});
+			m_pIngredients[i]->SetIngredients(c);
+			return;
+		}
+	}
 	CIngredients* now = new CIngredients;
 	now->SetNabe(Nabe);
 	now->SetPosition({ static_cast<float>(x) *(NABE/ static_cast<float>(R-1))- NABE/2.0f ,5,static_cast<float>(z) * (NABE / static_cast<float>(R-1))- NABE/2.0f });
-	
+
 	c++;
 	if (c>=17) {
 		c = 0;
 	}
 
-	now->SetIngredients(c);
+	now->SetIngredients(11);
 	m_pIngredients.push_back(now);
 
 

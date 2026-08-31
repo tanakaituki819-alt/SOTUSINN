@@ -34,7 +34,7 @@ CIngredients::CIngredients()
 	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		=		{ CS::GetObjMesh(OL::S_TARA)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	=		{ CS::GetObjMesh(OL::S_TOUHU)	,0.4, {1.f,1.f,1.f}, {0,0,0},10 };
 	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	=		{ CS::GetObjMesh(OL::S_UINNER)	,0.4, {1.5,1.5,1.5}, {0,0,0},10 };
-
+	Status = enCharStatus::Standby;
 }
 
 CIngredients::~CIngredients()
@@ -57,7 +57,7 @@ void CIngredients::SetIngredients(int i)
 	isBoiled = false;
 	m_Boiledc = 0;
 	m_BoiledcMAX = (15*(0.8+static_cast<float>(rand()%5)/10)) * 60;
-		
+	Status = enCharStatus::Live;
 }
 
 void CIngredients::IsCollecting()
@@ -92,15 +92,15 @@ void CIngredients::Update()
 		//水に沈んだ
 		if (m_Position.y <= Nabe->GetPosition().y + Nabe->GetNabeH()) {
 		
-			Fallingforce *= 0.5;//液体による原則
-			// 2. 沈んでいる深さに応じた浮力の計算（深ければ深いほど浮力が強くなる）
+			Fallingforce *= 0.5;//液体による減速
+			// 沈んでいる深さに応じた浮力の計算（深ければ深いほど浮力が強くなる）
 			float depth = Nabe->GetNabeH() - m_Position.y; // 沈んでいる深さ
 			float buoyancyFactor = 0.15f;               // 浮力の強さ調整用パラメータ
 
 			// 毎フレーム加算ではなく、深さに応じた固定の浮力を設定
 			m_buoyancy =  (depth * buoyancyFactor);
 
-			// 3. 落下力から浮力を引く（＝上向きの力を与える）
+			// 落下力から浮力を引く（＝上向きの力を与える）
 			Fallingforce -= m_buoyancy;
 		}
 		else {
@@ -117,6 +117,10 @@ void CIngredients::Update()
 			isBoiled = true;
 		}
 
+	}
+
+	if (Status == enCharStatus::Dead) {
+		Status = enCharStatus::Standby;
 	}
 
 }

@@ -5,7 +5,7 @@ class CWinnerResultUI
 	: public CUIObject
 {
 public:
-	static const int Font_Max = 4;
+	static const int FONT_MAM = 4;
 
 public:
 	CWinnerResultUI();
@@ -78,6 +78,9 @@ public:
 	void Player2AndPlayer3AndPlayer4FontUI();
 	// プレイヤー壱とプレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
 	void AllPlayerFontUI();
+	
+
+
 
 private:
 	CSprite2D* BackGround_Img;
@@ -86,7 +89,8 @@ private:
 	CSprite2D* Player2_Img;
 	CSprite2D* Player3_Img;
 	CSprite2D* Player4_Img;
-	CSprite2D* PlayerFont_Img[Font_Max];
+	CSprite2D* PlayerFont_Img[FONT_MAM];
+
 
 	int Win;
 };

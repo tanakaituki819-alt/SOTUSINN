@@ -4,6 +4,7 @@
 #include"GameScene\GameSceneGameMain\CGameSceneGameMain.h"
 #include "GameScene\GameScenePlayerSetup\CGameScenePlayerSetup.h"
 #include "GameScene\GameSceneWinnerResult\CGameSceneWinnerResult.h"
+#include "GameScene\GameSceneResult\CGameSceneResult.h"
 
 #include "Game\enScene.h"
 #include "SoundManager\CSoundManager.h"
