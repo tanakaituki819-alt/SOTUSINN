@@ -8,6 +8,7 @@ public:
 	static const int PLAYER_MAX = 4;
 	static const int MEDAL_MAM = 3;
 	static const int FONT_MAM = 4;
+	static const int RESTART_MAM = 2;
 public:
 	CResultUI();
 	~CResultUI()override;
@@ -133,6 +134,8 @@ public:
 	void Number_P3_UI();
 	void Number_P4_UI();
 
+	//もう一度プレイ
+	void ReStart();
 private:
 	CSprite2D* BackGround_Img;
 	CSprite2D* PlayerBack_Img[PLAYER_MAX];
@@ -140,6 +143,7 @@ private:
 	CSprite2D* Medal_Img[MEDAL_MAM];
 	CSprite2D* Font_Img[FONT_MAM];
 	CSprite2D* Number_Img;
+	CSprite2D* ReStart_Img[RESTART_MAM];
 
 	int Rank;	//仮の条件のためのもの
 	int Count;	//仮の条件のためのもの

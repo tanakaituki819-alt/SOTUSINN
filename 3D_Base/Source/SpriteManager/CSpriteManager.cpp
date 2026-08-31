@@ -234,6 +234,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Medal),		_T("Data\\Texture\\medal.png"),		{ {1, 1, 1}, {5692, 3200}, {5692/3, 3200}} });
 	//全体リザルトで使用する文字
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_ResultFont),		_T("Data\\Texture\\ResultFont.png"),		{ {1, 1, 1}, {325, 240}, {325, 240/4}} });
+	//全体リザルトで使用する文字
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_ReStart),		_T("Data\\Texture\\ReStart.png"),		{ {1, 1, 1}, {283, 200}, {283, 200/2}} });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
