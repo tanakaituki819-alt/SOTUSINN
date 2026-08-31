@@ -116,7 +116,7 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 				m_pChopsticks[i]->SetPosition(m_Position.x+ 0.5f,m_Position.y + 1.f ,m_Position.z + 0.2f);
 			}
 			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));	//角度調整.
-			m_pChopsticks[i]->SetScale(2.f, 2.f, 2.f);
+			m_pChopsticks[i]->SetScale(2.2f, 2.2f, 2.2f);
 			m_pChopsticks[i]->Draw(View, Proj, Light, Camera);
 		}
 	}
