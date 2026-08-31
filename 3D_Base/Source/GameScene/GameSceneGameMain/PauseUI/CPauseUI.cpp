@@ -65,36 +65,6 @@ CPauseUI::~CPauseUI()
 
 void CPauseUI::Update()
 {
-
-#if 0
-	//実行中に動かすやつ
-	static float ananana=0;
-	static float ananana2=0;
-
-	if (GetAsyncKeyState('W') & 0x8000)
-	{
-		ananana--;
-	}
-	if (GetAsyncKeyState('S') & 0x8000)
-	{
-		ananana++;
-	}
-	if (GetAsyncKeyState('D') & 0x8000)
-	{
-		ananana2++;
-	}
-	if (GetAsyncKeyState('A') & 0x8000)
-	{
-		ananana2--;
-	}
-
-	FILE* pFile;
-	//stdout（標準出力）を新しく作成したコンソールにリダイレクト
-	freopen_s(&pFile, "CONOUT$", "w", stdout);
-	std::cout << ananana<< std::endl;
-
-#endif
-
 	if (m_pController == nullptr)
 	{
 		return;
@@ -152,7 +122,10 @@ void CPauseUI::Update()
 void CPauseUI::Draw()
 {
 	//読み込めてないなら消え失せろ
-	if (m_pPauseImg == nullptr || m_pPauseOptionImg[0] == nullptr || m_pPauseOptionImg[1] == nullptr|| m_pPauseSelectionFrameImg == nullptr)
+	if (m_pPauseImg == nullptr || 
+		m_pPauseOptionImg[0] == nullptr || 
+		m_pPauseOptionImg[1] == nullptr|| 
+		m_pPauseSelectionFrameImg == nullptr)
 	{
 		return;
 	}
