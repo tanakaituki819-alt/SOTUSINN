@@ -40,8 +40,9 @@ void CCollisionManager::Update()
 					else {
 						//回収状態でないなら次のプレイヤーへ.
 						if (j->GetCollecting())continue;
-						m_pPlayer[i]->IngredientsGetter(j);	//具材を回収する.
 						j->IsCollecting();					//具材回収状態へ.
+						m_pPlayer[i]->IngredientsGetter(j);	//具材を回収する.
+
 					}
 				}	
 				}
