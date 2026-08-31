@@ -100,7 +100,8 @@ void CTitleChopsticks::Update()
 
 		//中央付近で衝突したら移動スピードを反転させる.
 		if (m_AttackMoveNow && m_MoveOffset.x > IMPACT_THRESHOLD) {
-			m_AttackMoveNow = false;
+			m_SceneChangeflag = true;	//シーンチェンジ可能状態へ.
+			m_AttackMoveNow = false;	//動き反転.
 			m_MoveSpeed.x = -m_MoveSpeed.x;	//X方向反転.
 			m_MoveSpeed.y = -m_MoveSpeed.y;	//Y方向反転.
 		}

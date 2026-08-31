@@ -17,6 +17,9 @@ CGameSceneTitleSequence::~CGameSceneTitleSequence()
 
 void CGameSceneTitleSequence::Update()
 {
+	if (m_pTitleChopsticks->GetSceneChangeflag()) {
+		SenenChang(enScene::Title, CSceneChange::TransitionType::Fade, 60, 60);
+	}
 	m_pTitleChopsticks->Update();
 }
 

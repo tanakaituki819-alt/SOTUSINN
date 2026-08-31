@@ -29,6 +29,8 @@ public:
 	void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera) override;
 	void SetCaseId(int nextCaseId);
 
+	bool GetSceneChangeflag() { return m_SceneChangeflag; }
+
 private:
 	//メッシュステート.
 	CStaticMeshObjObject* m_pChopsticks[Chopsticks_Max] = {};		//お箸オブジェクト配列.
@@ -40,10 +42,11 @@ private:
 	D3DXVECTOR2 m_MoveOffset = D3DXVECTOR2(0.3f, 0.3f);				//現在の移動オフセット量(X, Y).
 	D3DXVECTOR2 m_MoveSpeed = D3DXVECTOR2(0.08f, 0.08f / 1.5f);		//移動スピード(X, Y).
 	//制御フラグ状態.
-	bool    m_AttackMoveNow = true;	//攻撃移動中フラグ.
-	int     m_CaseId = 1;			//現在のケースID.
-	CAMERA* m_pCamera = nullptr;	//カメラ参照.
-	float progress = {};			//お箸が中央に向かう進捗率.
-	D3DXMATRIX m_CustomView = {};	//ケース3演出用のカメラ行列を複製.
-	D3DXMATRIX m_MatZoom;			//ケース3演出用のズーム行列.
+	bool    m_AttackMoveNow = true;		//攻撃移動中フラグ.
+	bool	m_SceneChangeflag = false;	//シーン移動していいか判定.
+	int     m_CaseId = 1;				//現在のケースID.
+	CAMERA* m_pCamera = nullptr;		//カメラ参照.
+	float progress = {};				//お箸が中央に向かう進捗率.
+	D3DXMATRIX m_CustomView = {};		//ケース3演出用のカメラ行列を複製.
+	D3DXMATRIX m_MatZoom;				//ケース3演出用のズーム行列.
 };
