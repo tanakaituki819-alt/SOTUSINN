@@ -58,6 +58,7 @@ void CIngredients::SetIngredients(int i)
 	m_Boiledc = 0;
 	m_BoiledcMAX = (15*(0.8+static_cast<float>(rand()%5)/10)) * 60;
 	Status = enCharStatus::Live;
+	m_IsCollecting = false;
 }
 
 void CIngredients::IsCollecting()
@@ -68,9 +69,9 @@ void CIngredients::IsCollecting()
 
 void CIngredients::Update()
 {
-	if (!m_IsCollecting) {
+
 		Fallingforce += gravity;
-	}
+	
 	if (m_Position.y > 2.f) {
 		m_IsCollecting = false;
 	}
@@ -107,7 +108,10 @@ void CIngredients::Update()
 			m_buoyancy = 0;
 		}
 	}
-	m_Position.y -= Fallingforce;
+	if (!m_IsCollecting) {
+		m_Position.y -= Fallingforce;
+	}
+	
 	m_OldPosition = m_Position;
 	//にえていないなら
 	if (isBoiled==false) {
@@ -143,7 +147,7 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 		D3DXVECTOR3 Coler= { 157,101,80 };
 		m_pMesh->SetLightCOLOR256(Coler);
 		if (IngredientsNo == Ingredients::KANI || IngredientsNo == Ingredients::ROBUSTER) {
-			Coler = { 200,150,150 };
+			Coler = { 50,50,50 };
 			m_pMesh->SetLightCOLOR256(Coler  );
 		}
 
@@ -152,7 +156,7 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 			D3DXVECTOR3 Coler = { 107,41,0 };
 			m_pMesh->SetLightCOLOR256(Coler);
 			if (IngredientsNo == Ingredients::KANI || IngredientsNo == Ingredients::ROBUSTER) {
-				Coler = { 300,250,250 };
+				Coler = { 200,100,75 };
 				m_pMesh->SetLightCOLOR256(Coler);
 			}
 		}

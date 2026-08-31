@@ -24,31 +24,36 @@ void CIngredientsmanager::Update()
 		}
 	}
 	for (int i = 0; i < m_pIngredients.size(); i++) {
-		for (int c = 0; c < m_pIngredients.size(); c++) {
-			if (m_pIngredients[i] != nullptr) {
-				if (m_pIngredients[c] != nullptr) {
-					if (m_pIngredients[i] != m_pIngredients[c]) {
-						if (m_pIngredients[i]->GetBSphere()->IsHit(*m_pIngredients[c]->GetBSphere()))
-						{
-						D3DXVECTOR3 Vec=m_pIngredients[i]->GetPosition() - m_pIngredients[c]->GetPosition();
-						D3DXVec3Normalize(&Vec,&Vec);
-						float Radius = m_pIngredients[i]->GetBSphere()->GetRadius()  + m_pIngredients[c]->GetBSphere()->GetRadius() ;
-						if (Radius>0.05) {
-							Radius = 0.05;
-						}
-						//真上、真下なら左にずれる；
-						if (Vec.x == 0.f && Vec.z == 0.f && Vec.y != 0.f) {
-							Vec.x += 0.001;
-						}
-						m_pIngredients[i]->SetPosition({ m_pIngredients[i]->GetPosition() + ((Radius ) * Vec) });
-						m_pIngredients[c]->SetPosition({ m_pIngredients[c]->GetPosition() + ((Radius ) * -Vec) });
-						m_pIngredients[i]->UpdateBSpherePos();
-						m_pIngredients[c]->UpdateBSpherePos();
+		if(m_pIngredients[i]->GetCharStatus()==enCharStatus::Live&& !m_pIngredients[i]->GetCollecting()){
+			for (int c = 0; c < m_pIngredients.size(); c++) {
+				if (m_pIngredients[c]->GetCharStatus() == enCharStatus::Live && !m_pIngredients[c]->GetCollecting()) {
+					if (m_pIngredients[i] != nullptr) {
+						if (m_pIngredients[c] != nullptr) {
+							if (m_pIngredients[i] != m_pIngredients[c]) {
+								if (m_pIngredients[i]->GetBSphere()->IsHit(*m_pIngredients[c]->GetBSphere()))
+								{
+									D3DXVECTOR3 Vec = m_pIngredients[i]->GetPosition() - m_pIngredients[c]->GetPosition();
+									D3DXVec3Normalize(&Vec, &Vec);
+									float Radius = m_pIngredients[i]->GetBSphere()->GetRadius() + m_pIngredients[c]->GetBSphere()->GetRadius();
+									if (Radius > 0.05) {
+										Radius = 0.05;
+									}
+									//真上、真下なら左にずれる；
+									if (Vec.x == 0.f && Vec.z == 0.f && Vec.y != 0.f) {
+										Vec.x += 0.001;
+									}
+									m_pIngredients[i]->SetPosition({ m_pIngredients[i]->GetPosition() + ((Radius)*Vec) });
+									m_pIngredients[c]->SetPosition({ m_pIngredients[c]->GetPosition() + ((Radius) * -Vec) });
+									m_pIngredients[i]->UpdateBSpherePos();
+									m_pIngredients[c]->UpdateBSpherePos();
+								}
+							}
 						}
 					}
 				}
 			}
 		}
+		
 	}
 
 
@@ -90,7 +95,7 @@ void CIngredientsmanager::Create()
 		c = 0;
 	}
 
-	now->SetIngredients(11);
+	now->SetIngredients(7);
 	m_pIngredients.push_back(now);
 
 
