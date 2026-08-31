@@ -36,6 +36,7 @@ private:
 		CStaticObjMesh* Mesh=nullptr;//つかうモデルの
 		float HitSize=0;//当たり判定サイズ//０なら自動設定
 		D3DXVECTOR3 Size = { 0,0,0 };//モデルサイズ
+		D3DXVECTOR3 Rotation = { 0,0,0 };//モデルローテーション
 		int Score =0;//
 	};
 public:
