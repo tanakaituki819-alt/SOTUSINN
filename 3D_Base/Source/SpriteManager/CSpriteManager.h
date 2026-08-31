@@ -52,6 +52,7 @@ public:
 		Img_TitleNabe,			//タイトルの鍋.
 		IMG_TitleWaribashi,		//タイトルの割りばし.
 		IMG_Medal,				//メダル.
+		IMG_ResultFont,			//リザルトで使用するフォント.
 		MAX
 	};
 	//ｘファイル

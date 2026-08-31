@@ -31,6 +31,40 @@ static constexpr Transform P2_MEDAL = { 475.f,90.f,85.f,125.f };
 static constexpr Transform P3_MEDAL = { 780.f,90.f,85.f,125.f };
 static constexpr Transform P4_MEDAL = { 1085.f,90.f,85.f,125.f };
 
+//フォント関連.
+static constexpr Transform FONT_SCALE = { 0.f,0.f,210.f,45.f };
+
+//プレイヤー壱
+static constexpr Transform P1_FONT_1 = { 45.f, 215.f };     //かくとくポイント
+static constexpr Transform P1_FONT_2 = { 45.f, 270.f };     //具材ポイント
+static constexpr Transform P1_FONT_3 = { 45.f, 360.f };     //高級具材ポイント
+static constexpr Transform P1_FONT_4 = { 45.f, 450.f };     //合計ポイント
+//プレイヤー弐
+static constexpr Transform P2_FONT_1 = { 350.f, 215.f };    //かくとくポイント
+static constexpr Transform P2_FONT_2 = { 350.f, 270.f };    //具材ポイント
+static constexpr Transform P2_FONT_3 = { 350.f, 360.f };    //高級具材ポイント
+static constexpr Transform P2_FONT_4 = { 350.f, 450.f };    //合計ポイント
+//プレイヤー参
+static constexpr Transform P3_FONT_1 = { 655.f, 215.f };    //かくとくポイント
+static constexpr Transform P3_FONT_2 = { 655.f, 270.f };    //具材ポイント
+static constexpr Transform P3_FONT_3 = { 655.f, 360.f };    //高級具材ポイント
+static constexpr Transform P3_FONT_4 = { 655.f, 450.f };    //合計ポイント
+//プレイヤー肆
+static constexpr Transform P4_FONT_1 = { 960.f, 215.f };    //かくとくポイント
+static constexpr Transform P4_FONT_2 = { 960.f, 270.f };    //具材ポイント
+static constexpr Transform P4_FONT_3 = { 960.f, 360.f };    //高級具材ポイント
+static constexpr Transform P4_FONT_4 = { 960.f, 450.f };    //合計ポイント
+
+//数字の1文字あたりの幅高さ.
+static constexpr float NUMBER_SIZE_W = 30.f;
+static constexpr float NUMBER_SIZE_H = 45.f;
+
+//各プレイヤーの合計スコア表示位置.
+static constexpr Transform P1_ALL_SCORE_POS = { 90.f,  500.f };
+static constexpr Transform P2_ALL_SCORE_POS = { 395.f, 500.f };
+static constexpr Transform P3_ALL_SCORE_POS = { 700.f, 500.f };
+static constexpr Transform P4_ALL_SCORE_POS = { 1005.f, 500.f };
+
 CResultUI::CResultUI()
 	: Rank (0)
     , Count(0)
@@ -45,20 +79,31 @@ CResultUI::CResultUI()
     {
         Medal_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_Medal);
     }
+    for (int i = 0; i < FONT_MAM; i++)
+    {
+        Font_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_ResultFont);      //フォント.
+    }
+    Number_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Digit0_9);	//数字.
 }
 
 CResultUI::~CResultUI()
 {
-	BackGround_Img = nullptr;
+    Number_Img = nullptr;
+    for (int i = 0; i < FONT_MAM; i++)
+    {
+        Font_Img[i] = nullptr;
+    }
+    for (int i = 0; i < MEDAL_MAM; i++)
+    {
+        Medal_Img[i] = nullptr;
+    }
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
         PlayerBack_Img[i] = nullptr;
 		PlayerIcon_Img[i] = nullptr;
 	}
-    for (int i = 0; i < MEDAL_MAM; i++)
-    {
-        Medal_Img[i] = nullptr;
-    }
+    BackGround_Img = nullptr;
+
 }
 
 void CResultUI::Update()
@@ -82,6 +127,19 @@ void CResultUI::Draw()
 {
 	ResultBackUI();
     PlayerBackUI();
+
+    //フォント.
+    Font_P1_UI();
+    Font_P2_UI();
+    Font_P3_UI();
+    Font_P4_UI();
+
+    //スコア
+    Number_P1_UI();
+    Number_P2_UI();
+    Number_P3_UI();
+    Number_P4_UI();
+    
 
     //修正必須!!.
 	//仮条件 2026.07.31
@@ -611,8 +669,6 @@ void CResultUI::Draw()
         Player4First();
     }
 
-    
-
 }
 
 void CResultUI::ResultBackUI()
@@ -624,33 +680,6 @@ void CResultUI::ResultBackUI()
 
 void CResultUI::PlayerBackUI()
 {
-    //実行中に動かすやつ
-    static float ananana = 10;
-    static float ananana2 = 10;
-
-    if (GetAsyncKeyState('W') & 0x8000)
-    {
-        ananana--;
-    }
-    if (GetAsyncKeyState('S') & 0x8000)
-    {
-        ananana++;
-    }
-    if (GetAsyncKeyState('D') & 0x8000)
-    {
-        ananana2++;
-    }
-    if (GetAsyncKeyState('A') & 0x8000)
-    {
-        ananana2--;
-    }
-
-    FILE* pFile;
-    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
-    freopen_s(&pFile, "CONOUT$", "w", stdout);
-    std::cout << ananana << std::endl;
-
-
     PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_BACK.GetPos()));
     PlayerBack_Img[0]->SetScale(D3DXVECTOR3(PLAYER_1_BACK.GetScl()));
     PlayerBack_Img[0]->SetRotationZ(IMAGE_ROTATION_ANGLE);
@@ -856,6 +885,32 @@ void CResultUI::Medal_P1_3rd_UI()
 //プレイヤー弐のメダルUI
 void CResultUI::Medal_P2_1st_UI()
 {
+    //実行中に動かすやつ
+    static float ananana = 10;
+    static float ananana2 = 10;
+
+    if (GetAsyncKeyState('W') & 0x8000)
+    {
+        ananana--;
+    }
+    if (GetAsyncKeyState('S') & 0x8000)
+    {
+        ananana++;
+    }
+    if (GetAsyncKeyState('D') & 0x8000)
+    {
+        ananana2++;
+    }
+    if (GetAsyncKeyState('A') & 0x8000)
+    {
+        ananana2--;
+    }
+
+    FILE* pFile;
+    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
+    freopen_s(&pFile, "CONOUT$", "w", stdout);
+    std::cout << ananana << std::endl;
+
     Medal_Img[0]->SetPosition(D3DXVECTOR3(P2_MEDAL.GetPos()));
     Medal_Gold_Render();
 }
@@ -922,4 +977,195 @@ void CResultUI::Medal_Bronze_Render()
     Medal_Img[2]->SetScale(D3DXVECTOR3(P1_MEDAL.GetScl()));
     Medal_Img[2]->SetPatternNo(2.f, 0.f);
     Medal_Img[2]->Render();
+}
+
+void CResultUI::Font_P1_UI()
+{
+    Font_P1_1st_UI();
+    Font_P1_2nd_UI();
+    Font_P1_3rd_UI();
+    Font_P1_4th_UI();
+}
+void CResultUI::Font_P2_UI()
+{
+    Font_P2_1st_UI();
+    Font_P2_2nd_UI();
+    Font_P2_3rd_UI();
+    Font_P2_4th_UI();
+}
+void CResultUI::Font_P3_UI()
+{
+    Font_P3_1st_UI();
+    Font_P3_2nd_UI();
+    Font_P3_3rd_UI();
+    Font_P3_4th_UI();
+}
+void CResultUI::Font_P4_UI()
+{
+    Font_P4_1st_UI();
+    Font_P4_2nd_UI();
+    Font_P4_3rd_UI();
+    Font_P4_4th_UI();
+}
+
+//プレイヤー壱.
+void CResultUI::Font_P1_1st_UI()
+{
+    Font_Img[0]->SetPosition(D3DXVECTOR3(P1_FONT_1.GetPos()));
+    Font_1st_Render();
+}
+void CResultUI::Font_P1_2nd_UI()
+{
+    Font_Img[1]->SetPosition(D3DXVECTOR3(P1_FONT_2.GetPos()));
+    Font_2nd_Render();
+}
+void CResultUI::Font_P1_3rd_UI()
+{
+    Font_Img[2]->SetPosition(D3DXVECTOR3(P1_FONT_3.GetPos()));
+    Font_3rd_Render();
+}
+void CResultUI::Font_P1_4th_UI()
+{
+    Font_Img[3]->SetPosition(D3DXVECTOR3(P1_FONT_4.GetPos()));
+    Font_4th_Render();
+}
+
+//プレイヤー弐.
+void CResultUI::Font_P2_1st_UI()
+{
+    Font_Img[0]->SetPosition(D3DXVECTOR3(P2_FONT_1.GetPos()));
+    Font_1st_Render();
+}
+void CResultUI::Font_P2_2nd_UI()
+{
+    Font_Img[1]->SetPosition(D3DXVECTOR3(P2_FONT_2.GetPos()));
+    Font_2nd_Render();
+}
+void CResultUI::Font_P2_3rd_UI()
+{
+    Font_Img[2]->SetPosition(D3DXVECTOR3(P2_FONT_3.GetPos()));
+    Font_3rd_Render();
+}
+void CResultUI::Font_P2_4th_UI()
+{
+    Font_Img[3]->SetPosition(D3DXVECTOR3(P2_FONT_4.GetPos()));
+    Font_4th_Render();
+}
+
+//プレイヤー参.
+void CResultUI::Font_P3_1st_UI()
+{
+    Font_Img[0]->SetPosition(D3DXVECTOR3(P3_FONT_1.GetPos()));
+    Font_1st_Render();
+}
+void CResultUI::Font_P3_2nd_UI()
+{
+    Font_Img[1]->SetPosition(D3DXVECTOR3(P3_FONT_2.GetPos()));
+    Font_2nd_Render();
+}
+void CResultUI::Font_P3_3rd_UI()
+{
+    Font_Img[2]->SetPosition(D3DXVECTOR3(P3_FONT_3.GetPos()));
+    Font_3rd_Render();
+}
+void CResultUI::Font_P3_4th_UI()
+{
+    Font_Img[3]->SetPosition(D3DXVECTOR3(P3_FONT_4.GetPos()));
+    Font_4th_Render();
+}
+
+//プレイヤー肆.
+void CResultUI::Font_P4_1st_UI()
+{
+    Font_Img[0]->SetPosition(D3DXVECTOR3(P4_FONT_1.GetPos()));
+    Font_1st_Render();
+}
+void CResultUI::Font_P4_2nd_UI()
+{
+    Font_Img[1]->SetPosition(D3DXVECTOR3(P4_FONT_2.GetPos()));
+    Font_2nd_Render();
+}
+void CResultUI::Font_P4_3rd_UI()
+{
+    Font_Img[2]->SetPosition(D3DXVECTOR3(P4_FONT_3.GetPos()));
+    Font_3rd_Render();
+}
+void CResultUI::Font_P4_4th_UI()
+{
+    Font_Img[3]->SetPosition(D3DXVECTOR3(P4_FONT_4.GetPos()));
+    Font_4th_Render();
+}
+
+//フォントのスケール、パターンナンバー、レンダ関数をまとめた関数.
+void CResultUI::Font_1st_Render()
+{
+    Font_Img[0]->SetScale(D3DXVECTOR3(FONT_SCALE.GetScl()));
+    Font_Img[0]->SetPatternNo(0.f, 0.f);	//1コマ目：かくとくポイント.
+    Font_Img[0]->Render();
+}
+void CResultUI::Font_2nd_Render()
+{
+    Font_Img[1]->SetScale(D3DXVECTOR3(FONT_SCALE.GetScl()));
+    Font_Img[1]->SetPatternNo(0.f, 1.f);	//2コマ目：具材ポイント.
+    Font_Img[1]->Render();
+}
+void CResultUI::Font_3rd_Render()
+{
+    Font_Img[2]->SetScale(D3DXVECTOR3(FONT_SCALE.GetScl()));
+    Font_Img[2]->SetPatternNo(0.f, 2.f);	//3コマ目：高級具材ポイント.
+    Font_Img[2]->Render();
+}
+void CResultUI::Font_4th_Render()
+{
+    Font_Img[3]->SetScale(D3DXVECTOR3(FONT_SCALE.GetScl()));
+    Font_Img[3]->SetPatternNo(0.f, 3.f);	//4コマ目：合計ポイント.
+    Font_Img[3]->Render();
+}
+void CResultUI::DrawNumber(int Score, const D3DXVECTOR3& Pos)
+{
+    //上限仮999.
+    int S = Score;
+    if (S > 999) {
+        S = 999;
+    }
+
+    int M = 100;	//百の位から.
+    for (int i = 0; i < 3; i++)
+    {
+        Number_Img->SetPosition(D3DXVECTOR3(Pos.x + NUMBER_SIZE_W * i, Pos.y, 0.f));
+        Number_Img->SetScale(D3DXVECTOR3(NUMBER_SIZE_W, NUMBER_SIZE_H, 0.f));
+        Number_Img->SetPatternNo(static_cast<SHORT>(S / M), 0);
+        Number_Img->Render();
+
+        S -= (S / M) * M;
+        M /= 10;
+    }
+
+    //点.
+    Number_Img->SetPosition(D3DXVECTOR3(Pos.x + NUMBER_SIZE_W * 3, Pos.y, 0.f));
+    Number_Img->SetScale(D3DXVECTOR3(NUMBER_SIZE_W, NUMBER_SIZE_H, 0.f));
+    Number_Img->SetPatternNo(10, 0);
+    Number_Img->Render();
+}
+
+//外部から取得したスコアに差し替える.
+void CResultUI::Number_P1_UI()
+{
+    int DummyScore = 123;		//仮.
+    DrawNumber(DummyScore, D3DXVECTOR3(P1_ALL_SCORE_POS.GetPos()));
+}
+void CResultUI::Number_P2_UI()
+{
+    int DummyScore = 45;		//仮.
+    DrawNumber(DummyScore, D3DXVECTOR3(P2_ALL_SCORE_POS.GetPos()));
+}
+void CResultUI::Number_P3_UI()
+{
+    int DummyScore = 999;		//仮.
+    DrawNumber(DummyScore, D3DXVECTOR3(P3_ALL_SCORE_POS.GetPos()));
+}
+void CResultUI::Number_P4_UI()
+{
+    int DummyScore = 7;		//仮.
+    DrawNumber(DummyScore, D3DXVECTOR3(P4_ALL_SCORE_POS.GetPos()));
 }

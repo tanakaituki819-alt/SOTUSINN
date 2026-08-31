@@ -163,9 +163,7 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Fad), _T("Data\\Texture\\IMG_Fad.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Shutter), _T("Data\\Texture\\IMG_Shutter.png"), { {1, 1, 1}, {1280, 720}, {1280, 720} } });
 
-
 	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9), _T("Data\\Texture\\Digit0_9.png"), { {1, 1, 1}, {11, 1}, {1, 1} } });
-	Img_List.push_back({ static_cast<int>(enImagList::Digit0_9),			_T("Data\\Texture\\Digit0_9.png"),			{ {1, 1, 1}, {11, 1}, {1, 1} } });
 
 	//プレイヤーフォント.																									//初期サイズ、元画像サイズ、切り取りサイズ.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_Playerfont),		_T("Data\\Texture\\Playerfont.png"),		{ {1, 1, 1}, {196, 184}, {196, 184 / 4 } } });	
@@ -229,6 +227,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_TitleWaribashi),		_T("Data\\Texture\\waribashi.png"),		{ {1, 1, 1}, {500, 500}, {500, 500}} });
 	//メダル
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Medal),		_T("Data\\Texture\\medal.png"),		{ {1, 1, 1}, {5692, 3200}, {5692/3, 3200}} });
+	//全体リザルトで使用する文字
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_ResultFont),		_T("Data\\Texture\\ResultFont.png"),		{ {1, 1, 1}, {325, 240}, {325, 240/4}} });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
