@@ -195,6 +195,9 @@ void CPlayer::IngredientsCollecting()
 		m_Position.y += 0.1f;
 		m_pIngredients->SetPosition(m_Position);
 	}
+	else {
+		GetIngredients(m_pIngredients);
+	}
 
 }
 
@@ -202,8 +205,9 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 {
 	my_list.push_back(YASAI->GetIngredientsNo());
 	Score += YASAI->GetScore();
-	m_pIngredients = nullptr;
 	YASAI->DeadCharStatus();
+	m_pIngredients = nullptr;
+	
 }
 
 

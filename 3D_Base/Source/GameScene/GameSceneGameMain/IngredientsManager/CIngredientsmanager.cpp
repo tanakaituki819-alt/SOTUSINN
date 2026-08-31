@@ -90,7 +90,7 @@ void CIngredientsmanager::Create()
 		c = 0;
 	}
 
-	now->SetIngredients(11);
+	now->SetIngredients(7);
 	m_pIngredients.push_back(now);
 
 
