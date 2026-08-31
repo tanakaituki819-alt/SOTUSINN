@@ -1,5 +1,6 @@
 #include "CResultUI.h"
 #include "SpriteManager/CSpriteManager.h"
+#include "System/XInput/CXInput.h"
 #include <iostream>
 
 struct Transform {
@@ -65,6 +66,11 @@ static constexpr Transform P2_ALL_SCORE_POS = { 395.f, 500.f };
 static constexpr Transform P3_ALL_SCORE_POS = { 700.f, 500.f };
 static constexpr Transform P4_ALL_SCORE_POS = { 1005.f, 500.f };
 
+
+//ReStart関連.
+static constexpr Transform RESTART = { 490.f,603.f,380.f,120.f };
+static constexpr Transform FIN = { 880.f,610.f,380.f,120.f };
+
 CResultUI::CResultUI()
 	: Rank (0)
     , Count(0)
@@ -84,10 +90,19 @@ CResultUI::CResultUI()
         Font_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_ResultFont);      //フォント.
     }
     Number_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Digit0_9);	//数字.
+    for (int i = 0; i < RESTART_MAM; i++)
+    {
+        ReStart_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_ReStart);      //フォント.
+    }
+    
 }
 
 CResultUI::~CResultUI()
 {
+    for (int i = 0; i < RESTART_MAM; i++)
+    {
+        ReStart_Img[i] = nullptr;
+    }
     Number_Img = nullptr;
     for (int i = 0; i < FONT_MAM; i++)
 	{
@@ -140,6 +155,7 @@ void CResultUI::Draw()
     Number_P3_UI();
     Number_P4_UI();
     
+    ReStart();
 
     //修正必須!!.
 	//仮条件 2026.07.31
@@ -887,32 +903,6 @@ void CResultUI::Medal_P1_3rd_UI()
 //プレイヤー弐のメダルUI
 void CResultUI::Medal_P2_1st_UI()
 {
-    //実行中に動かすやつ
-    static float ananana = 10;
-    static float ananana2 = 10;
-
-    if (GetAsyncKeyState('W') & 0x8000)
-    {
-        ananana--;
-    }
-    if (GetAsyncKeyState('S') & 0x8000)
-    {
-        ananana++;
-    }
-    if (GetAsyncKeyState('D') & 0x8000)
-    {
-        ananana2++;
-    }
-    if (GetAsyncKeyState('A') & 0x8000)
-    {
-        ananana2--;
-    }
-
-    FILE* pFile;
-    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
-    freopen_s(&pFile, "CONOUT$", "w", stdout);
-    std::cout << ananana << std::endl;
-
     Medal_Img[0]->SetPosition(D3DXVECTOR3(P2_MEDAL.GetPos()));
     Medal_Gold_Render();
 }
@@ -1170,4 +1160,45 @@ void CResultUI::Number_P4_UI()
 {
     int DummyScore = 7;		//仮.
     DrawNumber(DummyScore, D3DXVECTOR3(P4_ALL_SCORE_POS.GetPos()));
+}
+
+void CResultUI::ReStart()
+{
+    //実行中に動かすやつ
+    static float ananana = 10;
+    static float ananana2 = 10;
+
+    if (GetAsyncKeyState('W') & 0x8000)
+    {
+        ananana--;
+    }
+    if (GetAsyncKeyState('S') & 0x8000)
+    {
+        ananana++;
+    }
+    if (GetAsyncKeyState('D') & 0x8000)
+    {
+        ananana2++;
+    }
+    if (GetAsyncKeyState('A') & 0x8000)
+    {
+        ananana2--;
+    }
+
+    FILE* pFile;
+    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
+    freopen_s(&pFile, "CONOUT$", "w", stdout);
+    std::cout << ananana << std::endl;
+
+
+    //もう一度プレイ
+    ReStart_Img[0]->SetPosition(D3DXVECTOR3(RESTART.GetPos()));
+    ReStart_Img[0]->SetScale(D3DXVECTOR3(RESTART.GetScl()));
+    ReStart_Img[0]->SetPatternNo(0.f, 0.f);
+    ReStart_Img[0]->Render();
+    //人数選択画面へ
+    ReStart_Img[1]->SetPosition(D3DXVECTOR3(FIN.GetPos()));
+    ReStart_Img[1]->SetScale(D3DXVECTOR3(FIN.GetScl()));
+    ReStart_Img[1]->SetPatternNo(0.f, 1.f);
+    ReStart_Img[1]->Render();
 }
