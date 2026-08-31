@@ -32,13 +32,13 @@ void CIngredientsmanager::Update()
 						{
 						D3DXVECTOR3 Vec=m_pIngredients[i]->GetPosition() - m_pIngredients[c]->GetPosition();
 						D3DXVec3Normalize(&Vec,&Vec);
-						float Radius = m_pIngredients[i]->GetBSphere()->GetRadius() / 2 + m_pIngredients[c]->GetBSphere()->GetRadius() / 2;
+						float Radius = m_pIngredients[i]->GetBSphere()->GetRadius()  + m_pIngredients[c]->GetBSphere()->GetRadius() ;
 						if (Radius>0.05) {
 							Radius = 0.05;
 						}
 
-						m_pIngredients[i]->SetPosition({ m_pIngredients[i]->GetPosition() + ((Radius/2 ) * Vec) });
-						m_pIngredients[c]->SetPosition({ m_pIngredients[c]->GetPosition() + ((Radius/2 ) * -Vec) });
+						m_pIngredients[i]->SetPosition({ m_pIngredients[i]->GetPosition() + ((Radius ) * Vec) });
+						m_pIngredients[c]->SetPosition({ m_pIngredients[c]->GetPosition() + ((Radius ) * -Vec) });
 						m_pIngredients[i]->UpdateBSpherePos();
 						m_pIngredients[c]->UpdateBSpherePos();
 						}
@@ -65,20 +65,23 @@ void CIngredientsmanager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light,
 
 void CIngredientsmanager::Create()
 {
-
-
-
+	int R = 6;
+	float NABE = 4*1.2;
+	int x = rand() % R;
+	int z = rand() % R;
+	static int c = -1;
 	//再利用可能なら再利用
 	//for (int i = 0; i < m_pIngredients.size(); i++) {
-	//	if (m_pBBeam[i]->GetCharStatus() == enCharStatus::Standby) {
-	//		m_pBBeam[i]->StratShot(pos, Looc, Size);
+	//	if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Standby) {
+	//		m_pIngredients[i]->SetPosition({static_cast<FLOAT>(rand() % 100 + 1) / 100,5,static_cast<FLOAT>(rand() % 100 + 1) / 100});
+	//		m_pIngredients[i]->SetIngredients(c);
 	//		return;
 	//	}
 	//}
 	CIngredients* now = new CIngredients;
 	now->SetNabe(Nabe);
-	now->SetPosition({static_cast<FLOAT>( rand() % 100+1)/100,5,static_cast<FLOAT>(rand() % 100+1) / 100 });
-	static int c = -1;
+	now->SetPosition({ static_cast<float>(x) *(NABE/ static_cast<float>(R-1))- NABE/2.0f ,5,static_cast<float>(z) * (NABE / static_cast<float>(R-1))- NABE/2.0f });
+	
 	c++;
 	if (c>=17) {
 		c = 0;

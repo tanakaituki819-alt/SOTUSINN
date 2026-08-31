@@ -70,14 +70,14 @@ void CIngredients::Update()
 	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
 	if (Nabe!=nullptr) {
 		//鍋の外に出ないようにする
-		if (!D2CollizionXZ(calPos, 0.5, Nabe->GetPosition(), Nabe->GetSize() )) {
+		if (!D2CollizionXZ(calPos, m_pBSphere->GetRadius(), Nabe->GetPosition(), Nabe->GetSize())) {
 
 			m_Position.x = m_OldPosition.x;
 
 		};
 		calPos = { m_OldPosition.x,0,m_Position.z };
 		
-		if (!D2CollizionXZ(calPos, 0.5, Nabe->GetPosition(), Nabe->GetSize() )) {
+		if (!D2CollizionXZ(calPos, m_pBSphere->GetRadius(), Nabe->GetPosition(), Nabe->GetSize() )) {
 		m_Position.z = m_OldPosition.z;
 		
 		};

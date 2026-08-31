@@ -116,7 +116,27 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 				m_pChopsticks[i]->SetPosition(m_Position.x+ 0.5f,m_Position.y + 1.f ,m_Position.z + 0.2f);
 			}
 			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));	//角度調整.
-			m_pChopsticks[i]->SetScale(2.2f, 2.2f, 2.2f);
+			m_pChopsticks[i]->SetScale(2.f, 2.f, 2.f);
+
+			//プレイヤーの番号に応じて色を変える
+			if (MyController->GetPadID()==0) {
+				m_pChopsticks[0]->GetMesh()->SetLightCOLOR256({ 255,0,0 });
+				m_pChopsticks[0]->GetMesh()->SetisCOLOR(true);
+			}
+			if (MyController->GetPadID() == 1) {
+				m_pChopsticks[0]->GetMesh()->SetLightCOLOR256({ 0,0,255 });
+				m_pChopsticks[0]->GetMesh()->SetisCOLOR(true);
+			}
+			if (MyController->GetPadID() == 2) {
+				m_pChopsticks[0]->GetMesh()->SetLightCOLOR256({ 255,255,0 });
+				m_pChopsticks[0]->GetMesh()->SetisCOLOR(true);
+			}
+			if (MyController->GetPadID() == 3) {
+				m_pChopsticks[0]->GetMesh()->SetLightCOLOR256({ 0,255,0 });
+				m_pChopsticks[0]->GetMesh()->SetisCOLOR(true);
+			}
+
+
 			m_pChopsticks[i]->Draw(View, Proj, Light, Camera);
 		}
 	}
