@@ -27,8 +27,11 @@ void CCollisionManager::Update()
 			std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
 			//具材の最大数分.
 			for (auto& j: Ingredients) {
+				if (j->GetCharStatus()==enCharStatus::Live) {
+			
 				//プレイヤーと具材が接触する.
 				if (m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) {
+					
 					//具材が煮えていないなら.
 					if (!j->GetBoiledc()) {
 						m_pPlayer[i]->OnTouchRawIngredient();	//マヒ状態にする.
@@ -40,6 +43,7 @@ void CCollisionManager::Update()
 						m_pPlayer[i]->IngredientsGetter(j);	//具材を回収する.
 						j->IsCollecting();					//具材回収状態へ.
 					}
+				}	
 				}
 			}
 		}
