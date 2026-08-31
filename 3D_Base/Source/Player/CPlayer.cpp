@@ -50,16 +50,18 @@ void CPlayer::Update()
 			}
 		}
 		//具材回収中なら.
-		if ( m_IsCollecting ) {
-			++m_Collectingtime;	//タイム増加.
-			//タイムが指定した時間経過すれば.
-			if (m_Collectingtime > 40) {
-				m_IsCollecting = false;	//回収中解除.
-				m_Collectingtime = 0;	//タイムを初期化.
-			}
-			//タイムが指定した時間を超えていないなら.
-			else {
-				m_Position.y -= 0.01f;	//お箸を下におろす.
+		if (!m_pIngredients) {
+			if (m_IsCollecting) {
+				++m_Collectingtime;	//タイム増加.
+				//タイムが指定した時間経過すれば.
+				if (m_Collectingtime > 40) {
+					m_IsCollecting = false;	//回収中解除.
+					m_Collectingtime = 0;	//タイムを初期化.
+				}
+				//タイムが指定した時間を超えていないなら.
+				else {
+					m_Position.y -= 0.01f;	//お箸を下におろす.
+				}
 			}
 		}
 		//マヒ中なら.
@@ -197,6 +199,7 @@ void CPlayer::IngredientsCollecting()
 	}
 	else {
 		GetIngredients(m_pIngredients);
+		m_IsCollecting = false;
 	}
 
 }
