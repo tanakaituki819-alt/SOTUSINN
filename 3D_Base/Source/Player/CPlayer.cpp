@@ -181,6 +181,7 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 {
 	my_list.push_back(YASAI->GetIngredientsNo());
 	Score += YASAI->GetScore();
+	YASAI->DeadCharStatus();
 }
 
 

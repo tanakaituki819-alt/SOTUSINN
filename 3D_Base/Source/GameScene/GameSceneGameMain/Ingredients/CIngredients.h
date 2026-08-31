@@ -23,6 +23,13 @@ enum class Ingredients {
 	UINNER,//ウインナー
 	MAX
 };
+enum class enCharStatus {
+	Standby,
+	Live,
+	Dying,
+	Dead,
+};
+
 
 
 class CIngredients
@@ -49,6 +56,8 @@ public:
 	int GetScore() const{return Score;}
 	void SetNabe(CNabe* CNabe) { Nabe = CNabe; }
 	void SetIngredients(int i);
+	enCharStatus GetCharStatus() {return Status;}
+	void DeadCharStatus() { Status = enCharStatus::Dead; }
 protected:
 	D3DXVECTOR3 m_OldPosition;
 	Ingredients IngredientsNo;
@@ -60,4 +69,6 @@ protected:
 	 float m_Boiledc;
 	 float m_BoiledcMAX;
 	 float Fallingforce;//落下力
+
+	 enCharStatus Status;
 };

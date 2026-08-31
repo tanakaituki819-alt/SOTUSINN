@@ -30,6 +30,7 @@ void CCollisionManager::Update()
 				//プレイヤーと具材が接触する.
 				if (m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) {
 					m_pPlayer[i]->OnTouchRawIngredient();	//マヒ状態にする.
+
 				}
 			}
 		}
