@@ -23,6 +23,8 @@ void CCollisionManager::Update()
 		{
 			//プレイヤーが回収中でないなら次のプレイヤーへ.
 			if (!m_pPlayer[i]->GetIsCollecting()) continue;
+			//プレイヤーがマヒ中なら次のプレイヤーへ.
+			if (m_pPlayer[i]->GetIsParalysis())continue;
 			//具材のサイズ読み込み.
 			std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
 			//具材の最大数分.

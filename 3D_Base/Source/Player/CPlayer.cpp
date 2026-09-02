@@ -5,7 +5,7 @@ CPlayer::CPlayer()
 {
 
 	m_Rotation.y = D3DXToRadian(90);
-	m_Cousor = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_Cusoru);
+	m_Cousor = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Cusoru);
 	Score = 0;
 	P_UI = new CPlayerUI();
 	PlayerNo = 0;
@@ -88,9 +88,9 @@ void CPlayer::Update()
 		//回収中の処理.
 		IngredientsCollecting();
 		//スコア増加(仮).
-		if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
-			Score++;
-		}
+		//if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
+		//	Score++;
+		//}
 		UpdateBSpherePos();	//当たり判定位置を更新.
 	}
 	else {
@@ -102,15 +102,12 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 {
 	//回収状態じゃないかつマヒ状態じゃないなら.
 	if (!m_IsCollecting && !m_IsParalysis) {
-		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす
-		m_Cousor->SetPosition(m_Position);					
-		//m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
-		m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
-		m_Cousor->SetScale(m_Scale);
+		m_Position.y = 1 ;
+		D3DXVECTOR3 i = m_Position;
+		i.y = 0.2+0.4;
+		m_Cousor->SetPosition(GetPosition2D(View, Proj, m_Position));
 
-		m_Cousor->Render(View, Proj);
-	
-		m_CousorPosition = m_Cousor->GetPos2D(View, Proj);	//カーソルのポジションを2D用のポジションに変換する.
+		m_CousorPosition = GetPosition2D(View, Proj, i);	//カーソルのポジションを2D用のポジションに変換する.
 	}
 	//回収中.
 	else {
@@ -160,6 +157,32 @@ void CPlayer::DrawUI()
 		if (m_pPlayerParalysisUI != nullptr) {
 			m_pPlayerParalysisUI->Draw();	//マヒUI描画
 		}
+	}
+
+	//m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
+	m_Cousor->SetPosition(m_CousorPosition);
+	m_Cousor->SetScale({ 100,100,100 });
+
+	if (!m_IsCollecting && !m_IsParalysis) {
+		//プレイヤーの番号に応じて色を変える
+		if (MyController->GetPadID() == 0) {
+			m_Cousor->SetCOLOR({ 1,0,0 });//
+			m_Cousor->SetisCOLOR(true);
+		}
+		if (MyController->GetPadID() == 1) {
+			m_Cousor->SetCOLOR({ 0,0,1 });
+			m_Cousor->SetisCOLOR(true);
+		}
+		if (MyController->GetPadID() == 2) {
+			m_Cousor->SetCOLOR({ 1,1,0 });
+			m_Cousor->SetisCOLOR(true);
+		}
+		if (MyController->GetPadID() == 3) {
+			m_Cousor->SetCOLOR({ 0,1,0 });
+			m_Cousor->SetisCOLOR(true);
+		}
+
+		m_Cousor->Render();
 	}
 	P_UI->SetPlayerNo(PlayerNo);
 	P_UI->Draw(Score);
