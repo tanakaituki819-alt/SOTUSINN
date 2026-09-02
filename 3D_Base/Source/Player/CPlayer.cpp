@@ -31,17 +31,20 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
+	std::cout << m_Position.x << std::endl;
+	std::cout << m_Position.z << std::endl;
+	
 	//コントローラーが接続されていれば.
 	if (MyController->IsConnect()==true) {
 		m_IsConnected = true;	//コントローラー接続状態に.
 		//回収中じゃないかつマヒ中でないなら
 		if (!m_IsCollecting && !m_IsParalysis) {
-			//左スティック動作.
-			D3DXVECTOR2 VECT = { static_cast<FLOAT>(MyController->GetLThumbX()) ,static_cast<FLOAT>(MyController->GetLThumbY()) };
-			D3DXVec2Normalize(&VECT, &VECT);
-			VECT *= Speed;
-			m_Position.x += VECT.x;
-			m_Position.z += VECT.y;
+				//左スティック動作.
+				D3DXVECTOR2 VECT = { static_cast<FLOAT>(MyController->GetLThumbX()) ,static_cast<FLOAT>(MyController->GetLThumbY()) };
+				D3DXVec2Normalize(&VECT, &VECT);
+				VECT *= Speed;
+				m_Position.x += VECT.x;
+				m_Position.z += VECT.y;
 		}
 		//回収中じゃないかつマヒ中でないなら.
 		if (!m_IsCollecting && !m_IsParalysis) {

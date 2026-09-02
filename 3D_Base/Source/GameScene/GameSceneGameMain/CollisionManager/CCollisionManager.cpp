@@ -15,7 +15,7 @@ CCollisionManager::~CCollisionManager()
 void CCollisionManager::Update()
 {
 	for (int i = 0; i < Player_Max; i++) {
-		//nullptrなら次の配列番号へ.
+		//nullptrなら次のプレイヤーへ.
 		if (!m_pPlayer[i]) continue;
 		if (!m_pIngredientsManager)continue;
 		//プレイヤーにコントローラー接続が接続されていないのなら次のプレイヤーへ.
@@ -27,23 +27,23 @@ void CCollisionManager::Update()
 			std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
 			//具材の最大数分.
 			for (auto& j: Ingredients) {
-				if (j->GetCharStatus()==enCharStatus::Live) {
-			
-				//プレイヤーと具材が接触する.
-				if (m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) {
-					
-					//具材が煮えていないなら.
-					if (!j->GetBoiledc()) {
-						m_pPlayer[i]->OnTouchRawIngredient();	//マヒ状態にする.
+				//野菜が生きている.
+				if (j->GetCharStatus() == enCharStatus::Live) {
+					//プレイヤーと具材が接触する.
+					if (m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) {
+
+						//具材が煮えていないなら.
+						if (!j->GetBoiledc()) {
+							m_pPlayer[i]->OnTouchRawIngredient();	//マヒ状態にする.
+						}
+						//具材が煮えている.
+						else {
+							//回収状態でないなら次のプレイヤーへ.
+							if (j->GetCollecting())continue;
+							m_pPlayer[i]->IngredientsGetter(j);	//具材を回収する.
+							j->IsCollecting();					//具材回収状態へ.
+						}
 					}
-					//具材が煮えている.
-					else {
-						//回収状態でないなら次のプレイヤーへ.
-						if (j->GetCollecting())continue;
-						m_pPlayer[i]->IngredientsGetter(j);	//具材を回収する.
-						j->IsCollecting();					//具材回収状態へ.
-					}
-				}	
 				}
 			}
 		}
