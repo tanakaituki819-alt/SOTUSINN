@@ -188,6 +188,9 @@ void CPlayer::OnTouchRawIngredient()
 
 void CPlayer::IngredientsGetter(CIngredients* Ingredients)
 {
+	if (m_pIngredients!=nullptr) {
+		m_pIngredients->m_IsCollectingEnd();
+	}
 	m_pIngredients = Ingredients;
 	m_Position = { m_pIngredients->GetPosition() };
 }

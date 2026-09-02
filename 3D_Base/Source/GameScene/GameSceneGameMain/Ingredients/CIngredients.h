@@ -61,6 +61,8 @@ public:
 	void IsCollecting();
 	enCharStatus GetCharStatus() {return Status;}
 	void DeadCharStatus() { Status = enCharStatus::Dead; }
+	//重複して取ったら
+	void m_IsCollectingEnd() { m_IsCollecting = false; }
 protected:
 	D3DXVECTOR3 m_OldPosition;
 	Ingredients IngredientsNo;
