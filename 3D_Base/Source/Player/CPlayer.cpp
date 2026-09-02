@@ -63,7 +63,7 @@ void CPlayer::Update()
 				}
 				//タイムが指定した時間を超えていないなら.
 				else {
-					m_Position.y -= 0.01f;	//お箸を下におろす.
+					m_Position.y -= 0.02f;	//お箸を下におろす.
 				}
 			}
 		}
@@ -105,11 +105,11 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 		m_Position.y = 1 + MyController->GetPadID() * 0.1;	//重なって見えなくならないようにずらす
 		m_Cousor->SetPosition(m_Position);					
 		//m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
-		m_Cousor->SetRotation({ D3DXToRadian(135),0,0 });
+		m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
 		m_Cousor->SetScale(m_Scale);
-		m_Cousor->SetBillboard(true);
+
 		m_Cousor->Render(View, Proj);
-		m_Cousor->SetBillboard(false);
+	
 		m_CousorPosition = m_Cousor->GetPos2D(View, Proj);	//カーソルのポジションを2D用のポジションに変換する.
 	}
 	//回収中.
@@ -150,18 +150,17 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 			m_pChopsticks[i]->Draw(View, Proj, Light, Camera);
 		}
 	}
-	//マヒ中なら.
-	if (m_IsParalysis) {
-		
-		//マヒUIが生成されていれば.
-		if (m_pPlayerParalysisUI!=nullptr) {
-			m_pPlayerParalysisUI->Draw();	//マヒUI描画
-		}
-	}
 }
 
 void CPlayer::DrawUI()
 {
+	//マヒ中なら.
+	if (m_IsParalysis) {
+		//マヒUIが生成されていれば.
+		if (m_pPlayerParalysisUI != nullptr) {
+			m_pPlayerParalysisUI->Draw();	//マヒUI描画
+		}
+	}
 	P_UI->SetPlayerNo(PlayerNo);
 	P_UI->Draw(Score);
 }
