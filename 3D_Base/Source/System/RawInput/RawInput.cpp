@@ -249,7 +249,7 @@ void RawInput::upd()
     MouseHOILLNow = 0;
     MouseMovement = { 0,0 };
 
-    AllocConsole();
+    AllocConsole();//ここを消せばコンソールが消える（コメント化して）
     FILE* pFile;
     //stdout（標準出力）を新しく作成したコンソールにリダイレクト
     freopen_s(&pFile, "CONOUT$", "w", stdout);

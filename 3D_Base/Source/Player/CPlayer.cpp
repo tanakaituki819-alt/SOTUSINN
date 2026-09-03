@@ -31,8 +31,7 @@ CPlayer::~CPlayer()
 
 void CPlayer::Update()
 {
-	std::cout << m_Position.x << std::endl;
-	std::cout << m_Position.z << std::endl;
+
 	
 	//コントローラーが接続されていれば.
 	if (MyController->IsConnect()==true) {

@@ -5,6 +5,7 @@ CCollisionManager::CCollisionManager()
 	: m_pPlayer()
 	, m_pIngredientsManager()
 {
+
 }
 
 CCollisionManager::~CCollisionManager()

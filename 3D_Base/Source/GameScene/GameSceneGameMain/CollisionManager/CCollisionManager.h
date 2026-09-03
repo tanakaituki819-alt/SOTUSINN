@@ -35,6 +35,7 @@ public:
 		D3DXVECTOR3* pNormal = nullptr);//(out)法線（ベクトル）.
 
 private:
+
 	CPlayer*			 m_pPlayer[Player_Max];	//プレイヤー.
 	CIngredientsmanager* m_pIngredientsManager;	//具材マネージャー.
 

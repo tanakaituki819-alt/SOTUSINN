@@ -17,46 +17,31 @@ CIngredients::CIngredients()
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
 
-	IngredientsSetting[static_cast<int>(Ingredients::none)]		=		{ CS::GetObjMesh(OL::S_NIKU)	,0.5, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::NIKU)]		=		{ CS::GetObjMesh(OL::S_NIKU)	,0.5, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)]	=		{ CS::GetObjMesh(OL::S_NINZIN)	,0.5, {1.f,1.f,1.f}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)]	=		{ CS::GetObjMesh(OL::S_DAIKON)	,0.5, {1.2,1.2,1.2}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)]	=		{ CS::GetObjMesh(OL::S_ENOKI)	,0.5, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] =		{ CS::GetObjMesh(OL::S_HAKUSAI1),0.5, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] =		{ CS::GetObjMesh(OL::S_HAKUSAI2),0.5, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::KANI)]		=		{ CS::GetObjMesh(OL::S_KANI)	,0.7, {4,4,4},		 {-1,D3DXToRadian(70),0},10};
-	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] =		{ CS::GetObjMesh(OL::S_KUMANOTE),0.7, {2,2,2},		 {D3DXToRadian(-50),D3DXToRadian(280),0},10};
-	IngredientsSetting[static_cast<int>(Ingredients::NEGI)]		=		{ CS::GetObjMesh(OL::S_NEGI)	,0.5, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] =		{ CS::GetObjMesh(OL::S_ROBUSTER),0.7, {5,5,5},		 {D3DXToRadian(-50),D3DXToRadian(200),0},10};
-	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	=		{ CS::GetObjMesh(OL::S_SAKANA)	,0.5, {6,6,6},		 {D3DXToRadian(-90),0,0},10};
-	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)]	=		{ CS::GetObjMesh(OL::S_SITAKE)	,0.5, {1.2,1.2,1.2}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::TAI)]		=		{ CS::GetObjMesh(OL::S_TAI)		,0.5, {2.5,2.5,2.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		=		{ CS::GetObjMesh(OL::S_TARA)	,0.5, {1.5,1.5,1.5}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	=		{ CS::GetObjMesh(OL::S_TOUHU)	,0.5, {1.f,1.f,1.f}, {0,0,0},10 };
-	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	=		{ CS::GetObjMesh(OL::S_UINNER)	,0.5, {1.5,1.5,1.5}, {0,0,0},10 };
+
 	Status = enCharStatus::Standby;
 }
 
 CIngredients::~CIngredients()
 {
 }
-void CIngredients::SetIngredients(int i)
+void CIngredients::SetIngredients(IngredientsSetting* pIngredientsSetting,int i)
 {
 	IngredientsNo = static_cast<Ingredients>(i);
-	m_pMesh = IngredientsSetting[i].Mesh;
-	m_Scale = IngredientsSetting[i].Size;
-	m_Rotation = IngredientsSetting[i].Rotation;
-	if (IngredientsSetting[i].HitSize==0) {
+	m_pMesh = pIngredientsSetting[i].Mesh;
+	m_Scale = pIngredientsSetting[i].Size;
+	m_Rotation = pIngredientsSetting[i].Rotation;
+	if (pIngredientsSetting[i].HitSize==0) {
 		m_pBSphere->CreatSphereForMesh(*m_pMesh);
 	}
 	else {
-		m_pBSphere->SetRadius(IngredientsSetting[i].HitSize);
+		m_pBSphere->SetRadius(pIngredientsSetting[i].HitSize);
 	}
-	Score = IngredientsSetting[i].Score;
+	Score = pIngredientsSetting[i].Score;
 	Fallingforce = 0;
 	isBoiled = false;
 	m_Boiledc = 0;
-	m_BoiledcMAX = (15*(0.8+static_cast<float>(rand()%5)/10)) * 60;
+	m_BoiledcMAX = (pIngredientsSetting[i].BoiledcTimu*(0.8+static_cast<float>(rand()%5)/10.f)) * 60;//煮えるまでの時間が0.8から1.2倍のランダム
+	Cost = pIngredientsSetting[i].Cost;
 	Status = enCharStatus::Live;
 	m_IsCollecting = false;
 }

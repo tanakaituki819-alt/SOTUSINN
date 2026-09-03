@@ -1184,10 +1184,7 @@ void CResultUI::ReStart()
         ananana2--;
     }
 
-    FILE* pFile;
-    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
-    freopen_s(&pFile, "CONOUT$", "w", stdout);
-    std::cout << ananana << std::endl;
+
 
 
     //もう一度プレイ
