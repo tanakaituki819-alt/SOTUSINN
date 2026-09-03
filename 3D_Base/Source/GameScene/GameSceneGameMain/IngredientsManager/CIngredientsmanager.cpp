@@ -21,23 +21,23 @@ CIngredientsmanager::CIngredientsmanager()
 	//短縮用
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
-	IngredientsSetting[static_cast<int>(Ingredients::none)]		= { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::NIKU)]		= { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::none)]		= { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,20,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::NIKU)]		= { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,20,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)]	= { CS::GetObjMesh(OL::S_NINZIN)	,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,10,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)]	= { CS::GetObjMesh(OL::S_DAIKON)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,10,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)]	= { CS::GetObjMesh(OL::S_ENOKI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] = { CS::GetObjMesh(OL::S_HAKUSAI2)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] = { CS::GetObjMesh(OL::S_HAKUSAI1)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::KANI)]		= { CS::GetObjMesh(OL::S_KANI)		,100,0.7, {4,4,4},		 {-1,D3DXToRadian(70),0}				,10,5, };
-	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE)	,1,0.7, {2,2,2},		 {D3DXToRadian(-50),D3DXToRadian(280),0},10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] = { CS::GetObjMesh(OL::S_HAKUSAI2)	,1,0.5, {1.5,1.5,1.5}, {D3DXToRadian(-60),D3DXToRadian(90),0},10,1,};
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] = { CS::GetObjMesh(OL::S_HAKUSAI1)	,0,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::KANI)]		= { CS::GetObjMesh(OL::S_KANI)		,0.1,0.7, {4,4,4},	   {-1,D3DXToRadian(70),0}				,35,4, };
+	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE)	,0.1,0.7, {2,2,2},	   {D3DXToRadian(-50),D3DXToRadian(280),0},35,3, };
 	IngredientsSetting[static_cast<int>(Ingredients::NEGI)]		= { CS::GetObjMesh(OL::S_NEGI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER)	,1,0.7, {5,5,5},		 {D3DXToRadian(-50),D3DXToRadian(200),0},10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	= { CS::GetObjMesh(OL::S_SAKANA)	,1,0.5, {6,6,6},		 {D3DXToRadian(-90),0,0}				,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER)	,0.1,0.7, {5,5,5},	   {D3DXToRadian(-50),D3DXToRadian(200),0},35,3, };
+	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	= { CS::GetObjMesh(OL::S_SAKANA)	,0.05,0.5, {6,6,6},	   {D3DXToRadian(-90),0,0}				,80,3, };
 	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)]	= { CS::GetObjMesh(OL::S_SITAKE)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::TAI)]		= { CS::GetObjMesh(OL::S_TAI)		,1,0.5, {2.5,2.5,2.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		= { CS::GetObjMesh(OL::S_TARA)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	= { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	= { CS::GetObjMesh(OL::S_UINNER)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::TAI)]		= { CS::GetObjMesh(OL::S_TAI)		,0.1,0.7, {2.0,2.0,2.0}, {0,D3DXToRadian(70),0}				,35,2, };
+	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		= { CS::GetObjMesh(OL::S_TARA)		,1,0.5, {1.5,1.5,1.5}, {0,D3DXToRadian(70),0}				,15,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	= { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,1,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	= { CS::GetObjMesh(OL::S_UINNER)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,15,1, };
 
 	std::vector<float> m_probability;
 	std::vector<float> m_Startprobability;
@@ -84,7 +84,7 @@ void CIngredientsmanager::Update()
 	else {
 		if (TimuC > IngredientsSettingTimu) {
 			TimuC = 0;
-			IngredientsSettingTimu = (5 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;;
+			IngredientsSettingTimu = (0.5 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;;
 			Create();
 		}
 	}
@@ -148,7 +148,7 @@ void CIngredientsmanager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light,
 void CIngredientsmanager::Create()
 { 
 	//std::cout << GetIngredientsliveing() << std::endl;
-	if (GetIngredientsliveing() >= 35) {
+	if (GetIngredientsliveing() >= 40) {
 		StartSettingis = false;
 		return;
 	}
