@@ -15,46 +15,46 @@ struct Transform {
 static constexpr float IMAGE_ROTATION_ANGLE = 1.5707963;
 
 //プレイヤー背景
-static constexpr Transform PLAYER_1_BACK = { 185.f,340.f,630.f,350.f };
-static constexpr Transform PLAYER_2_BACK = { 490.f,340.f,630.f,350.f };
-static constexpr Transform PLAYER_3_BACK = { 795.f,340.f,630.f,350.f };
-static constexpr Transform PLAYER_4_BACK = { 1100.f,340.f,630.f,350.f };
+static constexpr Transform PLAYER_1_BACK = { 155.f,340.f,630.f,350.f };
+static constexpr Transform PLAYER_2_BACK = { 290.f,340.f,630.f,350.f };
+static constexpr Transform PLAYER_3_BACK = { 765.f,340.f,630.f,350.f };
+static constexpr Transform PLAYER_4_BACK = { 1070.f,340.f,630.f,350.f };
 
 //プレイヤーアイコン
-static constexpr Transform PLAYER_1_ICON = {  70.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_2_ICON = { 375.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_3_ICON = { 680.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_4_ICON = { 985.f,100.f,120.f,120.f };
+static constexpr Transform PLAYER_1_ICON = {  45.f,100.f,120.f,120.f };
+static constexpr Transform PLAYER_2_ICON = { 350.f,100.f,120.f,120.f };
+static constexpr Transform PLAYER_3_ICON = { 655.f,100.f,120.f,120.f };
+static constexpr Transform PLAYER_4_ICON = { 960.f,100.f,120.f,120.f };
 
 //メダル関連.
-static constexpr Transform P1_MEDAL = { 195.f,90.f,85.f,125.f };
-static constexpr Transform P2_MEDAL = { 500.f,90.f,85.f,125.f };
-static constexpr Transform P3_MEDAL = { 805.f,90.f,85.f,125.f };
-static constexpr Transform P4_MEDAL = { 1110.f,90.f,85.f,125.f };
+static constexpr Transform P1_MEDAL = { 170.f,90.f,85.f,125.f };
+static constexpr Transform P2_MEDAL = { 475.f,90.f,85.f,125.f };
+static constexpr Transform P3_MEDAL = { 780.f,90.f,85.f,125.f };
+static constexpr Transform P4_MEDAL = { 1085.f,90.f,85.f,125.f };
 
 //フォント関連.
 static constexpr Transform FONT_SCALE = { 0.f,0.f,210.f,45.f };
 
 //プレイヤー壱
-static constexpr Transform P1_FONT_1 = { 80.f, 215.f };     //かくとくポイント
-static constexpr Transform P1_FONT_2 = { 80.f, 270.f };     //具材ポイント
-static constexpr Transform P1_FONT_3 = { 80.f, 360.f };     //高級具材ポイント
-static constexpr Transform P1_FONT_4 = { 80.f, 450.f };     //合計ポイント
+static constexpr Transform P1_FONT_1 = { 45.f, 215.f };     //かくとくポイント
+static constexpr Transform P1_FONT_2 = { 45.f, 270.f };     //具材ポイント
+static constexpr Transform P1_FONT_3 = { 45.f, 360.f };     //高級具材ポイント
+static constexpr Transform P1_FONT_4 = { 45.f, 450.f };     //合計ポイント
 //プレイヤー弐
-static constexpr Transform P2_FONT_1 = { 385.f, 215.f };    //かくとくポイント
-static constexpr Transform P2_FONT_2 = { 385.f, 270.f };    //具材ポイント
-static constexpr Transform P2_FONT_3 = { 385.f, 360.f };    //高級具材ポイント
-static constexpr Transform P2_FONT_4 = { 385.f, 450.f };    //合計ポイント
+static constexpr Transform P2_FONT_1 = { 350.f, 215.f };    //かくとくポイント
+static constexpr Transform P2_FONT_2 = { 350.f, 270.f };    //具材ポイント
+static constexpr Transform P2_FONT_3 = { 350.f, 360.f };    //高級具材ポイント
+static constexpr Transform P2_FONT_4 = { 350.f, 450.f };    //合計ポイント
 //プレイヤー参
-static constexpr Transform P3_FONT_1 = { 690.f, 215.f };    //かくとくポイント
-static constexpr Transform P3_FONT_2 = { 690.f, 270.f };    //具材ポイント
-static constexpr Transform P3_FONT_3 = { 690.f, 360.f };    //高級具材ポイント
-static constexpr Transform P3_FONT_4 = { 690.f, 450.f };    //合計ポイント
+static constexpr Transform P3_FONT_1 = { 655.f, 215.f };    //かくとくポイント
+static constexpr Transform P3_FONT_2 = { 655.f, 270.f };    //具材ポイント
+static constexpr Transform P3_FONT_3 = { 655.f, 360.f };    //高級具材ポイント
+static constexpr Transform P3_FONT_4 = { 655.f, 450.f };    //合計ポイント
 //プレイヤー肆
-static constexpr Transform P4_FONT_1 = { 995.f, 215.f };    //かくとくポイント
-static constexpr Transform P4_FONT_2 = { 995.f, 270.f };    //具材ポイント
-static constexpr Transform P4_FONT_3 = { 995.f, 360.f };    //高級具材ポイント
-static constexpr Transform P4_FONT_4 = { 995.f, 450.f };    //合計ポイント
+static constexpr Transform P4_FONT_1 = { 960.f, 215.f };    //かくとくポイント
+static constexpr Transform P4_FONT_2 = { 960.f, 270.f };    //具材ポイント
+static constexpr Transform P4_FONT_3 = { 960.f, 360.f };    //高級具材ポイント
+static constexpr Transform P4_FONT_4 = { 960.f, 450.f };    //合計ポイント
 
 //数字の1文字あたりの幅高さ.
 static constexpr float NUMBER_SIZE_W = 30.f;
@@ -702,6 +702,7 @@ void CResultUI::PlayerBackUI()
     PlayerBack_Img[0]->Render();
 
     PlayerBack_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_BACK.GetPos()));
+    PlayerBack_Img[1]->SetPosition(D3DXVECTOR3(460,340,0));
     PlayerBack_Img[1]->SetScale(D3DXVECTOR3(PLAYER_2_BACK.GetScl()));
     PlayerBack_Img[1]->SetRotationZ(IMAGE_ROTATION_ANGLE);
     PlayerBack_Img[1]->Render();
@@ -1183,7 +1184,10 @@ void CResultUI::ReStart()
         ananana2--;
     }
 
-
+    FILE* pFile;
+    //stdout（標準出力）を新しく作成したコンソールにリダイレクト
+    freopen_s(&pFile, "CONOUT$", "w", stdout);
+    std::cout << ananana << std::endl;
 
 
     //もう一度プレイ
