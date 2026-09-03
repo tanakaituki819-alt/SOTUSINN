@@ -32,7 +32,7 @@ CIngredientsmanager::CIngredientsmanager()
 	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE)	,0.1,0.7, {2,2,2},	   {D3DXToRadian(-50),D3DXToRadian(280),0},35,3, };
 	IngredientsSetting[static_cast<int>(Ingredients::NEGI)]		= { CS::GetObjMesh(OL::S_NEGI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER)	,0.1,0.7, {5,5,5},	   {D3DXToRadian(-50),D3DXToRadian(200),0},35,3, };
-	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	= { CS::GetObjMesh(OL::S_SAKANA)	,0.05,0.5, {6,6,6},	   {D3DXToRadian(-90),0,0}				,80,3, };
+	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	= { CS::GetObjMesh(OL::S_SAKANA)	,0.05,0.8, {6,6,6},	   {D3DXToRadian(-90),0,0}				,80,3, };
 	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)]	= { CS::GetObjMesh(OL::S_SITAKE)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,10,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::TAI)]		= { CS::GetObjMesh(OL::S_TAI)		,0.1,0.7, {2.0,2.0,2.0}, {0,D3DXToRadian(70),0}				,35,2, };
 	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		= { CS::GetObjMesh(OL::S_TARA)		,1,0.5, {1.5,1.5,1.5}, {0,D3DXToRadian(70),0}				,15,1, };
