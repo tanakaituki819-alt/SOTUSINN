@@ -52,7 +52,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pCingM->SetNabe(m_pGround);
 
 	m_pTimer = new CTimer();
-	m_pTimer->SetTime(50* 60);
+	m_pTimer->SetTime(60* 60);
 	m_pCollisionManager->SetIngredients(*m_pCingM);		//具材マネージャーセット
 }
 

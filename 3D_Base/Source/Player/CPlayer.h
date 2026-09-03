@@ -35,6 +35,8 @@ public:
 	bool GetConnected() { return m_IsConnected;}
 	//今回収中かどうか.
 	bool GetIsCollecting() { return m_IsCollecting; }
+	//マヒ状態かどうか.
+	bool GetIsParalysis() { return m_IsParalysis; }
 	//CBoundingSphere* GetTipBSphere();
 	void IngredientsGetter(CIngredients* Ingredients);
 	//具材回収中の処理.
@@ -45,7 +47,7 @@ public:
 private:
 	D3DXVECTOR3				m_Pos;							//ポジション.
 	CXInput*				MyController;					//コントローラー.
-	CSprite3D*				m_Cousor;						//カーソル.
+	CSprite2D*				m_Cousor;						//カーソル.
 	CStaticMeshObjObject*	m_pChopsticks[Chopsticks_Max];	//お箸(お箸を二つ描画するために配列化).
 	std::list<Ingredients>	my_list;						//リスト.
 	int						Score;							//スコア.
