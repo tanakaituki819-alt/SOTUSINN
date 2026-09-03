@@ -89,7 +89,11 @@ CWinnerResultUI::CWinnerResultUI()
 	{
 		PlayerFont_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_WinnerFont);	//色付きプレイヤーフォント
 	}
-
+	for (int i = 0; i < PARA_MAM; i++)
+	{
+		Para_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_Para);	//平行四辺形.
+	}
+	RoundRect_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_RoundRect);	//角丸四角形.
 }
 
 CWinnerResultUI::~CWinnerResultUI()
@@ -104,6 +108,11 @@ CWinnerResultUI::~CWinnerResultUI()
 	{
 		PlayerFont_Img[i] = nullptr;
 	}
+	for (int i = 0; i < PARA_MAM; i++)
+	{
+		Para_Img[i] = nullptr;
+	}
+	RoundRect_Img = nullptr;
 }
 	void CWinnerResultUI::Update()
 {
@@ -213,21 +222,42 @@ void CWinnerResultUI::Draw()
 	{
 		Player1WinnerUI();
 		Player1FontUI();
+		GPara1();
+		GPara2();
+		GPara3();
+		UGPara();
+		RoundRect();
+
 	}
 	else if (Win == 1)
 	{
 		Player2WinnerUI();
 		Player2FontUI();
+		GPara1();
+		GPara2();
+		GPara3();
+		UGPara();
+		RoundRect();
 	}
 	else if (Win == 2)
 	{
 		Player3WinnerUI();
 		Player3FontUI();
+		GPara1();
+		GPara2();
+		GPara3();
+		UGPara();
+		RoundRect();
 	}
 	else if (Win == 3)
 	{
 		Player4WinnerUI();
 		Player4FontUI();
+		GPara1();
+		GPara2();
+		GPara3();
+		UGPara();
+		RoundRect();
 	}
 	else if (Win == 4)
 	{
@@ -710,6 +740,40 @@ void CWinnerResultUI::AllPlayerFontUI()
 	PlayerFont_Img[3]->Render();
 }
 
+void CWinnerResultUI::GPara1()
+{
+	Para_Img[0]->SetPosition(D3DXVECTOR3(0,0,0));
+	Para_Img[0]->SetScale(D3DXVECTOR3(100,50,0));
+	Para_Img[0]->SetPatternNo(0, 0);
+	Para_Img[0]->Render();
+}
+void CWinnerResultUI::GPara2()
+{
+	Para_Img[1]->SetPosition(D3DXVECTOR3(50,50,0));
+	Para_Img[1]->SetScale(D3DXVECTOR3(100, 50,0));
+	Para_Img[1]->SetPatternNo(0, 0);
+	Para_Img[1]->Render();
+}
+void CWinnerResultUI::GPara3()
+{
+	Para_Img[2]->SetPosition(D3DXVECTOR3(100,100,0));
+	Para_Img[2]->SetScale(D3DXVECTOR3(100, 50,0));
+	Para_Img[2]->SetPatternNo(0, 0);
+	Para_Img[2]->Render();
+}
+void CWinnerResultUI::UGPara()
+{
+	Para_Img[3]->SetPosition(D3DXVECTOR3(150,150,0));
+	Para_Img[3]->SetScale(D3DXVECTOR3(100, 50,0));
+	Para_Img[3]->SetPatternNo(0, 1);
+	Para_Img[3]->Render();
+}
 
+void CWinnerResultUI::RoundRect()
+{
+	RoundRect_Img->SetPosition(D3DXVECTOR3(200, 200, 0));
+	RoundRect_Img->SetScale(D3DXVECTOR3(100, 100, 0));
+	RoundRect_Img->Render();
+}
 
 

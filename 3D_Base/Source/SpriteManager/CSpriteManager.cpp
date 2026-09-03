@@ -236,6 +236,11 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_ResultFont),		_T("Data\\Texture\\ResultFont.png"),		{ {1, 1, 1}, {325, 240}, {325, 240/4}} });
 	//全体リザルトで使用する文字
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_ReStart),		_T("Data\\Texture\\ReStart.png"),		{ {1, 1, 1}, {283, 200}, {283, 200/2}} });
+
+	//平行四辺形
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_Para),		_T("Data\\Texture\\Parallelogram.png"),		{ {1, 1, 1}, {150,500}, {150, 500/2}} });
+	//角丸四角形
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_RoundRect),		_T("Data\\Texture\\RoundedRectangle.png"),		{ {1, 1, 1}, {140, 140}, {140, 140}} });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];

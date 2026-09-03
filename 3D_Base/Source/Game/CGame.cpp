@@ -45,9 +45,9 @@ void CGame::Create()
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
 //	m_pGeamScene = new CGameScenePlayerSetup(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
-//	m_pGeamScene = new CGameSceneResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+	m_pGeamScene = new CGameSceneWinnerResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
 //	m_pGeamScene = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-	m_pGeamScene = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+//	m_pGeamScene = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
 }
 
 //ロードデータ関数.
