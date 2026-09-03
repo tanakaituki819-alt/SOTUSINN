@@ -181,11 +181,15 @@ void CPlayer::DrawUI()
 			m_Cousor->SetCOLOR({ 0,1,0 });
 			m_Cousor->SetisCOLOR(true);
 		}
-
-		m_Cousor->Render();
+		if (MyController->IsConnect() == true) {
+			m_Cousor->Render();
+		}
 	}
-	P_UI->SetPlayerNo(PlayerNo);
-	P_UI->Draw(Score);
+	//コントローラーが接続されているのなら.
+	if (MyController->IsConnect() == true) {
+		P_UI->SetPlayerNo(PlayerNo);
+		P_UI->Draw(Score);
+	}
 }
 //マヒ状態処理.
 void CPlayer::Paralysis()

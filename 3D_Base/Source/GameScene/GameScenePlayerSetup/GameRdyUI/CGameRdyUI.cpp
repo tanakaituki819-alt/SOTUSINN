@@ -198,7 +198,9 @@ void CGameRdyUI::Update()
 	}
 	//接続されているカウンターが0より多いかつ、接続されているコントローラー分と準備完了カウンターが同じであれば.
 	if (m_Connectedcnt > 0 && m_Connectedcnt == m_Readycnt) {
-		m_IsAllReady = true;  //全員準備完了.
+		if (m_Connectedcnt > 1) {
+			m_IsAllReady = true;  //全員準備完了.
+		}
 	}
 	else {
 		m_IsAllReady = false; //まだ揃っていない.
