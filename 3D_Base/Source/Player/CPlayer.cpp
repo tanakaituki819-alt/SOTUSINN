@@ -1,5 +1,5 @@
 #include "CPlayer.h"
-
+#include <algorithm>
 CPlayer::CPlayer()
 	: MyController		()
 {
@@ -39,13 +39,16 @@ void CPlayer::Update()
 		m_IsConnected = true;	//コントローラー接続状態に.
 		//回収中じゃないかつマヒ中でないなら
 		if (!m_IsCollecting && !m_IsParalysis) {
-				//左スティック動作.
-				D3DXVECTOR2 VECT = { static_cast<FLOAT>(MyController->GetLThumbX()) ,static_cast<FLOAT>(MyController->GetLThumbY()) };
-				D3DXVec2Normalize(&VECT, &VECT);
-				VECT *= Speed;
-				m_Position.x += VECT.x;
-				m_Position.z += VECT.y;
+			//左スティック動作.
+			D3DXVECTOR2 VECT = { static_cast<FLOAT>(MyController->GetLThumbX()) ,static_cast<FLOAT>(MyController->GetLThumbY()) };
+			D3DXVec2Normalize(&VECT, &VECT);
+			VECT *= Speed;
+
+			m_Position.x += VECT.x;
+			m_Position.z += VECT.y;
 		}
+		//m_Position.x = std::clamp(m_Position.x, -6.5f, 7.0f);
+		m_Position.z = std::clamp(m_Position.z, -4.0f, 4.8f);
 		//回収中じゃないかつマヒ中でないなら.
 		if (!m_IsCollecting && !m_IsParalysis) {
 			if (MyController->IsDown(CXInput::A, false)) {
