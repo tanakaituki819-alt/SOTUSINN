@@ -5,7 +5,8 @@ class CWinnerResultUI
 	: public CUIObject
 {
 public:
-	static const int FONT_MAM = 4;
+	static const int FONT_MAM = 4;	//フォントの最大値
+	static const int PARA_MAM = 4;	//平行四辺形最大値
 
 public:
 	CWinnerResultUI();
@@ -78,9 +79,17 @@ public:
 	void Player2AndPlayer3AndPlayer4FontUI();
 	// プレイヤー壱とプレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
 	void AllPlayerFontUI();
-	
 
-
+	//緑の平行四辺形関数
+	void GPara1();
+	//緑の平行四辺形関数
+	void GPara2();
+	//緑の平行四辺形関数
+	void GPara3();
+	//薄緑の平行四辺形関数
+	void UGPara();
+	//角丸四角形関数.
+	void RoundRect();
 
 private:
 	CSprite2D* BackGround_Img;
@@ -90,6 +99,8 @@ private:
 	CSprite2D* Player3_Img;
 	CSprite2D* Player4_Img;
 	CSprite2D* PlayerFont_Img[FONT_MAM];
+	CSprite2D* Para_Img[PARA_MAM];
+	CSprite2D* RoundRect_Img;
 
 
 	int Win;
