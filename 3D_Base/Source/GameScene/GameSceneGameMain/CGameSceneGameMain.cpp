@@ -111,6 +111,7 @@ void CGameSceneGameMain::Update()
 	for (int i = 0;i < PlayerMax;i++) {
 		m_pPlayer[i]->Update();
 	}
+	m_pCingM->SetTimu(m_pTimer->GetTimu());
 	m_pCingM->Update();
 	
 	////エフェクト制御

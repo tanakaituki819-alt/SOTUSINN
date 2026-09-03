@@ -13,6 +13,7 @@ public:
 	}
 	virtual void Update() override;
 	virtual void Draw()override;
+	float GetTimu() { return  static_cast<float>(m_TimeCount) / static_cast<float>(m_TimeMAX); }//正規化した残り時間};
 private:
 	CSprite2D* m_pbefore;
 
