@@ -31,9 +31,10 @@ private:
 	CNabe* Nabe;
 
 	std::mt19937 gen;
-	std::discrete_distribution<int> dist;
-	std::discrete_distribution<int> Startdist;
-	
+	std::discrete_distribution<int> Normaldist;
+	std::discrete_distribution<int> Raredist;
+
+	std::discrete_distribution<int> Gacha;
 	float TimuC;
 	bool StartSettingis;//開始時の配置中
 	float IngredientsSettingTimu;

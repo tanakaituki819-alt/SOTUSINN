@@ -126,9 +126,9 @@ void CGameSceneGameMain::Update()
 	//	handle = -1;
 	//}
 
-	if (GetAsyncKeyState('C') & 0x8000) {
-		m_pCingM->Create();
-	}
+	//if (GetAsyncKeyState('C') & 0x8000) {
+	//	m_pCingM->Create();
+	//}
 	m_pTimer->Update();
 	//Effect::SetRotation(handle, D3DXVECTOR3(0.f,D3DXToRadian(i), 0.f));
 	UpdateBSpherePos();
