@@ -39,27 +39,38 @@ CIngredientsmanager::CIngredientsmanager()
 	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	= { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,1,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	= { CS::GetObjMesh(OL::S_UINNER)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,15,1, };
 
-	std::vector<float> m_probability;
-	std::vector<float> m_Startprobability;
+	std::vector<float> m_Normalbability;
+	std::vector<float> m_Rarebility;
 	
 	for (int i = 0;i < static_cast<int> (Ingredients::MAX);i++) {
-		m_probability.push_back(IngredientsSetting[i].probability);
+		if (i == static_cast<int>(Ingredients::KANI) ||
+			i == static_cast<int>(Ingredients::KUMANOTE) ||
+			i == static_cast<int>(Ingredients::SAKANA) ||
+			i == static_cast<int>(Ingredients::ROBUSTER)
+			) {
+			m_Normalbability.push_back(0);
+		}
+		else {
+			m_Normalbability.push_back(IngredientsSetting[i].probability);
+		}
+
 		if (i== static_cast<int>(Ingredients::KANI)||
 			i == static_cast<int>(Ingredients::KUMANOTE) ||
 			i == static_cast<int>(Ingredients::SAKANA) ||
 			i == static_cast<int>(Ingredients::ROBUSTER)
 			) {
-			m_Startprobability.push_back(0);
+			m_Rarebility.push_back(IngredientsSetting[i].probability);
 		}
 		else {
-			m_Startprobability.push_back(IngredientsSetting[i].probability);
+			m_Rarebility.push_back(0);
 		}
-
-
 	}
+	std::vector<float> m_Gatya = {5.0f,95.f };//レア確率５
+
 	//  離散分布（偏りのある分布）を作成(distに入る)
-	dist= std::discrete_distribution(m_probability.begin(), m_probability.end());
-	Startdist = std::discrete_distribution(m_Startprobability.begin(), m_Startprobability.end());
+	Normaldist = std::discrete_distribution(m_Normalbability.begin(), m_Normalbability.end());
+	Raredist = std::discrete_distribution(m_Rarebility.begin(), m_Rarebility.end());
+	Gacha = std::discrete_distribution(m_Gatya.begin(), m_Gatya.end());
 }
 
 CIngredientsmanager::~CIngredientsmanager()
@@ -154,10 +165,16 @@ void CIngredientsmanager::Create()
 	}
 	int index;
 	if (StartSettingis) {
-		index =Startdist(gen);//最初の配置ならレア役が出ない
+		index = Normaldist(gen);//最初の配置ならレア役が出ない
 	}
 	else {
-		index = dist(gen); // 確率に基づいたインデックスが返る
+		if (Gacha(gen)==0) {//レアなら０
+			index = Raredist(gen); 
+		}
+		else {
+			index = Normaldist(gen); // 確率に基づいたインデックスが返る
+		}
+		
 	} 
 
 	int R = 5;
