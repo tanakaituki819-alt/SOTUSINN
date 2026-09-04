@@ -125,7 +125,7 @@ void CGameSceneGameMain::Update()
 		handle=Effect::Play(EFE::KANSEI,D3DXVECTOR3(0.f, 0.f, 0.f));
 	}
 	if (GetAsyncKeyState('Z') & 0x0001) {
-		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 60, 60);
+		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 30, 120);
 	}
 	m_pTimer->Update();
 	
