@@ -67,10 +67,10 @@ void CTitleUI::Update()
 	{
 		return;
 	}
-	if (m_pController->IsConnect() == false)
-	{
-		return;
-	}
+	//if (m_pController->IsConnect() == false)
+	//{
+	//	return;
+	//}
 
 	//左スティックの縦方向.
 	SHORT y = m_pController->GetLThumbY();
