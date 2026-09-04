@@ -15,12 +15,6 @@
     <ClCompile Include="Source\stdafx.cpp">
       <Filter>Source\触る必要のないもの</Filter>
     </ClCompile>
-    <ClCompile Include="Source\CIngredientsmanager.cpp">
-      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\CIngredients.cpp">
-      <Filter>Source\CGameScene\CGameSceneGameMain\CIngredientsmanager\CIngredients</Filter>
-    </ClCompile>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp" />
     <ClCompile Include="Source\Effect\Effect.cpp" />
     <ClCompile Include="Source\Game\CCamera.cpp" />
@@ -73,6 +67,9 @@
     <ClCompile Include="Source\System\Global\Global.cpp" />
     <ClCompile Include="Source\System\RawInput\RawInput.cpp" />
     <ClCompile Include="Source\System\XInput\CXInput.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneResult\CGameSceneResult.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.cpp" />
+    <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\stdafx.h">
@@ -132,6 +129,9 @@
     <ClInclude Include="Source\System\Global\Global.h" />
     <ClInclude Include="Source\System\RawInput\RawInput.h" />
     <ClInclude Include="Source\System\XInput\CXInput.h" />
+    <ClInclude Include="Source\GameScene\GameSceneResult\CGameSceneResult.h" />
+    <ClInclude Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.h" />
+    <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">

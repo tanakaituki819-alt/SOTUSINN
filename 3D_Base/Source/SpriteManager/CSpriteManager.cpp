@@ -241,6 +241,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Para),		_T("Data\\Texture\\Parallelogram.png"),		{ {1, 1, 1}, {150,500}, {150, 500/2}} });
 	//角丸四角形
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_RoundRect),		_T("Data\\Texture\\RoundedRectangle.png"),		{ {1, 1, 1}, {140, 140}, {140, 140}} });
+	//ふすま
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_FUSUMA),		_T("Data\\Texture\\TitleNabe.png"),		{ {1, 1, 1}, {1, 1}, {0.5, 1}} });
 	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];

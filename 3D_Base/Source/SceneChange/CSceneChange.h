@@ -3,7 +3,7 @@
 #include "SceneTransitionRenderer/FadeSceneTransition/CFadeSceneTransition.h"
 #include "SceneTransitionRenderer/SceneTransition/CSceneTransition.h"
 #include "SceneTransitionRenderer/CSceneTransitionRenderer.h"
-
+#include"SceneTransitionRenderer/FUSUMASceneTransition/CFUSUMASceneTransition.h"
 //シーンチェンジの動作クラス
 class CSceneChange
 {
@@ -20,6 +20,7 @@ public:
 		Fade,//フェード
 		RSRIDE,//横からのシャッタ
 		Shutter,//上からのシャッタ-
+		FUSUMA,//ふすま
 	};
 
 	//更新関数(キー入力や動作処理を行う)
@@ -44,6 +45,9 @@ public:
 			break;
 		case CSceneChange::TransitionType::RSRIDE:
 			SceneChangeClass = new CSceneTransition();
+			break;
+		case CSceneChange::TransitionType::FUSUMA:
+			SceneChangeClass = new CFUSUMASceneTransition();
 			break;
 		}
 
