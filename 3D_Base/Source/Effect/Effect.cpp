@@ -55,8 +55,10 @@ HRESULT Effect::LoadData()
 	EffectList EList[] =
 	{
 		{ enList::NAMI,	u"Data\\Effekseer\\波.efk"	},
-		{ enList::TYAKUSUI,	u"Data\\Effekseer\\着水.efk"	},
+		{ enList::ORA1,	u"Data\\Effekseer\\O-RA1.efk"	},
 		{ enList::KANSEI,	u"Data\\Effekseer\\完成.efk"	},
+	{ enList::KIRAN,	u"Data\\Effekseer\\KIRAN.efk"	},
+		
 	
 	};
 	//配列の最大要素数を算出(配列全体のサイズ／配列１つ分のサイズ).

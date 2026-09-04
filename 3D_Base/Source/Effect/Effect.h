@@ -49,8 +49,9 @@ public:
 	enum enList
 	{
 		NAMI = 0,	//
-		TYAKUSUI,			//
+		ORA1,			//
 		KANSEI,			//
+		KIRAN,//
 		Max				//最大数
 	};
 public:
@@ -94,6 +95,12 @@ public:
 	static ::EsHandle Play(enList list, const D3DXVECTOR3& pos) {
 		Effect* pE = Effect::GetInstance();
 		return pE->m_pManager->Play(pE->m_pEffect[list], pos.x, pos.y, pos.z);
+	}
+	static ::EsHandle Play(enList list, const D3DXVECTOR3& pos,int32_t startFrame ) {
+		Effect* pE = Effect::GetInstance();
+		EsVec3 i(pos.x, pos.y, pos.z);
+		EsVec3& c = i;
+		return pE->m_pManager->Play(pE->m_pEffect[list],c, startFrame);
 	}
 	//停止
 	static void Stop(::EsHandle handle) {

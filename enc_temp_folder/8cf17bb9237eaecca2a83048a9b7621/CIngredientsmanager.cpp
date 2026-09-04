@@ -36,7 +36,7 @@ CIngredientsmanager::CIngredientsmanager()
 	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)]	= { CS::GetObjMesh(OL::S_SITAKE)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,10,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::TAI)]		= { CS::GetObjMesh(OL::S_TAI)		,0.1,0.7, {2.0,2.0,2.0}, {0,D3DXToRadian(70),0}				,35,2, };
 	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		= { CS::GetObjMesh(OL::S_TARA)		,1,0.5, {1.5,1.5,1.5}, {0,D3DXToRadian(70),0}				,15,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	= { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,0.5f,1.f}, {0,0,0}								,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	= { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,0.5f,1.f}, {0,0,0}								,1,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	= { CS::GetObjMesh(OL::S_UINNER)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,15,1, };
 
 	std::vector<float> m_Normalbability;

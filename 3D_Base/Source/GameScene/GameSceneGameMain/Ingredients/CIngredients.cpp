@@ -45,6 +45,8 @@ void CIngredients::SetIngredients(IngredientsSetting* pIngredientsSetting,int i)
 	Status = enCharStatus::Live;
 	m_IsCollecting = false;
 	IsInTheWater = false;
+	EffC = 0;
+	EffC1 = 0;
 }
 
 void CIngredients::IsCollecting()
@@ -121,6 +123,15 @@ void CIngredients::Update()
 				isBoiled = true;
 			}
 
+		}
+		else {
+			EffC1--;
+			if (EffC1<0) {
+				EffC1 = 25;
+				::EsHandle handle = -1;
+				handle = Effect::Play(EFE::KIRAN, { m_Position.x,m_Position.y+0.25f,m_Position .z});
+				Effect::SetScale(handle, D3DXVECTOR3(m_Scale.x * 0.065f, m_Scale.y * 0.08f, m_Scale.z * 0.065f));
+			}
 		}
 
 	}

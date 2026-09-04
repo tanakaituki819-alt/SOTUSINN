@@ -84,5 +84,6 @@ protected:
 	 float Cost;//食材のコスト
 	 bool IsInTheWater;//水に入っているか
 	 int EffC;
+	 int EffC1;
 	 enCharStatus Status;
 };
