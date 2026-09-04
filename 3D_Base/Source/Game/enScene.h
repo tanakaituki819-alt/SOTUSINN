@@ -9,4 +9,5 @@ enum class enScene
 	PlayerSetUp,	//プレイヤーコントローラー接続画面.
 	GameMain,		//ゲーム中
 	WinnnerResult,	//勝利者リザルト.
+	Result,	//勝利者リザルト.
 };

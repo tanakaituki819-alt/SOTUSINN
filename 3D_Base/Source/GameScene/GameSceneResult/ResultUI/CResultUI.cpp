@@ -74,6 +74,9 @@ static constexpr Transform FIN = { 880.f,610.f,380.f,120.f };
 CResultUI::CResultUI()
 	: Rank (0)
     , Count(0)
+    , m_ADecided(false)
+    , m_BDecided(false)
+    , m_pController(nullptr)
 {
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
 	for (int i = 0; i < PLAYER_MAX; i++)
@@ -136,6 +139,18 @@ void CResultUI::Update()
             Rank = 0;
         }
     }
+
+    //Aボタン.
+    if (m_pController->IsDown(CXInput::A, true))
+    {
+        m_ADecided = true;
+    }
+    //Bボタン.
+    if (m_pController->IsDown(CXInput::B, true))
+    {
+        m_BDecided = true;
+    }
+
 }
 
 void CResultUI::Draw()
@@ -685,6 +700,12 @@ void CResultUI::Draw()
         Player4First();
     }
 
+}
+
+void CResultUI::BoolInit()
+{
+    m_ADecided = false;
+    m_BDecided = false;
 }
 
 void CResultUI::ResultBackUI()

@@ -15,6 +15,14 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	bool IsDecided() const { return m_Decided; }	//決定されたかどうか
+
+	//コントローラー
+	void SetXInput(CXInput* Input) { m_pController = Input; }
+
+	//初期化
+	void Init();
+
 	//背景.
 	void WinnerResultBackUI();
 	//あっぱれ.
@@ -93,6 +101,12 @@ public:
 	//図形をまとめた関数.
 	void Shape();
 
+
+
+private:
+	bool m_Decided;			//決定フラグ
+	CXInput* m_pController;	//コントローラー
+
 private:
 	CSprite2D* BackGround_Img;
 	CSprite2D* Winner_Img;
@@ -103,7 +117,6 @@ private:
 	CSprite2D* PlayerFont_Img[FONT_MAM];
 	CSprite2D* Para_Img[PARA_MAM];
 	CSprite2D* RoundRect_Img;
-
 
 	int Win;
 };

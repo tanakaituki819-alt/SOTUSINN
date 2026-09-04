@@ -14,4 +14,5 @@ public:
 
 private:
 	CResultUI* m_pResultUI;
+	CXInput* m_pController;
 };
