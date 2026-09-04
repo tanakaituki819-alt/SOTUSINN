@@ -97,7 +97,7 @@ void CIngredientsmanager::Update()
 		else {
 			if (TimuC > IngredientsSettingTimu) {
 				TimuC = 0;
-				IngredientsSettingTimu = (1 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;
+				IngredientsSettingTimu = (0.5 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;
 				if (gameTimu<0.2) {
 					IngredientsSettingTimu = (0.1 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;
 				}

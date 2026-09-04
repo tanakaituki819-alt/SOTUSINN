@@ -179,7 +179,7 @@ void CPlayer::DrawUI()
 
 	//m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
 	m_Cousor->SetPosition(m_CousorPosition);
-	m_Cousor->SetScale({ 70,70,70 });
+	m_Cousor->SetScale({ 85,85,85 });
 
 	if (!m_IsCollecting && !m_IsParalysis) {
 		//プレイヤーの番号に応じて色を変える

@@ -41,7 +41,7 @@ private:
 	//ポーズ関連.
 	CPauseUI* m_pPauseUI;
 	bool m_Pause;
-
+	float		m_EndTimer = 0;
 	CIngredientsmanager* m_pCIngredientsM;//野菜マネージャー
 	CSprite2D* m_pBackGround;
 	CIngredientsmanager* m_pCingM;
