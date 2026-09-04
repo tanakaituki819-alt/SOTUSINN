@@ -27,6 +27,7 @@ void CTimer::Draw()
 {
 	m_Rotation.z = D3DXToRadian(0);
 	m_pSprite->SetScale({ 150,150,0 });
+	m_pSprite->SetAlpha(0.7f);
 	m_pSprite->SetPosition(m_Position);
 	m_pSprite->SetRotation(m_Rotation);
 
