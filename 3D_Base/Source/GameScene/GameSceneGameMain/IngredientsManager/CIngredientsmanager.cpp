@@ -85,20 +85,27 @@ CIngredientsmanager::~CIngredientsmanager()
 void CIngredientsmanager::Update()
 {
 	TimuC++;
-	if (StartSettingis) {
-		if (TimuC>15) {
-			TimuC = 0;
-			Create();
-		}
 
-	}
-	else {
-		if (TimuC > IngredientsSettingTimu) {
-			TimuC = 0;
-			IngredientsSettingTimu = (0.5 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;;
-			Create();
+	if (gameTimu >0) {
+		if (StartSettingis) {
+			if (TimuC > 15) {
+				TimuC = 0;
+				Create();
+			}
+
+		}
+		else {
+			if (TimuC > IngredientsSettingTimu) {
+				TimuC = 0;
+				IngredientsSettingTimu = (1 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;
+				if (gameTimu<0.2) {
+					IngredientsSettingTimu = (0.1 * (0.8 + static_cast<float>(rand() % 5) / 10.f)) * 60;
+				}
+				Create();
+			}
 		}
 	}
+
 
 
 
@@ -224,7 +231,7 @@ std::vector<CIngredients*>& CIngredientsmanager::GetIngredients()
 	return m_pIngredients;
 }
 
-int CIngredientsmanager::GetIngredientsliveing()
+float CIngredientsmanager::GetIngredientsliveingScore()
 {
 	float cost=0;
 	for (int i = 0; i < m_pIngredients.size(); i++) {
@@ -234,4 +241,17 @@ int CIngredientsmanager::GetIngredientsliveing()
 		
 	};
 	return cost;
+}
+
+int CIngredientsmanager::GetIngredientsliveing()
+{
+	float cost = 0;
+	for (int i = 0; i < m_pIngredients.size(); i++) {
+		if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Live) {
+			cost++;
+		}
+
+	};
+	return cost;
+;
 }

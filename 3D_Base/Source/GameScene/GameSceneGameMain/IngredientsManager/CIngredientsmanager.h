@@ -22,8 +22,9 @@ public:
 	
 	void AllIngredientsUpdate();
 	std::vector<CIngredients*>& GetIngredients();
+	float GetIngredientsliveingScore();//野菜の生存数スコアを返す
 	int GetIngredientsliveing();//野菜の生存数を返す
-
+	void SetTimu(float T) { gameTimu = T; };
 private:
 	IngredientsSetting IngredientsSetting[static_cast<int>(Ingredients::MAX)];//野菜の設定
 	std::vector<CIngredients*> m_pIngredients;
@@ -38,4 +39,5 @@ private:
 	float TimuC;
 	bool StartSettingis;//開始時の配置中
 	float IngredientsSettingTimu;
+	float gameTimu = 0;
 };
