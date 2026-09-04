@@ -90,6 +90,8 @@ public:
 	void UGPara();
 	//角丸四角形関数.
 	void RoundRect();
+	//図形をまとめた関数.
+	void Shape();
 
 private:
 	CSprite2D* BackGround_Img;
