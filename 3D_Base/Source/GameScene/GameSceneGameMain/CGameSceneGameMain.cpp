@@ -34,6 +34,8 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	Effect::GetInstance()->LoadData();
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
+	m_pBackGround = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_GameMainGround);
+	m_pBackGround->SetScale(D3DXVECTOR3{ 1920, 1080, 200 });
 
 	m_pCing = new CIngredients();
 
@@ -148,6 +150,7 @@ void CGameSceneGameMain::Draw()
 	static float S=0;
 	S += 0.01;
 
+	m_pBackGround->Render();
 
 	m_pDx11->SetDepth(true);
 

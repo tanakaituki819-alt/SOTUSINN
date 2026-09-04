@@ -57,6 +57,7 @@ public:
 		IMG_ReStart,			//もう一度プレイの文字.
 		IMG_Para,				//平行四辺形.
 		IMG_RoundRect,			//角丸四角形.
+		Img_GameMainGround,		//ゲームメインでの背景.
 		MAX
 	};
 	//ｘファイル
