@@ -2,7 +2,7 @@
 #include "CGameSceneGameMain.h"
 
 
-#include"Effect/Effect.h"
+
 CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 :CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
 	, m_pGround				( nullptr )
@@ -29,9 +29,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 		m_pPlayer[i]->SetXInput(CONTROLA[i]);
 		m_pPlayer[i]->SetPlayerNo(i);
 	}
-	//エフェクト.
-	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
-	Effect::GetInstance()->LoadData();
+
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 
@@ -48,16 +46,17 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pPauseUI = new CPauseUI();
 	m_pPauseUI->SetXInput(CONTROLA[0]);
 
-	m_pCingM = new CIngredientsmanager();
-	m_pCingM->SetNabe(m_pGround);
+	m_pCIngredientsM = new CIngredientsmanager();
+	m_pCIngredientsM->SetNabe(m_pGround);
 
 	m_pTimer = new CTimer();
 	m_pTimer->SetTime(90* 60);
-	m_pCollisionManager->SetIngredients(*m_pCingM);		//具材マネージャーセット
+	m_pCollisionManager->SetIngredients(*m_pCIngredientsM);		//具材マネージャーセット
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
 {
+	Effect::StopAll();
 	SAFE_DELETE(m_pTimer);
 	SAFE_DELETE(m_pPauseUI);
 	SAFE_DELETE(m_pCollisionManager);
@@ -111,27 +110,23 @@ void CGameSceneGameMain::Update()
 	for (int i = 0;i < PlayerMax;i++) {
 		m_pPlayer[i]->Update();
 	}
-	m_pCingM->SetTimu(m_pTimer->GetTimu());
-	m_pCingM->Update();
-	
+	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
+	m_pCIngredientsM->Update();
+	if (m_pTimer->GetTimu()<=0&& m_pCIngredientsM->GetIngredientsliveing()<=0) {
+		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
+	}
+
 	////エフェクト制御
-	//static ::EsHandle handle = -1;
+	static ::EsHandle handle = -1;
 
-	//static int i = 0;
-	//i += 6;
-	//if (GetAsyncKeyState('C') & 0x0001) {
-	//	handle=Effect::Play(EFE::Test0,D3DXVECTOR3(0.f, 0.f, 0.f));
-	//}
-	//if (GetAsyncKeyState('V') & 0x0001 ) {
-	//	Effect::StopAll();
-	//	handle = -1;
-	//}
 
-	//if (GetAsyncKeyState('C') & 0x8000) {
-	//	m_pCingM->Create();
-	//}
+	if (GetAsyncKeyState('C') & 0x0001) {
+		static ::EsHandle handle = -1;
+		handle=Effect::Play(EFE::KANSEI,D3DXVECTOR3(0.f, 0.f, 0.f));
+	}
+
 	m_pTimer->Update();
-	//Effect::SetRotation(handle, D3DXVECTOR3(0.f,D3DXToRadian(i), 0.f));
+	
 	UpdateBSpherePos();
 
 	CheckCollision();
@@ -145,8 +140,7 @@ void CGameSceneGameMain::Draw()
 
 	//背景
 	m_pDx11->SetDepth(false);
-	static float S=0;
-	S += 0.01;
+
 
 
 	m_pDx11->SetDepth(true);
@@ -155,7 +149,7 @@ void CGameSceneGameMain::Draw()
 	m_pGround->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 
-	m_pCingM->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+	m_pCIngredientsM->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pGround->DrawWater(m_pCamera->GetView(), m_mProj);
 	for (int i = 0;i < PlayerMax;i++) {
@@ -185,7 +179,7 @@ void CGameSceneGameMain::UpdateBSpherePos()
 {
 	//当たり判定の中心座標を更新する.
 	//m_pPlayer->UpdateBSpherePos();
-	m_pCingM->UpdateBSpherePos();
+	m_pCIngredientsM->UpdateBSpherePos();
 }
 
 void CGameSceneGameMain::CheckCollision()

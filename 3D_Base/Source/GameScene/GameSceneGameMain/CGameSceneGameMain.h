@@ -42,7 +42,7 @@ private:
 	CPauseUI* m_pPauseUI;
 	bool m_Pause;
 
-	CIngredientsmanager* m_pCingM;
+	CIngredientsmanager* m_pCIngredientsM;//野菜マネージャー
 };
 
 

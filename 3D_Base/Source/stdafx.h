@@ -33,3 +33,5 @@
 #include"System/XInput/CXInput.h"
 
 #include <iostream>
+
+#include"Effect/Effect.h"

@@ -48,9 +48,9 @@ public:
 	//エフェクト種類列挙型
 	enum enList
 	{
-		Test0 = 0,	//仮で設定
-		Test1,			//仮で設定
-		Test2,			//仮で設定
+		NAMI = 0,	//
+		TYAKUSUI,			//
+		KANSEI,			//
 		Max				//最大数
 	};
 public:
@@ -126,7 +126,7 @@ public:
 		Effect::GetInstance()->m_pManager->SetRotation(handle, ::EsVec3(axis.x, axis.y, axis.z), angle);
 	}
 	//サイズを指定する
-	void SetScale(::EsHandle handle, const D3DXVECTOR3& scale) {
+	static void SetScale(::EsHandle handle, const D3DXVECTOR3& scale) {
 		Effect::GetInstance()->m_pManager->SetScale(handle, scale.x, scale.y, scale.z);
 	}
 

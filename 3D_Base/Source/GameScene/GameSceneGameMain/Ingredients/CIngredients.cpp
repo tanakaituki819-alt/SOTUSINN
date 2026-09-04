@@ -44,6 +44,7 @@ void CIngredients::SetIngredients(IngredientsSetting* pIngredientsSetting,int i)
 	Cost = pIngredientsSetting[i].Cost;
 	Status = enCharStatus::Live;
 	m_IsCollecting = false;
+	IsInTheWater = false;
 }
 
 void CIngredients::IsCollecting()
@@ -55,51 +56,71 @@ void CIngredients::IsCollecting()
 void CIngredients::Update()
 {
 
+	if (Status == enCharStatus::Live) {
+		Fallingforce += gravity;
+		D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
+		if (Nabe != nullptr) {
+			//鍋の外に出ないようにする
+			if (!D2CollizionXZ(calPos, m_pBSphere->GetRadius(), Nabe->GetPosition(), Nabe->GetSize())) {
 
-	Fallingforce += gravity;
-	D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
-	if (Nabe!=nullptr) {
-		//鍋の外に出ないようにする
-		if (!D2CollizionXZ(calPos, m_pBSphere->GetRadius(), Nabe->GetPosition(), Nabe->GetSize())) {
+				m_Position.x = m_OldPosition.x;
 
-			m_Position.x = m_OldPosition.x;
+			};
+			calPos = { m_OldPosition.x,0,m_Position.z };
 
-		};
-		calPos = { m_OldPosition.x,0,m_Position.z };
-		
-		if (!D2CollizionXZ(calPos, m_pBSphere->GetRadius(), Nabe->GetPosition(), Nabe->GetSize() )) {
-		m_Position.z = m_OldPosition.z;
-		
-		};
-		//水に沈んだ
-		if (m_Position.y <= Nabe->GetPosition().y + Nabe->GetNabeH()) {
-		
-			Fallingforce *= 0.5;//液体による減速
-			// 沈んでいる深さに応じた浮力の計算（深ければ深いほど浮力が強くなる）
-			float depth = Nabe->GetNabeH() - m_Position.y; // 沈んでいる深さ
-			float buoyancyFactor = 0.15f;               // 浮力の強さ調整用パラメータ
+			if (!D2CollizionXZ(calPos, m_pBSphere->GetRadius(), Nabe->GetPosition(), Nabe->GetSize())) {
+				m_Position.z = m_OldPosition.z;
 
-			// 毎フレーム加算ではなく、深さに応じた固定の浮力を設定
-			m_buoyancy =  (depth * buoyancyFactor);
+			};
+			//水に沈んだ
+			if (m_Position.y <= Nabe->GetPosition().y + Nabe->GetNabeH()) {
+				if (IsInTheWater == false) {
+					::EsHandle handle = -1;
+					handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y - 0.2f,m_Position.z });
+					Effect::SetScale(handle, D3DXVECTOR3(0.3f, 0.3f, 0.3f));
+				}
+				IsInTheWater = true;
+				Fallingforce *= 0.5;//液体による減速
+				// 沈んでいる深さに応じた浮力の計算（深ければ深いほど浮力が強くなる）
+				float depth = Nabe->GetNabeH() - m_Position.y; // 沈んでいる深さ
+				float buoyancyFactor = 0.15f;               // 浮力の強さ調整用パラメータ
 
-			// 落下力から浮力を引く（＝上向きの力を与える）
-			Fallingforce -= m_buoyancy;
+				// 毎フレーム加算ではなく、深さに応じた固定の浮力を設定
+				m_buoyancy = (depth * buoyancyFactor);
+
+				// 落下力から浮力を引く（＝上向きの力を与える）
+				Fallingforce -= m_buoyancy;
+			}
+			else {
+				m_buoyancy = 0;
+			}
 		}
-		else {
-			m_buoyancy = 0;
-		}
-	}
-	if (!m_IsCollecting) {
-		m_Position.y -= Fallingforce;
-	}
-	
-	m_OldPosition = m_Position;
-	//にえていないなら
-	if (isBoiled==false) {
+		if (IsInTheWater == true) {
+			EffC += rand() % 2;
+			if (EffC >= 60) {
+				::EsHandle handle = -1;
+				handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y - 0.1f,m_Position.z });
+				Effect::SetScale(handle, D3DXVECTOR3(0.3f, 0.1f, 0.3f));
+				EffC = 0;
+			}
 
-		m_Boiledc ++;
-		if (m_Boiledc> m_BoiledcMAX) {
-			isBoiled = true;
+		}
+		if (!m_IsCollecting) {
+			m_Position.y -= Fallingforce;
+		}
+
+		m_OldPosition = m_Position;
+		//にえていないなら
+		if (isBoiled == false) {
+
+			m_Boiledc++;
+			if (m_Boiledc > m_BoiledcMAX) {
+				::EsHandle handle = -1;
+				handle = Effect::Play(EFE::KANSEI, m_Position);
+				Effect::SetScale(handle, D3DXVECTOR3(m_Scale.x * 0.15f, m_Scale.y * 0.15f, m_Scale.z * 0.15f));
+				isBoiled = true;
+			}
+
 		}
 
 	}
