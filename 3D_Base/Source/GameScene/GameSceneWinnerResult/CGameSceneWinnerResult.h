@@ -14,4 +14,5 @@ public:
 
 private:
 	CWinnerResultUI* m_pWinnerResultUI;
+	CXInput* m_pController;
 };

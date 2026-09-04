@@ -1,5 +1,6 @@
 #include "CWinnerResultUI.h"
 #include "SpriteManager/CSpriteManager.h"
+#include "System/XInput/CXInput.h"
 #include <iostream>
 
 struct Transform {
@@ -90,6 +91,8 @@ static constexpr Transform ROUNDRECT = {1040.f,408.f,160.f,160.f};
 
 CWinnerResultUI::CWinnerResultUI()
 	:Win (0)
+	, m_Decided  (false)
+	, m_pController(nullptr)
 {
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
 	Winner_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_WinnerText);		//あっぱれ.
@@ -156,6 +159,21 @@ CWinnerResultUI::~CWinnerResultUI()
 		std::cout << ananana << std::endl;
 	
 #endif
+		//if (m_pController == nullptr)
+		//{
+		//	return;
+		//}
+		//if (m_pController->IsConnect() == false)
+		//{
+		//	return;
+		//}
+
+
+		//Aボタンで決定.
+		if (m_pController->IsDown(CXInput::A, true))
+		{
+			m_Decided = true;
+		}
 
 #if 1
 		//仮で１５パターンん
@@ -312,6 +330,11 @@ void CWinnerResultUI::Draw()
 #endif
 
 
+}
+
+void CWinnerResultUI::Init()
+{
+	m_Decided = false;
 }
 
 //背景.

@@ -16,6 +16,15 @@ public:
 	void Update()override;
 	void Draw()override;
 	
+	bool IsADecided() const { return m_ADecided; }	//決定されたかどうか
+	bool IsBDecided() const { return m_BDecided; }	//決定されたかどうか
+
+	//コントローラー
+	void SetXInput(CXInput* Input) { m_pController = Input; }
+
+	//フラグ初期化
+	void BoolInit();
+
 	//背景.
 	void ResultBackUI();
 	//プレイヤーの背景
@@ -136,6 +145,11 @@ public:
 
 	//もう一度プレイ
 	void ReStart();
+
+	private:
+		bool m_ADecided;			//A決定フラグ
+		bool m_BDecided;			//B決定フラグ
+		CXInput* m_pController;	//コントローラー
 private:
 	CSprite2D* BackGround_Img;
 	CSprite2D* PlayerBack_Img[PLAYER_MAX];

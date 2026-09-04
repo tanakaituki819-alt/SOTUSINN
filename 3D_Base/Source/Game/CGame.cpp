@@ -179,6 +179,11 @@ void CGame::ChangeScene()
 			SAFE_DELETE(m_pGeamScene);
 			m_pGeamScene = new CGameSceneWinnerResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
 			break;
+		case enScene::Result:
+			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
+			SAFE_DELETE(m_pGeamScene);
+			m_pGeamScene = new CGameSceneResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			break;
 			
 
 		}
