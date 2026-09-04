@@ -196,6 +196,10 @@ void CGameRdyUI::Update()
 			}
 		}
 	}
+	//接続されているコントローラー1Pだけであれば、全員が準備完了状態を解除する.
+	if (m_Connectedcnt == 1) {
+		m_IsAllReady = false;  //全員準備完了.
+	}
 	//接続されているカウンターが0より多いかつ、接続されているコントローラー分と準備完了カウンターが同じであれば.
 	if (m_Connectedcnt > 0 && m_Connectedcnt == m_Readycnt) {
 		if (m_Connectedcnt > 1) {
