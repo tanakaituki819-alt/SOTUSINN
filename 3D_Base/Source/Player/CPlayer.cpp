@@ -16,7 +16,7 @@ CPlayer::CPlayer()
 		m_pBSphere->CreatSphereForMesh(*CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::Chopsticks));	//スフィアのメッシュを設定.
 		m_pBSphere->SetRadius(0.1f);		//半径を変更.
 	}
-
+	 m_OldPosition = { 0,0,0 };
 	//KARI = CSpriteManager::GetSprite2D(CSpM::enImagList::Img_Playericon);
 }
 
@@ -46,8 +46,22 @@ void CPlayer::Update()
 			m_Position.x += VECT.x;
 			m_Position.z += VECT.y;
 		}
-		//m_Position.x = std::clamp(m_Position.x, -6.5f, 7.0f);
-		m_Position.z = std::clamp(m_Position.z, -4.0f, 4.8f);
+		D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
+		D3DXVECTOR3  ENDPos = m_Position;
+		float i=atan2(m_Position.z, m_Position.x);
+			//鍋の外に出ないようにする
+			if (!D2CollizionXZ(calPos, 0.1, {0,0,0}, 4)) {
+
+				ENDPos.x = cos(i) * (4.0-0.1);
+
+			};
+			calPos = { m_OldPosition.x,0,m_Position.z };
+
+			if (!D2CollizionXZ(calPos, 0.1, {0,0,0}, 4)) {
+				ENDPos.z = sin(i) * (4.0-0.1);
+
+			};
+			m_Position = ENDPos;
 		//回収中じゃないかつマヒ中でないなら.
 		if (!m_IsCollecting && !m_IsParalysis) {
 			if (MyController->IsDown(CXInput::A, false)) {
@@ -94,6 +108,8 @@ void CPlayer::Update()
 		//	Score++;
 		//}
 		UpdateBSpherePos();	//当たり判定位置を更新.
+
+		m_OldPosition = m_Position;
 	}
 	else {
 		m_IsConnected = false;	//コントローラー接続状態解除.

@@ -115,7 +115,7 @@ void CGameSceneGameMain::Update()
 	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
 	m_pCIngredientsM->Update();
 	if (m_pTimer->GetTimu()<=0&& m_pCIngredientsM->GetIngredientsliveing()<=0) {
-		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
+		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 60, 60);
 	}
 
 	////エフェクト制御
