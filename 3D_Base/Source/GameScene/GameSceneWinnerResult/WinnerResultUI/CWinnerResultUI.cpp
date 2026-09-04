@@ -74,7 +74,19 @@ static constexpr Transform ALL_P3 = { 200.f,0.f,300.f,500.f };
 //プレイヤー全員が同率の時のプレイヤー肆の立ち絵
 static constexpr Transform ALL_P4 = { 300.f,0.f,300.f,500.f };
 
+//角度(5度傾ける).
+static constexpr float RAD = -0.08726646;
 
+//緑の平行四辺形1.
+static constexpr Transform GPARA1 = { 600.f,150.f,430.f,90.f };
+//緑の平行四辺形2.
+static constexpr Transform GPARA2 = { 580.f,280.f,420.f,60.f };
+//緑の平行四辺形3.
+static constexpr Transform GPARA3 = { 580.f,380.f,420.f,60.f };
+//薄緑の平行四辺形.
+static constexpr Transform UGPARA = { 545.f,480.f,450.f,90.f };
+//角丸四角形.
+static constexpr Transform ROUNDRECT = {1040.f,408.f,160.f,160.f};
 
 CWinnerResultUI::CWinnerResultUI()
 	:Win (0)
@@ -222,42 +234,25 @@ void CWinnerResultUI::Draw()
 	{
 		Player1WinnerUI();
 		Player1FontUI();
-		GPara1();
-		GPara2();
-		GPara3();
-		UGPara();
-		RoundRect();
-
+		Shape();
 	}
 	else if (Win == 1)
 	{
 		Player2WinnerUI();
 		Player2FontUI();
-		GPara1();
-		GPara2();
-		GPara3();
-		UGPara();
-		RoundRect();
+		Shape();
 	}
 	else if (Win == 2)
 	{
 		Player3WinnerUI();
 		Player3FontUI();
-		GPara1();
-		GPara2();
-		GPara3();
-		UGPara();
-		RoundRect();
+		Shape();
 	}
 	else if (Win == 3)
 	{
 		Player4WinnerUI();
 		Player4FontUI();
-		GPara1();
-		GPara2();
-		GPara3();
-		UGPara();
-		RoundRect();
+		Shape();
 	}
 	else if (Win == 4)
 	{
@@ -740,40 +735,55 @@ void CWinnerResultUI::AllPlayerFontUI()
 	PlayerFont_Img[3]->Render();
 }
 
+//緑の平行四辺形１
 void CWinnerResultUI::GPara1()
 {
-	Para_Img[0]->SetPosition(D3DXVECTOR3(0,0,0));
-	Para_Img[0]->SetScale(D3DXVECTOR3(100,50,0));
+	Para_Img[0]->SetPosition(D3DXVECTOR3(GPARA1.GetPos()));
+	Para_Img[0]->SetScale(D3DXVECTOR3(GPARA1.GetScl()));
+	Para_Img[0]->SetRotation(D3DXVECTOR3(0, 0, RAD));
 	Para_Img[0]->SetPatternNo(0, 0);
 	Para_Img[0]->Render();
 }
+//緑の平行四辺形２
 void CWinnerResultUI::GPara2()
 {
-	Para_Img[1]->SetPosition(D3DXVECTOR3(50,50,0));
-	Para_Img[1]->SetScale(D3DXVECTOR3(100, 50,0));
+	Para_Img[1]->SetPosition(D3DXVECTOR3(GPARA2.GetPos()));
+	Para_Img[1]->SetScale(D3DXVECTOR3(GPARA2.GetScl()));
+	Para_Img[1]->SetRotation(D3DXVECTOR3(0, 0, 0));
 	Para_Img[1]->SetPatternNo(0, 0);
 	Para_Img[1]->Render();
 }
+//緑の平行四辺形３
 void CWinnerResultUI::GPara3()
 {
-	Para_Img[2]->SetPosition(D3DXVECTOR3(100,100,0));
-	Para_Img[2]->SetScale(D3DXVECTOR3(100, 50,0));
+	Para_Img[2]->SetPosition(D3DXVECTOR3(GPARA3.GetPos()));
+	Para_Img[2]->SetScale(D3DXVECTOR3(GPARA3.GetScl()));
 	Para_Img[2]->SetPatternNo(0, 0);
 	Para_Img[2]->Render();
 }
+//薄緑の平行四辺形
 void CWinnerResultUI::UGPara()
 {
-	Para_Img[3]->SetPosition(D3DXVECTOR3(150,150,0));
-	Para_Img[3]->SetScale(D3DXVECTOR3(100, 50,0));
+	Para_Img[3]->SetPosition(D3DXVECTOR3(UGPARA.GetPos()));
+	Para_Img[3]->SetScale(D3DXVECTOR3(UGPARA.GetScl()));
 	Para_Img[3]->SetPatternNo(0, 1);
 	Para_Img[3]->Render();
 }
-
+//角丸四角形.
 void CWinnerResultUI::RoundRect()
 {
-	RoundRect_Img->SetPosition(D3DXVECTOR3(200, 200, 0));
-	RoundRect_Img->SetScale(D3DXVECTOR3(100, 100, 0));
+	RoundRect_Img->SetPosition(D3DXVECTOR3(ROUNDRECT.GetPos()));
+	RoundRect_Img->SetScale(D3DXVECTOR3(ROUNDRECT.GetScl()));
 	RoundRect_Img->Render();
+}
+//図形まとめ
+void CWinnerResultUI::Shape()
+{
+	GPara1();
+	GPara2();
+	GPara3();
+	UGPara();
+	RoundRect();
 }
 
 

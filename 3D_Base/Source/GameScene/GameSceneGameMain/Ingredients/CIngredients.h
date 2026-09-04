@@ -82,5 +82,7 @@ protected:
 	 float Fallingforce;//落下力
 	 bool	m_IsCollecting = false;	//回収中.
 	 float Cost;//食材のコスト
+	 bool IsInTheWater;//水に入っているか
+	 int EffC;
 	 enCharStatus Status;
 };

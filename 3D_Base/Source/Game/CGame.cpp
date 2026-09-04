@@ -40,8 +40,12 @@ CGame::~CGame()
 //構築.
 void CGame::Create()
 {
+
 	RawInput::firstSetting(m_hWnd);
 	CSpriteManager::LoadDeat(*m_pDx11,*m_pDx9);
+	//エフェクト.
+	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
+	Effect::GetInstance()->LoadData();
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
 //	m_pGeamScene = new CGameScenePlayerSetup(m_hWnd,m_pDx9,m_pDx11,m_pCamara);

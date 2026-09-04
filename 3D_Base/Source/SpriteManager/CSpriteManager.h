@@ -58,6 +58,7 @@ public:
 		IMG_Para,				//平行四辺形.
 		IMG_RoundRect,			//角丸四角形.
 		Img_GameMainGround,		//ゲームメインでの背景.
+		IMG_FUSUMA,				//ふすま
 		MAX
 	};
 	//ｘファイル

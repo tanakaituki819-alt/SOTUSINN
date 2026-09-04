@@ -188,6 +188,7 @@
     <ClCompile Include="Source\SceneChange\CSceneChange.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\CSceneTransitionRenderer.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FadeSceneTransition\CFadeSceneTransition.cpp" />
+    <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\SceneTransition\CSceneTransition.cpp" />
     <ClCompile Include="Source\SoundManager\CSoundManager.cpp" />
     <ClCompile Include="Source\SoundManager\Sound\CSound.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Source\SceneChange\CSceneChange.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\CSceneTransitionRenderer.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FadeSceneTransition\CFadeSceneTransition.h" />
+    <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\SceneTransition\CSceneTransition.h" />
     <ClInclude Include="Source\SoundManager\CSoundManager.h" />
     <ClInclude Include="Source\SoundManager\Sound\CSound.h" />
