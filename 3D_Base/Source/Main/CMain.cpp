@@ -191,8 +191,8 @@ HRESULT CMain::InitWindow(
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
 	wc.lpszClassName = APP_NAME;
-	wc.hIconSm = LoadIcon(nullptr, IDI_SHIELD);//ウインドウのアイコン
-	//wc.hIconSm = LoadPNGAsIcon(_T("Data\\ICON.png"));
+	//wc.hIconSm = LoadIcon(nullptr, IDI_SHIELD);//ウインドウのアイコン
+	wc.hIconSm = LoadPNGAsIcon(_T("Data\\ICON.png"));
 	//ウィンドウクラスをWindowsに登録.
 	if( !RegisterClassEx( &wc ) ) {
 		_ASSERT_EXPR( false, _T( "ウィンドウクラスの登録に失敗" ) );
