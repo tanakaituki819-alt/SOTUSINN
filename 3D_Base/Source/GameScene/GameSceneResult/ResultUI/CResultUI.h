@@ -162,4 +162,5 @@ private:
 	int Rank;	//仮の条件のためのもの
 	int Count;	//仮の条件のためのもの
 
+	bool PushA;
 };

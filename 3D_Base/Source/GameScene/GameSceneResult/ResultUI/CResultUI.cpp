@@ -97,7 +97,7 @@ CResultUI::CResultUI()
     {
         ReStart_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_ReStart);      //フォント.
     }
-    
+    PushA = true;
 }
 
 CResultUI::~CResultUI()
@@ -129,28 +129,33 @@ void CResultUI::Update()
     static int Timer = 0; // 切り替え用のタイマー
 
     Timer++;
-    if (Timer >= 10) 
+    if (Timer >= 10)
     {
-        Timer = 0;   
-        Rank++;    
+        Timer = 0;
+        Rank++;
 
-        if (Rank >= 75) 
+        if (Rank >= 75)
         {
             Rank = 0;
         }
     }
 
     //Aボタン.
-    if (m_pController->IsDown(CXInput::A, true))
-    {
-        m_ADecided = true;
+
+    if (!PushA) {
+        if (m_pController->IsDown(CXInput::A, true))
+        {
+            m_ADecided = true;
+        }
     }
+
+
     //Bボタン.
     if (m_pController->IsDown(CXInput::B, true))
     {
         m_BDecided = true;
     }
-
+    PushA= m_pController->IsDown(CXInput::A, true);
 }
 
 void CResultUI::Draw()
