@@ -168,9 +168,9 @@ void CTitleUI::Finish()
 //鍋の画像.
 void CTitleUI::Nabe()
 {
-	m_Nabe->SetPosition(D3DXVECTOR3(NABE_POS_X, NABE_POS_Y, 0));
-	m_Nabe->SetScale(D3DXVECTOR3(NABE_SCL_X, NABE_SCL_Y, 0));
-	m_Nabe->Render();
+	//m_Nabe->SetPosition(D3DXVECTOR3(NABE_POS_X, NABE_POS_Y, 0));
+	//m_Nabe->SetScale(D3DXVECTOR3(NABE_SCL_X, NABE_SCL_Y, 0));
+	//m_Nabe->Render();
 }
 //「開始」の時の選択肢の割りばし.
 void CTitleUI::STARTWaribashi()
