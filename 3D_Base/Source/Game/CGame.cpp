@@ -151,41 +151,57 @@ void CGame::ChangeScene()
 		switch (m_pGeamScene->ChangeScene())
 		{
 		case enScene::TitleSequence:
+		{
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
-			m_pGeamScene = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			CGameSceneTitleSequence* P = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			m_pGeamScene = P;
 			break;
+		}
 			//タイトルに代わるとき
 		case enScene::Title:
+		{
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
-			m_pGeamScene = new CGameSceneTitle(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			CGameSceneTitle* P = new CGameSceneTitle(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			m_pGeamScene = P;
 			break;
+		}
 			//ゲームメインに変わるとき
 		case enScene::GameMain:
+		{
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
-			m_pGeamScene = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			CGameSceneGameMain* P = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			m_pGeamScene = P;
 			break;
+		}
 			//プレイヤーセットアップに変わるとき
 		case enScene::PlayerSetUp:
+		{
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
-			m_pGeamScene = new CGameScenePlayerSetup(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			CGameScenePlayerSetup* P = new CGameScenePlayerSetup(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			m_pGeamScene = P;
 			break;
+		}
 			//勝利者リザルトに変わるとき.
 		case enScene::WinnnerResult:
+		{
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
-			m_pGeamScene = new CGameSceneWinnerResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			CGameSceneWinnerResult* P = new CGameSceneWinnerResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			m_pGeamScene = P;
 			break;
+		}
 		case enScene::Result:
+		{
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
-			m_pGeamScene = new CGameSceneResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			CGameSceneResult* P = new CGameSceneResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+			m_pGeamScene = P;
 			break;
-			
-
+		}
 		}
 	
 }

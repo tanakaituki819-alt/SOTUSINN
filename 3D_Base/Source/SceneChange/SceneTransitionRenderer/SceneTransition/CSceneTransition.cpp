@@ -20,6 +20,12 @@ bool CSceneTransition::BeforeUpdate(float SceneChengCount, float SceneChengTime)
 	}
 	return false;
 }
+bool CSceneTransition::UnderUpdate(float SceneChengCount, float SceneChengTime) {
+	if (SceneChengCount > SceneChengTime) {
+		return true;
+	}
+	return false;
+}
 
 bool CSceneTransition::AfterUpdate(float SceneChengCount, float SceneChengTime)
 {
@@ -41,7 +47,7 @@ void CSceneTransition::BeforeDraw(double transitionProgress)
 	
 }
 
-void CSceneTransition::UnderDraw()
+void CSceneTransition::UnderDraw(double transitionProgress)
 {
 	Sprite->SetPositionY(0);
 	Sprite->SetPositionX(0);

@@ -21,7 +21,12 @@ bool CFadeSceneTransition::BeforeUpdate(float SceneChengCount, float SceneChengT
 	}
 	return false;
 }
-
+bool CFadeSceneTransition::UnderUpdate(float SceneChengCount, float SceneChengTime) {
+	if (SceneChengCount > SceneChengTime) {
+		return true;
+	}
+	return false;
+}
 bool CFadeSceneTransition::AfterUpdate(float SceneChengCount, float SceneChengTime)
 {
 	if (SceneChengCount > SceneChengTime) {
@@ -41,7 +46,7 @@ void CFadeSceneTransition::BeforeDraw(double transitionProgress)
 	Sprite->SetAlpha(1);
 }
 
-void CFadeSceneTransition::UnderDraw()
+void CFadeSceneTransition::UnderDraw(double transitionProgress)
 {
 	Sprite->Render();
 }

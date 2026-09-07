@@ -8,12 +8,14 @@ public:
 	CFUSUMASceneTransition();
 	~CFUSUMASceneTransition()override;
 	bool BeforeUpdate(float SceneChengCount, float SceneChengTime)override;//変更前のUpdate、trueを返すとシーンが変わる
+	bool UnderUpdate(float SceneChengCount, float SceneChengTime)override;//変更前のUpdate、trueを返すとシーンが変わる
 	bool AfterUpdate(float SceneChengCount, float SceneChengTime) override;//変更後
 	void AfterStart() override;
 	void BeforeDraw(double transitionProgress)override;
-	void UnderDraw();
+	void UnderDraw(double transitionProgress)override;
 	void AfterDraw(double transitionProgress)override;
 private:
 	CSprite2D* Sprite;
 	float Quadraticfunction(float i);
+	float R(float i);
 };

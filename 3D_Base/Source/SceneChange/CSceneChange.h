@@ -13,7 +13,9 @@ public:
 	enum class SceneChange {
 		none,		//なし
 		Beforechange,//変更前//フェード中
+		Beforechangeend,//変更前変更後
 		Underchange,//変更中//画面が真っ黒になってる状態
+		Underchangeend,//変更中変更後
 		Afterchange,//変更後//フェードを戻す状態
 	};
 	enum class TransitionType {
@@ -41,23 +43,34 @@ public:
 		switch (Type)
 		{
 		case CSceneChange::TransitionType::Fade:
-			SceneChangeClass = new CFadeSceneTransition();
+		{
+			CFadeSceneTransition*P=new CFadeSceneTransition();
+			SceneChangeClass = P;
 			break;
+		}
+		
 		case CSceneChange::TransitionType::RSRIDE:
-			SceneChangeClass = new CSceneTransition();
+		{
+			CSceneTransition*P=new CSceneTransition();
+			SceneChangeClass = P;
 			break;
+		}
+
 		case CSceneChange::TransitionType::FUSUMA:
-			SceneChangeClass = new CFUSUMASceneTransition();
+		{
+			CFUSUMASceneTransition*P= new CFUSUMASceneTransition();
+			SceneChangeClass = P;
 			break;
+		}
+
 		}
 
 		SceneChangeFlag = SceneChange::Beforechange;
 
 	};
-
 	//シーンチェンジ終了
 	void endSceneChange(int Time = 60) {
-		if (SceneChangeFlag == SceneChange::Underchange) {
+		if (SceneChangeFlag == SceneChange::Underchangeend) {
 			SceneChengTime = Time;
 			SceneChengCount = 0;
 			SceneChangeFlag = SceneChange::Afterchange;
@@ -72,6 +85,19 @@ public:
 
 	};
 
+	void DuringSceneChange(int Time = 0) {
+		if (SceneChangeFlag == SceneChange::Beforechangeend) {
+			SceneChengTime = Time;
+			SceneChengCount = 0;
+			SceneChangeFlag = SceneChange::Underchange;
+			if (SceneChangeClass != nullptr) {
+				if (Time != 0) {
+					SceneChangeClass->AfterStart();
+				}
+
+			}
+		}
+	}
 private:
 	CSceneTransitionRenderer* SceneChangeClass;//シーンチェンジの仕方を決めるクラス	
 	SceneChange SceneChangeFlag;	//シーン変更中
