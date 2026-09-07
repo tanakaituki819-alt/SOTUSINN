@@ -29,19 +29,23 @@ CGameSceneTitle::~CGameSceneTitle()
 
 void CGameSceneTitle::Update()
 {
-	if (GetAsyncKeyState('Z') & 0x8000) {
-		
-		SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
-		
-	}
-	if (GetAsyncKeyState('X') & 0x8000) {
-
-		SenenChang(enScene::GameMain, CSceneChange::TransitionType::Fade, 60, 60);
-
-	}
-
+	m_pController->Update();
 	m_pTitleUI->Update();
 
+	//遷移
+	if (m_pTitleUI->IsDecided())
+	{
+		if (m_pTitleUI->GetSelect() == CTitleUI::enSelect::Start)
+		{
+			SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
+			m_pTitleUI->Init();
+		}
+		else if (m_pTitleUI->GetSelect() == CTitleUI::enSelect::Fin)
+		{
+			SenenChang(enScene::WinnnerResult);
+
+		}
+	}
 }
 
 void CGameSceneTitle::Draw()

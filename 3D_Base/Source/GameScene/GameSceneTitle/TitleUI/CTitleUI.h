@@ -7,8 +7,8 @@ class CTitleUI
 public:
 	enum class enSelect
 	{
-		Start,		//ゲームに戻る
-		Fin,	//タイトルに戻る
+		Start,		//hazimeru
+		Fin,	//owaru
 	};
 public:
 	static const int Max = 3;
