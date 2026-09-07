@@ -65,6 +65,7 @@ private:
 	CSceneChange* m_SceneChanger;//シーンチェンジの仕方
 private:
 	void StartChangeScene();	//シーン変更開始関数（使うシーンチェンジの選択とシーンチェンジの時間固定）
+	void DuringChangeScene();//シーン変更の閉じ切った間
 	void ChangeScene();	//シーン変更関数
 	//=delete「削除定義」と呼ばれる機能.
 	//指定された場合、その関数は呼び出せなくなる.

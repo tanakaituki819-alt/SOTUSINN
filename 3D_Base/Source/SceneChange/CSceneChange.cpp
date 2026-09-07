@@ -47,15 +47,19 @@ void CSceneChange::Update() {
 
 
 void CSceneChange::Draw() {
-	if (SceneChangeClass != nullptr&& SceneChengTime!=0) {
+	if (SceneChangeClass != nullptr) {
+		float T = static_cast<float> (SceneChengCount) / static_cast<float> (SceneChengTime);
+		if (T>1) {
+			T = 1;
+		}
 		if (SceneChangeFlag == SceneChange::Beforechange|| SceneChangeFlag == SceneChange::Beforechangeend) {
-			SceneChangeClass->BeforeDraw(static_cast<float> (SceneChengCount)/ static_cast<float> (SceneChengTime));
+			SceneChangeClass->BeforeDraw(T);
 		}
 		if (SceneChangeFlag == SceneChange::Underchange|| SceneChangeFlag == SceneChange::Underchangeend) {
-			SceneChangeClass->UnderDraw(static_cast<float> (SceneChengCount) / static_cast<float> (SceneChengTime));
+			SceneChangeClass->UnderDraw(T);
 		}
 		if (SceneChangeFlag == SceneChange::Afterchange) {
-			SceneChangeClass->AfterDraw(static_cast<float> (SceneChengCount) / static_cast<float> (SceneChengTime));
+			SceneChangeClass->AfterDraw(T);
 		}
 	}
 

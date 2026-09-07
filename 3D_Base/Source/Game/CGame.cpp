@@ -40,7 +40,7 @@ CGame::~CGame()
 //構築.
 void CGame::Create()
 {
-	m_pDx11->Max();//最大化
+	//m_pDx11->Max();//最大化
 	RawInput::firstSetting(m_hWnd);
 	CSpriteManager::LoadDeat(*m_pDx11,*m_pDx9);
 	//エフェクト.
@@ -86,11 +86,18 @@ void CGame::Update()
 			}
 
 		}
+		
+			if (m_SceneChanger->GetSceneChangeFlag() == CSceneChange::SceneChange::Beforechangeend) {
+				DuringChangeScene();
+			}
+
+	
 		//画面が真っ暗になったら
-		if (m_SceneChanger->GetSceneChangeFlag() == CSceneChange::SceneChange::Underchange) {
+		if (m_SceneChanger->GetSceneChangeFlag() == CSceneChange::SceneChange::Underchangeend) {
 
 			ChangeScene();//シーン変更
 		}
+
 		if (m_SceneChanger->GetSceneChangeFlag() == CSceneChange::SceneChange::none) {
 			m_pGeamScene->Update();
 		}
@@ -145,7 +152,21 @@ void CGame::StartChangeScene()
 
 	}
 }
+void CGame::DuringChangeScene() 
+{
+	switch (m_pGeamScene->ChangeScene())
+	{
+	case enScene::None:
 
+		break;
+
+	default:
+		m_SceneChanger->DuringSceneChange(m_pGeamScene->GetSenenChangTimeDuring());
+		break;
+
+	}
+
+}
 void CGame::ChangeScene()
 {
 		switch (m_pGeamScene->ChangeScene())

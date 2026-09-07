@@ -69,7 +69,7 @@ void CFUSUMASceneTransition::UnderDraw(double transitionProgress)
 	Sprite->Render();
 	Sprite->SetPatternNo(1, 0);
 	Sprite->SetPositionY(0);
-	Sprite->SetPositionX(0);
+	Sprite->SetPositionX(WND_W/2);
 	Sprite->Render();
 }
 

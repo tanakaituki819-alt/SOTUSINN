@@ -25,11 +25,12 @@ CGameScene::~CGameScene()
 
 
 
-void CGameScene::SenenChang(enScene enScene, CSceneChange::TransitionType TransitionType, int Farst, int End)
+void CGameScene::SenenChang(enScene enScene, CSceneChange::TransitionType TransitionType, int Farst, int End,  int During )
 {
 	m_SceneChangeFlag = enScene;
 	m_First = Farst;
 	m_End = End;
+	m_During = During;
 	m_SceneChange = TransitionType;
 }
 

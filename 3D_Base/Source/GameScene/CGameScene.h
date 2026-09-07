@@ -20,15 +20,17 @@ public:
 
 	int GetSenenChangTimeFarst()const {return m_First;}
 	int GetSenenChangTimeEnd()const {return m_End;}
+	int GetSenenChangTimeDuring()const { return m_During;}
 	CSceneChange::TransitionType GetSenenChangTransitionType()const { return m_SceneChange; }
 protected:
-	void SenenChang(enScene enScene, CSceneChange::TransitionType TransitionType = CSceneChange::TransitionType::Fade, int Farst = 0, int End = 0);
+	void SenenChang(enScene enScene, CSceneChange::TransitionType TransitionType = CSceneChange::TransitionType::Fade, int Farst = 0, int End = 0,int During=0);
 	//プロジェクション関数.
 	void Projection();
 	enScene m_SceneChangeFlag;	//シーン変更フラグ
 	enScene m_enScene;
 	int m_First;
 	int m_End;
+	int m_During;
 	CSceneChange::TransitionType m_SceneChange;
 
 	CDirectX9*  m_pDx9;

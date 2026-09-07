@@ -40,7 +40,7 @@ void CGameScenePlayerSetup::Update()
 		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);
 	}
 	if (m_pGameRdyUI->GetTitleSceneChangeflag()) {
-		SenenChang(enScene::Title, CSceneChange::TransitionType::FUSUMA, 60, 260);
+		SenenChang(enScene::Title, CSceneChange::TransitionType::FUSUMA, 60, 120,120);
 	}
 
 	m_pGameRdyUI->Update();
