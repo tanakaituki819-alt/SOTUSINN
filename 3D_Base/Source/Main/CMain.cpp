@@ -25,6 +25,7 @@ const TCHAR APP_NAME[]	= _T( "お先にいただきます！" );
 //=================================================
 //	コンストラクタ.
 //=================================================
+static CDirectX11* pDX11;
 CMain::CMain()
 	//初期化リスト.
 	: m_hWnd	( nullptr )
@@ -34,6 +35,7 @@ CMain::CMain()
 {
 	m_pDx9 = new CDirectX9();
 	m_pDx11 = new CDirectX11();
+	pDX11 = m_pDx11;
 	// --- GDI+ の初期化（WinMainなどの最初で1回だけ呼ぶ） ---
 	ULONG_PTR gdiplusToken;
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
@@ -288,6 +290,7 @@ LRESULT CALLBACK CMain::MsgProc(
 		//キー別の処理.
 		switch( static_cast<char>( wParam ) ) {
 		case VK_ESCAPE:	//ESCｷｰ.
+			pDX11->Mini();
 			if( MessageBox( nullptr,
 				_T( "ゲームを終了しますか？" ),
 				_T( "警告" ), MB_YESNO ) == IDYES )
