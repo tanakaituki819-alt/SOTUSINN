@@ -40,7 +40,9 @@ public:
 	void ClearBackBuffer();
 	//表示.
 	void Present();
-
+	//ウィンドウ最大化、最小化.
+	void Max();
+	void Mini();
 	//デバイスを取得.
 	ID3D11Device* GetDevice() const { return m_pDevice11; }
 	//デバイスコンテキストを取得.

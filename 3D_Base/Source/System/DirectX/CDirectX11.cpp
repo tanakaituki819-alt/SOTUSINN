@@ -357,6 +357,16 @@ void CDirectX11::Present()
 	m_pSwapChain->Present( 0, 0 );
 }
 
+void CDirectX11::Max()
+{
+	m_pSwapChain->SetFullscreenState(TRUE, nullptr);
+}
+
+void CDirectX11::Mini()
+{
+	m_pSwapChain->SetFullscreenState(FALSE, nullptr);
+}
+
 
 //バックバッファ作成:カラー用レンダーターゲットビュー作成.
 HRESULT CDirectX11::CreateColorBackBufferRTV()

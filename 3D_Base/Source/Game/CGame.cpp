@@ -40,7 +40,7 @@ CGame::~CGame()
 //構築.
 void CGame::Create()
 {
-
+	m_pDx11->Max();//最大化
 	RawInput::firstSetting(m_hWnd);
 	CSpriteManager::LoadDeat(*m_pDx11,*m_pDx9);
 	//エフェクト.
