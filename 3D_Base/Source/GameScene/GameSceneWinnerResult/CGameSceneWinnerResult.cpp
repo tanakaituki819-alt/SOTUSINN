@@ -26,7 +26,7 @@ void CGameSceneWinnerResult::Update()
 	if (m_pWinnerResultUI->IsDecided())
 	{
 		//リザルトへ
-		SenenChang(enScene::Result);
+		SenenChang(enScene::Result, CSceneChange::TransitionType::FUSUMA, 10, 30);
 		m_pWinnerResultUI->Init();
 	}
 }

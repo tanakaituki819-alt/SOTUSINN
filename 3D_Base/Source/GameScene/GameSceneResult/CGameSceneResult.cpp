@@ -24,12 +24,12 @@ void CGameSceneResult::Update()
 
 	if (m_pResultUI->IsADecided())
 	{
-		SenenChang(enScene::GameMain);
+		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);
 		m_pResultUI->BoolInit();
 	}
 	else if (m_pResultUI->IsBDecided())
 	{
-		SenenChang(enScene::PlayerSetUp);
+		SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::FUSUMA, 60, 60);
 		m_pResultUI->BoolInit();
 	}
 
