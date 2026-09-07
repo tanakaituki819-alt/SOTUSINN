@@ -5,8 +5,8 @@
 class CPlayerUI
 {
 private:
-	static constexpr int UIH=80;
-	static constexpr int UIW=240;
+	static constexpr int UIH=95;
+	static constexpr int UIW=255;
 	static constexpr int NoSize=40;
 public:
 	CPlayerUI();
