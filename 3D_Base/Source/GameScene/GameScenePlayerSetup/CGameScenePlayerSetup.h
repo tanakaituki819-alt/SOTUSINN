@@ -22,6 +22,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
+//	void SetXInput(CXInput* Controller) {m_pController = Controller; m_pGameRdyUI->SetXInput(m_pController);}
 
 private:
 	CUIObject*		m_pBackImg						= nullptr;

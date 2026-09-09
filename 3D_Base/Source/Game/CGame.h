@@ -21,12 +21,12 @@
 *	ゲームクラス.
 **/
 
-
+class CPlayer;
 class CGame
 {
 private:
 public:
-
+	static const int Player_Max = 4;
 	CGame( CDirectX9& pDx9, CDirectX11& pDx11, HWND hWnd );
 	~CGame();
 
@@ -60,7 +60,8 @@ private:
 
 private:
 	CCamera* m_pCamara;//カメラ
-
+	CPlayer* m_pPlayer[Player_Max];	//プレイヤー.
+	CXInput* m_pController[Player_Max];
 	CGameScene* m_pGeamScene;//ゲームシーン
 	CSceneChange* m_SceneChanger;//シーンチェンジの仕方
 private:

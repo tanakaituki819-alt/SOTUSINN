@@ -42,16 +42,25 @@ void CGame::Create()
 {
 	//m_pDx11->Max();//最大化
 	RawInput::firstSetting(m_hWnd);
-	CSpriteManager::LoadDeat(*m_pDx11,*m_pDx9);
+	CSpriteManager::LoadDeat(*m_pDx11, *m_pDx9);
 	//エフェクト.
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
-//	m_pGeamScene = new CGameScenePlayerSetup(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
-//	m_pGeamScene = new CGameSceneWinnerResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
-	m_pGeamScene = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+	//	m_pGeamScene = new CGameScenePlayerSetup(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+	//	m_pGeamScene = new CGameSceneWinnerResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
+
+	
 	//m_pGeamScene = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+	for (int i = 0; i < Player_Max; i++) {
+		m_pPlayer[i] = new CPlayer();
+		m_pController[i] = new CXInput(i);
+
+	}
+	CGameSceneTitle* p= new CGameSceneTitle(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+	p->SetXInput(m_pController[0]);
+	m_pGeamScene = p;
 }
 
 //ロードデータ関数.

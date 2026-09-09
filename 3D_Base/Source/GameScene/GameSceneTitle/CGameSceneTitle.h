@@ -12,6 +12,10 @@ public:
 	~CGameSceneTitle()override;
 	void Update()override;
 	void Draw()override;
+
+	void SetXInput(CXInput* Controller) { m_pController = Controller; 	m_pTitleUI->SetXInput(m_pController);
+	m_pTitleUI->Init();
+	}
 private:
 	CSprite2D* m_pTSprite;
 	CUIObject* m_pTImg;

@@ -36,6 +36,8 @@ public:
 	bool GetMainSceneChangeflag() { return m_GameMainSceneChangeflag; }
 	//タイトルに戻る際のフラグ.
 	bool GetTitleSceneChangeflag() { return m_TitleSceneChangeflag; }
+	//現在接続されているコントローラーを判別する.
+	bool GetIsConnected(int i) { return m_IsConnected[i]; }
 
 private:
 	CSprite2D*  m_pWhiteBack				= nullptr;	//白い背景(背景ぼかし用).
@@ -60,4 +62,5 @@ private:
 	int			m_SelectchangeTimer			= 0;		//セレクトフレームを変更で期までのタイマー.
 	bool		m_GameMainSceneChangeflag	= false;	//ゲームメインシーンチェンジ判定フラグ.
 	bool		m_TitleSceneChangeflag		= false;	//タイトルシーンチェンジ判定フラグ.
+	bool		m_IsConnected[hand_Max]		= {};		//どのプレイヤーが接続されているのかを判別する.
 };

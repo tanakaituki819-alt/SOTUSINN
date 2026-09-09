@@ -105,6 +105,14 @@ void CGameRdyUI::Update()
 			}
 		}
 	}
+	for (int i = 0; i < hand_Max; i++) {
+		if (m_pController[i]->IsConnect()) {
+			m_IsConnected[i] = true;
+		}
+		else {
+			m_IsConnected[i] = false;
+		}
+	}
 
 	//タイトルに戻る画面が出ているなら.
 	if (m_TitleBackflag) {
