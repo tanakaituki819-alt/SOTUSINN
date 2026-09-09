@@ -23,12 +23,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_Light.fIntensity = 1;//	ライトパワー
 
 	m_pGround = new CNabe();
-	for (int i = 0;i < PlayerMax;i++) {
-		CONTROLA[i] = new CXInput(i);
-		m_pPlayer[i] = new CPlayer();
-		m_pPlayer[i]->SetXInput(CONTROLA[i]);
-		m_pPlayer[i]->SetPlayerNo(i);
-	}
+
 
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
@@ -39,14 +34,11 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	//当たり判定クラス.
 	m_pCollisionManager = new CCollisionManager();
-	for (int i = 0; i < PlayerMax; i++) {
-		m_pCollisionManager->SetPlyaer(*m_pPlayer[i],i);	//プレイヤー数分セット.
-	
-	}
+
 	
 	//ポーズUIの生成とコントローラーをセット.
 	m_pPauseUI = new CPauseUI();
-	m_pPauseUI->SetXInput(CONTROLA[0]);
+
 
 	m_pCIngredientsM = new CIngredientsmanager();
 	m_pCIngredientsM->SetNabe(m_pGround);
@@ -64,9 +56,21 @@ CGameSceneGameMain::~CGameSceneGameMain()
 	SAFE_DELETE(m_pCollisionManager);
 
 	SAFE_DELETE(m_pGround);
-	for (int i = 0; i < PlayerMax; i++ ) {
-		SAFE_DELETE(m_pPlayer[i]);
+
+}
+
+void CGameSceneGameMain::StartFinalSetup()
+{
+	for (int i = 0;i < PlayerMax;i++) {
+		if (m_pPlayer[i] != nullptr) {
+			m_pPlayer[i]->SetXInput(CONTROLA[i]);
+			m_pPlayer[i]->SetPlayerNo(i);
+		}
 	}
+	for (int i = 0; i < PlayerMax; i++) {
+		m_pCollisionManager->SetPlyaer(*m_pPlayer[i], i);	//プレイヤー数分セット.
+	}
+	m_pPauseUI->SetXInput(CONTROLA[0]);
 }
 
 void CGameSceneGameMain::Update()
@@ -110,7 +114,10 @@ void CGameSceneGameMain::Update()
 
 	m_pGround->Update();
 	for (int i = 0;i < PlayerMax;i++) {
+		if (m_pPlayer[i] != nullptr) {
 		m_pPlayer[i]->Update();
+		}
+		
 	}
 	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
 	m_pCIngredientsM->Update();
@@ -163,13 +170,19 @@ void CGameSceneGameMain::Draw()
 
 	m_pGround->DrawWater(m_pCamera->GetView(), m_mProj);
 	for (int i = 0;i < PlayerMax;i++) {
+		if (m_pPlayer[i] != nullptr) {
 		m_pPlayer[i]->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
+		}
+
 	}
 	Effect::GetInstance()->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pDx11->SetDepth(false);
 	for (int i = 0;i < PlayerMax;i++) {
+		if (m_pPlayer[i] != nullptr) {
 		m_pPlayer[i]->DrawUI();
+		}
+		
 	}
 	m_pTimer->Draw();
 
@@ -183,6 +196,14 @@ void CGameSceneGameMain::Draw()
 
 
 
+}
+
+void CGameSceneGameMain::PlayerControllerSet(CXInput** Xinput, CPlayer** player)
+{
+	for (int i = 0;i < PlayerMax;i++) {
+		CONTROLA[i] = Xinput[i];
+		m_pPlayer[i] = player[i];
+	}
 }
 
 void CGameSceneGameMain::UpdateBSpherePos()

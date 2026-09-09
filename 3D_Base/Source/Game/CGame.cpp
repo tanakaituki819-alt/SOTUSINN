@@ -48,8 +48,13 @@ void CGame::Create()
 	Effect::GetInstance()->LoadData();
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
-	
-	ChangeScene(enScene::GameMain);
+
+	for (int i = 0; i < Player_Max; i++) {
+		m_pPlayer[i] = new CPlayer();
+		m_pController[i] = new CXInput(i);
+	}
+
+	ChangeScene(enScene::PlayerSetUp);
 }
 
 //ロードデータ関数.
@@ -67,6 +72,11 @@ void CGame::Release()
 {
 	SAFE_DELETE(m_pGeamScene);
 	SAFE_DELETE(m_SceneChanger);
+
+	for (int i = 0;i < Player_Max;i++) {
+		SAFE_DELETE(m_pPlayer[i]);
+		SAFE_DELETE(m_pController[i]);
+	}
 }
 
 
@@ -201,6 +211,7 @@ void CGame::ChangeScene(std::optional<enScene> nextSceneId )
 	case enScene::Title:
 	{
 		CGameSceneTitle* P = new CGameSceneTitle(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		P->SetXInput(m_pController[0]);
 		m_pGeamScene = P;
 		break;
 	}
@@ -208,13 +219,21 @@ void CGame::ChangeScene(std::optional<enScene> nextSceneId )
 	case enScene::GameMain:
 	{
 		CGameSceneGameMain* P = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		P->PlayerControllerSet(m_pController, m_pPlayer);
 		m_pGeamScene = P;
 		break;
 	}
 	//プレイヤーセットアップに変わるとき
 	case enScene::PlayerSetUp:
 	{
+		for (int i = 0;i < Player_Max;i++) {
+			SAFE_DELETE(m_pPlayer[i]);
+			SAFE_DELETE(m_pController[i]);
+			m_pPlayer[i] = new CPlayer();
+			m_pController[i] = new CXInput(i);
+		}
 		CGameScenePlayerSetup* P = new CGameScenePlayerSetup(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		P->PlayerControllerSet(this);
 		m_pGeamScene = P;
 		break;
 	}
