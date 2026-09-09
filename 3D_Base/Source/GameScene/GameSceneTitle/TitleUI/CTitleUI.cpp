@@ -3,6 +3,8 @@
 #include "System/XInput/CXInput.h"
 #include <iostream>
 
+//今の定数宣言に変更する(Transform)	2026.09.04
+
 //しきい値.
 static constexpr SHORT STICK_THRESHOLD = 16000;	//constexpr:コンパイル時に確定する定数
 //タイトル
@@ -67,10 +69,6 @@ void CTitleUI::Update()
 	{
 		return;
 	}
-	//if (m_pController->IsConnect() == false)
-	//{
-	//	return;
-	//}
 
 	//左スティックの縦方向.
 	SHORT y = m_pController->GetLThumbY();
