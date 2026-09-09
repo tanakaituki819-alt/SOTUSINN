@@ -48,10 +48,8 @@ void CGame::Create()
 	Effect::GetInstance()->LoadData();
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
-//	m_pGeamScene = new CGameScenePlayerSetup(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
-//	m_pGeamScene = new CGameSceneWinnerResult(m_hWnd,m_pDx9,m_pDx11,m_pCamara);
-	m_pGeamScene = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-	//m_pGeamScene = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+	
+	ChangeScene(enScene::GameMain);
 }
 
 //ロードデータ関数.
@@ -167,62 +165,83 @@ void CGame::DuringChangeScene()
 	}
 
 }
-void CGame::ChangeScene()
+void CGame::ChangeScene(std::optional<enScene> nextSceneId )
 {
-		switch (m_pGeamScene->ChangeScene())
-		{
-		case enScene::TitleSequence:
-		{
+
+	enScene Scene = enScene::None;
+	if (m_pGeamScene != nullptr) {
+		Scene = m_pGeamScene->ChangeScene();
+	}
+	if (nextSceneId.has_value()) {
+		Scene = nextSceneId.value();
+	}
+	switch (Scene)
+	{
+	case enScene::None:
+
+		break;
+
+	default:
+		if (m_pGeamScene != nullptr) {
 			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
 			SAFE_DELETE(m_pGeamScene);
-			CGameSceneTitleSequence* P = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-			m_pGeamScene = P;
-			break;
 		}
-			//タイトルに代わるとき
-		case enScene::Title:
-		{
-			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
-			SAFE_DELETE(m_pGeamScene);
-			CGameSceneTitle* P = new CGameSceneTitle(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-			m_pGeamScene = P;
-			break;
-		}
-			//ゲームメインに変わるとき
-		case enScene::GameMain:
-		{
-			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
-			SAFE_DELETE(m_pGeamScene);
-			CGameSceneGameMain* P = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-			m_pGeamScene = P;
-			break;
-		}
-			//プレイヤーセットアップに変わるとき
-		case enScene::PlayerSetUp:
-		{
-			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
-			SAFE_DELETE(m_pGeamScene);
-			CGameScenePlayerSetup* P = new CGameScenePlayerSetup(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-			m_pGeamScene = P;
-			break;
-		}
-			//勝利者リザルトに変わるとき.
-		case enScene::WinnnerResult:
-		{
-			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
-			SAFE_DELETE(m_pGeamScene);
-			CGameSceneWinnerResult* P = new CGameSceneWinnerResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-			m_pGeamScene = P;
-			break;
-		}
-		case enScene::Result:
-		{
-			m_SceneChanger->endSceneChange(m_pGeamScene->GetSenenChangTimeEnd());
-			SAFE_DELETE(m_pGeamScene);
-			CGameSceneResult* P = new CGameSceneResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
-			m_pGeamScene = P;
-			break;
-		}
-		}
-	
+		break;
+	}
+
+	switch (Scene)
+	{
+	case enScene::TitleSequence:
+	{
+		CGameSceneTitleSequence* P = new CGameSceneTitleSequence(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		m_pGeamScene = P;
+		break;
+	}
+	//タイトルに代わるとき
+	case enScene::Title:
+	{
+		CGameSceneTitle* P = new CGameSceneTitle(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		m_pGeamScene = P;
+		break;
+	}
+	//ゲームメインに変わるとき
+	case enScene::GameMain:
+	{
+		CGameSceneGameMain* P = new CGameSceneGameMain(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		m_pGeamScene = P;
+		break;
+	}
+	//プレイヤーセットアップに変わるとき
+	case enScene::PlayerSetUp:
+	{
+		CGameScenePlayerSetup* P = new CGameScenePlayerSetup(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		m_pGeamScene = P;
+		break;
+	}
+	//勝利者リザルトに変わるとき.
+	case enScene::WinnnerResult:
+	{
+		CGameSceneWinnerResult* P = new CGameSceneWinnerResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		m_pGeamScene = P;
+		break;
+	}
+	case enScene::Result:
+	{
+		CGameSceneResult* P = new CGameSceneResult(m_hWnd, m_pDx9, m_pDx11, m_pCamara);
+		m_pGeamScene = P;
+		break;
+	}
+	}
+	switch (Scene)
+	{
+	case enScene::None:
+
+		break;
+	default:
+		m_pGeamScene->StartFinalSetup();
+		break;
+	}
+
+
+
 }

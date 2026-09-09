@@ -26,7 +26,9 @@ CGameSceneTitle::~CGameSceneTitle()
 	SAFE_DELETE(m_pTitleUI);
 	SAFE_DELETE(m_pTImg);
 }
-
+void CGameSceneTitle::StartFinalSetup()
+{
+}
 void CGameSceneTitle::Update()
 {
 	m_pController->Update();
@@ -78,3 +80,5 @@ void CGameSceneTitle::Draw()
 
 
 }
+
+

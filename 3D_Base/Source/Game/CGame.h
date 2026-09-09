@@ -16,6 +16,8 @@
 #include"SceneChange/SceneTransitionRenderer/FadeSceneTransition/CFadeSceneTransition.h"
 #include "SceneChange/CSceneChange.h"
 
+#include <optional>
+
 #include"CCamera.h"
 /********************************************************************************
 *	ゲームクラス.
@@ -66,7 +68,9 @@ private:
 private:
 	void StartChangeScene();	//シーン変更開始関数（使うシーンチェンジの選択とシーンチェンジの時間固定）
 	void DuringChangeScene();//シーン変更の閉じ切った間
-	void ChangeScene();	//シーン変更関数
+	// std::nullopt は「値が渡されていない」ことを意味します
+	//最初に使う、
+	void ChangeScene(std::optional<enScene> nextSceneId = std::nullopt);	//シーン変更関数
 	//=delete「削除定義」と呼ばれる機能.
 	//指定された場合、その関数は呼び出せなくなる.
 	CGame() = delete;	//デフォルトコンストラクタ禁止.

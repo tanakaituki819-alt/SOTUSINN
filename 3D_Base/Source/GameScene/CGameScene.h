@@ -8,7 +8,11 @@ class CGameScene
 {
 public:
 	CGameScene(HWND	Hwnd, CDirectX9* Dx9, CDirectX11* Dx11,CCamera* m_Camera);
+
+
 	virtual ~CGameScene();
+	virtual void StartFinalSetup() {};
+
 	virtual void Update() = 0;
 	virtual void Draw() = 0;	//カメラを参照しなくて良い
 	

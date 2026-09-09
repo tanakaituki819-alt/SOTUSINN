@@ -22,6 +22,7 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	void i();
 
 private:
 	CUIObject*		m_pBackImg						= nullptr;
