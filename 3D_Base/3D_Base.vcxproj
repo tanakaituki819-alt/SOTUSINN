@@ -159,6 +159,7 @@
     <ClCompile Include="Source\GameObject\StaticMeshObjObject\CStaticMeshObjObject.cpp" />
     <ClCompile Include="Source\GameObject\UIObject\CUIObject.cpp" />
     <ClCompile Include="Source\GameScene\CGameScene.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\CGameSceneGameMain.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\CollisionManager\CCollisionManager.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\IngredientsManager\CIngredientsmanager.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Source\GameObject\StaticMeshObjObject\CStaticMeshObjObject.h" />
     <ClInclude Include="Source\GameObject\UIObject\CUIObject.h" />
     <ClInclude Include="Source\GameScene\CGameScene.h" />
+    <ClInclude Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\CGameSceneGameMain.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\CollisionManager\CCollisionManager.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\IngredientsManager\CIngredientsmanager.h" />

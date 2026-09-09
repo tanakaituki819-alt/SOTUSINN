@@ -249,6 +249,9 @@ void CSpriteManager::Load2D()
 	
 	//Img_List.push_back({ static_cast<int>(enImagList::IMG_FUSUMA),		_T("Data\\Texture\\Hand.png"),		{ {1, 1, 1}, {1, 1}, {0.5, 1}} });
 	
+	//ゲージ.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_Gage),		_T("Data\\Texture\\Gauge.png"),		{ {1, 1, 1}, {300, 400}, {300, 400/4}} });
+	
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
 	}
