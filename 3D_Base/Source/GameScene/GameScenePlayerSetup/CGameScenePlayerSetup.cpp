@@ -8,15 +8,7 @@ CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX
 	m_pCharacterUI		= new CCharacterUI	();	//キャラクターのUI.
 	m_pPlayerSetupUI	= new CPlayerSetupUI();	//その他UI.
 	m_pGameRdyUI		= new CGameRdyUI	();	//ゲームlady確認UI.
-	//コントローラー最大数.
-	for (int i = 0; i < Controller_Max; i++) {
-		m_pController[i] = new CXInput(i);	
-		//コントローラーセット.
-		m_pPlayerSetupUI->SetXInput(m_pController[i],i);	
-		m_pCharacterUI->SetXInput(m_pController	[i], i);
-		m_pCharacterUI->SetXInput(m_pController	[i], i);
-		m_pGameRdyUI->SetXInput(m_pController	[i], i);
-	}
+
 	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//和室背景設定.
 	m_pBackImg->SetPosition	(0, 0, 0);		
 	m_pBackImg->SetScale	(WND_W, WND_H,0);	//画面最大数のサイズ.
@@ -30,6 +22,19 @@ CGameScenePlayerSetup::~CGameScenePlayerSetup()
 	SAFE_DELETE(m_pBackImg);
 }
 
+void CGameScenePlayerSetup::StartFinalSetup()
+{
+	//コントローラー最大数.
+	for (int i = 0; i < Controller_Max; i++) {
+			
+		//コントローラーセット.
+		m_pPlayerSetupUI->SetXInput(m_pController[i],i);	
+		m_pCharacterUI->SetXInput(m_pController	[i], i);
+		m_pCharacterUI->SetXInput(m_pController	[i], i);
+		m_pGameRdyUI->SetXInput(m_pController	[i], i);
+	}
+}
+
 void CGameScenePlayerSetup::Update()
 {
 	//コントローラー最大分.
@@ -38,6 +43,12 @@ void CGameScenePlayerSetup::Update()
 	}
 	if (m_pGameRdyUI->GetMainSceneChangeflag()) {
 		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);
+		for (int i = 0; i < Controller_Max; i++) {
+			if (!m_pController[i]->IsConnect()&&i!=0) {
+			SAFE_DELETE(CG->m_pPlayer[i]);
+			}
+			
+		}
 	}
 	if (m_pGameRdyUI->GetTitleSceneChangeflag()) {
 		SenenChang(enScene::Title, CSceneChange::TransitionType::FUSUMA, 60, 120,120);
@@ -55,4 +66,24 @@ void CGameScenePlayerSetup::Draw()
 	m_pCharacterUI->Draw();		//キャラクターUI描画.
 	m_pGameRdyUI->Draw();		//準備OK切り替え描画.
 	m_pDx11->SetDepth(true);	//深度テスト有効.
+}
+
+void CGameScenePlayerSetup::PlayerControllerSet(CXInput** Xinput, CPlayer** player)
+{
+	
+	for (int i = 0;i < Controller_Max;i++) {
+		m_pController[i] = Xinput[i];
+			m_pPlayer[i] = player[i];
+	}
+
+}
+
+void CGameScenePlayerSetup::PlayerControllerSet(CGame* m_pCGame)
+{
+	CG = m_pCGame;
+	for (int i = 0;i < Controller_Max;i++) {
+		m_pController[i] = CG->m_pController[i];
+
+	}
+
 }

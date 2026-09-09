@@ -14,6 +14,10 @@ public:
 	void Update()override;
 	void Draw()override;
 
+	void SetXInput(CXInput* Controller) {
+		m_pController = Controller; 
+	}
+
 private:
 	CSprite2D* m_pTSprite;
 	CUIObject* m_pTImg;

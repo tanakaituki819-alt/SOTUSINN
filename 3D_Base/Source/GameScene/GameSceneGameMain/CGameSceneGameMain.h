@@ -17,19 +17,22 @@ private:
 public:
 	CGameSceneGameMain(HWND	Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera);
 	~CGameSceneGameMain()override;
+	void StartFinalSetup()override;
 	void Update()override;
 	void Draw()override;
+
+	void PlayerControllerSet(CXInput** Xinput, CPlayer** player);
+
 private:
 	//当たり判定の更新
 	void UpdateBSpherePos();
 	//当たり判定確認
 	void CheckCollision();
 
-	CXInput* CONTROLA[PlayerMax];
+
 
 	CStaticMesh* m_pStaticMeshBSphere;	//バウンディングスフィア(当たり判定用).
 	CNabe* m_pGround;
-	CPlayer* m_pPlayer[PlayerMax];
 
 	CIngredients* m_pCing;
 
@@ -45,6 +48,10 @@ private:
 	CIngredientsmanager* m_pCIngredientsM;//野菜マネージャー
 	CSprite2D* m_pBackGround;
 	CIngredientsmanager* m_pCingM;
+	
+	CXInput* CONTROLA[PlayerMax] = {};
+	CPlayer* m_pPlayer[PlayerMax] = {};
+
 };
 
 

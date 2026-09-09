@@ -23,12 +23,12 @@
 *	ゲームクラス.
 **/
 
-
+class CPlayer;
 class CGame
 {
 private:
 public:
-
+	static const int Player_Max = 4;
 	CGame( CDirectX9& pDx9, CDirectX11& pDx11, HWND hWnd );
 	~CGame();
 
@@ -38,7 +38,8 @@ public:
 
 	virtual void Update();
 	virtual void Draw();
-
+	CPlayer* m_pPlayer[Player_Max];	//プレイヤー.
+	CXInput* m_pController[Player_Max];
 private:
 	//プロジェクション関数.
 	void Projection();
