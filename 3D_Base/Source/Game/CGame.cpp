@@ -54,7 +54,7 @@ void CGame::Create()
 		m_pController[i] = new CXInput(i);
 	}
 
-	ChangeScene(enScene::PlayerSetUp);
+	ChangeScene(enScene::TitleSequence);
 }
 
 //ロードデータ関数.
