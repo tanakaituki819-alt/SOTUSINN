@@ -50,4 +50,5 @@ private:
 	D3DXMATRIX  m_CustomView	= {};		//ケース3演出用のカメラ行列を複製.
 	D3DXMATRIX  m_MatZoom		= {};		//ケース3演出用のズーム行列.
 	bool		m_Effectflag	= false;
+	float		m_BattleTimer	= 0;		//真ん中でバトルする時間.
 };

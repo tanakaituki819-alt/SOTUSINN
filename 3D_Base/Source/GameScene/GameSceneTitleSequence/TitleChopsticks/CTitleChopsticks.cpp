@@ -43,10 +43,7 @@ void CTitleChopsticks::Update()
 	if (GetAsyncKeyState('Z') & 0x8000) {
 		SetCaseId(1);
 	}
-	//if (m_Effectflag) {
-	//	Effect::Play(EFE::lightning, { 0,0,0 });
-	//	m_Effectflag = false;
-	//}
+
 	//ケースで移動処理の変更.
 	switch (m_CaseId)
 	{
@@ -61,10 +58,18 @@ void CTitleChopsticks::Update()
 
 		//中央付近で衝突(一致値を超えたらX座標を反転させる)
 		if (m_AttackMoveNow && m_MoveOffset.x > IMPACT_THRESHOLD) {
-			m_AttackMoveNow = false;						//反転.
-			m_Effectflag = true;							//エフェクト出す.
-			m_MoveSpeed.x = -m_MoveSpeed.x / SPEED_Y_RATIO;	//X軸の移動方向だけ反転.
+
+			m_AttackMoveNow = false;							//反転.
+			m_Effectflag	= true;								//エフェクト出す.
+			m_MoveSpeed.x	= -m_MoveSpeed.x / SPEED_Y_RATIO;	//X軸の移動方向だけ反転.
+			m_MoveSpeed.y = -m_MoveSpeed.y / SPEED_Y_RATIO;
 		}
+		//if (m_Effectflag) {
+		//	::EsHandle handle = -1;
+		//	handle = Effect::Play(EFE::lightning, { 2.5,1.4,4.6 });
+		//	Effect::SetScale(handle, D3DXVECTOR3{ 10.f,10.f,10.f });
+		//	m_Effectflag = false;
+		//}
 		//端まで戻ったら次のフェーズへ.
 		if (!m_AttackMoveNow && m_MoveOffset.x < NEXT_PHASE_LIMIT) {
 			SetCaseId(2);
