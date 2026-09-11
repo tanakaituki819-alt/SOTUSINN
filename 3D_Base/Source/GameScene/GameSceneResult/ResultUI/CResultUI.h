@@ -14,8 +14,16 @@ public:
 	~CResultUI()override;
 
 	void Update()override;
+
 	void Draw()override;
 	
+	//二人.
+	void TwoDraw();
+	//三人.
+	void ThreeDraw();
+	//四人.
+	void FourDraw();
+
 	bool IsADecided() const { return m_ADecided; }	//決定されたかどうか
 	bool IsBDecided() const { return m_BDecided; }	//決定されたかどうか
 
@@ -28,7 +36,7 @@ public:
 	//背景.
 	void ResultBackUI();
 	//プレイヤーの背景
-	void PlayerBackUI();
+	void FourPlayerBackUI();
 
 	//プレイヤー1の位置.
 	void Player1Pos();

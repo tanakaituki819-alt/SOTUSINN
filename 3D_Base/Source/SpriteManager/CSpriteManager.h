@@ -59,6 +59,7 @@ public:
 		IMG_RoundRect,			//角丸四角形.
 		Img_GameMainGround,		//ゲームメインでの背景.
 		IMG_FUSUMA,				//ふすま
+		IMG_Gage,				//連打対決のゲージの.
 		MAX
 	};
 	//ｘファイル
@@ -117,6 +118,9 @@ public:
 	static void DeleteMesh(enMeshList No);//xファイル
 	static void DeleteObjMesh(enMeshObjList No);//obj
 	void AllDelete() { GetInstance()->allDelete(); };
+	//ゲットで初めて読んだクラスは作成されるが、先に作っておきたい場合に使う
+	static void AllObjMeshCreate();
+	static void AllSprite2DCreate();
 private:
 	void Load2D();
 	void Load3D();
