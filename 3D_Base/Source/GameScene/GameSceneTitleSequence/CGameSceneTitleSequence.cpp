@@ -30,5 +30,6 @@ void CGameSceneTitleSequence::Draw()
 	Projection();
 	m_pBackImg->Draw();	//背景描画.
 	m_pTitleChopsticks->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());	//お箸描画.
+	Effect::GetInstance()->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 	m_pDx11->SetDepth(true);	//深度テスト無効.
 }
