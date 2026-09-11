@@ -39,7 +39,7 @@ CPauseUI::CPauseUI()
 	m_pPauseImg = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Pause);
 
 	//箸休め中の選択肢画像の取得.
-	for (int i = 0; i < Option_MAX; i++)
+	for (int i = 0; i < OPTION_MAX; i++)
 	{
 		m_pPauseOptionImg[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_PauseOptions);
 	}
@@ -55,7 +55,7 @@ CPauseUI::~CPauseUI()
 {
 	//画像はここでは初期化しない.
 	m_pPauseImg	= nullptr;
-	for (int i = 0; i < Option_MAX; i++)
+	for (int i = 0; i < OPTION_MAX; i++)
 	{
 		m_pPauseOptionImg[i] = nullptr;
 	}

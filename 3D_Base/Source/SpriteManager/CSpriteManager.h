@@ -59,6 +59,7 @@ public:
 		IMG_RoundRect,			//角丸四角形.
 		Img_GameMainGround,		//ゲームメインでの背景.
 		IMG_FUSUMA,				//ふすま
+		IMG_Gage,				//連打対決のゲージの.
 		MAX
 	};
 	//ｘファイル

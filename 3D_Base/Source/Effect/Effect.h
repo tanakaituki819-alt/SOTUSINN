@@ -52,6 +52,7 @@ public:
 		ORA1,			//
 		KANSEI,			//
 		KIRAN,//
+		lightning,		//雷
 		Max				//最大数
 	};
 public:

@@ -5,8 +5,7 @@ class CPauseUI
 	:public CUIObject
 {
 public:
-
-	static const int Option_MAX = 2;
+	static const int OPTION_MAX = 2;
 	
 public:
 	enum class enSelect
@@ -33,7 +32,7 @@ public:
 
 private:
 	CSprite2D* m_pPauseImg;							//箸休め画像
-	CSprite2D* m_pPauseOptionImg	[Option_MAX];	//箸休め中の選択肢.
+	CSprite2D* m_pPauseOptionImg	[OPTION_MAX];	//箸休め中の選択肢.
 	CSprite2D* m_pPauseSelectionFrameImg;			//選択中の枠.
 	CSprite2D* m_pDimImg;							//fe^de.
 

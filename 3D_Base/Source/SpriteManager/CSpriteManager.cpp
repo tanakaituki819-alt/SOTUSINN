@@ -280,6 +280,10 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_FUSUMA),		_T("Data\\Texture\\husuma.png"),		{ {1, 1, 1}, {1, 1}, {0.5, 1}} });
 	
 	//Img_List.push_back({ static_cast<int>(enImagList::IMG_FUSUMA),		_T("Data\\Texture\\Hand.png"),		{ {1, 1, 1}, {1, 1}, {0.5, 1}} });
+	
+	//ゲージ.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_Gage),		_T("Data\\Texture\\Gauge.png"),		{ {1, 1, 1}, {300, 400}, {300, 400/4}} });
+	
 	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
 		return a.listNo < b.listNo;
 		});
