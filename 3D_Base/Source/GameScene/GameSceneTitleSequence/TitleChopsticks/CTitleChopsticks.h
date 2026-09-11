@@ -40,7 +40,7 @@ private:
 	D3DXVECTOR3 m_BaseRot = D3DXVECTOR3(D3DXToRadian(12.0f), D3DXToRadian(-68.0f), D3DXToRadian(26.0f));	//初期基準回転.
 	//移動速度.
 	D3DXVECTOR2 m_MoveOffset = D3DXVECTOR2(0.3f, 0.3f);				//現在の移動オフセット量(X, Y).
-	D3DXVECTOR2 m_MoveSpeed = D3DXVECTOR2(0.08f, 0.08f / 1.5f);		//移動スピード(X, Y).
+	D3DXVECTOR2 m_MoveSpeed = D3DXVECTOR2(0.18f, 0.18f / 1.68f);	//移動スピード(X, Y).
 	//制御フラグ状態.
 	bool    m_AttackMoveNow		= true;		//攻撃移動中フラグ.
 	bool	m_SceneChangeflag	= false;	//シーン移動していいか判定.
@@ -49,5 +49,6 @@ private:
 	float progress				= {};		//お箸が中央に向かう進捗率.
 	D3DXMATRIX  m_CustomView	= {};		//ケース3演出用のカメラ行列を複製.
 	D3DXMATRIX  m_MatZoom		= {};		//ケース3演出用のズーム行列.
-	bool		m_Effectflag	= false;
+	bool		m_Effectflag	= false;	//エフェクトを出していいかの判定.
+	float		m_StopTimer		= 0;		//中央で止まるときのタイマー.
 };
