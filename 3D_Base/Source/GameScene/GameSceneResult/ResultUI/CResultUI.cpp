@@ -156,7 +156,7 @@ void CResultUI::Update()
 void CResultUI::Draw()
 {
 	ResultBackUI();
-    PlayerBackUI();
+    FourPlayerBackUI();
 
     //フォント.
     Font_P1_UI();
@@ -702,6 +702,22 @@ void CResultUI::Draw()
 
 }
 
+//二人.
+void CResultUI::TwoDraw()
+{
+
+}
+//三人.
+void CResultUI::ThreeDraw()
+{
+
+}
+//四人.
+void CResultUI::FourDraw()
+{
+
+}
+
 void CResultUI::BoolInit()
 {
     m_ADecided = false;
@@ -715,7 +731,7 @@ void CResultUI::ResultBackUI()
 	BackGround_Img->Render();
 }
 
-void CResultUI::PlayerBackUI()
+void CResultUI::FourPlayerBackUI()
 {
     PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_BACK.GetPos()));
     PlayerBack_Img[0]->SetScale(D3DXVECTOR3(PLAYER_1_BACK.GetScl()));
