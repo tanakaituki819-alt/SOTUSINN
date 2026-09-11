@@ -41,7 +41,7 @@ public:
 
 	//初期化.
 	HRESULT Init(CDirectX11& pDx11, LPCTSTR lpFileName, SPRITE_STATE& pSs );
-	HRESULT Init2(CDirectX11& pDx11, LPCTSTR lpFileName, SPRITE_STATE& pSs);
+
 	//解放.
 	void Release();
 
@@ -50,7 +50,7 @@ public:
 
 	//モデル作成.
 	HRESULT CreateModel();
-	HRESULT CreateModel2();
+
 	//テクスチャ作成.
 	HRESULT CreateTexture( LPCTSTR lpFileName );
 	//サンプラ作成.
@@ -96,6 +96,7 @@ public:
 	void SetCOLOR(D3DXVECTOR3 COLORE) {
 		COLOR = COLORE;
 	};
+	void SetTopleftreferenceis(bool i) { Topleftreferenceis = i; }
 private:
 	CDirectX11*				m_pDx11;
 	ID3D11Device*			m_pDevice11;
@@ -131,4 +132,7 @@ private:
 	bool isCOLOR;
 	D3DXVECTOR3 COLOR;
 	void Multiply(D3DXVECTOR4* base, D3DXVECTOR3* multiplier);
+
+	bool Topleftreferenceis;
+	D3DXVECTOR3 PiPot;
 };

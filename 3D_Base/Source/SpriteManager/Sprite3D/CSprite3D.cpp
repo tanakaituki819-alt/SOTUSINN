@@ -25,6 +25,8 @@ CSprite3D::CSprite3D()
 	, m_PatternNo		()
 	, m_PatternMax		()
 	, m_Billboard		( false )
+	, Topleftreferenceis(false)
+	, PiPot(0, 0, 0)
 {
 }
 
@@ -211,8 +213,10 @@ HRESULT CSprite3D::CreateShader()
 //モデル作成.
 HRESULT CSprite3D::CreateModel()
 {
-	float w = m_SpriteState.Disp.x/ 2.0f;	//中心を基準に作るので半分にする.
-	float h = m_SpriteState.Disp.y / 2.0f;	//中心を基準に作るので半分にする.
+	PiPot.x = m_SpriteState.Disp.x / 2;
+	PiPot.y = m_SpriteState.Disp.y / 2;
+	float w = PiPot.x;
+	float h = PiPot.y;
 
 	float u = m_SpriteState.Stride.w / m_SpriteState.Base.w;	//１マスあたりの幅.
 	float v = m_SpriteState.Stride.h / m_SpriteState.Base.h;	//１マスあたりの高さ.
@@ -224,24 +228,24 @@ HRESULT CSprite3D::CreateModel()
 		static_cast<SHORT>(m_SpriteState.Base.h / m_SpriteState.Stride.h);
 
 	//板ポリ(四角形)の頂点を作成.
-	VERTEX vertices[]=
+	VERTEX vertices[] =
 	{
 		//頂点座標(x,y,z)				 UV座標(u,v)
-		D3DXVECTOR3(-w,-h, 0.0f ), D3DXVECTOR2( 0.0f,    v ),	//頂点１(左下).
-		D3DXVECTOR3(-w, h, 0.0f ), D3DXVECTOR2( 0.0f, 0.0f ),	//頂点２(左上).
-		D3DXVECTOR3( w,-h, 0.0f ), D3DXVECTOR2(    u,    v ),	//頂点３(右下).
-		D3DXVECTOR3( w, h, 0.0f ), D3DXVECTOR2(    u, 0.0f )	//頂点４(右上).
+		D3DXVECTOR3(-w,   h, 0.0f), D3DXVECTOR2(0.0f,    v),	//頂点１(左下).
+		D3DXVECTOR3(-w, -h, 0.0f), D3DXVECTOR2(0.0f, 0.0f),	//頂点２(左上).
+		D3DXVECTOR3(w,   h, 0.0f), D3DXVECTOR2(u,    v),	//頂点３(右下).
+		D3DXVECTOR3(w,-h, 0.0f), D3DXVECTOR2(u, 0.0f)	//頂点４(右上).
 	};
 	//最大要素数を算出する.
-	UINT uVerMax = sizeof( vertices ) / sizeof( vertices[0] );
+	UINT uVerMax = sizeof(vertices) / sizeof(vertices[0]);
 
 	//バッファ構造体.
 	D3D11_BUFFER_DESC bd;
-	bd.Usage			= D3D11_USAGE_DEFAULT;		//使用方法（デフォルト）.
-	bd.ByteWidth		= sizeof(VERTEX) * uVerMax;	//頂点のサイズ.
-	bd.BindFlags		= D3D11_BIND_VERTEX_BUFFER;	//頂点バッファとして扱う.
-	bd.CPUAccessFlags	= 0;	//CPUからはアクセスしない.
-	bd.MiscFlags		= 0;	//その他のフラグ（未使用）.
+	bd.Usage = D3D11_USAGE_DEFAULT;		//使用方法（デフォルト）.
+	bd.ByteWidth = sizeof(VERTEX) * uVerMax;	//頂点のサイズ.
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;	//頂点バッファとして扱う.
+	bd.CPUAccessFlags = 0;	//CPUからはアクセスしない.
+	bd.MiscFlags = 0;	//その他のフラグ（未使用）.
 	bd.StructureByteStride = 0;	//構造体のサイズ（未使用）.
 
 	//サブリソースデータ構造体.
@@ -250,13 +254,14 @@ HRESULT CSprite3D::CreateModel()
 
 	//頂点バッファの作成.
 	if (FAILED(m_pDevice11->CreateBuffer(
-		&bd, &InitData, &m_pVertexBuffer )))
+		&bd, &InitData, &m_pVertexBuffer)))
 	{
-		_ASSERT_EXPR( false, _T( "頂点バッファ作成失敗" ) );
+		_ASSERT_EXPR(false, _T("頂点バッファ作成失敗"));
 		return E_FAIL;
 	}
 
 	return S_OK;
+
 }
 
 HRESULT CSprite3D::CreateTexture(LPCTSTR lpFileName, LPCTSTR lpFileName2)
@@ -323,6 +328,13 @@ HRESULT CSprite3D::CreateSampler()
 void CSprite3D::Render(
 	D3DXMATRIX& mView,D3DXMATRIX& mProj )
 {
+	//基準点（ピボット）のオフセットを設定
+	D3DXMATRIX mPio = {};
+	D3DXMatrixIdentity(&mPio); // 単位行列に設定//０で初期化だとかけた時に０すべて０になる
+	if (Topleftreferenceis) {
+		//基準点が左上に来るように引き算（逆方向へ移動）
+		D3DXMatrixTranslation(&mPio, PiPot.x, PiPot.y, PiPot.z);
+	}
 	//ワールド行列.
 	D3DXMATRIX	mWorld;
 	D3DXMATRIX	mTrans, mRot, mScale;
@@ -345,7 +357,7 @@ void CSprite3D::Render(
 
 	//ワールド座標変換.
 	//重要: 拡縮行列 * 回転行列 * 平行行列.
-	mWorld = mScale * mRot * mTrans;
+	mWorld = mPio* mScale * mRot * mTrans;
 
 	//ビルボード用.
 	if (m_Billboard == true) {
@@ -436,6 +448,13 @@ void CSprite3D::Render2(D3DXMATRIX& mView, D3DXMATRIX& mProj, D3DXVECTOR2 c)
 		Render(mView, mProj);
 		return;
 	}
+	//基準点（ピボット）のオフセットを設定
+	D3DXMATRIX mPio = {};
+	D3DXMatrixIdentity(&mPio); // 単位行列に設定//０で初期化だとかけた時に０すべて０になる
+	if (Topleftreferenceis) {
+		//基準点が左上に来るように引き算（逆方向へ移動）
+		D3DXMatrixTranslation(&mPio, PiPot.x, PiPot.y, PiPot.z);
+	}
 	//ワールド行列.
 	D3DXMATRIX	mWorld;
 	D3DXMATRIX	mTrans, mRot, mScale;
@@ -449,7 +468,7 @@ void CSprite3D::Render2(D3DXMATRIX& mView, D3DXMATRIX& mProj, D3DXVECTOR2 c)
 	D3DXMatrixRotationY(&mYaw, m_Rotation.y);
 	D3DXMatrixRotationX(&mPitch, m_Rotation.x);
 	D3DXMatrixRotationZ(&mRoll, m_Rotation.z);
-	mRot = mYaw * mPitch * mRoll;
+	mRot = mPio* mYaw * mPitch * mRoll;
 	//※Yaw, Pitch, Roll の掛ける順番を変えると結果も変わる.
 
 	//平行行列（平行移動）.

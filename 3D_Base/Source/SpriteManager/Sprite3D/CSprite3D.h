@@ -97,6 +97,7 @@ public:
 	void SetCOLOR(D3DXVECTOR3 COLORE) {
 		COLOR = COLORE;
 	};
+	void SetTopleftreferenceis(bool i) { Topleftreferenceis = i; }
 private:
 	CDirectX11*				m_pDx11;
 	ID3D11Device*			m_pDevice11;
@@ -133,4 +134,7 @@ private:
 	D3DXVECTOR3 COLOR;
 
 	HRESULT CleatePixelShader(LPCSTR EntrePoint, ID3D11PixelShader*& pTexture);
+
+	bool Topleftreferenceis;
+	D3DXVECTOR3 PiPot;
 };

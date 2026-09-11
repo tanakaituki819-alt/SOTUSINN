@@ -38,14 +38,12 @@ CSprite2D* CSpriteManager::GetSprite2D(enImagList No)
 	SPRITE_STATE ST = CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE;
 	if(CSpriteManager::GetInstance()->Sprite2D[NO]==nullptr) {
 		GetInstance()->Sprite2D[NO] = new CSprite2D();
+		GetInstance()->Sprite2D[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
+			CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
 		if (CSpriteManager::GetInstance()->IMG_LIST[NO].centralstandards == true) {
-			GetInstance()->Sprite2D[NO]->Init2(*(CSpriteManager::GetInstance()->Dx11),
-				CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
-
 		}
 		else {
-			GetInstance()->Sprite2D[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
-				CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
+			GetInstance()->Sprite2D[NO]->SetTopleftreferenceis(true);
 		}
 	}
 	return GetInstance()->Sprite2D[NO];
@@ -154,6 +152,40 @@ void CSpriteManager::DeleteObjMesh(enMeshObjList No)
 	SAFE_DELETE(GetInstance()->StaticObjMesh[static_cast<int>(No)]);
 }
 
+void CSpriteManager::AllObjMeshCreate()
+{
+	for (int NO = 0;NO < static_cast<int>(enMeshObjList::MAX);NO++) {
+		if (CSpriteManager::GetInstance()->StaticObjMesh[NO] == nullptr) {
+			GetInstance()->StaticObjMesh[NO] = new CStaticObjMesh();
+			GetInstance()->StaticObjMesh[NO]->Init(*(CSpriteManager::GetInstance()->Dx9), *(CSpriteManager::GetInstance()->Dx11),
+				CSpriteManager::GetInstance()->MESH_OBJ_List[NO].path);
+		}
+	}
+
+}
+
+void CSpriteManager::AllSprite2DCreate()
+{
+	for (int NO = 0;NO < static_cast<int>(enImagList::MAX);NO++) {
+
+		SPRITE_STATE ST = CSpriteManager::GetInstance()->IMG_LIST[NO].SPRITE;
+		if (CSpriteManager::GetInstance()->Sprite2D[NO] == nullptr) {
+			GetInstance()->Sprite2D[NO] = new CSprite2D();
+			GetInstance()->Sprite2D[NO]->Init(*(CSpriteManager::GetInstance()->Dx11),
+				CSpriteManager::GetInstance()->IMG_LIST[NO].path, ST);
+
+			if (CSpriteManager::GetInstance()->IMG_LIST[NO].centralstandards == true) {
+
+			}
+			else {
+				GetInstance()->Sprite2D[NO]->SetTopleftreferenceis(true);
+			}
+		}
+	}
+
+
+}
+
 void CSpriteManager::Load2D()
 {
 	std::vector <ImgList> Img_List;
@@ -248,7 +280,9 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_FUSUMA),		_T("Data\\Texture\\husuma.png"),		{ {1, 1, 1}, {1, 1}, {0.5, 1}} });
 	
 	//Img_List.push_back({ static_cast<int>(enImagList::IMG_FUSUMA),		_T("Data\\Texture\\Hand.png"),		{ {1, 1, 1}, {1, 1}, {0.5, 1}} });
-	
+	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
+		return a.listNo < b.listNo;
+		});
 	for (int i = 0;i < Img_List.size();i++) {
 		IMG_LIST[Img_List[i].listNo] = Img_List[i];
 	}
@@ -260,13 +294,13 @@ void CSpriteManager::Load3D()
 
 	//Mehshも
 	MeshList.push_back({ static_cast<int>(enMeshList::Sphere),_T("Data\\Collision\\Sphere.x") });
-
-	for (int i = 0;i < MeshList.size();i++) {
-		MESH_LIST[MeshList[i].listNo] = MeshList[i];
-	}
 	std::sort(MeshList.begin(), MeshList.end(), [](const auto& a, const auto& b) {
 		return a.listNo < b.listNo;
 		});
+	for (int i = 0;i < MeshList.size();i++) {
+		MESH_LIST[MeshList[i].listNo] = MeshList[i];
+	}
+
 
 	std::vector<StaticMeshList>MeshObjList;
 	//オブジェファイルの読み込み
@@ -300,7 +334,9 @@ void CSpriteManager::Load3D()
 	MeshObjList.push_back({ static_cast<int>(enMeshObjList::Chopsticks2),_T("Data\\Mesh\\Obj\\Chopsticks\\Chopsticks.obj") });
 
 
-
+	std::sort(MeshObjList.begin(), MeshObjList.end(), [](const auto& a, const auto& b) {
+		return a.listNo < b.listNo;
+		});
 	for (int i = 0;i < MeshObjList.size();i++) {
 		MESH_OBJ_List[MeshObjList[i].listNo] = MeshObjList[i];
 	}

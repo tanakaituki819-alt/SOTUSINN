@@ -117,6 +117,9 @@ public:
 	static void DeleteMesh(enMeshList No);//xファイル
 	static void DeleteObjMesh(enMeshObjList No);//obj
 	void AllDelete() { GetInstance()->allDelete(); };
+	//ゲットで初めて読んだクラスは作成されるが、先に作っておきたい場合に使う
+	static void AllObjMeshCreate();
+	static void AllSprite2DCreate();
 private:
 	void Load2D();
 	void Load3D();
