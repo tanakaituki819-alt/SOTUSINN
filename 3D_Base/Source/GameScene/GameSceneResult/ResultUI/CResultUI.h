@@ -171,4 +171,8 @@ private:
 	int Count;	//仮の条件のためのもの
 
 	bool PushA;
+
+	//ｶﾞﾁ仮
+	int ZTMY;
+
 };

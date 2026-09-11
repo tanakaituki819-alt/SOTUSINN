@@ -21,10 +21,19 @@ static constexpr Transform PLAYER_3_BACK = { 765.f,340.f,630.f,350.f };
 static constexpr Transform PLAYER_4_BACK = { 1070.f,340.f,630.f,350.f };
 
 //プレイヤーアイコン
-static constexpr Transform PLAYER_1_ICON = {  45.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_2_ICON = { 350.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_3_ICON = { 655.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_4_ICON = { 960.f,100.f,120.f,120.f };
+    //二人の時.
+    static constexpr Transform PLAYER_1_ICON_TWO = { 45.f,100.f,120.f,120.f };
+    static constexpr Transform PLAYER_2_ICON_TWO = { 350.f,100.f,120.f,120.f };
+    //三人の時
+    static constexpr Transform PLAYER_1_ICON_THREE = { 45.f,100.f,120.f,120.f };
+    static constexpr Transform PLAYER_2_ICON_THREE = { 350.f,100.f,120.f,120.f };
+    static constexpr Transform PLAYER_3_ICON_THREE = { 655.f,100.f,120.f,120.f };
+    //四人の時
+    static constexpr Transform PLAYER_1_ICON_FOR = { 45.f,100.f,120.f,120.f };
+    static constexpr Transform PLAYER_2_ICON_FOR = { 350.f,100.f,120.f,120.f };
+    static constexpr Transform PLAYER_3_ICON_FOR = { 655.f,100.f,120.f,120.f };
+    static constexpr Transform PLAYER_4_ICON_FOR = { 960.f,100.f,120.f,120.f };
+
 
 //メダル関連.
 static constexpr Transform P1_MEDAL = { 170.f,90.f,85.f,125.f };
@@ -35,6 +44,7 @@ static constexpr Transform P4_MEDAL = { 1085.f,90.f,85.f,125.f };
 //フォント関連.
 static constexpr Transform FONT_SCALE = { 0.f,0.f,210.f,45.f };
 
+//四人の時
 //プレイヤー壱
 static constexpr Transform P1_FONT_1 = { 45.f, 215.f };     //かくとくポイント
 static constexpr Transform P1_FONT_2 = { 45.f, 270.f };     //具材ポイント
@@ -55,6 +65,8 @@ static constexpr Transform P4_FONT_1 = { 960.f, 215.f };    //かくとくポイ
 static constexpr Transform P4_FONT_2 = { 960.f, 270.f };    //具材ポイント
 static constexpr Transform P4_FONT_3 = { 960.f, 360.f };    //高級具材ポイント
 static constexpr Transform P4_FONT_4 = { 960.f, 450.f };    //合計ポイント
+
+
 
 //数字の1文字あたりの幅高さ.
 static constexpr float NUMBER_SIZE_W = 30.f;
@@ -77,6 +89,7 @@ CResultUI::CResultUI()
     , m_ADecided(false)
     , m_BDecided(false)
     , m_pController(nullptr)
+    , ZTMY(0)
 {
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
 	for (int i = 0; i < PLAYER_MAX; i++)
@@ -128,20 +141,66 @@ void CResultUI::Update()
 {
     static int Timer = 0; // 切り替え用のタイマー
 
-    Timer++;
-    if (Timer >= 10)
+    if (ZTMY == 1)
     {
-        Timer = 0;
-        Rank++;
-
-        if (Rank >= 75)
+        Timer++;
+        if (Timer >= 10)
         {
-            Rank = 0;
+            Timer = 0;
+            Rank++;
+
+            if (Rank >= 3)
+            {
+                Rank = 0;
+            }
+        }
+    }
+    else if (ZTMY == 2)
+    {
+        Timer++;
+        if (Timer >= 10)
+        {
+            Timer = 0;
+            Rank++;
+
+            if (Rank >= 13)
+            {
+                Rank = 0;
+            }
+        }
+    }
+    else if (ZTMY == 3)
+    {
+        Timer++;
+        if (Timer >= 10)
+        {
+            Timer = 0;
+            Rank++;
+
+            if (Rank >= 75)
+            {
+                Rank = 0;
+            }
         }
     }
 
-    //Aボタン.
 
+    //人数変化（ｶﾞﾁ仮）
+    if (GetAsyncKeyState('Z') & 0x0001)
+    {
+        ZTMY = 1;
+    }
+    if (GetAsyncKeyState('X') & 0x0001)
+    {
+        ZTMY = 2;
+    }
+    if (GetAsyncKeyState('C') & 0x0001)
+    {
+        ZTMY = 3;
+    }
+
+
+    //Aボタン.
     if (!PushA) {
         if (m_pController->IsDown(CXInput::A, true))
         {
@@ -161,6 +220,152 @@ void CResultUI::Update()
 void CResultUI::Draw()
 {
 	ResultBackUI();
+
+
+    
+    ReStart();
+    
+    if (ZTMY == 1)
+    {
+        TwoDraw();
+    }
+    else if (ZTMY == 2)
+    {
+        ThreeDraw();
+    }
+    else if (ZTMY == 3)
+    {
+        FourDraw();
+    }
+}
+
+//二人.
+void CResultUI::TwoDraw()
+{
+    FourPlayerBackUI();
+
+    //フォント.
+    Font_P1_UI();
+    Font_P2_UI();
+
+    //スコア
+    Number_P1_UI();
+    Number_P2_UI();
+
+    if (Rank == 0)
+    {
+        Player1First();
+        Player2First();
+    }
+    else if (Rank == 1)
+    {
+        Player1First();
+        Player2Second();
+    }
+    else if (Rank == 2)
+    {
+        Player1Second();
+        Player2First();
+    }
+}
+//三人.
+void CResultUI::ThreeDraw()
+{
+    FourPlayerBackUI();
+
+    //フォント.
+    Font_P1_UI();
+    Font_P2_UI();
+    Font_P3_UI();
+
+    //スコア
+    Number_P1_UI();
+    Number_P2_UI();
+    Number_P3_UI();
+
+    if (Rank == 0)
+    {
+        Player1First();
+        Player2First();
+        Player3First();
+    }
+    else if (Rank == 1)
+    {
+        Player1First();
+        Player2First();
+        Player3Second();
+    }
+    else if (Rank == 2)
+    {
+        Player1First();
+        Player2Second();
+        Player3First();
+    }
+    else if (Rank == 3)
+    {
+        Player1First();
+        Player2Second();
+        Player3Second();
+    }
+    else if (Rank == 4)
+    {
+        Player1Second();
+        Player2First();
+        Player3First();
+    }
+    else if (Rank == 5)
+    {
+        Player1Second();
+        Player2First();
+        Player3Second();
+    }
+    else if (Rank == 6)
+    {
+        Player1Second();
+        Player2Second();
+        Player3First();
+    }
+    else if (Rank == 7)
+    {
+        Player1First();
+        Player2Second();
+        Player3Third();
+    }
+    else if (Rank == 8)
+    {
+        Player1First();
+        Player2Third();
+        Player3Second();
+    }
+    else if (Rank == 9)
+    {
+        Player1Second();
+        Player2First();
+        Player3Third();
+    }
+    else if (Rank == 10)
+    {
+        Player1Second();
+        Player2Third();
+        Player3First();
+    }
+    else if (Rank == 11)
+    {
+        Player1Third();
+        Player2First();
+        Player3Second();
+    }
+    else if (Rank == 12)
+    {
+        Player1Third();
+        Player2Second();
+        Player3First();
+    }
+}
+//四人.
+void CResultUI::FourDraw()
+{
+
     FourPlayerBackUI();
 
     //フォント.
@@ -174,11 +379,9 @@ void CResultUI::Draw()
     Number_P2_UI();
     Number_P3_UI();
     Number_P4_UI();
-    
-    ReStart();
 
     //修正必須!!.
-	//仮条件 2026.07.31
+     //仮条件 2026.07.31
     if (Rank == 0)
     {
         Player1First();
@@ -191,7 +394,7 @@ void CResultUI::Draw()
         Player1First();
         Player2First();
         Player3First();
-        Player4Second();   
+        Player4Second();
     }
     else if (Rank == 2)
     {
@@ -704,23 +907,6 @@ void CResultUI::Draw()
         Player3Second();
         Player4First();
     }
-
-}
-
-//二人.
-void CResultUI::TwoDraw()
-{
-
-}
-//三人.
-void CResultUI::ThreeDraw()
-{
-
-}
-//四人.
-void CResultUI::FourDraw()
-{
-
 }
 
 void CResultUI::BoolInit()
@@ -763,26 +949,79 @@ void CResultUI::FourPlayerBackUI()
 
 void CResultUI::Player1Pos()
 {
-	PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON.GetPos()));
+    if (ZTMY == 1)
+    {
+        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON_TWO.GetPos()));
+
+    }
+    if (ZTMY == 2)
+    {
+        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON_THREE.GetPos()));
+
+    }
+    if (ZTMY == 3)
+    {
+        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON_FOR.GetPos()));
+
+    }
 }
 void CResultUI::Player2Pos()
 {
-    PlayerIcon_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON.GetPos()));
+    if (ZTMY == 1)
+    {
+        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON_TWO.GetPos()));
+
+    }
+    if (ZTMY == 2)
+    {
+        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON_THREE.GetPos()));
+
+    }
+    if (ZTMY == 3)
+    {
+        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON_FOR.GetPos()));
+
+    }
 }
 void CResultUI::Player3Pos()
 {
-    PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON.GetPos()));
+    if (ZTMY == 1)
+    {
+        return;
+    }
+    if (ZTMY == 2)
+    {
+        PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON_THREE.GetPos()));
+
+    }
+    if (ZTMY == 3)
+    {
+        PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON_FOR.GetPos()));
+
+    }
 }
 void CResultUI::Player4Pos()
 {
-    PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_ICON.GetPos()));
+    if (ZTMY == 1)
+    {
+        return;
+    }
+    if (ZTMY == 2)
+    {
+        return;
+    }
+    if (ZTMY == 3)
+    {
+        PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_ICON_FOR.GetPos()));
+
+    }
 }
 
 void CResultUI::PlayerScl()
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(PLAYER_1_ICON .GetScl()));
+		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(PLAYER_1_ICON_FOR .GetScl()));
 	}
 }
 
