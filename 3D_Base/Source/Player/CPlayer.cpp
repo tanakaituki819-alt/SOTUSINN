@@ -36,8 +36,8 @@ void CPlayer::Update()
 	//コントローラーが接続されていれば.
 	if (MyController->IsConnect()==true) {
 		m_IsConnected = true;	//コントローラー接続状態に.
-		//回収中じゃないかつマヒ中でないなら
-		if (!m_IsCollecting && !m_IsParalysis) {
+		//回収中じゃないかつマヒ中でないかつ連打対決中でないなら
+		if (!m_IsCollecting && !m_IsParalysis && !m_IsMashBattle) {
 			//左スティック動作.
 			D3DXVECTOR2 VECT = { static_cast<FLOAT>(MyController->GetLThumbX()) ,static_cast<FLOAT>(MyController->GetLThumbY()) };
 			D3DXVec2Normalize(&VECT, &VECT);
@@ -62,15 +62,16 @@ void CPlayer::Update()
 
 			};
 			m_Position = ENDPos;
-		//回収中じゃないかつマヒ中でないなら.
-		if (!m_IsCollecting && !m_IsParalysis) {
+		//回収中じゃないかつマヒ中でないかつ連打対決中でないなら.
+		if (!m_IsCollecting && !m_IsParalysis && !m_IsMashBattle) {
 			if (MyController->IsDown(CXInput::A, false)) {
 				m_IsCollecting = true;	//回収中へ.
 			}
 		}
 		//具材回収中なら.
+		//※連打対決中は箸を伸ばしたまま止めておきたいので、対決中はタイムを進めない.
 		if (!m_pIngredients) {
-			if (m_IsCollecting) {
+			if (m_IsCollecting && !m_IsMashBattle) {
 				++m_Collectingtime;	//タイム増加.
 				//タイムが指定した時間経過すれば.
 				if (m_Collectingtime > 40) {
