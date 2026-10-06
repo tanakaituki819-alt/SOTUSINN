@@ -172,6 +172,7 @@
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\GameRdyUI\CGameRdyUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\PlayerSetupUI\CPlayerSetupUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\TitleBackUI\CTitleBackUI.cpp" />
+    <ClCompile Include="Source\GameDataManager\CGameDataManager.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneResult\CGameSceneResult.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneTitleSequence\CGameSceneTitleSequence.cpp" />

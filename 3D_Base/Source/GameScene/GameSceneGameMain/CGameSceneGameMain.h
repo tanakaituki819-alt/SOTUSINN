@@ -28,6 +28,8 @@ private:
 	void UpdateBSpherePos();
 	//当たり判定確認
 	void CheckCollision();
+	//リザルトへ持っていくデータを保存.
+	void SaveResultData();
 
 
 

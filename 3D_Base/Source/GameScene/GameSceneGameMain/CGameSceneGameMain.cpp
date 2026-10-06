@@ -1,5 +1,6 @@
 #include "Game/CGame.h"
 #include "CGameSceneGameMain.h"
+#include "GameDataManager/CGameDataManager.h"
 
 
 
@@ -71,6 +72,9 @@ void CGameSceneGameMain::StartFinalSetup()
 		m_pCollisionManager->SetPlyaer(*m_pPlayer[i], i);	//プレイヤー数分セット.
 	}
 	m_pPauseUI->SetXInput(CONTROLA[0]);
+
+	//前回のゲームの結果を消しておく.
+	CGameDataManager::GetInstance()->ResetGameData();
 }
 
 void CGameSceneGameMain::Update()
@@ -123,6 +127,7 @@ void CGameSceneGameMain::Update()
 	m_pCIngredientsM->Update();
 	//タイマーが0秒になっているかつ鍋に残った具材が0になるまたは、強制終了タイマーが45秒経過したら.
 	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45) {
+		SaveResultData();	//リザルトへ持っていくデータを保存.
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
 	}
 	//ゲームタイマーが0秒になった.
@@ -139,6 +144,7 @@ void CGameSceneGameMain::Update()
 		handle=Effect::Play(EFE::KANSEI,D3DXVECTOR3(0.f, 0.f, 0.f));
 	}
 	if (GetAsyncKeyState('Z') & 0x0001) {
+		SaveResultData();	//リザルトへ持っていくデータを保存.
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 30, 120);
 	}
 	m_pTimer->Update();
@@ -216,4 +222,16 @@ void CGameSceneGameMain::UpdateBSpherePos()
 void CGameSceneGameMain::CheckCollision()
 {
 
+}
+
+void CGameSceneGameMain::SaveResultData()
+{
+	CGameDataManager* pData = CGameDataManager::GetInstance();
+	for (int i = 0; i < PlayerMax; i++) {
+		if (m_pPlayer[i] == nullptr) continue;
+		//得点と取得した食材のリストを保存(コントローラー接続中のプレイヤーを参加者とする).
+		pData->SetPlayerResult(i, m_pPlayer[i]->GetConnected(),
+			m_pPlayer[i]->GetScore(), m_pPlayer[i]->GetAllIngredients());
+	}
+	pData->CalcRank();	//順位を計算.
 }

@@ -44,6 +44,8 @@ public:
 
 	void GetIngredients(CIngredients*  YASAI);
 	std::list<Ingredients>& GetAllIngredients() {return my_list;}
+	//スコア取得.
+	int GetScore() const { return Score; }
 private:
 	D3DXVECTOR3				m_Pos;							//ポジション.
 	CXInput*				MyController;					//コントローラー.
