@@ -153,6 +153,8 @@
   <ItemGroup>
     <ClCompile Include="Source\BoundingSphere\CBoundingSphere.cpp" />
     <ClCompile Include="Source\Effect\Effect.cpp" />
+    <ClCompile Include="Source\Effect\Effect2D.cpp" />
+    <ClCompile Include="Source\Effect\EffectManager.cpp" />
     <ClCompile Include="Source\GameObject\CGameObject.cpp" />
     <ClCompile Include="Source\GameObject\SpriteObject\CSpriteObject.cpp" />
     <ClCompile Include="Source\GameObject\StaticMeshObject\CStaticMeshObject.cpp" />
@@ -215,6 +217,8 @@
   <ItemGroup>
     <ClInclude Include="Source\BoundingSphere\CBoundingSphere.h" />
     <ClInclude Include="Source\Effect\Effect.h" />
+    <ClInclude Include="Source\Effect\Effect2D.h" />
+    <ClInclude Include="Source\Effect\EffectManager.h" />
     <ClInclude Include="Source\GameDataManager\CGameDataManager.h" />
     <ClInclude Include="Source\GameObject\CGameObject.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\CSpriteObject.h" />

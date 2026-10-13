@@ -58,13 +58,7 @@ public:
 public:
 
 	~Effect();
-	//インスタンス取得（唯一のアクセス原）
-	static Effect* GetInstance()
-	{
-		//唯一のインスタンス作成
-		static Effect s_Instance;
-		return &s_Instance;
-	}
+
 public:
 
 	//コピーコンストラクタによるコピーを禁止する
@@ -93,49 +87,48 @@ public:
 	//	制御系.
 	//-------------------------------------.
 	//再生
-	static ::EsHandle Play(enList list, const D3DXVECTOR3& pos) {
-		Effect* pE = Effect::GetInstance();
-		return pE->m_pManager->Play(pE->m_pEffect[list], pos.x, pos.y, pos.z);
+	 ::EsHandle Play(enList list, const D3DXVECTOR3& pos) {
+		return m_pManager->Play(pE->m_pEffect[list], pos.x, pos.y, pos.z);
 	}
-	static ::EsHandle Play(enList list, const D3DXVECTOR3& pos,int32_t startFrame ) {
-		Effect* pE = Effect::GetInstance();
+	 ::EsHandle Play(enList list, const D3DXVECTOR3& pos,int32_t startFrame ) {
+	
 		EsVec3 i(pos.x, pos.y, pos.z);
 		EsVec3& c = i;
-		return pE->m_pManager->Play(pE->m_pEffect[list],c, startFrame);
+		return m_pManager->Play(m_pEffect[list],c, startFrame);
 	}
 	//停止
-	static void Stop(::EsHandle handle) {
-		Effect::GetInstance()->m_pManager->StopEffect(handle);
+	 void Stop(::EsHandle handle) {
+		m_pManager->StopEffect(handle);
 		
 	}
 	//全てのエフェクトを停止
-	static void StopAll() {
-		Effect::GetInstance()->m_pManager->StopAllEffects();
+	 void StopAll() {
+		m_pManager->StopAllEffects();
 	}
 
 	//一時停止
-	static void Paused(::EsHandle handle, bool bPaused) {
-		Effect::GetInstance()->m_pManager->SetPaused(handle, bPaused);
+	 void Paused(::EsHandle handle, bool bPaused) {
+		m_pManager->SetPaused(handle, bPaused);
 	}
 	//再生速度の設定
-	static void SetSpeed(::EsHandle handle, float speed) {
-		Effect::GetInstance()->m_pManager->SetSpeed(handle, speed);
+	 void SetSpeed(::EsHandle handle, float speed) {
+		m_pManager->SetSpeed(handle, speed);
 	}
 	//位置を指定する
-	static void SetLocation(::EsHandle handle, const D3DXVECTOR3& pos) {
-		Effect::GetInstance()->m_pManager->SetLocation(handle, pos.x, pos.y, pos.z);
+	 void SetLocation(::EsHandle handle, const D3DXVECTOR3& pos) {
+		m_pManager->SetLocation(handle, pos.x, pos.y, pos.z);
 	}
 	//回転を指定する
-	static void SetRotation(::EsHandle handle, const D3DXVECTOR3& rot) {
-		 Effect::GetInstance()->m_pManager->SetRotation(handle, rot.x, rot.y, rot.z);
+	 void SetRotation(::EsHandle handle, const D3DXVECTOR3& rot) {
+		 m_pManager->SetRotation(handle, rot.x, rot.y, rot.z);
 	}
 	//回転を指定する（軸回転）
-	static void SetRotation(::EsHandle handle, const D3DXVECTOR3& axis, float angle) {
-		Effect::GetInstance()->m_pManager->SetRotation(handle, ::EsVec3(axis.x, axis.y, axis.z), angle);
+	 void SetRotation(::EsHandle handle, const D3DXVECTOR3& axis, float angle) {
+		m_pManager->SetRotation(handle, ::EsVec3(axis.x, axis.y, axis.z), angle);
 	}
 	//サイズを指定する
-	static void SetScale(::EsHandle handle, const D3DXVECTOR3& scale) {
-		Effect::GetInstance()->m_pManager->SetScale(handle, scale.x, scale.y, scale.z);
+	 void SetScale(::EsHandle handle, const D3DXVECTOR3& scale) {
+		m_pManager->SetScale(handle, scale.x, scale.y, scale.z);
 	}
 
 
@@ -153,6 +146,7 @@ private:
 private:
 	//エフェクトを動作させるのにひつよう
 	::EsManagerRef	m_pManager;
+
 	::EsRenderefRef m_pRender;
 	//エフェクトの数だけ必要
 	::EsEffecRef	m_pEffect[enList::Max];
