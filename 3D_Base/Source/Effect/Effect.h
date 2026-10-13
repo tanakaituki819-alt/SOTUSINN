@@ -88,7 +88,7 @@ public:
 	//-------------------------------------.
 	//再生
 	 ::EsHandle Play(enList list, const D3DXVECTOR3& pos) {
-		return m_pManager->Play(pE->m_pEffect[list], pos.x, pos.y, pos.z);
+		return m_pManager->Play(m_pEffect[list], pos.x, pos.y, pos.z);
 	}
 	 ::EsHandle Play(enList list, const D3DXVECTOR3& pos,int32_t startFrame ) {
 	
