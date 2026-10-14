@@ -405,7 +405,7 @@ HRESULT XAudio2::Initialize()
         return E_FAIL;
     }
 
-
+    LoadData();
 
   
 
