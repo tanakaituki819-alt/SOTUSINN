@@ -59,7 +59,7 @@ void CGame::Create()
 	}
 
 //	ChangeScene(enScene::TitleSequence);
-	ChangeScene(enScene::Title);
+	ChangeScene(enScene::GameMain);
 }
 
 //ロードデータ関数.

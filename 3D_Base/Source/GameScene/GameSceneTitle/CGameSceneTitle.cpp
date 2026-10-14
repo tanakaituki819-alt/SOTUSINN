@@ -45,6 +45,7 @@ void CGameSceneTitle::Update()
 		if (m_pTitleUI->GetSelect() == CTitleUI::enSelect::Start)
 		{
 			SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::Fade, 60, 60);
+			XAudio2::GetInstance()->AllStopBGM();
 			m_pTitleUI->Init();
 		}
 		else if (m_pTitleUI->GetSelect() == CTitleUI::enSelect::Fin)

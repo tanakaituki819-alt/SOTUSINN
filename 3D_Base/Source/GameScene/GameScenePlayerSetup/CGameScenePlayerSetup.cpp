@@ -46,6 +46,7 @@ void CGameScenePlayerSetup::Update()
 	}
 	if (m_pGameRdyUI->GetMainSceneChangeflag()) {
 		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);
+		XAudio2::GetInstance()->AllStopBGM();
 		for (int i = 0; i < Controller_Max; i++) {
 			if (!m_pController[i]->IsConnect()&&i!=0) {
 			SAFE_DELETE(CG->m_pPlayer[i]);
@@ -55,6 +56,7 @@ void CGameScenePlayerSetup::Update()
 	}
 	if (m_pGameRdyUI->GetTitleSceneChangeflag()) {
 		SenenChang(enScene::Title, CSceneChange::TransitionType::FUSUMA, 60, 120,120);
+		XAudio2::GetInstance()->AllStopBGM();
 	}
 
 	m_pGameRdyUI->Update();
