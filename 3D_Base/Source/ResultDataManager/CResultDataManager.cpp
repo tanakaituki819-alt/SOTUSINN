@@ -13,26 +13,76 @@ CResultDataManager::~CResultDataManager()
 }
 
 //食材の種類からカテゴリを判定.
-CResultDataManager::enCategory CResultDataManager::GetCategory(Ingredients IngredientsNo)
+enIngredientCategory CResultDataManager::GetCategory(Ingredients IngredientsNo)
 {
 	switch (IngredientsNo)
 	{
 	//高級食材.
-	case Ingredients::KANI:
-	case Ingredients::KUMANOTE:
-	case Ingredients::SAKANA:
-	case Ingredients::ROBUSTER:
-		return enCategory::Special;
+	case Ingredients::KANI:		//カニ.
+	case Ingredients::KUMANOTE:	//クマの手.
+	case Ingredients::ROBUSTER:	//ロブスター.
+	case Ingredients::SAKANA:	//リュウグウノツカイ.
+	case Ingredients::TAI:		//タイ.
+		return enIngredientCategory::Special;
 
 	//肉系.
-	case Ingredients::NIKU:
-	case Ingredients::UINNER:
-		return enCategory::Meat;
+	case Ingredients::NIKU:		//肉.
+	case Ingredients::UINNER:	//ウインナー.
+		return enIngredientCategory::Meat;
 
-	//それ以外は野菜.
+	//魚系.
+	case Ingredients::TARA:		//タラ.
+		return enIngredientCategory::Fish;
+
+	//野菜系.
+	case Ingredients::NINZIN:	//にんじん.
+	case Ingredients::DAIKON:	//大根.
+	case Ingredients::HAKUSAI1:	//白菜.
+	case Ingredients::HAKUSEI2:	//白菜.
+	case Ingredients::NEGI:		//ねぎ.
+		return enIngredientCategory::Veggie;
+
+	//きのこ系.
+	case Ingredients::ENOKI:	//エノキ.
+	case Ingredients::SITAKE:	//シイタケ.
+		return enIngredientCategory::Mushroom;
+
+	//豆腐.
+	case Ingredients::TOUHU:	//豆腐.
+		return enIngredientCategory::Tofu;
+
+	//none,MAXなど食材ではないもの.
 	default:
-		return enCategory::Veggie;
+		return enIngredientCategory::None;
 	}
+}
+
+//各カテゴリの獲得数からお気に入りカテゴリを判定する.
+//同数の場合は高級食材 > 肉 > 魚 > 野菜 > きのこ > 豆腐 の順で優先する.
+enIngredientCategory CResultDataManager::CalculateFavoriteCategory(const SPlayerResultData& Data)
+{
+	const struct { enIngredientCategory Category; int Count; } Table[] =
+	{
+		{ enIngredientCategory::Special,	Data.m_nSpecialCount	},
+		{ enIngredientCategory::Meat,		Data.m_nMeatCount		},
+		{ enIngredientCategory::Fish,		Data.m_nFishCount		},
+		{ enIngredientCategory::Veggie,		Data.m_nVeggieCount		},
+		{ enIngredientCategory::Mushroom,	Data.m_nMushroomCount	},
+		{ enIngredientCategory::Tofu,		Data.m_nTofuCount		},
+	};
+
+	enIngredientCategory Favorite = enIngredientCategory::None;
+	int MaxCount = 0;
+	for (const auto& Entry : Table)
+	{
+		//同数なら先に見つかった方(優先度が高い方)を残す.
+		if (Entry.Count > MaxCount)
+		{
+			MaxCount = Entry.Count;
+			Favorite = Entry.Category;
+		}
+	}
+	return Favorite;
 }
 
 //CPlayerの配列からスナップショットを取る.
@@ -61,11 +111,18 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 		{
 			switch (GetCategory(Item))
 			{
-			case enCategory::Meat:		m_PlayerData[i].m_nMeatCount++;	break;
-			case enCategory::Veggie:	m_PlayerData[i].m_nVeggieCount++;	break;
-			case enCategory::Special:	m_PlayerData[i].m_nSpecialCount++;	break;
+			case enIngredientCategory::Meat:		m_PlayerData[i].m_nMeatCount++;		break;
+			case enIngredientCategory::Fish:		m_PlayerData[i].m_nFishCount++;		break;
+			case enIngredientCategory::Veggie:		m_PlayerData[i].m_nVeggieCount++;	break;
+			case enIngredientCategory::Mushroom:	m_PlayerData[i].m_nMushroomCount++;	break;
+			case enIngredientCategory::Tofu:		m_PlayerData[i].m_nTofuCount++;		break;
+			case enIngredientCategory::Special:		m_PlayerData[i].m_nSpecialCount++;	break;
+			default: break;
 			}
 		}
+
+		//お気に入りカテゴリを判定.
+		m_PlayerData[i].m_FavoriteCategory = CalculateFavoriteCategory(m_PlayerData[i]);
 	}
 
 	//順位を計算する.

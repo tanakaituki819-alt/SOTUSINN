@@ -46,7 +46,8 @@ CIngredientsmanager::CIngredientsmanager()
 		if (i == static_cast<int>(Ingredients::KANI) ||
 			i == static_cast<int>(Ingredients::KUMANOTE) ||
 			i == static_cast<int>(Ingredients::SAKANA) ||
-			i == static_cast<int>(Ingredients::ROBUSTER)
+			i == static_cast<int>(Ingredients::ROBUSTER) ||
+			i == static_cast<int>(Ingredients::TAI)
 			) {
 			m_Normalbability.push_back(0);
 		}
@@ -57,7 +58,8 @@ CIngredientsmanager::CIngredientsmanager()
 		if (i== static_cast<int>(Ingredients::KANI)||
 			i == static_cast<int>(Ingredients::KUMANOTE) ||
 			i == static_cast<int>(Ingredients::SAKANA) ||
-			i == static_cast<int>(Ingredients::ROBUSTER)
+			i == static_cast<int>(Ingredients::ROBUSTER) ||
+			i == static_cast<int>(Ingredients::TAI)
 			) {
 			m_Rarebility.push_back(IngredientsSetting[i].probability);
 		}
