@@ -6,6 +6,9 @@ CGameSceneWinnerResult::CGameSceneWinnerResult(HWND	Hwnd, CDirectX9* Dx9, CDirec
 	, m_pWinnerResultUI(nullptr)
 	, m_pController(nullptr)
 {
+	//BGM再生.
+	XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::Result);
+
 	m_pController = new CXInput(0);
 	m_pWinnerResultUI = new CWinnerResultUI();
 	m_pWinnerResultUI->SetXInput(m_pController);	
@@ -19,6 +22,7 @@ CGameSceneWinnerResult::~CGameSceneWinnerResult()
 
 void CGameSceneWinnerResult::Update()
 {
+
 	m_pController->Update();		
 
 	m_pWinnerResultUI->Update();

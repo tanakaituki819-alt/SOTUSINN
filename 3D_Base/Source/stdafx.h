@@ -3,6 +3,8 @@
 // を記述します.
 //
 #pragma once
+
+
 #define _USE_MATH_DEFINES
 #include <math.h>
 //#include "targetver.h"
@@ -34,5 +36,9 @@
 
 #include <iostream>
 
+#include "XAudio2/XAudio2.h"
+
 #include"Effect/Effect.h"
 #include"Effect/Effect2D.h"
+
+
