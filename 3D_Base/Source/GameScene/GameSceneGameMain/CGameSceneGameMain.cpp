@@ -137,6 +137,7 @@ void CGameSceneGameMain::Update()
 	//タイマーが0秒になっているかつ鍋に残った具材が0になるまたは、強制終了タイマーが45秒経過したら.
 	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45) 
 	{
+		XAudio2::GetInstance()->AllStopBGM();
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
 	}
 	//ゲームタイマーが0秒になった.
@@ -153,6 +154,7 @@ void CGameSceneGameMain::Update()
 		handle=Effect::Play(EFE::KANSEI,D3DXVECTOR3(0.f, 0.f, 0.f));
 	}
 	if (GetAsyncKeyState('Z') & 0x0001) {
+		XAudio2::GetInstance()->AllStopBGM();
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 30, 120);
 	}
 	m_pTimer->Update();
