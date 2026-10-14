@@ -211,6 +211,8 @@
     <ClCompile Include="Source\System\RawInput\RawInput.cpp" />
     <ClCompile Include="Source\System\WinMain.cpp" />
     <ClCompile Include="Source\System\XInput\CXInput.cpp" />
+    <ClCompile Include="Source\XAudio2\AudioLoaderMp3.cpp" />
+    <ClCompile Include="Source\XAudio2\XAudio2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BoundingSphere\CBoundingSphere.h" />
@@ -273,6 +275,9 @@
     <ClInclude Include="Source\System\MyMacro.h" />
     <ClInclude Include="Source\System\RawInput\RawInput.h" />
     <ClInclude Include="Source\System\XInput\CXInput.h" />
+    <ClInclude Include="Source\XAudio2\AudioLoaderMp3.h" />
+    <ClInclude Include="Source\XAudio2\XAudio2.h" />
+    <ClInclude Include="Source\XAudio2\XAudio2Memo.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\DebugText.hlsl">
