@@ -2,7 +2,6 @@
 #include "CGameSceneGameMain.h"
 
 
-
 CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 :CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
 	, m_pGround				( nullptr )
@@ -35,7 +34,12 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	//当たり判定クラス.
 	m_pCollisionManager = new CCollisionManager();
 
-	
+	//連打対決UIの生成と当たり判定クラスへのセット.
+	//(具材の取り合いを検知したCCollisionManagerがこのUIに対決開始を伝える).
+	m_pButtonMashBattleUI = new CButtonMashBattleUI();
+	m_pCollisionManager->SetButtonMashBattleUI(m_pButtonMashBattleUI);
+
+
 	//ポーズUIの生成とコントローラーをセット.
 	m_pPauseUI = new CPauseUI();
 
@@ -53,6 +57,7 @@ CGameSceneGameMain::~CGameSceneGameMain()
 	Effect::StopAll();
 	SAFE_DELETE(m_pTimer);
 	SAFE_DELETE(m_pPauseUI);
+	SAFE_DELETE(m_pButtonMashBattleUI);
 	SAFE_DELETE(m_pCollisionManager);
 
 	SAFE_DELETE(m_pGround);
@@ -113,6 +118,13 @@ void CGameSceneGameMain::Update()
 	}
 
 	m_pGround->Update();
+
+	//連打対決の更新(参加者の連打回数の集計・勝敗判定).
+	//※プレイヤーの移動/回収処理より先に更新することで、
+	//  この対決が今フレームで決着した場合にそのまま同じフレームで
+	//  勝者のお箸が具材を持ち上げ始められるようにしている.
+	m_pButtonMashBattleUI->Update();
+
 	for (int i = 0;i < PlayerMax;i++) {
 		if (m_pPlayer[i] != nullptr) {
 		m_pPlayer[i]->Update();
@@ -122,7 +134,8 @@ void CGameSceneGameMain::Update()
 	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
 	m_pCIngredientsM->Update();
 	//タイマーが0秒になっているかつ鍋に残った具材が0になるまたは、強制終了タイマーが45秒経過したら.
-	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45) {
+	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45) 
+	{
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
 	}
 	//ゲームタイマーが0秒になった.
@@ -185,6 +198,11 @@ void CGameSceneGameMain::Draw()
 		
 	}
 	m_pTimer->Draw();
+
+	//連打対決中なら、対象の具材の真上にゲージを描画する.
+	//(具材の3D座標を2D画面座標に変換するためカメラ行列が必要なので、描画の直前に更新する).
+	m_pButtonMashBattleUI->UpdateScreenPosition(m_pCamera->GetView(), m_mProj);
+	m_pButtonMashBattleUI->Draw();
 
 	//ポーズ
 	if (m_Pause)
