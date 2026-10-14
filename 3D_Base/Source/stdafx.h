@@ -39,6 +39,6 @@
 #include "XAudio2/XAudio2.h"
 
 #include"Effect/Effect.h"
-
+#include"Effect/Effect2D.h"
 
 

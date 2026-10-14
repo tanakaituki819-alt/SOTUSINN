@@ -57,8 +57,7 @@ enIngredientCategory CResultDataManager::GetCategory(Ingredients IngredientsNo)
 	}
 }
 
-//各カテゴリの獲得数からお気に入りカテゴリを判定する.
-//同数の場合は高級食材 > 肉 > 魚 > 野菜 > きのこ > 豆腐 の順で優先する.
+//各カテゴリの獲得数からお気に入りカテゴリを判定する（同数の場合は高級食材 > 肉 > 魚 > 野菜 > きのこ > 豆腐 の順）.
 enIngredientCategory CResultDataManager::CalculateFavoriteCategory(const SPlayerResultData& Data)
 {
 	const struct { enIngredientCategory Category; int Count; } Table[] =

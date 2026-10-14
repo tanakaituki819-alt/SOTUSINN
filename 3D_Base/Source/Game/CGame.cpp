@@ -48,6 +48,8 @@ void CGame::Create()
 	//エフェクト.
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
+	Effect2D::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
+	Effect2D::GetInstance()->LoadData();
 	XAudio2::GetInstance()->Initialize();
 	XAudio2::GetInstance()->LoadData();
 	m_SceneChanger = new CSceneChange();

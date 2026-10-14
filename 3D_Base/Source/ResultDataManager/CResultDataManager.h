@@ -60,7 +60,7 @@ public:
 	//インスタンス取得.
 	static CResultDataManager* GetInstance()
 	{
-		//唯一のインスタンスを作成する.
+		//インスタンスを作成.
 		static CResultDataManager s_Instance;
 		return &s_Instance;
 	}
@@ -74,7 +74,7 @@ public:
 	//指定したプレイヤーの結果データを取得.
 	const SPlayerResultData& GetPlayerData(int PlayerIndex) const;
 
-	//1位のプレイヤー番号を取得．非参加のみの場合は0.
+	//1位のプレイヤー番号を取得
 	int GetWinnerPlayerIndex() const;
 
 	//1位で同着になっているプレイヤーをビットで表す.
