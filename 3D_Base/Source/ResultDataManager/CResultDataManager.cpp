@@ -12,9 +12,7 @@ CResultDataManager::~CResultDataManager()
 {
 }
 
-//食材の種類からカテゴリを判定する.
-//※CIngredientsmanager.cppのレア食材の括り(KANI/KUMANOTE/SAKANA/ROBUSTER)を
-//  「高級食材」として流用している.
+//食材の種類からカテゴリを判定.
 CResultDataManager::enCategory CResultDataManager::GetCategory(Ingredients IngredientsNo)
 {
 	switch (IngredientsNo)
@@ -31,15 +29,13 @@ CResultDataManager::enCategory CResultDataManager::GetCategory(Ingredients Ingre
 	case Ingredients::UINNER:
 		return enCategory::Meat;
 
-	//それ以外(野菜、豆腐、タイ、タラ等)は野菜系として扱う.
-	//※分類を変えたい場合はここを調整すること.
+	//それ以外は野菜.
 	default:
 		return enCategory::Veggie;
 	}
 }
 
 //CPlayerの配列からスナップショットを取る.
-//参加しているかどうかは、各プレイヤーのGetConnected()から自動判定する.
 void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 {
 	m_nPlayerCount = 0;
@@ -100,7 +96,7 @@ void CResultDataManager::CalculateRanks()
 			return m_PlayerData[a].m_nScore > m_PlayerData[b].m_nScore;
 		});
 
-	//順位を設定(1位〜).
+	//順位を設定.
 	for (int Rank = 0; Rank < Num; Rank++)
 	{
 		int PlayerIndex = Indices[Rank];
