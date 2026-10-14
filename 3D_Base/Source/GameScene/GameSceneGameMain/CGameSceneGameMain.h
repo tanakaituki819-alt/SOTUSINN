@@ -9,6 +9,7 @@
 
 #include "GameScene/GameSceneGameMain/Ingredientsmanager/CIngredientsmanager.h"
 #include "GameScene/GameSceneGameMain/Nabe/CNabe.h"
+#include "GameScene/GameSceneGameMain/ButtonMashBattleUI/CButtonMashBattleUI.h"
 class CGameSceneGameMain
 	:public CGameScene
 {
@@ -40,6 +41,8 @@ private:
 
 	//当たり判定クラス.
 	CCollisionManager* m_pCollisionManager;
+	//連打対決UI(具材の取り合いが発生した時に使用する).
+	CButtonMashBattleUI* m_pButtonMashBattleUI;
 
 	//ポーズ関連.
 	CPauseUI* m_pPauseUI;

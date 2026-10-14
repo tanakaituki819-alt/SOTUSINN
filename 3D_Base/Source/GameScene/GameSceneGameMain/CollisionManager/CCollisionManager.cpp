@@ -15,41 +15,140 @@ CCollisionManager::~CCollisionManager()
 
 void CCollisionManager::Update()
 {
-	for (int i = 0; i < Player_Max; i++) {
-		//nullptrなら次のプレイヤーへ.
-		if (!m_pPlayer[i]) continue;
-		if (!m_pIngredientsManager)continue;
-		//プレイヤーにコントローラー接続が接続されていないのなら次のプレイヤーへ.
-		if (!m_pPlayer[i]->GetConnected()) continue;
-		{
-			//プレイヤーが回収中でないなら次のプレイヤーへ.
-			if (!m_pPlayer[i]->GetIsCollecting()) continue;
-			//プレイヤーがマヒ中なら次のプレイヤーへ.
-			if (m_pPlayer[i]->GetIsParalysis())continue;
-			//具材のサイズ読み込み.
-			std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
-			//具材の最大数分.
-			for (auto& j: Ingredients) {
-				//野菜が生きている.
-				if (j->GetCharStatus() == enCharStatus::Live) {
-					//プレイヤーと具材が接触する.
-					if (m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) {
+	if (!m_pIngredientsManager) return;
 
-						//具材が煮えていないなら.
-						if (!j->GetBoiledc()) {
-							m_pPlayer[i]->OnTouchRawIngredient();	//マヒ状態にする.
-						}
-						//具材が煮えている.
-						else {
-							//回収状態でないなら次のプレイヤーへ.
-							if (j->GetCollecting())continue;
-							m_pPlayer[i]->IngredientsGetter(j);	//具材を回収する.
-							j->IsCollecting();					//具材回収状態へ.
-						}
-					}
-				}
+	//具材リストを取得.
+	std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
+
+	//--------------------------------------------------------------------
+	//	①生の具材に触れたプレイヤーをマヒさせる.
+	//	マヒはプレイヤー単位で独立して発生するので、取り合い(連打対決)とは別に判定する.
+	//--------------------------------------------------------------------
+	for (int i = 0; i < Player_Max; i++) {
+		if (!m_pPlayer[i]) continue;
+		if (!m_pPlayer[i]->GetConnected()) continue;			//コントローラー未接続なら対象外.
+		if (!m_pPlayer[i]->GetIsCollecting()) continue;		//回収動作中でないなら対象外.
+		if (m_pPlayer[i]->GetIsParalysis()) continue;			//既にマヒ中なら対象外.
+		if (m_pPlayer[i]->GetIsMashBattle()) continue;			//連打対決中は下の②でまとめて処理する.
+
+		for (auto& j : Ingredients) {
+			if (j->GetCharStatus() != enCharStatus::Live) continue;	//生存していない具材は対象外.
+			if (!m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) continue;	//接触していなければ対象外.
+
+			//具材が煮えていないなら触れた瞬間にマヒさせる.
+			if (!j->GetBoiledc()) {
+				m_pPlayer[i]->OnTouchRawIngredient();
 			}
 		}
+	}
+
+	//--------------------------------------------------------------------
+	//	②煮えた具材の取り合い判定.
+	//	同じ具材に複数のプレイヤーが触れていたら連打対決を発生させる.
+	//	※完全に同じフレームで触れていなくても対決に発展できるように、
+	//	  最初に触れてからGRACE_FRAMESの間は他のプレイヤーの参加を待つ
+	//	  「猶予期間」を設ける(PendingClaimで管理する).
+	//--------------------------------------------------------------------
+	for (auto& j : Ingredients) {
+		if (j->GetCharStatus() != enCharStatus::Live) continue;	//生存していない具材は対象外.
+		if (!j->GetBoiledc()) continue;						//生の具材はここでは扱わない(①でマヒ判定済み).
+		if (j->GetCollecting()) continue;						//既に確保済み(通常回収中 or 連打対決中)の具材は対象外.
+
+		//この具材に「今」触れている(取りに来ている)プレイヤーを集める.
+		CPlayer* Touchers[Player_Max] = {};
+		int TouchCount = 0;
+
+		for (int i = 0; i < Player_Max; i++) {
+			if (!m_pPlayer[i]) continue;
+			if (!m_pPlayer[i]->GetConnected()) continue;
+			if (!m_pPlayer[i]->GetIsCollecting()) continue;
+			if (m_pPlayer[i]->GetIsParalysis()) continue;
+			if (m_pPlayer[i]->GetIsMashBattle()) continue;		//既に別の対決に参加中なら重複して数えない.
+			if (!m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) continue;
+
+			Touchers[TouchCount] = m_pPlayer[i];
+			TouchCount++;
+		}
+
+		//今フレーム誰も触れていないなら、進行中の猶予期間があれば打ち切って次の具材へ.
+		if (TouchCount == 0) {
+			PendingClaim* pClaim = FindPendingClaim(j);
+			if (pClaim) {
+				pClaim->pTarget = nullptr;	//誰も欲しがらなくなったので猶予枠を解放する.
+			}
+			continue;
+		}
+
+		//この具材の猶予枠を取得する(まだ無ければ新規に確保して猶予期間を開始する).
+		PendingClaim* pClaim = FindPendingClaim(j);
+		if (!pClaim) {
+			pClaim = FindFreePendingClaimSlot();
+			if (!pClaim) continue;	//空き枠が無ければ今回は諦める(次フレーム以降に再判定される).
+
+			pClaim->pTarget = j;
+			pClaim->TouchCount = 0;
+			pClaim->GraceTimer = GRACE_FRAMES;
+		}
+
+		//今フレーム触れたプレイヤーのうち、まだ登録されていない人を猶予枠に追加する.
+		for (int t = 0; t < TouchCount; t++) {
+			bool AlreadyIn = false;
+			for (int k = 0; k < pClaim->TouchCount; k++) {
+				if (pClaim->Touchers[k] == Touchers[t]) {
+					AlreadyIn = true;
+					break;
+				}
+			}
+			if (!AlreadyIn && pClaim->TouchCount < Player_Max) {
+				pClaim->Touchers[pClaim->TouchCount] = Touchers[t];
+				pClaim->TouchCount++;
+			}
+		}
+
+		//猶予時間を減らし、時間切れになったらその時点の参加人数で決着をつける.
+		pClaim->GraceTimer--;
+		if (pClaim->GraceTimer <= 0) {
+			ResolvePendingClaim(*pClaim);
+			pClaim->pTarget = nullptr;	//猶予枠を解放して次の取り合いに備える.
+		}
+	}
+}
+
+//指定した具材の猶予枠を探す.
+CCollisionManager::PendingClaim* CCollisionManager::FindPendingClaim(CIngredients* pTarget)
+{
+	for (auto& Claim : m_PendingClaims) {
+		if (Claim.pTarget == pTarget) return &Claim;
+	}
+	return nullptr;
+}
+
+//空いている猶予枠を探す.
+CCollisionManager::PendingClaim* CCollisionManager::FindFreePendingClaimSlot()
+{
+	for (auto& Claim : m_PendingClaims) {
+		if (Claim.pTarget == nullptr) return &Claim;
+	}
+	return nullptr;
+}
+
+//猶予枠を確定させる.
+void CCollisionManager::ResolvePendingClaim(PendingClaim& Claim)
+{
+	if (!Claim.pTarget) return;
+
+	//猶予期間中に触れたのが1人だけなら、今まで通りそのまま獲得させる.
+	if (Claim.TouchCount == 1) {
+		Claim.Touchers[0]->IngredientsGetter(Claim.pTarget);	//具材を回収する.
+		Claim.pTarget->IsCollecting();							//具材回収状態へ.
+		return;
+	}
+
+	//2人以上いれば連打対決を開始する(最大2組まで同時進行可能).
+	//空いているスロットが無い場合は今回は開始せず、具材は未確保のまま次フレーム以降で再判定させる.
+	if (m_pButtonMashBattleUI && m_pButtonMashBattleUI->CanStartBattle()) {
+		m_pButtonMashBattleUI->StartBattle(Claim.pTarget, Claim.Touchers, Claim.TouchCount);
+		Claim.pTarget->IsCollecting();		//決着がつくまで他のプレイヤーが横取りできないようにする.
 	}
 }
 

@@ -71,6 +71,7 @@
     <ClCompile Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.cpp" />
+    <ClCompile Include="Source\ResultDataManager\CResultDataManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\stdafx.h">
@@ -134,6 +135,7 @@
     <ClInclude Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.h" />
+    <ClInclude Include="Source\ResultDataManager\CResultDataManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">

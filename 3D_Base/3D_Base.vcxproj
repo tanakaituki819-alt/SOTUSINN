@@ -186,6 +186,7 @@
     <ClCompile Include="Source\Player\CPlayer.cpp" />
     <ClCompile Include="Source\Player\PlayerParalysisUI\CPlayerParalysisUI.cpp" />
     <ClCompile Include="Source\Player\PlayerUI\CPlayerUI.cpp" />
+    <ClCompile Include="Source\ResultDataManager\CResultDataManager.cpp" />
     <ClCompile Include="Source\SceneChange\CSceneChange.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\CSceneTransitionRenderer.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FadeSceneTransition\CFadeSceneTransition.cpp" />
@@ -211,11 +212,12 @@
     <ClCompile Include="Source\System\RawInput\RawInput.cpp" />
     <ClCompile Include="Source\System\WinMain.cpp" />
     <ClCompile Include="Source\System\XInput\CXInput.cpp" />
+    <ClCompile Include="Source\XAudio2\AudioLoaderMp3.cpp" />
+    <ClCompile Include="Source\XAudio2\XAudio2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\BoundingSphere\CBoundingSphere.h" />
     <ClInclude Include="Source\Effect\Effect.h" />
-    <ClInclude Include="Source\GameDataManager\CGameDataManager.h" />
     <ClInclude Include="Source\GameObject\CGameObject.h" />
     <ClInclude Include="Source\GameObject\SpriteObject\CSpriteObject.h" />
     <ClInclude Include="Source\GameObject\StaticMeshObject\CStaticMeshObject.h" />
@@ -250,6 +252,7 @@
     <ClInclude Include="Source\Player\CPlayer.h" />
     <ClInclude Include="Source\Player\PlayerParalysisUI\CPlayerParalysisUI.h" />
     <ClInclude Include="Source\Player\PlayerUI\CPlayerUI.h" />
+    <ClInclude Include="Source\ResultDataManager\CResultDataManager.h" />
     <ClInclude Include="Source\SceneChange\CSceneChange.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\CSceneTransitionRenderer.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FadeSceneTransition\CFadeSceneTransition.h" />
@@ -273,6 +276,9 @@
     <ClInclude Include="Source\System\MyMacro.h" />
     <ClInclude Include="Source\System\RawInput\RawInput.h" />
     <ClInclude Include="Source\System\XInput\CXInput.h" />
+    <ClInclude Include="Source\XAudio2\AudioLoaderMp3.h" />
+    <ClInclude Include="Source\XAudio2\XAudio2.h" />
+    <ClInclude Include="Source\XAudio2\XAudio2Memo.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\DebugText.hlsl">

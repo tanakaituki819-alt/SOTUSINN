@@ -1,0 +1,79 @@
+#pragma once
+#include "Player/CPlayer.h"
+#include "GameScene/GameSceneGameMain/Ingredients/CIngredients.h"	//Ingredients列挙体を使うため.
+
+//========================================================
+//	リザルト画面用のプレイヤー結果データ構造体.
+//========================================================
+struct SPlayerResultData
+{
+	bool	m_bActive;			//このプレイヤーが参加しているか.
+	int		m_nScore;			//合計スコア.
+	int		m_nMeatCount;		//獲得した肉系食材の数.
+	int		m_nVeggieCount;		//獲得した野菜系食材の数.
+	int		m_nSpecialCount;	//獲得した高級食材の数.
+	int		m_nRank;			//順位.
+
+	//初期化.
+	SPlayerResultData()
+		: m_bActive			(false)
+		, m_nScore			(0)
+		, m_nMeatCount		(0)
+		, m_nVeggieCount	(0)
+		, m_nSpecialCount	(0)
+		, m_nRank			(0)
+	{
+	}
+};
+
+/************************************************************
+*	リザルト画面へ渡すデータをまとめるクラス(シングルトン).
+**/
+class CResultDataManager
+{
+public:
+	static const int PLAYER_MAX = 4;	//プレイヤー最大数.
+
+public:
+	//インスタンス取得.
+	static CResultDataManager* GetInstance()
+	{
+		//唯一のインスタンスを作成する.
+		static CResultDataManager s_Instance;
+		return &s_Instance;
+	}
+
+	//CPlayerの配列からデータを取得してスナップショット化する.
+	void CaptureFromPlayers(CPlayer* pPlayer[]);
+
+	//参加人数を取得.
+	int GetPlayerCount() const { return m_nPlayerCount; }
+
+	//指定したプレイヤーの結果データを取得.
+	const SPlayerResultData& GetPlayerData(int PlayerIndex) const;
+
+	//1位のプレイヤー番号を取得．非参加のみの場合は0.
+	int GetWinnerPlayerIndex() const;
+
+	//1位で同着になっているプレイヤーをビットで表す.
+	int GetTiedFirstPlaceMask() const;
+
+private:
+	CResultDataManager();
+	~CResultDataManager();
+	//コピーコンストラクタによるコピーを禁止する.
+	CResultDataManager(const CResultDataManager& rhs) = delete;
+	//代入演算子によるコピーを禁止する.
+	CResultDataManager& operator=(CResultDataManager& rhs) = delete;
+
+	//食材の種類からどれに数えるかを判定する.
+	enum class enCategory { Meat, Veggie, Special };
+	static enCategory GetCategory(Ingredients IngredientsNo);
+
+	//参加プレイヤーのみを対象に、スコアが高い順に順位を計算する.
+	void CalculateRanks();
+
+private:
+	SPlayerResultData	m_PlayerData[PLAYER_MAX];	//プレイヤー毎の結果データ.
+	int					m_nPlayerCount;				//参加人数.
+};
