@@ -314,7 +314,7 @@ void CButtonMashBattleUI::RenderGauge(int PlayerNo)
 	if (SlotIndex < 0) return;	//対決に参加していなければ描画しない.
 	const BattleSlot& Slot = m_Slots[SlotIndex];
 
-	//カウントダウン中はゲージをまだ表示しない(代表の数字をDraw()側でスロットにつき1回だけ表示する).
+	//カウントダウン中はゲージをまだ表示しない.
 	if (Slot.IsCountdown) return;
 
 	if (!m_pGaugeImg[PlayerNo]) return;
@@ -329,11 +329,11 @@ void CButtonMashBattleUI::RenderGauge(int PlayerNo)
 	if (Rate > 1.f) Rate = 1.f;
 	if (Rate < 0.f) Rate = 0.f;
 
-	//ゲージ画像は1列4行構成で、行番号(y)を変えることでプレイヤーごとの色(赤・青・黄・緑)を選べる.
+	//ゲージ画像は1列4行構成で、行番号(y)を変えることでプレイヤーごとの色を選べる.
 	m_pGaugeImg[PlayerNo]->SetPatternNo(0, static_cast<SHORT>(PlayerNo));
 	m_pGaugeImg[PlayerNo]->SetPosition(D3DXVECTOR3(PosX, PosY, 0.f));
 
-	//土台(ゲージの最大量)を薄く表示する.
+	//ゲージの最大量を薄く表示する.
 	m_pGaugeImg[PlayerNo]->SetScale(D3DXVECTOR3(GAUGE_WIDTH, GAUGE_HEIGHT, 0.f));
 	m_pGaugeImg[PlayerNo]->SetAlpha(GAUGE_BG_ALPHA);
 	m_pGaugeImg[PlayerNo]->Render();
@@ -353,12 +353,12 @@ void CButtonMashBattleUI::RenderGauge(int PlayerNo)
 	}
 }
 
-//カウントダウン中の数字(3・2・1)を、スロットにつき1つだけ代表して描画する.
+//カウントダウン中の数字を描画する.
 void CButtonMashBattleUI::RenderCountdownNumber(const BattleSlot& Slot)
 {
 	if (!m_pCountdownDigit) return;
 
-	//このスロットの参加人数を数える(ゲージが縦に何本並ぶ予定か).
+	//このスロットの参加人数を数える.
 	int EntryCount = 0;
 	for (int i = 0; i < GAUGE_MAX; i++)
 	{
@@ -376,7 +376,7 @@ void CButtonMashBattleUI::RenderCountdownNumber(const BattleSlot& Slot)
 	int Elapsed = COUNTDOWN_TOTAL_FRAMES - Slot.CountdownTimer;
 	if (Elapsed < 0) Elapsed = 0;
 
-	int Step = Elapsed / COUNTDOWN_STEP_FRAMES;	//0:"3"の期間, 1:"2"の期間, 2:"1"の期間.
+	int Step = Elapsed / COUNTDOWN_STEP_FRAMES;	
 	int Digit = 3 - Step;
 	if (Digit > 3) Digit = 3;
 	if (Digit < 1) Digit = 1;
@@ -390,7 +390,7 @@ void CButtonMashBattleUI::RenderCountdownNumber(const BattleSlot& Slot)
 	m_pCountdownDigit->Render();
 }
 
-//同じスロット内で、指定したプレイヤーが何番目(0始まり)の参加者かを求める.
+//同じスロット内で、指定したプレイヤーが何番目の参加者かを求める.
 int CButtonMashBattleUI::GetLocalRank(const BattleSlot& Slot, int PlayerNo) const
 {
 	int Rank = 0;
