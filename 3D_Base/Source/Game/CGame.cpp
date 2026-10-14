@@ -48,6 +48,8 @@ void CGame::Create()
 	//エフェクト.
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
+	Effect2D::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
+	Effect2D::GetInstance()->LoadData();
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
 
@@ -57,7 +59,7 @@ void CGame::Create()
 	}
 
 //	ChangeScene(enScene::TitleSequence);
-	ChangeScene(enScene::Result);
+	ChangeScene(enScene::Title);
 }
 
 //ロードデータ関数.

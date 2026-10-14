@@ -38,6 +38,22 @@ void CGameSceneTitle::StartFinalSetup()
 }
 void CGameSceneTitle::Update()
 {
+	static int i = 0;
+	static int c = 0;
+	i++;
+	c++;
+	static EsHandle H=-1;
+	if (i>20) {
+		i = 0;
+		H= Effect2D::Play(Effect2D::KANSEI, { 0, 0, 0 });
+		Effect2D::SetScale(H,{20,20,20});
+	}
+	if (H!=-1) {
+		Effect2D::SetLocation(H, { cos(D3DXToRadian(c)) * WND_W / 4 + WND_W/2,sin(D3DXToRadian(c)) * WND_H / 4 + WND_H/2,0 });
+		Effect2D::SetRotation(H,{0,0,D3DXToRadian(c) });
+	}
+
+
 	m_pController->Update();
 	m_pTitleUI->Update();
 
@@ -81,6 +97,8 @@ void CGameSceneTitle::Draw()
 	m_pTImg->Draw();
 
 	m_pTitleUI->Draw();
+
+	Effect2D::GetInstance()->Draw();
 
 	m_pDx11->SetDepth(true);
 

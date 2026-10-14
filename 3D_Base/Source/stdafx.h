@@ -35,3 +35,4 @@
 #include <iostream>
 
 #include"Effect/Effect.h"
+#include"Effect/Effect2D.h"
