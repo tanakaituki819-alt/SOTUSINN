@@ -22,7 +22,9 @@ public:
 	void Draw(D3DXMATRIX& View, D3DXMATRIX& Proj,
 		LIGHT& Light, CAMERA& Camera) override;
 	//コントローラー情報.
-	void SetXInput( CXInput* Input) { MyController = Input; }	
+	void SetXInput( CXInput* Input) { MyController = Input; }
+	//コントローラー情報を取得(連打対決でボタン入力を直接読むために使用).
+	CXInput* GetXInput() const { return MyController; }
 	//UIの描画.
 	void DrawUI();
 	//マヒ状態.
@@ -31,12 +33,18 @@ public:
 	void OnTouchRawIngredient();
 	//プレイヤーNoセット.
 	void SetPlayerNo(int No) { PlayerNo = No; };
+	//プレイヤーNo取得.
+	int GetPlayerNo() const { return PlayerNo; }
 	//今コントローラー接続されているかどうか.
 	bool GetConnected() { return m_IsConnected;}
 	//今回収中かどうか.
 	bool GetIsCollecting() { return m_IsCollecting; }
 	//マヒ状態かどうか.
 	bool GetIsParalysis() { return m_IsParalysis; }
+	//連打対決中かどうか.
+	bool GetIsMashBattle() const { return m_IsMashBattle; }
+	//連打対決の参加/終了をセットする(対決中は移動や新規の具材取得を禁止する).
+	void SetMashBattleLock(bool IsMashBattle) { m_IsMashBattle = IsMashBattle; }
 	//CBoundingSphere* GetTipBSphere();
 	void IngredientsGetter(CIngredients* Ingredients);
 	//具材回収中の処理.
@@ -62,6 +70,7 @@ private:
 	float					m_Collectingtime	 = 0;		//回収中のカウント.
 	bool					m_IsConnected		 = false;	//コントローラー接続中か判定.
 	bool					m_IsParalysis		 = false;	//マヒ中かどうか.
+	bool					m_IsMashBattle		 = false;	//連打対決中かどうか(true中は移動・新規の具材取得を止める).
 	float					m_ParalysisTimer	 = 0;		//マヒ経過時間.
 	float					m_ParalysisMovetime  = 0;		//マヒの動きをさせるためのタイム.
 	float					m_Speed				 = 0.8f;	//震える速度.
