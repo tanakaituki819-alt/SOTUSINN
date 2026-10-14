@@ -405,7 +405,7 @@ HRESULT XAudio2::Initialize()
         return E_FAIL;
     }
 
-    LoadData();
+   
 
   
 
@@ -712,16 +712,16 @@ SoundHandleX XAudio2::BGMPlayHandle(BGMList i, SubmixTargetType Effectactive, bo
     switch (Effectactive)
     {
     case SubmixTargetType::Default:
-        sendDesc.pOutputVoice = m_pSESubmixVoice; // 通常SE用サブミックス
+        sendDesc.pOutputVoice = m_pBGMSubmixVoice; // 通常SE用サブミックス
         break;
     case SubmixTargetType::Reverb:
-        sendDesc.pOutputVoice = m_pSEReverbSubmixVoice; // リバーブ用サブミックス
+        sendDesc.pOutputVoice = m_pBGMReverbSubmixVoice; // リバーブ用サブミックス
         break;
     case SubmixTargetType::Echo:
-        sendDesc.pOutputVoice = m_pSEEchoSubmixVoice; // リバーブ用サブミックス
+        sendDesc.pOutputVoice = m_pBGMEchoSubmixVoice; // リバーブ用サブミックス
         break;
     default:
-        sendDesc.pOutputVoice = m_pSESubmixVoice; // 通常SE用サブミックス
+        sendDesc.pOutputVoice = m_pBGMSubmixVoice; // 通常SE用サブミックス
 
         break;
     }

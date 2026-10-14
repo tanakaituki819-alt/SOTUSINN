@@ -4,6 +4,9 @@
 CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	:CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
 {
+	//BGM再生.
+	XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::PlayerSetUp);
+
 	m_pBackImg			= new CUIObject		();	//背景.
 	m_pCharacterUI		= new CCharacterUI	();	//キャラクターのUI.
 	m_pPlayerSetupUI	= new CPlayerSetupUI();	//その他UI.

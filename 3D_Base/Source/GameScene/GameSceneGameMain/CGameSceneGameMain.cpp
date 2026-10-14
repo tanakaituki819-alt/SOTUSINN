@@ -11,6 +11,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	, m_Pause				( false )
 
 {
+	XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::GameMain);
 
 	//カメラ座標.
 	m_pCamera->SetPosition(D3DXVECTOR3(0.f, 10.f, -5.f));
