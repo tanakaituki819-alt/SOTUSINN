@@ -15,9 +15,6 @@ namespace {
 CButtonMashBattleUI::CButtonMashBattleUI()
 {
 	//ゲージ画像の取得.
-	//※CSpriteManagerはNo単位でインスタンスをキャッシュしているため、
-	//  4つとも実体は同じCSprite2Dだが、描画のたびにパターンや座標を
-	//  設定し直してから即座にRenderするので問題なく使い分けられる.
 	for (int i = 0; i < GAUGE_MAX; i++)
 	{
 		m_pGaugeImg[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_Gage);
@@ -32,7 +29,6 @@ CButtonMashBattleUI::CButtonMashBattleUI()
 CButtonMashBattleUI::~CButtonMashBattleUI()
 {
 	//ゲージ画像・数字画像
-	//※CSpriteManagerが実体を管理しているため、ここではnullptrに戻すだけでよい.
 	for (int i = GAUGE_MAX - 1; i >= 0; i--)
 	{
 		m_pGaugeImg[i] = nullptr;
@@ -65,11 +61,10 @@ void CButtonMashBattleUI::UpdateScreenPosition(D3DXMATRIX& View, D3DXMATRIX& Pro
 
 void CButtonMashBattleUI::Draw()
 {
-	//対決中(カウントダウン含む)でなければ何も描画しない.
+	//対決中でなければ何も描画しない.
 	if (!IsBattle()) return;
 
 	//参加している可能性のある4人分のゲージ描画を呼び出す.
-	//(各関数の内部で不参加、またはカウントダウン中なら何もしない).
 	RenderPlayer1Gauge();
 	RenderPlayer2Gauge();
 	RenderPlayer3Gauge();
@@ -103,7 +98,7 @@ bool CButtonMashBattleUI::CanStartBattle() const
 	return false;
 }
 
-//いずれかの対決が進行中(カウントダウン含む)かどうか.
+//いずれかの対決が進行中かどうか.
 bool CButtonMashBattleUI::IsBattle() const
 {
 	for (auto& Slot : m_Slots)
@@ -119,7 +114,7 @@ void CButtonMashBattleUI::StartBattle(CIngredients* pTarget, CPlayer* const pCon
 	//対象具材が無い、または参加者が1人以下なら対決にならないので開始しない.
 	if (!pTarget || EntryCount < 2) return;
 
-	//空いているスロットを探す(両方使用中なら今回は開始できない).
+	//空いているスロットを探す.
 	BattleSlot* pSlot = nullptr;
 	for (auto& Slot : m_Slots)
 	{
@@ -140,7 +135,6 @@ void CButtonMashBattleUI::StartBattle(CIngredients* pTarget, CPlayer* const pCon
 	pSlot->CountdownTimer = COUNTDOWN_TOTAL_FRAMES;
 
 	//参加者をプレイヤー番号の枠にそのまま登録し、決着がつくまで行動をロックする.
-	//(カウントダウン中も含めてロックすることで、対決相手が確定した瞬間から動けなくする).
 	for (int i = 0; i < EntryCount && i < GAUGE_MAX; i++)
 	{
 		CPlayer* pPlayer = pContenders[i];
@@ -165,7 +159,7 @@ void CButtonMashBattleUI::UpdateSlot(BattleSlot& Slot)
 		{
 			Slot.CountdownTimer--;
 		}
-		//カウントダウンが終わったら、ここから本編(連打受付)を開始する.
+		//カウントダウンが終わったら、ここから本編を開始する.
 		if (Slot.CountdownTimer <= 0)
 		{
 			Slot.IsCountdown = false;

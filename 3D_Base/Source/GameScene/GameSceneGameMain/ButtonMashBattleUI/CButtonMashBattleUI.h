@@ -4,7 +4,7 @@
 #include "GameScene/GameSceneGameMain/Ingredients/CIngredients.h"
 
 /********************************************************************************
-*	連打対決(ボタン連打対決)UIクラス.
+*	連打対決UIクラス.
 **/
 class CButtonMashBattleUI
 	:public CUIObject
