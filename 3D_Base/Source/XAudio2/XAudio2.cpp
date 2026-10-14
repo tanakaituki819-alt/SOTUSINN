@@ -457,7 +457,7 @@ HRESULT XAudio2::PlaySample(const SoundData& soundData, D3DXVECTOR3 position)
     // 3D計算（X3DAudio）の実行
     X3DAUDIO_EMITTER emitter = { 0 };
     emitter.ChannelCount = 1; // 空間上の一点として計算
-    emitter.Position = position;
+    emitter.Position = { position .x,position .y,position .z};
     emitter.OrientFront = { 0.0f, 0.0f, 1.0f };
     emitter.OrientTop = { 0.0f, 1.0f, 0.0f };
     emitter.CurveDistanceScaler = 1.0f;
@@ -595,7 +595,7 @@ void XAudio2::Update()
         else {
             X3DAUDIO_EMITTER emitter = { 0 };
             emitter.ChannelCount = 1;
-            emitter.Position = pVESourceVoice3D[i]->position;
+            emitter.Position = { pVESourceVoice3D[i]->position.x,pVESourceVoice3D[i]->position.y,pVESourceVoice3D[i]->position.z};
             emitter.OrientFront = { 0.0f, 0.0f, 1.0f };
             emitter.OrientTop = { 0.0f, 1.0f, 0.0f };
             emitter.CurveDistanceScaler = 3.0f;

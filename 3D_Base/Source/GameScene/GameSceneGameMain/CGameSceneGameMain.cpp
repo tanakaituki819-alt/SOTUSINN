@@ -209,7 +209,7 @@ void CGameSceneGameMain::Draw()
 	{
 		m_pPauseUI->Draw();
 	}
-
+	Effect2D::GetInstance()->Draw();
 	m_pDx11->SetDepth(true);
 
 

@@ -41,6 +41,8 @@ void CGameSceneTitle::Update()
 	m_pController->Update();
 	m_pTitleUI->Update();
 
+	
+
 	//遷移
 	if (m_pTitleUI->IsDecided())
 	{

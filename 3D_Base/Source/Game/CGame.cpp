@@ -10,7 +10,7 @@
 #include "SoundManager\CSoundManager.h"
 #include"System\RawInput\RawInput.h"
 
-#include"XAudio2\XAudio2.h"
+#include"XAudio2\Xaudio2.h"
 //コンストラクタ.
 CGame::CGame( CDirectX9& pDx9, CDirectX11& pDx11, HWND hWnd )
 	: m_pDx9				( &pDx9 )
@@ -48,6 +48,10 @@ void CGame::Create()
 	//エフェクト.
 	Effect::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
 	Effect::GetInstance()->LoadData();
+
+	Effect2D::GetInstance()->Create(m_pDx11->GetDevice(), m_pDx11->GetContext());
+	Effect2D::GetInstance()->LoadData();
+
 	m_SceneChanger = new CSceneChange();
 	m_pCamara = new CCamera();
 
