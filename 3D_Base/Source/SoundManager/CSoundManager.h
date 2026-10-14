@@ -55,7 +55,7 @@ public:
 		for (int i = 0; i < SOUND_SE_MAX; i++) {
 			//SEはBGMと違って、サウンドの中の関数を使う
 			//音が止まっているなら
-			if (GetInstance()->m_pSound_SE[i][list]->IsStopped() == true) {		//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※
+			if (GetInstance()->m_pSound_SE[i][list]->IsStopped() == true) {		//※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※	←なにこれ？林2026.10.14
 				//最初から流す
 				GetInstance()->m_pSound_SE[i][list]->PlaySE();
 
