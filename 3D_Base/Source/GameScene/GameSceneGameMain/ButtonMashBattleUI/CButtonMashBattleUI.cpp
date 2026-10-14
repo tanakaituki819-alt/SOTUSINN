@@ -5,11 +5,11 @@ namespace {
 	//---------------------------------------------------
 	//	ゲージの見た目に関する定数.
 	//---------------------------------------------------
-	constexpr float GAUGE_WIDTH   = 150.f;	//ゲージ1本分の表示幅(ピクセル).
-	constexpr float GAUGE_HEIGHT  = 36.f;	//ゲージ1本分の表示高さ(ピクセル).
-	constexpr float GAUGE_MARGIN  = 8.f;	//ゲージ同士の縦の間隔(ピクセル).
-	constexpr float GAUGE_ANCHOR_OFFSET_Y = 70.f;	//具材の画面上の位置から、どれだけ上にゲージをずらすか(ピクセル).
-	constexpr float GAUGE_BG_ALPHA = 0.3f;	//連打していない部分(土台)のα値.
+	constexpr float GAUGE_WIDTH   = 150.f;	//ゲージ1本分の表示幅.
+	constexpr float GAUGE_HEIGHT  = 36.f;	//ゲージ1本分の表示高さ.
+	constexpr float GAUGE_MARGIN  = 8.f;	//ゲージ同士の縦の間隔.
+	constexpr float GAUGE_ANCHOR_OFFSET_Y = 70.f;	//具材の画面上の位置から、どれだけ上にゲージをずらすか.
+	constexpr float GAUGE_BG_ALPHA = 0.3f;	//連打していない部分のα値.
 }
 
 CButtonMashBattleUI::CButtonMashBattleUI()
@@ -147,7 +147,7 @@ void CButtonMashBattleUI::StartBattle(CIngredients* pTarget, CPlayer* const pCon
 		if (!pPlayer) continue;
 
 		int No = pPlayer->GetPlayerNo();
-		//プレイヤー番号が範囲外(想定外の値)なら登録しない.
+		//プレイヤー番号が範囲外なら登録しない.
 		if (No < 0 || No >= GAUGE_MAX) continue;
 
 		pSlot->pEntries[No] = pPlayer;
@@ -172,16 +172,16 @@ void CButtonMashBattleUI::UpdateSlot(BattleSlot& Slot)
 			Slot.BattleTimer = BATTLE_TIME_LIMIT;	//制限時間はカウントダウン終了後から数える.
 			Slot.GoFlashTimer = GO_FLASH_FRAMES;	//「GO!」の光る演出を開始する.
 		}
-		return;	//カウントダウン中はここで終了(連打判定はしない).
+		return;	//カウントダウン中はここで終了.
 	}
 
-	//GO演出の残りフレームを減らす(見た目だけなので判定には影響しない).
+	//GO演出の残りフレームを減らす.
 	if (Slot.GoFlashTimer > 0)
 	{
 		Slot.GoFlashTimer--;
 	}
 
-	//制限時間を減らす(0未満にはしない).
+	//制限時間を減らす.
 	if (Slot.BattleTimer > 0)
 	{
 		Slot.BattleTimer--;
@@ -196,8 +196,7 @@ void CButtonMashBattleUI::UpdateSlot(BattleSlot& Slot)
 		CXInput* pInput = Slot.pEntries[i]->GetXInput();
 		if (!pInput) continue;
 
-		//Aボタンが「今まさに押された瞬間」だけを1回としてカウントする.
-		//(押しっぱなしで連続カウントされないようにJust=trueで判定).
+		//Aボタンが押された瞬間だけを1回としてカウントする.
 		if (pInput->IsDown(CXInput::A, true))
 		{
 			Slot.MashCount[i]++;
@@ -209,8 +208,7 @@ void CButtonMashBattleUI::UpdateSlot(BattleSlot& Slot)
 	//--------------------------------------------------
 	int WinnerNo = -1;
 
-	//①：目標連打数に到達したプレイヤーがいれば即座に勝者とする.
-	//    (プレイヤー番号が若い方から調べるので、同フレームで複数人到達しても番号が若い方が優先される).
+	//目標連打数に到達したプレイヤーがいれば勝者.
 	for (int i = 0; i < GAUGE_MAX; i++)
 	{
 		if (!Slot.pEntries[i]) continue;
@@ -221,8 +219,7 @@ void CButtonMashBattleUI::UpdateSlot(BattleSlot& Slot)
 		}
 	}
 
-	//②：誰も目標に到達しないまま制限時間が切れたら、その時点で最も連打回数が多いプレイヤーを勝者にする.
-	//    (同数の場合はプレイヤー番号が若い方を優先する).
+	//誰も目標に到達しないまま制限時間が切れたら、その時点で最も連打回数が多いプレイヤーを勝者に.
 	if (WinnerNo == -1 && Slot.BattleTimer <= 0)
 	{
 		int BestCount = -1;
@@ -237,14 +234,13 @@ void CButtonMashBattleUI::UpdateSlot(BattleSlot& Slot)
 		}
 	}
 
-	//勝者が決まっていればこのスロットの対決を終了させる.
+	//勝者が決まっていればこの対決を終了させる.
 	if (WinnerNo != -1)
 	{
 		EndSlot(Slot, WinnerNo);
 	}
 }
 
-//決着をつけて後片付けをする.
 void CButtonMashBattleUI::EndSlot(BattleSlot& Slot, int WinnerNo)
 {
 	//参加者全員の行動ロックを解除する.
@@ -255,7 +251,6 @@ void CButtonMashBattleUI::EndSlot(BattleSlot& Slot, int WinnerNo)
 	}
 
 	//勝者がいれば、通常の具材獲得処理と同じ流れに合流させて具材を渡す.
-	//(これ以降は普段の「回収中」の処理でお箸が持ち上がっていく).
 	if (WinnerNo >= 0 && WinnerNo < GAUGE_MAX && Slot.pEntries[WinnerNo] && Slot.pTargetIngredients)
 	{
 		Slot.pEntries[WinnerNo]->IngredientsGetter(Slot.pTargetIngredients);
@@ -265,7 +260,7 @@ void CButtonMashBattleUI::EndSlot(BattleSlot& Slot, int WinnerNo)
 	ResetSlot(Slot);
 }
 
-//スロットの内容を未使用状態に戻す.
+//スロットの内容初期化.
 void CButtonMashBattleUI::ResetSlot(BattleSlot& Slot)
 {
 	Slot.IsActive = false;
@@ -317,7 +312,7 @@ void CButtonMashBattleUI::RenderPlayer4Gauge()
 	RenderGauge(3);
 }
 
-//指定したプレイヤー番号のゲージ(またはカウントダウン数字)を描画する.
+//指定したプレイヤー番号のゲージを描画する.
 void CButtonMashBattleUI::RenderGauge(int PlayerNo)
 {
 	//このプレイヤーが今対決中かどうか、対決中ならどのスロットかを調べる.
@@ -344,22 +339,17 @@ void CButtonMashBattleUI::RenderGauge(int PlayerNo)
 	m_pGaugeImg[PlayerNo]->SetPatternNo(0, static_cast<SHORT>(PlayerNo));
 	m_pGaugeImg[PlayerNo]->SetPosition(D3DXVECTOR3(PosX, PosY, 0.f));
 
-	//①土台(ゲージの最大量)を薄く表示する.
-	//IMG_GageはTopleftreferenceis(左上基準)が既定でONになっているため、
-	//SetPositionで指定した座標が左上端の基準になる.
+	//土台(ゲージの最大量)を薄く表示する.
 	m_pGaugeImg[PlayerNo]->SetScale(D3DXVECTOR3(GAUGE_WIDTH, GAUGE_HEIGHT, 0.f));
 	m_pGaugeImg[PlayerNo]->SetAlpha(GAUGE_BG_ALPHA);
 	m_pGaugeImg[PlayerNo]->Render();
 
-	//②連打した分だけ左詰めで塗りつぶす.
-	//左上基準のため、幅(Scale.x)だけを進捗率倍に縮めれば左端の位置は変わらず、
-	//右端だけが連打量に応じて伸び縮みするゲージ表現になる.
+	//連打した分だけ左詰めで塗りつぶす.
 	m_pGaugeImg[PlayerNo]->SetScale(D3DXVECTOR3(GAUGE_WIDTH * Rate, GAUGE_HEIGHT, 0.f));
 	m_pGaugeImg[PlayerNo]->SetAlpha(1.f);
 	m_pGaugeImg[PlayerNo]->Render();
 
-	//③カウントダウン終了直後だけ、ゲージ全体をフラッシュさせて「GO!」を演出する.
-	//(判定には一切影響しない、見た目だけの効果).
+	//カウントダウン終了直後だけ、ゲージ全体をフラッシュさせてGOを演出する.
 	if (Slot.GoFlashTimer > 0)
 	{
 		float FlashAlpha = static_cast<float>(Slot.GoFlashTimer) / static_cast<float>(GO_FLASH_FRAMES);
@@ -382,14 +372,13 @@ void CButtonMashBattleUI::RenderCountdownNumber(const BattleSlot& Slot)
 	}
 	if (EntryCount <= 0) return;
 
-	//本編開始後に参加者のゲージが並ぶ範囲(1番具材側の段の上端〜一番上の段の上端+ゲージ1本分)を求め、
-	//その中心に数字を1つだけ表示する.
+	//本編開始後に参加者のゲージが並ぶ範囲を求め、
 	const float RowStep = GAUGE_HEIGHT + GAUGE_MARGIN;
 	const float NearestRowTop = Slot.ScreenPos.y - GAUGE_ANCHOR_OFFSET_Y;					//具材に一番近い段の上端.
-	const float FarthestRowTop = NearestRowTop - (EntryCount - 1) * RowStep;				//一番遠い(上の)段の上端.
-	const float StackCenterY = (FarthestRowTop + NearestRowTop + GAUGE_HEIGHT) * 0.5f;	//全段をまとめた範囲の中心.
+	const float FarthestRowTop = NearestRowTop - (EntryCount - 1) * RowStep;				//一番遠い段の上端.
+	const float StackCenterY = (FarthestRowTop + NearestRowTop + GAUGE_HEIGHT) * 0.5f;		//全段をまとめた範囲の中心.
 
-	//カウントダウン開始からの経過フレーム数を求め、何段階目("3"→"2"→"1")かを算出する.
+	//カウントダウン開始からの経過フレーム数を求め、何段階目かを算出する.
 	int Elapsed = COUNTDOWN_TOTAL_FRAMES - Slot.CountdownTimer;
 	if (Elapsed < 0) Elapsed = 0;
 
