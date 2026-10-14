@@ -457,7 +457,7 @@ HRESULT XAudio2::PlaySample(const SoundData& soundData, D3DXVECTOR3 position)
     // 3D計算（X3DAudio）の実行
     X3DAUDIO_EMITTER emitter = { 0 };
     emitter.ChannelCount = 1; // 空間上の一点として計算
-    emitter.Position = position;
+    emitter.Position = { position.x, position.y, position.z };
     emitter.OrientFront = { 0.0f, 0.0f, 1.0f };
     emitter.OrientTop = { 0.0f, 1.0f, 0.0f };
     emitter.CurveDistanceScaler = 1.0f;
@@ -595,7 +595,7 @@ void XAudio2::Update()
         else {
             X3DAUDIO_EMITTER emitter = { 0 };
             emitter.ChannelCount = 1;
-            emitter.Position = pVESourceVoice3D[i]->position;
+            emitter.Position = { pVESourceVoice3D[i]->position.x, pVESourceVoice3D[i]->position.y, pVESourceVoice3D[i]->position.z };
             emitter.OrientFront = { 0.0f, 0.0f, 1.0f };
             emitter.OrientTop = { 0.0f, 1.0f, 0.0f };
             emitter.CurveDistanceScaler = 3.0f;
@@ -1374,13 +1374,11 @@ void XAudio2::BGMLoad()
     HRESULT RE= CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
     std::vector <Sound> BGMdata;
-    BGMdata.push_back({ static_cast<int>(BGMList::BGM1), _T("Data\\Sound\\BGM\\1.mp3") });
-    BGMdata.push_back({ static_cast<int>(BGMList::BGM2), _T("Data\\Sound\\BGM\\2.mp3") });
-    BGMdata.push_back({ static_cast<int>(BGMList::BGM3), _T("Data\\Sound\\BGM\\3.mp3") });
-    BGMdata.push_back({ static_cast<int>(BGMList::BGM4), _T("Data\\Sound\\BGM\\4.mp3") });
-    BGMdata.push_back({ static_cast<int>(BGMList::BGM5), _T("Data\\Sound\\BGM\\5.mp3") });
-    BGMdata.push_back({ static_cast<int>(BGMList::BGM6), _T("Data\\Sound\\BGM\\6.mp3") });
-    BGMdata.push_back({ static_cast<int>(BGMList::BGM7), _T("Data\\Sound\\BGM\\7.mp3") });
+    BGMdata.push_back({ static_cast<int>(BGMList::Title),       _T("Data\\Sound\\BGM\\Title.mp3") });
+    BGMdata.push_back({ static_cast<int>(BGMList::PlayerSetUp), _T("Data\\Sound\\BGM\\PlayerSetUp.mp3") });
+    BGMdata.push_back({ static_cast<int>(BGMList::GameMain),    _T("Data\\Sound\\BGM\\GameMain.mp3") });
+    BGMdata.push_back({ static_cast<int>(BGMList::Result),      _T("Data\\Sound\\BGM\\Result.mp3") });
+
     //    BGMdata.push_back();
     std::sort(BGMdata.begin(), BGMdata.end(), [](const auto& a, const auto& b) {
         return a.No < b.No;
@@ -1439,19 +1437,8 @@ void XAudio2::SELoad()
 {
     HRESULT RE = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
     std::vector <Sound> SEdata;
-    SEdata.push_back({ static_cast<int>(SEList::EI),_T("Data\\Sound\\SE\\エ゛イ゛.mp3") });
-    SEdata.push_back({ static_cast<int>(XAudio2::SEList::BAKUHATU),_T("Data\\Sound\\SE\\爆発2.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::SYAKIN),_T("Data\\Sound\\SE\\シャキーン2.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::DBIMU),_T("Data\\Sound\\SE\\気弾のせめぎ合い.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::SRASYU),_T("Data\\Sound\\SE\\剣で斬る6.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::GOGOGO),_T("Data\\Sound\\SE\\ゴゴゴゴ.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::MOVE),_T("Data\\Sound\\SE\\ロボット合体3.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::KIDOU),_T("Data\\Sound\\SE\\ロボットが腕を動かす1.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::MOVE2),_T("Data\\Sound\\SE\\巨大モーター起動.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::SHOT),_T("Data\\Sound\\SE\\ビーム砲1.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::KAIHI),_T("Data\\Sound\\SE\\キックの衣擦れ2.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::SATTA),_T("Data\\Sound\\SE\\巨大シャッターが開く.mp3") });
-    SEdata.push_back({ static_cast<int>(SEList::JANP),_T("Data\\Sound\\SE\\ピューンと逃げる.mp3") });
+   // SEdata.push_back({ static_cast<int>(SEList::EI),_T("Data\\Sound\\SE\\エ゛イ゛.mp3") });
+
 
     //SEdata.push_back();
 

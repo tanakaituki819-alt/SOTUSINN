@@ -10,7 +10,7 @@
 #include "SoundManager\CSoundManager.h"
 #include"System\RawInput\RawInput.h"
 
-#include"XAudio2\XAudio2.h"
+
 //コンストラクタ.
 CGame::CGame( CDirectX9& pDx9, CDirectX11& pDx11, HWND hWnd )
 	: m_pDx9				( &pDx9 )

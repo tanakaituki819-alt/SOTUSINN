@@ -93,13 +93,11 @@ public:
 		Loaded      // 読み込み完了
 	};
 	enum class BGMList {
-		BGM1,
-		BGM2,
-		BGM3,
-		BGM4,
-		BGM5,
-		BGM6,
-		BGM7,
+		Title,
+		PlayerSetUp,
+		GameMain,
+		Result,
+
 		MAX,
 	};
 	enum class SEList {
