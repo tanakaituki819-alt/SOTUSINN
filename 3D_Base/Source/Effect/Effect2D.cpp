@@ -59,7 +59,8 @@ HRESULT Effect2D::LoadData()
 		{ enList::KANSEI,	u"Data\\Effekseer\\完成.efk"	},
 	{ enList::KIRAN,	u"Data\\Effekseer\\KIRAN.efk"	},
 	{ enList::lightning,	u"Data\\Effekseer\\lightning.efk"	},
-		
+		{ enList::PointGetEfect,	u"Data\\Effekseer\\PointGetEfect.efk"	},
+
 	
 	};
 	//配列の最大要素数を算出(配列全体のサイズ／配列１つ分のサイズ).

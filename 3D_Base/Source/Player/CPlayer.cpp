@@ -240,6 +240,7 @@ void CPlayer::IngredientsGetter(CIngredients* Ingredients)
 	}
 	m_pIngredients = Ingredients;
 	m_Position = { m_pIngredients->GetPosition() };
+	
 }
 
 void CPlayer::IngredientsCollecting()
@@ -250,7 +251,10 @@ void CPlayer::IngredientsCollecting()
 		m_pIngredients->SetPosition(m_Position);
 	}
 	else {
-		GetIngredients(m_pIngredients);
+		//GetIngredients(m_pIngredients);
+		m_IngredientsGetEffectManager->Stato(this, m_pIngredients, { P_UI->GetPosition() .x,P_UI->GetPosition() .y,0});
+		m_pIngredients->Setisappear(false);
+		m_pIngredients = nullptr;
 		m_IsCollecting = false;
 	}
 
@@ -261,7 +265,7 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 	my_list.push_back(YASAI->GetIngredientsNo());
 	Score += YASAI->GetScore();
 	YASAI->DeadCharStatus();
-	m_pIngredients = nullptr;
+	//m_pIngredients = nullptr;
 	
 }
 

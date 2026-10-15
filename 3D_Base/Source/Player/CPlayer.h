@@ -7,6 +7,7 @@
 #include "Player/PlayerParalysisUI/CPlayerParalysisUI.h"
 #include <GameScene/GameSceneGameMain/Ingredients/CIngredients.h>
 #include <GameObject/StaticMeshObjObject/CStaticMeshObjObject.h>
+#include <GameScene/GameSceneGameMain/IngredientsGetEffect/IngredientsGetEffectManager.h>
 
 class CPlayer
 	:public  CStaticMeshObjObject	//スタティックメッシュオブジェのオブジェクトを継承.
@@ -56,6 +57,9 @@ public:
 	//スコアを取得.
 	int GetScore() const { return Score; }
 
+	void SetIngredientsGetEffectManager(IngredientsGetEffectManager* IngredientsGetEffectManager) {
+		m_IngredientsGetEffectManager = IngredientsGetEffectManager;
+	}
 private:
 	D3DXVECTOR3				m_Pos;							//ポジション.
 	CXInput*				MyController;					//コントローラー.
@@ -79,4 +83,6 @@ private:
 	D3DXVECTOR3				m_Point3Dto2DConverter = {};	//ボタン連打を表示するポジション(3D座標から2Dように変換).
 	D3DXVECTOR3 m_OldPosition;
 	CIngredients*			m_pIngredients = nullptr;
+
+	IngredientsGetEffectManager* m_IngredientsGetEffectManager=nullptr;//エフェクトのマネージャー
 };
