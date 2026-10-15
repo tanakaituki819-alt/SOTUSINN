@@ -47,6 +47,8 @@ void CIngredients::SetIngredients(IngredientsSetting* pIngredientsSetting,int i)
 	IsInTheWater = false;
 	EffC = 0;
 	EffC1 = 0;
+
+	isappear = true;
 }
 
 void CIngredients::IsCollecting()
@@ -147,7 +149,9 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 	if (m_pMesh == nullptr) {
 		return;
 	}
-
+	if (isappear ==false) {
+		return;
+	}
 	//描画直前で座標や回転情報などを更新.
 	m_pMesh->SetPosition(m_Position);
 	m_pMesh->SetRotation(m_Rotation);

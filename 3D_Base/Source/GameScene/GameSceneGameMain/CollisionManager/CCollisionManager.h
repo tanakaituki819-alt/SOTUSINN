@@ -72,4 +72,5 @@ private:
 		LPD3DXMESH pMesh,
 		DWORD dwPolyindex,
 		D3DXVECTOR3* pVertices);	//(out)頂点情報.
+
 };

@@ -51,11 +51,15 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pTimer = new CTimer();
 	m_pTimer->SetTime(90* 60);
 	m_pCollisionManager->SetIngredients(*m_pCIngredientsM);		//具材マネージャーセット
+
+
+	m_IngredientsGetEffectManager = new IngredientsGetEffectManager();
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
 {
 	Effect::StopAll();
+	Effect2D::StopAll();
 	SAFE_DELETE(m_pTimer);
 	SAFE_DELETE(m_pPauseUI);
 	SAFE_DELETE(m_pButtonMashBattleUI);
@@ -63,6 +67,8 @@ CGameSceneGameMain::~CGameSceneGameMain()
 
 	SAFE_DELETE(m_pGround);
 
+	SAFE_DELETE(m_IngredientsGetEffectManager);
+	
 }
 
 void CGameSceneGameMain::StartFinalSetup()
@@ -71,6 +77,7 @@ void CGameSceneGameMain::StartFinalSetup()
 		if (m_pPlayer[i] != nullptr) {
 			m_pPlayer[i]->SetXInput(CONTROLA[i]);
 			m_pPlayer[i]->SetPlayerNo(i);
+			m_pPlayer[i]->SetIngredientsGetEffectManager(m_IngredientsGetEffectManager);
 		}
 	}
 	for (int i = 0; i < PlayerMax; i++) {
@@ -119,6 +126,8 @@ void CGameSceneGameMain::Update()
 	}
 
 	m_pGround->Update();
+
+	m_IngredientsGetEffectManager->Update();
 
 	//連打対決の更新(参加者の連打回数の集計・勝敗判定).
 	//※プレイヤーの移動/回収処理より先に更新することで、
@@ -200,6 +209,8 @@ void CGameSceneGameMain::Draw()
 		}
 		
 	}
+
+	m_IngredientsGetEffectManager->Draw(m_pCamera->GetView(), m_mProj);
 	m_pTimer->Draw();
 
 	//連打対決中なら、対象の具材の真上にゲージを描画する.
@@ -207,6 +218,7 @@ void CGameSceneGameMain::Draw()
 	m_pButtonMashBattleUI->UpdateScreenPosition(m_pCamera->GetView(), m_mProj);
 	m_pButtonMashBattleUI->Draw();
 
+	Effect2D::GetInstance()->Draw();
 	//ポーズ
 	if (m_Pause)
 	{

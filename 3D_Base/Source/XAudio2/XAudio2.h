@@ -178,6 +178,8 @@ public:
 	//音のループエンド音は止まらない
 	void Exitloop(SoundHandleX handle);
 
+	void SetLoop(SoundHandleX handle, bool isLoop);
+
 	void StoporStratSound(SoundHandleX handle,bool isStop);//true音の一時停止、false再開
 
 	void SetChannelVolumes(SoundHandleX handle, float leftVol, float rightVol);//チャンネル（L/R等）ごとの音量を個別指定します。1ch,2ch音源しか対応していない

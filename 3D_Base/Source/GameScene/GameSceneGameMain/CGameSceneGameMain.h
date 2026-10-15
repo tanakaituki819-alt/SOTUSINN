@@ -10,6 +10,8 @@
 #include "GameScene/GameSceneGameMain/Ingredientsmanager/CIngredientsmanager.h"
 #include "GameScene/GameSceneGameMain/Nabe/CNabe.h"
 #include "GameScene/GameSceneGameMain/ButtonMashBattleUI/CButtonMashBattleUI.h"
+
+#include "GameScene/GameSceneGameMain/IngredientsGetEffect/IngredientsGetEffectManager.h"
 class CGameSceneGameMain
 	:public CGameScene
 {
@@ -55,6 +57,7 @@ private:
 	CXInput* CONTROLA[PlayerMax] = {};
 	CPlayer* m_pPlayer[PlayerMax] = {};
 
+	IngredientsGetEffectManager* m_IngredientsGetEffectManager = nullptr;
 };
 
 

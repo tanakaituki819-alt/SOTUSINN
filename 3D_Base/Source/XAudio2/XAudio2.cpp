@@ -742,10 +742,15 @@ SoundHandleX XAudio2::BGMPlayHandle(BGMList i, SubmixTargetType Effectactive, bo
     buffer.PlayBegin = 0;
     buffer.PlayLength = 0;
 
+    if (isLoop) {
         // --- ループ再生のための設定を追加 ---
         buffer.LoopCount = XAUDIO2_LOOP_INFINITE; // 無限ループに設定（1以上を指定すればその回数だけループ）
-        buffer.LoopBegin = BGMData[static_cast<int>(i)].wfx.nSamplesPerSec * 0;                     // ループを開始するサンプル位置（最初からなら0）wfx.nSamplesPerSec=1秒
+        buffer.LoopBegin = SEData[static_cast<int>(i)].wfx.nSamplesPerSec * 0;                     // ループを開始するサンプル位置（最初からなら0）wfx.nSamplesPerSec=1秒
         buffer.LoopLength = 0;                    // ループする長さ（0を指定するとファイル全体をループ）
+    }
+    else {
+        buffer.LoopCount == 0;
+    }
 
         //エフェクトチェーンの作成
         {
@@ -759,7 +764,7 @@ SoundHandleX XAudio2::BGMPlayHandle(BGMList i, SubmixTargetType Effectactive, bo
             descriptor.pEffect = pReverbEffect;
             descriptor.InitialState = TRUE;             // 最初から有効化しておく
             descriptor.OutputChannels = 2;              // 出力チャンネル数（例: ステレオ）
-
+            descriptor.InitialState = FALSE;   // 初期状態を無効にする
             //エフェクトチェーン構造体を構築
             XAUDIO2_EFFECT_CHAIN chain;
             chain.EffectCount = 1;                     // エフェクトの数
@@ -780,10 +785,6 @@ SoundHandleX XAudio2::BGMPlayHandle(BGMList i, SubmixTargetType Effectactive, bo
         }
 
 
-        hr = slot.pVoice->Start(0);
-        if (isLoop) {
-            slot.pVoice->ExitLoop();
-        }
 
 
 
@@ -876,11 +877,16 @@ SoundHandleX XAudio2::SEPlayHandle(SEList i, SubmixTargetType Effectactive, bool
     buffer.PlayBegin = 0;
     buffer.PlayLength = 0;
 
+
+    if (isLoop) {
         // --- ループ再生のための設定を追加 ---
-    buffer.LoopCount = XAUDIO2_LOOP_INFINITE; // 無限ループに設定（1以上を指定すればその回数だけループ）
-    buffer.LoopBegin = SEData[static_cast<int>(i)].wfx.nSamplesPerSec*0;                     // ループを開始するサンプル位置（最初からなら0）wfx.nSamplesPerSec=1秒
-    buffer.LoopLength = 0;                    // ループする長さ（0を指定するとファイル全体をループ）
-   
+        buffer.LoopCount = XAUDIO2_LOOP_INFINITE; // 無限ループに設定（1以上を指定すればその回数だけループ）
+        buffer.LoopBegin = SEData[static_cast<int>(i)].wfx.nSamplesPerSec * 0;                     // ループを開始するサンプル位置（最初からなら0）wfx.nSamplesPerSec=1秒
+        buffer.LoopLength = 0;                    // ループする長さ（0を指定するとファイル全体をループ）
+    }
+    else {
+        buffer.LoopCount == 0;
+    }
 
 
     hr = slot.pVoice->SubmitSourceBuffer(&buffer);
@@ -902,7 +908,7 @@ SoundHandleX XAudio2::SEPlayHandle(SEList i, SubmixTargetType Effectactive, bool
         descriptor.pEffect = pReverbEffect;
         descriptor.InitialState = TRUE;             // 最初から有効化しておく
         descriptor.OutputChannels = 2;              // 出力チャンネル数（例: ステレオ）
-
+        descriptor.InitialState = FALSE;   // 初期状態を無効にする
         //エフェクトチェーン構造体を構築
         XAUDIO2_EFFECT_CHAIN chain;
         chain.EffectCount = 1;                     // エフェクトの数
@@ -924,9 +930,7 @@ SoundHandleX XAudio2::SEPlayHandle(SEList i, SubmixTargetType Effectactive, bool
   
 
     hr = slot.pVoice->Start(0);
-    if (isLoop) {
-        slot.pVoice->ExitLoop();
-    }
+
     if (FAILED(hr)) {
         slot.pVoice->DestroyVoice();
         slot.pVoice = nullptr;
@@ -1116,7 +1120,11 @@ void XAudio2::SetEffect(SoundHandleX handle, EffectType Effectactive)
     if (!IsHandleValid(handle)) return;
    
 
-
+    // Default は「エフェクトなし」なので無効化して終了
+    if (Effectactive == EffectType::Default) {
+        m_voiceSlots[handle.id].pVoice->DisableEffect(0);
+        return;
+    }
 
 
 
@@ -1210,12 +1218,70 @@ void XAudio2::SetEffect(SoundHandleX handle, EffectType Effectactive)
         sizeof(XAUDIO2FX_REVERB_PARAMETERS),  // 構造体のサイズ
         XAUDIO2_COMMIT_NOW                    // 即座に反映
     );
+    m_voiceSlots[handle.id].pVoice->EnableEffect(0);   // ← 有効化を追加
 }
 
 void XAudio2::Exitloop(SoundHandleX handle)
 {
     if (!IsHandleValid(handle)) return;
     m_voiceSlots[handle.id].pVoice->ExitLoop();
+}
+
+void XAudio2::SetLoop(SoundHandleX handle, bool isLoop)
+{
+    if (!IsHandleValid(handle)) return;
+    VoiceSlot& slot = m_voiceSlots[handle.id];
+    if (isLoop) {
+        m_voiceSlots[handle.id].pVoice->ExitLoop();
+        return;
+    }
+
+    // 音源データを取得
+    const SoundData* data ;
+    if (slot.Type == SoundType::BGM) {
+        data = &BGMData[slot.SoundNo];
+    }
+    else {
+        data = &SEData[slot.SoundNo];
+    }
+
+
+    const UINT32 totalSamples =static_cast<UINT32>(data->audioBuffer.size() / data->wfx.nBlockAlign);
+    if (totalSamples == 0) return;
+
+    // 1. 現在位置を取得（Stop/Flush の前に取ること）
+    XAUDIO2_VOICE_STATE state;
+    slot.pVoice->GetState(&state);
+    UINT32 currentPos = static_cast<UINT32>(state.SamplesPlayed % totalSamples);
+
+    //  止めてキューを空にする（再生中のバッファも消すため先に Stop）
+    slot.pVoice->Stop(0);
+    slot.pVoice->FlushSourceBuffers();
+
+    //  今の位置から最後まで（ループなし）
+    XAUDIO2_BUFFER first = { 0 };
+    first.AudioBytes = static_cast<UINT32>(data->audioBuffer.size());
+    first.pAudioData = data->audioBuffer.data();
+    first.PlayBegin = currentPos;
+    first.PlayLength = totalSamples - currentPos;
+    first.LoopCount = 0;
+    slot.pVoice->SubmitSourceBuffer(&first);
+
+    //  その後は最初から全体を無限ループ
+    XAUDIO2_BUFFER loop = { 0 };
+    loop.AudioBytes = static_cast<UINT32>(data->audioBuffer.size());
+    loop.pAudioData = data->audioBuffer.data();
+    loop.Flags = XAUDIO2_END_OF_STREAM;
+    loop.PlayBegin = 0;
+    loop.PlayLength = 0;
+    loop.LoopBegin = 0;
+    loop.LoopLength = 0;
+    loop.LoopCount = XAUDIO2_LOOP_INFINITE;
+    slot.pVoice->SubmitSourceBuffer(&loop);
+
+    //  再開
+    slot.pVoice->Start(0);
+
 }
 
 void XAudio2::StoporStratSound(SoundHandleX handle, bool isStop)
