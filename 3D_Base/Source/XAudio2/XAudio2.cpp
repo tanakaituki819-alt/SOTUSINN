@@ -449,7 +449,7 @@ HRESULT XAudio2::PlaySample(const SoundData& soundData, D3DXVECTOR3 position)
     
     
     IXAudio2SourceVoice* pSourceVoice = nullptr;
-    hr = m_pXAudio2->CreateSourceVoice(&pSourceVoice, &SEData[static_cast<int>(SEList::BAKUHATU)].wfx, XAUDIO2_VOICE_USEFILTER);
+   // hr = m_pXAudio2->CreateSourceVoice(&pSourceVoice, &SEData[static_cast<int>(SEList::BAKUHATU)].wfx, XAUDIO2_VOICE_USEFILTER);
     if (FAILED(hr)) return hr;
 
    
@@ -517,8 +517,8 @@ HRESULT XAudio2::PlaySample(const SoundData& soundData, D3DXVECTOR3 position)
     pSourceVoice->SetOutputMatrix(m_pMasterVoice, srcChannels, 2, finalMatrix);
 
     XAUDIO2_BUFFER buffer = { 0 };
-    buffer.AudioBytes = (UINT32)SEData[static_cast<int>(SEList::BAKUHATU)].audioBuffer.size();
-    buffer.pAudioData = SEData[static_cast<int>(SEList::BAKUHATU)].audioBuffer.data();
+    //buffer.AudioBytes = (UINT32)SEData[static_cast<int>(SEList::BAKUHATU)].audioBuffer.size();
+    //buffer.pAudioData = SEData[static_cast<int>(SEList::BAKUHATU)].audioBuffer.data();
     buffer.Flags = XAUDIO2_END_OF_STREAM;
 
     hr = pSourceVoice->SubmitSourceBuffer(&buffer);
@@ -781,7 +781,7 @@ SoundHandleX XAudio2::BGMPlayHandle(BGMList i, SubmixTargetType Effectactive, bo
 
 
         hr = slot.pVoice->Start(0);
-        if (isLoop) {
+        if (!isLoop) {
             slot.pVoice->ExitLoop();
         }
 
@@ -877,7 +877,7 @@ SoundHandleX XAudio2::SEPlayHandle(SEList i, SubmixTargetType Effectactive, bool
     buffer.PlayLength = 0;
 
         // --- ループ再生のための設定を追加 ---
-    buffer.LoopCount = XAUDIO2_LOOP_INFINITE; // 無限ループに設定（1以上を指定すればその回数だけループ）
+    buffer.LoopCount = 0; // 無限ループに設定（1以上を指定すればその回数だけループ）
     buffer.LoopBegin = SEData[static_cast<int>(i)].wfx.nSamplesPerSec*0;                     // ループを開始するサンプル位置（最初からなら0）wfx.nSamplesPerSec=1秒
     buffer.LoopLength = 0;                    // ループする長さ（0を指定するとファイル全体をループ）
    
@@ -924,7 +924,7 @@ SoundHandleX XAudio2::SEPlayHandle(SEList i, SubmixTargetType Effectactive, bool
   
 
     hr = slot.pVoice->Start(0);
-    if (isLoop) {
+    if (!isLoop) {
         slot.pVoice->ExitLoop();
     }
     if (FAILED(hr)) {
@@ -1437,8 +1437,12 @@ void XAudio2::SELoad()
 {
     HRESULT RE = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
     std::vector <Sound> SEdata;
-   // SEdata.push_back({ static_cast<int>(SEList::EI),_T("Data\\Sound\\SE\\エ゛イ゛.mp3") });
-
+    SEdata.push_back({ static_cast<int>(SEList::Handclap),      _T("Data\\Sound\\SE\\Handclap.mp3")     });
+    SEdata.push_back({ static_cast<int>(SEList::Decision),      _T("Data\\Sound\\SE\\Decision.mp3")     });
+    SEdata.push_back({ static_cast<int>(SEList::Buttonpush),    _T("Data\\Sound\\SE\\Buttonpush.mp3")   });
+    SEdata.push_back({ static_cast<int>(SEList::Boiling),       _T("Data\\Sound\\SE\\Boiling.mp3")      });
+    SEdata.push_back({ static_cast<int>(SEList::Connected),     _T("Data\\Sound\\SE\\Connected.mp3")    });
+    SEdata.push_back({ static_cast<int>(SEList::Cancel),        _T("Data\\Sound\\SE\\Cancel.mp3")       });
 
     //SEdata.push_back();
 

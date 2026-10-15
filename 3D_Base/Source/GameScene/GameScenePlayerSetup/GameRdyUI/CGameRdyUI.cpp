@@ -108,7 +108,7 @@ void CGameRdyUI::Update()
 
 	//タイトルに戻る画面が出ているなら.
 	if (m_TitleBackflag) {
-		//セレクトフレームを移動させていいか
+		//セレクトフレームを移動させていいか.
 		if (m_SelectTimeOver) {
 			//左スティックを左に倒したなら.
 			if (m_pController[0]->GetLThumbX() > STICK_DEAD_ZONE) {
@@ -127,6 +127,7 @@ void CGameRdyUI::Update()
 			if (m_pController[0]->IsDown(CXInput::A, true)) {
 				//タイトルに戻るフラグ.
 				m_TitleSceneChangeflag = true;
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision); //決定音.
 			}
 		}
 		//いいえを選択中なら.
@@ -134,6 +135,7 @@ void CGameRdyUI::Update()
 			//Aボタンを押した.
 			if (m_pController[0]->IsDown(CXInput::A, true)) {
 				m_TitleBackflag = false;	//タイトルに戻る描画をしない.
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision); //決定音.
 			}
 		}
 		return;	//リターンで返して以降通らないようにする.
@@ -146,6 +148,7 @@ void CGameRdyUI::Update()
 		if (m_pController[0]->IsDown(CXInput::B, true)) {
 			m_TitleBackflag = true;		//タイトルに戻る画面を表示する.
 			m_IsYesSelected = false;	//いいえを選択している状態に戻す.
+			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Cancel); //キャンセル音.
 			return;		//以降通らないようにする.
 		}
 	}
@@ -155,6 +158,7 @@ void CGameRdyUI::Update()
 		//Aボタン準備完了.
 		if (m_pController[i]->IsDown(CXInput::A, true)) {
 			m_Handclapflag[i] = true;	//準備完了状態へ.
+			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Handclap);	//手を叩く音.
 		}
 		//Bボタンを押すと準備完了解除.
 		else if (m_pController[i]->IsDown(CXInput::B, true)) {
@@ -188,11 +192,14 @@ void CGameRdyUI::Update()
 	m_Connectedcnt	= 0;
 	m_Readycnt		= 0;
 	}
+	
 	for (int i = 0; i < hand_Max; i++) {
+		//接続されているコントローラーの数をカウントする.
 		if (m_pController[i]->IsConnect()) {
-			++m_Connectedcnt;
+			++m_Connectedcnt;	//接続されているコントローラーの数をカウントする.
+			//準備完了状態なら.
 			if ( m_Handclapflag[i]) {
-				++m_Readycnt;
+				++m_Readycnt;	//準備完了状態のコントローラーの数をカウントする.
 			}
 		}
 	}
