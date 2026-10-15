@@ -101,19 +101,13 @@ public:
 		MAX,
 	};
 	enum class SEList {
-		BAKUHATU,
-		SYAKIN,
-		DBIMU,
-		SRASYU,
-		GOGOGO,
-		MOVE,
-		KIDOU,
-		MOVE2,
-		SHOT,//ショット
-		KAIHI,//回避音
-		SATTA,//シャッター
-		JANP,//ジャンプ
-		EI,//エ゛イ゛
+		Handclap,	//手を叩く音.
+		Decision,	//決定音.
+		Buttonpush,	//ボタンを押す音.
+		Boiling,	//沸騰音.
+		Connected,	//コントローラー接続音.
+		Cancel,		//キャンセル音.
+
 		MAX,
 	};
 	static XAudio2* GetInstance()

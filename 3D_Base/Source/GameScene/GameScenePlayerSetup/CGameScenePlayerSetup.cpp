@@ -4,8 +4,6 @@
 CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	:CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
 {
-	//BGM再生.
-	XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::PlayerSetUp);
 
 	m_pBackImg			= new CUIObject		();	//背景.
 	m_pCharacterUI		= new CCharacterUI	();	//キャラクターのUI.
@@ -15,6 +13,10 @@ CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX
 	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//和室背景設定.
 	m_pBackImg->SetPosition	(0, 0, 0);		
 	m_pBackImg->SetScale	(WND_W, WND_H,0);	//画面最大数のサイズ.
+
+	//BGM再生.
+	SoundHandleX BGMHandle = XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::PlayerSetUp);
+	XAudio2::GetInstance()->SetSoundVolume(BGMHandle, 0.5f);
 }
 
 CGameScenePlayerSetup::~CGameScenePlayerSetup()
@@ -23,6 +25,8 @@ CGameScenePlayerSetup::~CGameScenePlayerSetup()
 	SAFE_DELETE(m_pPlayerSetupUI);
 	SAFE_DELETE(m_pCharacterUI);
 	SAFE_DELETE(m_pBackImg);
+	XAudio2::GetInstance()->AllStopBGM();
+	XAudio2::GetInstance()->AllStopSE();
 }
 
 void CGameScenePlayerSetup::StartFinalSetup()

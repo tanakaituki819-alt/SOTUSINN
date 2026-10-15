@@ -216,6 +216,7 @@ void CPlayer::Paralysis()
 	//Bボタンコントローラーが押されれば時間短縮.
 	if (MyController->IsUp(CXInput::B)) {
 		m_ParalysisTimer+= 10;	//タイマー増加.
+		XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Buttonpush); //ボタン押下音.
 	}
 	m_ParalysisTimer++;			//タイマー増加.
 	//タイマーが2秒経過すれば.

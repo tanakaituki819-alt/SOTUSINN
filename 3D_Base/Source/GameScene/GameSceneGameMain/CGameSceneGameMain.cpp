@@ -11,8 +11,6 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	, m_Pause				( false )
 
 {
-	XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::GameMain);
-
 	//カメラ座標.
 	m_pCamera->SetPosition(D3DXVECTOR3(0.f, 10.f, -5.f));
 	m_pCamera->SetLookPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
@@ -23,8 +21,6 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_Light.fIntensity = 1;//	ライトパワー
 
 	m_pGround = new CNabe();
-
-
 
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 	m_pBackGround = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_GameMainGround);
@@ -40,10 +36,8 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pButtonMashBattleUI = new CButtonMashBattleUI();
 	m_pCollisionManager->SetButtonMashBattleUI(m_pButtonMashBattleUI);
 
-
 	//ポーズUIの生成とコントローラーをセット.
 	m_pPauseUI = new CPauseUI();
-
 
 	m_pCIngredientsM = new CIngredientsmanager();
 	m_pCIngredientsM->SetNabe(m_pGround);
@@ -51,6 +45,11 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pTimer = new CTimer();
 	m_pTimer->SetTime(90* 60);
 	m_pCollisionManager->SetIngredients(*m_pCIngredientsM);		//具材マネージャーセット
+
+	SoundHandleX BGMHandle = XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::GameMain);
+	XAudio2::GetInstance()->SetSoundVolume(BGMHandle, 0.7f);
+	SoundHandleX SEHandle = XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Boiling, XAudio2::SubmixTargetType::Reverb, true);	//沸騰音をループ再生.
+	XAudio2::GetInstance()->SetSoundVolume(SEHandle, 1.5f);
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
