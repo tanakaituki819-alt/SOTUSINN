@@ -48,9 +48,11 @@ void CGameScenePlayerSetup::Update()
 	for (int i = 0; i < Controller_Max; i++) {
 		m_pController[i]->Update();	
 	}
+	//シーンチェンジフラグが立っていたら、シーンチェンジを行う.
 	if (m_pGameRdyUI->GetMainSceneChangeflag()) {
-		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);
-		XAudio2::GetInstance()->AllStopBGM();
+		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);	//ゲームメインへシーンチェンジ.
+		XAudio2::GetInstance()->AllStopBGM();	//BGM停止.
+		//コントローラーが接続されていないプレイヤーを削除する.
 		for (int i = 0; i < Controller_Max; i++) {
 			if (!m_pController[i]->IsConnect()&&i!=0) {
 			SAFE_DELETE(CG->m_pPlayer[i]);

@@ -114,11 +114,13 @@ void CGameRdyUI::Update()
 			if (m_pController[0]->GetLThumbX() > STICK_DEAD_ZONE) {
 				m_IsYesSelected = true;		//はいを選択中.
 				m_SelectTimeOver = false;	//セレクトフレームを動かせないようにする.
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange); //セレクトチェンジ音.
 			}
 			//左スティックを右に倒したなら.
 			else if (m_pController[0]->GetLThumbX() < -STICK_DEAD_ZONE) {
 				m_IsYesSelected = false;	//いいえを選択中.
 				m_SelectTimeOver = false;	//セレクトフレームを動かせないようにする.
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange); //セレクトチェンジ音.
 			}
 		}
 		//はいを選択中なら.
@@ -183,10 +185,18 @@ void CGameRdyUI::Update()
 		}
 		//全員が準備完了なら.
 		if(m_IsAllReady){
+			//SEがまだなっていない.
+			if (!m_AllrdyCutinSEflag) {
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::AllrdyCutin); //カットインSE.
+				m_AllrdyCutinSEflag = true;
+			}
 			//Aボタンが押されれば.
 			if (m_pController[0]->IsDown(CXInput::A, true)) {
-				m_GameMainSceneChangeflag = true;
+				m_GameMainSceneChangeflag = true;	//ゲームメインへシーンチェンジ.
 			}
+		}
+		else {
+			m_AllrdyCutinSEflag = false;	//SEを再生できるようにする.
 		}
 
 	m_Connectedcnt	= 0;
@@ -196,11 +206,19 @@ void CGameRdyUI::Update()
 	for (int i = 0; i < hand_Max; i++) {
 		//接続されているコントローラーの数をカウントする.
 		if (m_pController[i]->IsConnect()) {
+			//接続されていればSEを鳴らす.
+			if (!m_ControllerConnectSEflag[i]) {
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Connected); //コントローラー接続時のSE.
+				m_ControllerConnectSEflag[i] = true;	//SEを再生済へfalseにする.
+			}
 			++m_Connectedcnt;	//接続されているコントローラーの数をカウントする.
 			//準備完了状態なら.
 			if ( m_Handclapflag[i]) {
 				++m_Readycnt;	//準備完了状態のコントローラーの数をカウントする.
 			}
+		}
+		else {
+			m_ControllerConnectSEflag[i] = false;
 		}
 	}
 	//接続されているコントローラー1Pだけであれば、全員が準備完了状態を解除する.

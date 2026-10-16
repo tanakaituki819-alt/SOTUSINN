@@ -87,6 +87,7 @@ void CTitleChopsticks::Update()
 			m_AttackMoveNow = false;	//前進完了
 			m_Effectflag = true;		//エフェクトを出す
 			m_StopTimer = 40;			//タイマー増加.
+			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::ChopsticksHit);
 		}
 		//端まで戻ったら次のフェーズへ
 		if (!m_AttackMoveNow && m_MoveOffset.x < NEXT_PHASE_LIMIT) {
@@ -108,6 +109,7 @@ void CTitleChopsticks::Update()
 			m_AttackMoveNow = false;	//前進完了.
 			m_Effectflag = true;		//エフェクトを出す.
 			m_StopTimer = 40;			//タイマー増加.
+			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::ChopsticksHit);
 		}
 		//端まで戻ったら次のフェーズへ.
 		if (!m_AttackMoveNow && m_MoveOffset.x < NEXT_PHASE_LIMIT) {

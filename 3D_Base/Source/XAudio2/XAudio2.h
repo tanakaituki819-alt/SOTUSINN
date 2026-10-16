@@ -101,12 +101,15 @@ public:
 		MAX,
 	};
 	enum class SEList {
-		Handclap,	//手を叩く音.
-		Decision,	//決定音.
-		Buttonpush,	//ボタンを押す音.
-		Boiling,	//沸騰音.
-		Connected,	//コントローラー接続音.
-		Cancel,		//キャンセル音.
+		Handclap,		//手を叩く音.
+		Decision,		//決定音.
+		Buttonpush,		//ボタンを押す音.
+		Boiling,		//沸騰音.
+		Connected,		//コントローラー接続音.
+		Cancel,			//キャンセル音.
+		ChopsticksHit,	//お箸同士の衝突音.
+		SelectChange,	//セレクトチェンジ.
+		AllrdyCutin,	//全員が準備完了になった時のカットインSE.
 
 		MAX,
 	};
