@@ -8,7 +8,7 @@
 class CIngredientsmanager
 {
 private:
-	std::string filePath = "Data/Ingredients.json";
+	std::string filePath = "Data/いつき.いつき";
 public:
 	CIngredientsmanager();
 	~CIngredientsmanager();
@@ -26,6 +26,8 @@ public:
 	int GetIngredientsliveing();//野菜の生存数を返す
 	void SetTimu(float T) { gameTimu = T; };
 private:
+	void SAVE();
+
 	void IngredientsStetoLoad(int i, CStaticObjMesh* adoresu);//野菜ステートの読み込み
 	IngredientsSetting IngredientsSetting[static_cast<int>(Ingredients::MAX)];//野菜の設定
 	std::vector<CIngredients*> m_pIngredients;

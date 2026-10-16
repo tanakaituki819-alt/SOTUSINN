@@ -10,6 +10,7 @@
 #include <gdiplus.h>
 #pragma comment(lib, "gdiplus.lib")
 #include <iostream>
+#include <System/RawInput/RawInput.h>
 
 
 //=================================================
@@ -40,6 +41,10 @@ CMain::CMain()
 	ULONG_PTR gdiplusToken;
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
+
+	// コンソールの出力文字コードを UTF-8 に変更する
+	SetConsoleOutputCP(65001);
+
 }
 
 
@@ -300,9 +305,15 @@ LRESULT CALLBACK CMain::MsgProc(
 			}
 			break;
 		}
-		break;
-	}
 
+		break;
+
+	case WM_INPUT:
+		//RawInput::SetInpt((HRAWINPUT)lParam);
+		break;
+
+	}
+	
 	//メインに返す情報.
 	return DefWindowProc( hWnd, uMsg, wParam, lParam );
 }

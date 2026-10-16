@@ -13,7 +13,7 @@ CIngredientsmanager::CIngredientsmanager()
 {
 
 
-		JsonFileIO::Load(filePath, LoadData);
+	JsonFileIO::LoadEncrypted(filePath, LoadData);
 
 
 	// 1. 乱数生成器の初期化
@@ -27,42 +27,8 @@ CIngredientsmanager::CIngredientsmanager()
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
 
+	//SAVE();
 
-	//IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::NIKU)] = { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::NINZIN)] = { CS::GetObjMesh(OL::S_NINZIN)	,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] = { CS::GetObjMesh(OL::S_DAIKON)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::ENOKI)] = { CS::GetObjMesh(OL::S_ENOKI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] = { CS::GetObjMesh(OL::S_HAKUSAI2)	,1,0.5, {1.5,1.5,1.5}, {D3DXToRadian(-60),D3DXToRadian(90),0},5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] = { CS::GetObjMesh(OL::S_HAKUSAI1)	,0,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::KANI)] = { CS::GetObjMesh(OL::S_KANI)		,0.1,0.7, {4,4,4},	   {-1,D3DXToRadian(70),0}				,30,4, };
-	//IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE)	,0.1,0.7, {2,2,2},	   {D3DXToRadian(-50),D3DXToRadian(280),0},30,3, };
-	//IngredientsSetting[static_cast<int>(Ingredients::NEGI)] = { CS::GetObjMesh(OL::S_NEGI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER)	,0.1,0.7, {5,5,5},	   {D3DXToRadian(-50),D3DXToRadian(200),0},30,3, };
-	//IngredientsSetting[static_cast<int>(Ingredients::SAKANA)] = { CS::GetObjMesh(OL::S_SAKANA)	,0.05,0.8, {6,6,6},	   {D3DXToRadian(-90),0,0}				,50,3, };
-	//IngredientsSetting[static_cast<int>(Ingredients::SITAKE)] = { CS::GetObjMesh(OL::S_SITAKE)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::TAI)] = { CS::GetObjMesh(OL::S_TAI)		,0.1,0.7, {2.0,2.0,2.0}, {0,D3DXToRadian(70),0}				,30,2, };
-	//IngredientsSetting[static_cast<int>(Ingredients::TARA)] = { CS::GetObjMesh(OL::S_TARA)		,1,0.5, {1.5,1.5,1.5}, {0,D3DXToRadian(70),0}				,10,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::TOUHU)] = { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,0.5f,1.f}, {0,0,0}								,5,1, };
-	//IngredientsSetting[static_cast<int>(Ingredients::UINNER)] = { CS::GetObjMesh(OL::S_UINNER)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-
-	//nlohmann::json SAVEData;
-	//SAVEData["IngredientsSteto"] = nlohmann::json::array();
-
-	//for (int i = 0;i < static_cast<int>(Ingredients::MAX);i++) {
-	//	SAVEData["IngredientsSteto"].push_back({
-	//		{"No",          i},
-	//		{"probability", IngredientsSetting[i].probability},
-	//		{"HitSize",     IngredientsSetting[i].HitSize},
-	//		{"大きさ",        nlohmann::json::array({ ( IngredientsSetting[i].Size.x),     (IngredientsSetting[i].Size.y),     (IngredientsSetting[i].Size.z )})},
-	//		{"回転",    nlohmann::json::array({ D3DXToDegree(IngredientsSetting[i].Rotation.x), D3DXToDegree(IngredientsSetting[i].Rotation.y), D3DXToDegree(IngredientsSetting[i].Rotation.z) })},
-	//		{"スコア",       IngredientsSetting[i].Score},
-	//		{"コスト",        IngredientsSetting[i].Cost},
-	//		{"完成時間", IngredientsSetting[i].BoiledcTimu}
-	//		});
-	//}
-
-	//JsonFileIO::SAVE(filePath, SAVEData);
 
 
 
@@ -317,6 +283,49 @@ int CIngredientsmanager::GetIngredientsliveing()
 	};
 	return cost;
 ;
+}
+
+void CIngredientsmanager::SAVE()
+{
+	//短縮用
+	using  CS = CSpriteManager;
+	using  OL = CSpriteManager::enMeshObjList;
+	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::NIKU)] = { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)] = { CS::GetObjMesh(OL::S_NINZIN)	,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] = { CS::GetObjMesh(OL::S_DAIKON)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)] = { CS::GetObjMesh(OL::S_ENOKI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] = { CS::GetObjMesh(OL::S_HAKUSAI2)	,1,0.5, {1.5,1.5,1.5}, {D3DXToRadian(-60),D3DXToRadian(90),0},5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] = { CS::GetObjMesh(OL::S_HAKUSAI1)	,0,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::KANI)] = { CS::GetObjMesh(OL::S_KANI)		,0.1,0.7, {4,4,4},	   {-1,D3DXToRadian(70),0}				,30,4, };
+	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE)	,0.1,0.7, {2,2,2},	   {D3DXToRadian(-50),D3DXToRadian(280),0},30,3, };
+	IngredientsSetting[static_cast<int>(Ingredients::NEGI)] = { CS::GetObjMesh(OL::S_NEGI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER)	,0.1,0.7, {5,5,5},	   {D3DXToRadian(-50),D3DXToRadian(200),0},30,3, };
+	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)] = { CS::GetObjMesh(OL::S_SAKANA)	,0.05,0.8, {6,6,6},	   {D3DXToRadian(-90),0,0}				,50,3, };
+	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)] = { CS::GetObjMesh(OL::S_SITAKE)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::TAI)] = { CS::GetObjMesh(OL::S_TAI)		,0.1,0.7, {2.0,2.0,2.0}, {0,D3DXToRadian(70),0}				,30,2, };
+	IngredientsSetting[static_cast<int>(Ingredients::TARA)] = { CS::GetObjMesh(OL::S_TARA)		,1,0.5, {1.5,1.5,1.5}, {0,D3DXToRadian(70),0}				,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)] = { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,0.5f,1.f}, {0,0,0}								,5,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::UINNER)] = { CS::GetObjMesh(OL::S_UINNER)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+
+	nlohmann::json SAVEData;
+	SAVEData["IngredientsSteto"] = nlohmann::json::array();
+
+	for (int i = 0;i < static_cast<int>(Ingredients::MAX);i++) {
+		SAVEData["IngredientsSteto"].push_back({
+			{"No",          i},
+			{"probability", IngredientsSetting[i].probability},
+			{"HitSize",     IngredientsSetting[i].HitSize},
+			{"大きさ",        nlohmann::json::array({ ( IngredientsSetting[i].Size.x),     (IngredientsSetting[i].Size.y),     (IngredientsSetting[i].Size.z )})},
+			{"回転",    nlohmann::json::array({ D3DXToDegree(IngredientsSetting[i].Rotation.x), D3DXToDegree(IngredientsSetting[i].Rotation.y), D3DXToDegree(IngredientsSetting[i].Rotation.z) })},
+			{"スコア",       IngredientsSetting[i].Score},
+			{"コスト",        IngredientsSetting[i].Cost},
+			{"完成時間", IngredientsSetting[i].BoiledcTimu}
+			});
+	}
+
+	JsonFileIO::SaveEncrypted(filePath, SAVEData);
+	return;
 }
 
 void CIngredientsmanager::IngredientsStetoLoad(int i, CStaticObjMesh* adoresu)
