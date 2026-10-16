@@ -8,7 +8,7 @@
 class CIngredientsmanager
 {
 private:
-
+	std::string filePath = "Data/Ingredients.json";
 public:
 	CIngredientsmanager();
 	~CIngredientsmanager();
@@ -26,6 +26,7 @@ public:
 	int GetIngredientsliveing();//野菜の生存数を返す
 	void SetTimu(float T) { gameTimu = T; };
 private:
+	void IngredientsStetoLoad(int i, CStaticObjMesh* adoresu);//野菜ステートの読み込み
 	IngredientsSetting IngredientsSetting[static_cast<int>(Ingredients::MAX)];//野菜の設定
 	std::vector<CIngredients*> m_pIngredients;
 
@@ -40,4 +41,6 @@ private:
 	bool StartSettingis;//開始時の配置中
 	float IngredientsSettingTimu;
 	float gameTimu = 0;
+
+	nlohmann::json LoadData;//読み込んだjson
 };
