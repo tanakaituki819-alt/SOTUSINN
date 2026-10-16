@@ -252,7 +252,7 @@ void CPlayer::IngredientsCollecting()
 	}
 	else {
 		//GetIngredients(m_pIngredients);
-		m_IngredientsGetEffectManager->Stato(this, m_pIngredients, { P_UI->GetPosition() .x,P_UI->GetPosition() .y,0});
+		m_IngredientsGetEffectManager->Stato(this, m_pIngredients, { P_UI->GetPosition() .x+ P_UI->GetUIW()/2,P_UI->GetPosition().y+ P_UI->GetUIH() / 2,0});
 		m_pIngredients->Setisappear(false);
 		m_pIngredients = nullptr;
 		m_IsCollecting = false;

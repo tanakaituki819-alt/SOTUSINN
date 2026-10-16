@@ -15,6 +15,8 @@ public:
 	void SetPlayerNo(int No) { PlayerNo = No; }
 	void Draw(int Score);
 	D3DXVECTOR2 GetPosition() { return m_Position; }
+	float GetUIW() { return UIW; }
+	float GetUIH() { return UIH; }
 private:
 	CUIObject* Playericon;
 	CUIObject* PlayerBackground;
