@@ -30,7 +30,7 @@ void IngredientsGetEffect::Update()
 			m_Timu = 0;
 			EsHandle H = Effect2D::GetInstance()->Play(Effect2D::KANSEI, Position);
 		
-			Effect2D::GetInstance()->SetScale(H, { 30,30,30 });
+			Effect2D::GetInstance()->SetScale(H, { 15,15,15 });
 		}
 	}
 }
@@ -53,7 +53,7 @@ void IngredientsGetEffect::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj)
 	Position.y = StartPosition.y + (ToPosition.y - StartPosition.y) * powf(t, Curve);
 
 	if (m_Timu%5==0) {
-		float Size = 120;
+		float Size = 60;
 		EsHandle H= Effect2D::GetInstance()->Play(Effect2D::PointGetEfect,Position);
 		float EFSize = Size - Size * powf(t, 1.2);
 		Effect2D::GetInstance()->SetScale(H,{ EFSize,EFSize,EFSize });
