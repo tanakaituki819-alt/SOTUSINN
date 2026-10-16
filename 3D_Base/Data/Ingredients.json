@@ -1,0 +1,310 @@
+{
+    "IngredientsSteto": [
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 0,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 1,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 2,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 3,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 4,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 5,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 6,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 7,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 8,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 9,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 10,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 11,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 12,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 13,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 14,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 15,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        },
+        {
+            "BoiledcTimu": 15.0,
+            "Cost": 1.0,
+            "HitSize": 0.5,
+            "No": 16,
+            "Rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "Score": 10,
+            "Size": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "probability": 1.0
+        }
+    ]
+}

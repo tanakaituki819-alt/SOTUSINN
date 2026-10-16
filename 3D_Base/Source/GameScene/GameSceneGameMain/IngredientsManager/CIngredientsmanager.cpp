@@ -11,6 +11,11 @@ CIngredientsmanager::CIngredientsmanager()
 	, TimuC(0)
 	, IngredientsSettingTimu(0)
 {
+
+
+	JsonFileIO::Load(filePath, LoadData);
+
+
 	// 1. 乱数生成器の初期化
 	std::random_device rd;
 	//ハードウェア由来の非決定論的な乱数（シード値）を取得しています
@@ -21,23 +26,32 @@ CIngredientsmanager::CIngredientsmanager()
 	//短縮用
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
-	IngredientsSetting[static_cast<int>(Ingredients::none)]		= { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::NIKU)]		= { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)]	= { CS::GetObjMesh(OL::S_NINZIN)	,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,5,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)]	= { CS::GetObjMesh(OL::S_DAIKON)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,5,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::ENOKI)]	= { CS::GetObjMesh(OL::S_ENOKI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSEI2)] = { CS::GetObjMesh(OL::S_HAKUSAI2)	,1,0.5, {1.5,1.5,1.5}, {D3DXToRadian(-60),D3DXToRadian(90),0},5,1,};
-	IngredientsSetting[static_cast<int>(Ingredients::HAKUSAI1)] = { CS::GetObjMesh(OL::S_HAKUSAI1)	,0,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::KANI)]		= { CS::GetObjMesh(OL::S_KANI)		,0.1,0.7, {4,4,4},	   {-1,D3DXToRadian(70),0}				,30,4, };
-	IngredientsSetting[static_cast<int>(Ingredients::KUMANOTE)] = { CS::GetObjMesh(OL::S_KUMANOTE)	,0.1,0.7, {2,2,2},	   {D3DXToRadian(-50),D3DXToRadian(280),0},30,3, };
-	IngredientsSetting[static_cast<int>(Ingredients::NEGI)]		= { CS::GetObjMesh(OL::S_NEGI)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,5,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::ROBUSTER)] = { CS::GetObjMesh(OL::S_ROBUSTER)	,0.1,0.7, {5,5,5},	   {D3DXToRadian(-50),D3DXToRadian(200),0},30,3, };
-	IngredientsSetting[static_cast<int>(Ingredients::SAKANA)]	= { CS::GetObjMesh(OL::S_SAKANA)	,0.05,0.8, {6,6,6},	   {D3DXToRadian(-90),0,0}				,50,3, };
-	IngredientsSetting[static_cast<int>(Ingredients::SITAKE)]	= { CS::GetObjMesh(OL::S_SITAKE)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,5,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::TAI)]		= { CS::GetObjMesh(OL::S_TAI)		,0.1,0.7, {2.0,2.0,2.0}, {0,D3DXToRadian(70),0}				,30,2, };
-	IngredientsSetting[static_cast<int>(Ingredients::TARA)]		= { CS::GetObjMesh(OL::S_TARA)		,1,0.5, {1.5,1.5,1.5}, {0,D3DXToRadian(70),0}				,10,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::TOUHU)]	= { CS::GetObjMesh(OL::S_TOUHU)		,1,0.5, {1.f,0.5f,1.f}, {0,0,0}								,5,1, };
-	IngredientsSetting[static_cast<int>(Ingredients::UINNER)]	= { CS::GetObjMesh(OL::S_UINNER)	,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+
+
+	IngredientsStetoLoad(static_cast<int>(Ingredients::none), CS::GetObjMesh(OL::S_NIKU));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::NIKU), CS::GetObjMesh(OL::S_NIKU));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::NINZIN), CS::GetObjMesh(OL::S_NINZIN));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::DAIKON), CS::GetObjMesh(OL::S_DAIKON));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::ENOKI), CS::GetObjMesh(OL::S_ENOKI));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::HAKUSEI2), CS::GetObjMesh(OL::S_HAKUSAI2));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::HAKUSAI1), CS::GetObjMesh(OL::S_HAKUSAI1));
+
+	IngredientsStetoLoad(static_cast<int>(Ingredients::KANI), CS::GetObjMesh(OL::S_KANI));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::KUMANOTE), CS::GetObjMesh(OL::S_KUMANOTE));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::NEGI), CS::GetObjMesh(OL::S_NEGI));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::ROBUSTER), CS::GetObjMesh(OL::S_ROBUSTER));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::SAKANA), CS::GetObjMesh(OL::S_SAKANA));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::SITAKE), CS::GetObjMesh(OL::S_SITAKE));
+
+	IngredientsStetoLoad(static_cast<int>(Ingredients::TAI), CS::GetObjMesh(OL::S_TAI));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::TARA), CS::GetObjMesh(OL::S_TARA));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::TOUHU), CS::GetObjMesh(OL::S_TOUHU));
+	IngredientsStetoLoad(static_cast<int>(Ingredients::UINNER), CS::GetObjMesh(OL::S_UINNER));
+
+
+
+
+
 
 	std::vector<float> m_Normalbability;
 	std::vector<float> m_Rarebility;
@@ -73,6 +87,11 @@ CIngredientsmanager::CIngredientsmanager()
 	Normaldist = std::discrete_distribution(m_Normalbability.begin(), m_Normalbability.end());
 	Raredist = std::discrete_distribution(m_Rarebility.begin(), m_Rarebility.end());
 	Gacha = std::discrete_distribution(m_Gatya.begin(), m_Gatya.end());
+
+
+	
+	LoadData = nullptr;            //（内部のデータを全部解放して、型も null になる）
+
 }
 
 CIngredientsmanager::~CIngredientsmanager()
@@ -256,4 +275,51 @@ int CIngredientsmanager::GetIngredientsliveing()
 	};
 	return cost;
 ;
+}
+
+void CIngredientsmanager::IngredientsStetoLoad(int i, CStaticObjMesh* adoresu)
+{
+
+	D3DXVECTOR3 Size = {};
+	D3DXVECTOR3 Rotation = {};
+
+	      //IngredientsStetoがあって               それがオブジェクトなら 
+	if (LoadData.contains("IngredientsSteto") && LoadData["IngredientsSteto"].is_array()) {
+		if (LoadData["IngredientsSteto"][i].contains("Size") && LoadData["IngredientsSteto"][i]["Size"].is_array()) {
+			//数値型なら
+			if (LoadData["IngredientsSteto"][i]["Size"][0].is_number()) {
+				Size.x = LoadData["IngredientsSteto"][i]["Size"][0];
+			}
+			if (LoadData["IngredientsSteto"][i]["Size"][1].is_number()) {
+				Size.y = LoadData["IngredientsSteto"][i]["Size"][1];
+			}
+			if (LoadData["IngredientsSteto"][i]["Size"][2].is_number()) {
+				Size.z = LoadData["IngredientsSteto"][i]["Size"][2];
+			}
+		}
+		if (LoadData["IngredientsSteto"][i].contains("Rotation") && LoadData["IngredientsSteto"][i]["Rotation"].is_array()) {
+			//数値型なら
+			if (LoadData["IngredientsSteto"][i]["Rotation"][0].is_number()) {
+				Rotation.x = D3DXToRadian(LoadData["IngredientsSteto"][i]["Rotation"][0]);
+			}
+			if (LoadData["IngredientsSteto"][i]["Rotation"][1].is_number()) {
+				Rotation.x = D3DXToRadian(LoadData["IngredientsSteto"][i]["Rotation"][1]);
+			}
+			if (LoadData["IngredientsSteto"][i]["Rotation"][2].is_number()) {
+				Rotation.x = D3DXToRadian(LoadData["IngredientsSteto"][i]["Rotation"][2]);
+			}
+
+	
+			
+			
+		}
+
+		IngredientsSetting[i] = { adoresu		,LoadData["IngredientsSteto"][i].value("probability", 0.f),LoadData["IngredientsSteto"][i].value("probability", 0.f)
+			,Size, Rotation	,LoadData["IngredientsSteto"][i].value("Score", 0),LoadData["IngredientsSteto"][i].value("Cost", 1.f),LoadData["IngredientsSteto"][i].value("BoiledcTimu", 15.f) };
+	}
+
+
+
+
+
 }

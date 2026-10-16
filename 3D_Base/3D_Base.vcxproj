@@ -185,6 +185,7 @@
     <ClCompile Include="Source\GameScene\GameSceneWinnerResult\WinnerResultUI\CWinnerResultUI.cpp" />
     <ClCompile Include="Source\Game\CCamera.cpp" />
     <ClCompile Include="Source\Game\CGame.cpp" />
+    <ClCompile Include="Source\JsonFileIO\JsonFileIO.cpp" />
     <ClCompile Include="Source\Main\CMain.cpp" />
     <ClCompile Include="Source\Player\CPlayer.cpp" />
     <ClCompile Include="Source\Player\PlayerParalysisUI\CPlayerParalysisUI.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Source\Game\CCamera.h" />
     <ClInclude Include="Source\Game\CGame.h" />
     <ClInclude Include="Source\Game\enScene.h" />
+    <ClInclude Include="Source\JsonFileIO\JsonFileIO.h" />
     <ClInclude Include="Source\Main\CMain.h" />
     <ClInclude Include="Source\Player\CPlayer.h" />
     <ClInclude Include="Source\Player\PlayerParalysisUI\CPlayerParalysisUI.h" />
@@ -348,6 +350,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="LICENSE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="..\nlohmann_json.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -41,4 +41,4 @@
 #include"Effect/Effect.h"
 #include"Effect/Effect2D.h"
 
-
+#include"JsonFileIO\JsonFileIO.h"
