@@ -61,7 +61,7 @@ void CGame::Create()
 	}
 
 //	ChangeScene(enScene::TitleSequence);
-	ChangeScene(enScene::PlayerSetUp);
+	ChangeScene(enScene::TitleSequence);
 }
 
 //ロードデータ関数.

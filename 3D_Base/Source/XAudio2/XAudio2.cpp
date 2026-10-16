@@ -1503,12 +1503,15 @@ void XAudio2::SELoad()
 {
     HRESULT RE = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
     std::vector <Sound> SEdata;
-    SEdata.push_back({ static_cast<int>(SEList::Handclap),      _T("Data\\Sound\\SE\\Handclap.mp3")     });
-    SEdata.push_back({ static_cast<int>(SEList::Decision),      _T("Data\\Sound\\SE\\Decision.mp3")     });
-    SEdata.push_back({ static_cast<int>(SEList::Buttonpush),    _T("Data\\Sound\\SE\\Buttonpush.mp3")   });
-    SEdata.push_back({ static_cast<int>(SEList::Boiling),       _T("Data\\Sound\\SE\\Boiling.mp3")      });
-    SEdata.push_back({ static_cast<int>(SEList::Connected),     _T("Data\\Sound\\SE\\Connected.mp3")    });
-    SEdata.push_back({ static_cast<int>(SEList::Cancel),        _T("Data\\Sound\\SE\\Cancel.mp3")       });
+    SEdata.push_back({ static_cast<int>(SEList::Handclap),      _T("Data\\Sound\\SE\\Handclap.mp3")      });
+    SEdata.push_back({ static_cast<int>(SEList::Decision),      _T("Data\\Sound\\SE\\Decision.mp3")      });
+    SEdata.push_back({ static_cast<int>(SEList::Buttonpush),    _T("Data\\Sound\\SE\\Buttonpush.mp3")    });
+    SEdata.push_back({ static_cast<int>(SEList::Boiling),       _T("Data\\Sound\\SE\\Boiling.mp3")       });
+    SEdata.push_back({ static_cast<int>(SEList::Connected),     _T("Data\\Sound\\SE\\Connected.mp3")     });
+    SEdata.push_back({ static_cast<int>(SEList::Cancel),        _T("Data\\Sound\\SE\\Cancel.mp3")        });
+    SEdata.push_back({ static_cast<int>(SEList::ChopsticksHit), _T("Data\\Sound\\SE\\ChopsticksHit.mp3") });
+    SEdata.push_back({ static_cast<int>(SEList::SelectChange),  _T("Data\\Sound\\SE\\SelectChange.mp3")  });
+    SEdata.push_back({ static_cast<int>(SEList::AllrdyCutin),   _T("Data\\Sound\\SE\\AllrdyCutin.mp3")   });
 
     //SEdata.push_back();
 
