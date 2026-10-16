@@ -153,10 +153,16 @@ void CResultDataManager::CalculateRanks()
 		});
 
 	//順位を設定.
-	for (int Rank = 0; Rank < Num; Rank++)
+	//同点のプレイヤーは同じ順位にし、次の順位は詰める(例:1位,1位,2位,3位).
+	int Rank = 0;
+	for (int i = 0; i < Num; i++)
 	{
-		int PlayerIndex = Indices[Rank];
-		m_PlayerData[PlayerIndex].m_nRank = Rank + 1;
+		int PlayerIndex = Indices[i];
+		if (i == 0 || m_PlayerData[PlayerIndex].m_nScore != m_PlayerData[Indices[i - 1]].m_nScore)
+		{
+			Rank++;
+		}
+		m_PlayerData[PlayerIndex].m_nRank = Rank;
 	}
 }
 

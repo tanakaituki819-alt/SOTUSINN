@@ -29,7 +29,7 @@ struct SPlayerResultData
 	int		m_nMushroomCount;	//獲得したきのこ系食材の数.
 	int		m_nTofuCount;		//獲得した豆腐の数.
 	int		m_nSpecialCount;	//獲得した高級食材の数.
-	int		m_nRank;			//順位.
+	int		m_nRank;			//順位(同点は同じ順位).
 	enIngredientCategory	m_FavoriteCategory;	//お気に入り(一番多く取った)カテゴリ.
 
 	//初期化.

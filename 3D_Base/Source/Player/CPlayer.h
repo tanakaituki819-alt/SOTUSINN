@@ -56,6 +56,8 @@ public:
 
 	//スコアを取得.
 	int GetScore() const { return Score; }
+	//スコアと獲得した具材のリストをリセットする(もう一度プレイ用).
+	void ResetGameData() { Score = 0; my_list.clear(); }
 
 	void SetIngredientsGetEffectManager(IngredientsGetEffectManager* IngredientsGetEffectManager) {
 		m_IngredientsGetEffectManager = IngredientsGetEffectManager;
