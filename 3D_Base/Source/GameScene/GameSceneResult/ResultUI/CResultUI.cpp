@@ -1,6 +1,7 @@
 #include "CResultUI.h"
 #include "SpriteManager/CSpriteManager.h"
 #include "System/XInput/CXInput.h"
+#include "ResultDataManager/CResultDataManager.h"
 #include <iostream>
 
 struct Transform {
@@ -20,19 +21,11 @@ static constexpr Transform PLAYER_2_BACK = { 290.f,340.f,630.f,350.f };
 static constexpr Transform PLAYER_3_BACK = { 765.f,340.f,630.f,350.f };
 static constexpr Transform PLAYER_4_BACK = { 1070.f,340.f,630.f,350.f };
 
-//プレイヤーアイコン
-    //二人の時.
-    static constexpr Transform PLAYER_1_ICON_TWO = { 45.f,100.f,120.f,120.f };
-    static constexpr Transform PLAYER_2_ICON_TWO = { 350.f,100.f,120.f,120.f };
-    //三人の時
-    static constexpr Transform PLAYER_1_ICON_THREE = { 45.f,100.f,120.f,120.f };
-    static constexpr Transform PLAYER_2_ICON_THREE = { 350.f,100.f,120.f,120.f };
-    static constexpr Transform PLAYER_3_ICON_THREE = { 655.f,100.f,120.f,120.f };
-    //四人の時
-    static constexpr Transform PLAYER_1_ICON_FOR = { 45.f,100.f,120.f,120.f };
-    static constexpr Transform PLAYER_2_ICON_FOR = { 350.f,100.f,120.f,120.f };
-    static constexpr Transform PLAYER_3_ICON_FOR = { 655.f,100.f,120.f,120.f };
-    static constexpr Transform PLAYER_4_ICON_FOR = { 960.f,100.f,120.f,120.f };
+//プレイヤーアイコン(人数に関係なくプレイヤーごとに位置は固定).
+static constexpr Transform PLAYER_1_ICON = { 45.f,100.f,120.f,120.f };
+static constexpr Transform PLAYER_2_ICON = { 350.f,100.f,120.f,120.f };
+static constexpr Transform PLAYER_3_ICON = { 655.f,100.f,120.f,120.f };
+static constexpr Transform PLAYER_4_ICON = { 960.f,100.f,120.f,120.f };
 
 
 //メダル関連.
@@ -84,12 +77,9 @@ static constexpr Transform RESTART = { 490.f,603.f,380.f,120.f };
 static constexpr Transform FIN = { 880.f,610.f,380.f,120.f };
 
 CResultUI::CResultUI()
-	: Rank (0)
-    , Count(0)
-    , m_ADecided(false)
+    : m_ADecided(false)
     , m_BDecided(false)
     , m_pController(nullptr)
-    , ZTMY(0)
 {
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
 	for (int i = 0; i < PLAYER_MAX; i++)
@@ -139,67 +129,6 @@ CResultUI::~CResultUI()
 
 void CResultUI::Update()
 {
-    static int Timer = 0; // 切り替え用のタイマー
-
-    if (ZTMY == 1)
-    {
-        Timer++;
-        if (Timer >= 10)
-        {
-            Timer = 0;
-            Rank++;
-
-            if (Rank >= 3)
-            {
-                Rank = 0;
-            }
-        }
-    }
-    else if (ZTMY == 2)
-    {
-        Timer++;
-        if (Timer >= 10)
-        {
-            Timer = 0;
-            Rank++;
-
-            if (Rank >= 13)
-            {
-                Rank = 0;
-            }
-        }
-    }
-    else if (ZTMY == 3)
-    {
-        Timer++;
-        if (Timer >= 10)
-        {
-            Timer = 0;
-            Rank++;
-
-            if (Rank >= 75)
-            {
-                Rank = 0;
-            }
-        }
-    }
-
-
-    //人数変化（ｶﾞﾁ仮）
-    if (GetAsyncKeyState('Z') & 0x0001)
-    {
-        ZTMY = 1;
-    }
-    if (GetAsyncKeyState('X') & 0x0001)
-    {
-        ZTMY = 2;
-    }
-    if (GetAsyncKeyState('C') & 0x0001)
-    {
-        ZTMY = 3;
-    }
-
-
     //Aボタン.
     if (!PushA) {
         if (m_pController->IsDown(CXInput::A, true))
@@ -221,694 +150,80 @@ void CResultUI::Draw()
 {
 	ResultBackUI();
 
-
-    
     ReStart();
-    
-    if (ZTMY == 1)
-    {
-        TwoDraw();
-    }
-    else if (ZTMY == 2)
-    {
-        ThreeDraw();
-    }
-    else if (ZTMY == 3)
-    {
-        FourDraw();
-    }
-}
-
-//二人.
-void CResultUI::TwoDraw()
-{
-    FourPlayerBackUI();
-
-    //フォント.
-    Font_P1_UI();
-    Font_P2_UI();
-
-    //スコア
-    Number_P1_UI();
-    Number_P2_UI();
-
-    if (Rank == 0)
-    {
-        Player1First();
-        Player2First();
-    }
-    else if (Rank == 1)
-    {
-        Player1First();
-        Player2Second();
-    }
-    else if (Rank == 2)
-    {
-        Player1Second();
-        Player2First();
-    }
-}
-//三人.
-void CResultUI::ThreeDraw()
-{
-    FourPlayerBackUI();
-
-    //フォント.
-    Font_P1_UI();
-    Font_P2_UI();
-    Font_P3_UI();
-
-    //スコア
-    Number_P1_UI();
-    Number_P2_UI();
-    Number_P3_UI();
-
-    if (Rank == 0)
-    {
-        Player1First();
-        Player2First();
-        Player3First();
-    }
-    else if (Rank == 1)
-    {
-        Player1First();
-        Player2First();
-        Player3Second();
-    }
-    else if (Rank == 2)
-    {
-        Player1First();
-        Player2Second();
-        Player3First();
-    }
-    else if (Rank == 3)
-    {
-        Player1First();
-        Player2Second();
-        Player3Second();
-    }
-    else if (Rank == 4)
-    {
-        Player1Second();
-        Player2First();
-        Player3First();
-    }
-    else if (Rank == 5)
-    {
-        Player1Second();
-        Player2First();
-        Player3Second();
-    }
-    else if (Rank == 6)
-    {
-        Player1Second();
-        Player2Second();
-        Player3First();
-    }
-    else if (Rank == 7)
-    {
-        Player1First();
-        Player2Second();
-        Player3Third();
-    }
-    else if (Rank == 8)
-    {
-        Player1First();
-        Player2Third();
-        Player3Second();
-    }
-    else if (Rank == 9)
-    {
-        Player1Second();
-        Player2First();
-        Player3Third();
-    }
-    else if (Rank == 10)
-    {
-        Player1Second();
-        Player2Third();
-        Player3First();
-    }
-    else if (Rank == 11)
-    {
-        Player1Third();
-        Player2First();
-        Player3Second();
-    }
-    else if (Rank == 12)
-    {
-        Player1Third();
-        Player2Second();
-        Player3First();
-    }
-}
-//四人.
-void CResultUI::FourDraw()
-{
 
     FourPlayerBackUI();
 
-    //フォント.
-    Font_P1_UI();
-    Font_P2_UI();
-    Font_P3_UI();
-    Font_P4_UI();
+    //ゲームの結果(CResultDataManager)をもとに描画.
+    DrawPlayers();
+}
 
-    //スコア
-    Number_P1_UI();
-    Number_P2_UI();
-    Number_P3_UI();
-    Number_P4_UI();
+//参加しているプレイヤーのフォント、スコア、順位アイコンを描画する.
+void CResultUI::DrawPlayers()
+{
+    const CResultDataManager* pData = CResultDataManager::GetInstance();
 
-    //修正必須!!.
-     //仮条件 2026.07.31
-    if (Rank == 0)
-    {
-        Player1First();
-        Player2First();
-        Player3First();
-        Player4First();
-    }
-    else if (Rank == 1)
-    {
-        Player1First();
-        Player2First();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 2)
-    {
-        Player1First();
-        Player2First();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 3)
-    {
-        Player1First();
-        Player2First();
-        Player3Second();
-        Player4Second();
-    }
-    else if (Rank == 4)
-    {
-        Player1First();
-        Player2Second();
-        Player3First();
-        Player4First();
-    }
-    else if (Rank == 5)
-    {
-        Player1First();
-        Player2Second();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 6)
-    {
-        Player1First();
-        Player2Second();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 7)
-    {
-        Player1First();
-        Player2Second();
-        Player3Second();
-        Player4Second();
-    }
-    else if (Rank == 8)
-    {
-        Player1Second();
-        Player2First();
-        Player3First();
-        Player4First();
-    }
-    else if (Rank == 9)
-    {
-        Player1Second();
-        Player2First();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 10)
-    {
-        Player1Second();
-        Player2First();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 11)
-    {
-        Player1Second();
-        Player2First();
-        Player3Second();
-        Player4Second();
-    }
-    else if (Rank == 12)
-    {
-        Player1Second();
-        Player2Second();
-        Player3First();
-        Player4First();
-    }
-    else if (Rank == 13)
-    {
-        Player1Second();
-        Player2Second();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 14)
-    {
-        Player1Second();
-        Player2Second();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 15)
-    {
-        Player1First();
-        Player2First();
-        Player3Second();
-        Player4Third();
-    }
-    else if (Rank == 16)
-    {
-        Player1First();
-        Player2First();
-        Player3Third();
-        Player4Second();
-    }
-    else if (Rank == 17)
-    {
-        Player1First();
-        Player2Second();
-        Player3First();
-        Player4Third();
-    }
-    else if (Rank == 18)
-    {
-        Player1First();
-        Player2Second();
-        Player3Second();
-        Player4Third();
-    }
-    else if (Rank == 19)
-    {
-        Player1First();
-        Player2Second();
-        Player3Third();
-        Player4First();
-    }
-    else if (Rank == 20)
-    {
-        Player1First();
-        Player2Second();
-        Player3Third();
-        Player4Second();
-    }
-    else if (Rank == 21)
-    {
-        Player1First();
-        Player2Second();
-        Player3Third();
-        Player4Third();
-    }
-    else if (Rank == 22)
-    {
-        Player1First();
-        Player2Third();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 23)
-    {
-        Player1First();
-        Player2Third();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 24)
-    {
-        Player1First();
-        Player2Third();
-        Player3Second();
-        Player4Second();
-    }
-    else if (Rank == 25)
-    {
-        Player1First();
-        Player2Third();
-        Player3Second();
-        Player4Third();
-    }
-    else if (Rank == 26)
-    {
-        Player1First();
-        Player2Third();
-        Player3Third();
-        Player4Second();
-    }
-    else if (Rank == 27)
-    {
-        Player1Second();
-        Player2First();
-        Player3First();
-        Player4Third();
-    }
-    else if (Rank == 28)
-    {
-        Player1Second();
-        Player2First();
-        Player3Second();
-        Player4Third();
-    }
-    else if (Rank == 29)
-    {
-        Player1Second();
-        Player2First();
-        Player3Third();
-        Player4First();
-    }
-    else if (Rank == 30)
-    {
-        Player1Second();
-        Player2First();
-        Player3Third();
-        Player4Second();
-    }
-    else if (Rank == 31)
-    {
-        Player1Second();
-        Player2First();
-        Player3Third();
-        Player4Third();
-    }
-    else if (Rank == 32)
-    {
-        Player1Second();
-        Player2Second();
-        Player3First();
-        Player4Third();
-    }
-    else if (Rank == 33)
-    {
-        Player1Second();
-        Player2Second();
-        Player3Third();
-        Player4First();
-    }
-    else if (Rank == 34)
-    {
-        Player1Second();
-        Player2Third();
-        Player3First();
-        Player4First();
-    }
-    else if (Rank == 35)
-    {
-        Player1Second();
-        Player2Third();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 36)
-    {
-        Player1Second();
-        Player2Third();
-        Player3First();
-        Player4Third();
-    }
-    else if (Rank == 37)
-    {
-        Player1Second();
-        Player2Third();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 38)
-    {
-        Player1Second();
-        Player2Third();
-        Player3Third();
-        Player4First();
-    }
-    else if (Rank == 39)
-    {
-        Player1Third();
-        Player2First();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 40)
-    {
-        Player1Third();
-        Player2First();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 41)
-    {
-        Player1Third();
-        Player2First();
-        Player3Second();
-        Player4Second();
-    }
-    else if (Rank == 42)
-    {
-        Player1Third();
-        Player2First();
-        Player3Second();
-        Player4Third();
-    }
-    else if (Rank == 43)
-    {
-        Player1Third();
-        Player2First();
-        Player3Third();
-        Player4Second();
-    }
-    else if (Rank == 44)
-    {
-        Player1Third();
-        Player2Second();
-        Player3First();
-        Player4First();
-    }
-    else if (Rank == 45)
-    {
-        Player1Third();
-        Player2Second();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 46)
-    {
-        Player1Third();
-        Player2Second();
-        Player3First();
-        Player4Third();
-    }
-    else if (Rank == 47)
-    {
-        Player1Third();
-        Player2Second();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 48)
-    {
-        Player1Third();
-        Player2Second();
-        Player3Third();
-        Player4First();
-    }
-    else if (Rank == 49)
-    {
-        Player1Third();
-        Player2Third();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 50)
-    {
-        Player1Third();
-        Player2Third();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 51)
-    {
-        Player1First();
-        Player2Second();
-        Player3Third();
-        Player4Fourth();
-    }
-    else if (Rank == 52)
-    {
-        Player1First();
-        Player2Second();
-        Player3Fourth();
-        Player4Third();
-    }
-    else if (Rank == 53)
-    {
-        Player1First();
-        Player2Third();
-        Player3Second();
-        Player4Fourth();
-    }
-    else if (Rank == 54)
-    {
-        Player1First();
-        Player2Third();
-        Player3Fourth();
-        Player4Second();
-    }
-    else if (Rank == 55)
-    {
-        Player1First();
-        Player2Fourth();
-        Player3Second();
-        Player4Third();
-    }
-    else if (Rank == 56)
-    {
-        Player1First();
-        Player2Fourth();
-        Player3Third();
-        Player4Second();
-    }
-    else if (Rank == 57)
-    {
-        Player1Second();
-        Player2First();
-        Player3Third();
-        Player4Fourth();
-    }
-    else if (Rank == 58)
-    {
-        Player1Second();
-        Player2First();
-        Player3Fourth();
-        Player4Third();
-    }
-    else if (Rank == 59)
-    {
-        Player1Second();
-        Player2Third();
-        Player3First();
-        Player4Fourth();
-    }
-    else if (Rank == 60)
-    {
-        Player1Second();
-        Player2Third();
-        Player3Fourth();
-        Player4First();
-    }
-    else if (Rank == 61)
-    {
-        Player1Second();
-        Player2Fourth();
-        Player3First();
-        Player4Third();
-    }
-    else if (Rank == 62)
-    {
-        Player1Second();
-        Player2Fourth();
-        Player3Third();
-        Player4First();
-    }
-    else if (Rank == 63)
-    {
-        Player1Third();
-        Player2First();
-        Player3Second();
-        Player4Fourth();
-    }
-    else if (Rank == 64)
-    {
-        Player1Third();
-        Player2First();
-        Player3Fourth();
-        Player4Second();
-    }
-    else if (Rank == 65)
-    {
-        Player1Third();
-        Player2Second();
-        Player3First();
-        Player4Fourth();
-    }
-    else if (Rank == 66)
-    {
-        Player1Third();
-        Player2Second();
-        Player3Fourth();
-        Player4First();
-    }
-    else if (Rank == 67)
-    {
-        Player1Third();
-        Player2Fourth();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 68)
-    {
-        Player1Third();
-        Player2Fourth();
-        Player3Second();
-        Player4First();
-    }
-    else if (Rank == 69)
-    {
-        Player1Fourth();
-        Player2First();
-        Player3Second();
-        Player4Third();
-    }
-    else if (Rank == 70)
-    {
-        Player1Fourth();
-        Player2First();
-        Player3Third();
-        Player4Second();
-    }
-    else if (Rank == 71)
-    {
-        Player1Fourth();
-        Player2Second();
-        Player3First();
-        Player4Third();
-    }
-    else if (Rank == 72)
-    {
-        Player1Fourth();
-        Player2Second();
-        Player3Third();
-        Player4First();
-    }
-    else if (Rank == 73)
-    {
-        Player1Fourth();
-        Player2Third();
-        Player3First();
-        Player4Second();
-    }
-    else if (Rank == 74)
-    {
-        Player1Fourth();
-        Player2Third();
-        Player3Second();
-        Player4First();
+    for (int i = 0; i < PLAYER_MAX; i++)
+    {
+        const SPlayerResultData& Data = pData->GetPlayerData(i);
+
+        //参加していないプレイヤーは表示しない.
+        if (!Data.m_bActive) continue;
+
+        //フォント.
+        switch (i)
+        {
+        case 0: Font_P1_UI(); break;
+        case 1: Font_P2_UI(); break;
+        case 2: Font_P3_UI(); break;
+        case 3: Font_P4_UI(); break;
+        }
+
+        //スコア.
+        switch (i)
+        {
+        case 0: Number_P1_UI(); break;
+        case 1: Number_P2_UI(); break;
+        case 2: Number_P3_UI(); break;
+        case 3: Number_P4_UI(); break;
+        }
+
+        //順位アイコンとメダル.
+        DrawPlayerRank(i, Data.m_nRank);
     }
 }
 
+//プレイヤー番号と順位から対応するアイコンを描画する.
+void CResultUI::DrawPlayerRank(int PlayerIndex, int Rank)
+{
+    switch (PlayerIndex)
+    {
+    case 0:
+        if      (Rank == 1) Player1First();
+        else if (Rank == 2) Player1Second();
+        else if (Rank == 3) Player1Third();
+        else                Player1Fourth();
+        break;
+    case 1:
+        if      (Rank == 1) Player2First();
+        else if (Rank == 2) Player2Second();
+        else if (Rank == 3) Player2Third();
+        else                Player2Fourth();
+        break;
+    case 2:
+        if      (Rank == 1) Player3First();
+        else if (Rank == 2) Player3Second();
+        else if (Rank == 3) Player3Third();
+        else                Player3Fourth();
+        break;
+    case 3:
+        if      (Rank == 1) Player4First();
+        else if (Rank == 2) Player4Second();
+        else if (Rank == 3) Player4Third();
+        else                Player4Fourth();
+        break;
+    }
+}
 void CResultUI::BoolInit()
 {
     m_ADecided = false;
@@ -949,79 +264,26 @@ void CResultUI::FourPlayerBackUI()
 
 void CResultUI::Player1Pos()
 {
-    if (ZTMY == 1)
-    {
-        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON_TWO.GetPos()));
-
-    }
-    if (ZTMY == 2)
-    {
-        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON_THREE.GetPos()));
-
-    }
-    if (ZTMY == 3)
-    {
-        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON_FOR.GetPos()));
-
-    }
+    PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON.GetPos()));
 }
 void CResultUI::Player2Pos()
 {
-    if (ZTMY == 1)
-    {
-        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON_TWO.GetPos()));
-
-    }
-    if (ZTMY == 2)
-    {
-        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON_THREE.GetPos()));
-
-    }
-    if (ZTMY == 3)
-    {
-        PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON_FOR.GetPos()));
-
-    }
+    PlayerIcon_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON.GetPos()));
 }
 void CResultUI::Player3Pos()
 {
-    if (ZTMY == 1)
-    {
-        return;
-    }
-    if (ZTMY == 2)
-    {
-        PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON_THREE.GetPos()));
-
-    }
-    if (ZTMY == 3)
-    {
-        PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON_FOR.GetPos()));
-
-    }
+    PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON.GetPos()));
 }
 void CResultUI::Player4Pos()
 {
-    if (ZTMY == 1)
-    {
-        return;
-    }
-    if (ZTMY == 2)
-    {
-        return;
-    }
-    if (ZTMY == 3)
-    {
-        PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_ICON_FOR.GetPos()));
-
-    }
+    PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_ICON.GetPos()));
 }
 
 void CResultUI::PlayerScl()
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(PLAYER_1_ICON_FOR .GetScl()));
+		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(PLAYER_1_ICON.GetScl()));
 	}
 }
 
@@ -1056,8 +318,8 @@ void CResultUI::Player1Fourth()
 {
 	Player1Pos();
 	PlayerScl();
-	PlayerIcon_Img[1]->SetPatternNo(3, 0);
-	PlayerIcon_Img[1]->Render();
+	PlayerIcon_Img[0]->SetPatternNo(3, 0);
+	PlayerIcon_Img[0]->Render();
 }
 
 void CResultUI::Player2First()
@@ -1420,26 +682,26 @@ void CResultUI::DrawNumber(int Score, const D3DXVECTOR3& Pos)
     Number_Img->Render();
 }
 
-//外部から取得したスコアに差し替える.
+//CResultDataManagerから取得した合計スコアを表示する.
 void CResultUI::Number_P1_UI()
 {
-    int DummyScore = 123;		//仮.
-    DrawNumber(DummyScore, D3DXVECTOR3(P1_ALL_SCORE_POS.GetPos()));
+    int Score = CResultDataManager::GetInstance()->GetPlayerData(0).m_nScore;
+    DrawNumber(Score, D3DXVECTOR3(P1_ALL_SCORE_POS.GetPos()));
 }
 void CResultUI::Number_P2_UI()
 {
-    int DummyScore = 45;		//仮.
-    DrawNumber(DummyScore, D3DXVECTOR3(P2_ALL_SCORE_POS.GetPos()));
+    int Score = CResultDataManager::GetInstance()->GetPlayerData(1).m_nScore;
+    DrawNumber(Score, D3DXVECTOR3(P2_ALL_SCORE_POS.GetPos()));
 }
 void CResultUI::Number_P3_UI()
 {
-    int DummyScore = 999;		//仮.
-    DrawNumber(DummyScore, D3DXVECTOR3(P3_ALL_SCORE_POS.GetPos()));
+    int Score = CResultDataManager::GetInstance()->GetPlayerData(2).m_nScore;
+    DrawNumber(Score, D3DXVECTOR3(P3_ALL_SCORE_POS.GetPos()));
 }
 void CResultUI::Number_P4_UI()
 {
-    int DummyScore = 7;		//仮.
-    DrawNumber(DummyScore, D3DXVECTOR3(P4_ALL_SCORE_POS.GetPos()));
+    int Score = CResultDataManager::GetInstance()->GetPlayerData(3).m_nScore;
+    DrawNumber(Score, D3DXVECTOR3(P4_ALL_SCORE_POS.GetPos()));
 }
 
 void CResultUI::ReStart()

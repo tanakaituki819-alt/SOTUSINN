@@ -1,5 +1,6 @@
 #include "Game/CGame.h"
 #include "CGameSceneGameMain.h"
+#include "ResultDataManager/CResultDataManager.h"
 
 
 CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
@@ -71,6 +72,7 @@ void CGameSceneGameMain::StartFinalSetup()
 		if (m_pPlayer[i] != nullptr) {
 			m_pPlayer[i]->SetXInput(CONTROLA[i]);
 			m_pPlayer[i]->SetPlayerNo(i);
+			m_pPlayer[i]->ResetGameData();	//前回のスコアが残らないようにする.
 		}
 	}
 	for (int i = 0; i < PlayerMax; i++) {
@@ -135,8 +137,10 @@ void CGameSceneGameMain::Update()
 	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
 	m_pCIngredientsM->Update();
 	//タイマーが0秒になっているかつ鍋に残った具材が0になるまたは、強制終了タイマーが45秒経過したら.
-	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45) 
+	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45)
 	{
+		//リザルトへ渡すデータを保存.
+		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
 	}
 	//ゲームタイマーが0秒になった.
@@ -153,6 +157,7 @@ void CGameSceneGameMain::Update()
 		handle=Effect::Play(EFE::KANSEI,D3DXVECTOR3(0.f, 0.f, 0.f));
 	}
 	if (GetAsyncKeyState('Z') & 0x0001) {
+		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 30, 120);
 	}
 	m_pTimer->Update();

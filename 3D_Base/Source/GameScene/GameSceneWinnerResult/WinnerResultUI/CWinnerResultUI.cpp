@@ -1,6 +1,7 @@
 #include "CWinnerResultUI.h"
 #include "SpriteManager/CSpriteManager.h"
 #include "System/XInput/CXInput.h"
+#include "ResultDataManager/CResultDataManager.h"
 #include <iostream>
 
 struct Transform {
@@ -109,6 +110,33 @@ CWinnerResultUI::CWinnerResultUI()
 		Para_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_Para);	//平行四辺形.
 	}
 	RoundRect_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_RoundRect);	//角丸四角形.
+
+	//ゲームの結果から表示パターンを決める.
+	Win = GetWinPattern(CResultDataManager::GetInstance()->GetTiedFirstPlaceMask());
+}
+
+//1位のプレイヤーのビット(壱=1,弐=2,参=4,肆=8)から表示パターン番号(0〜14)に変換する.
+int CWinnerResultUI::GetWinPattern(int Mask)
+{
+	switch (Mask)
+	{
+	case 0b0001: return 0;	//壱.
+	case 0b0010: return 1;	//弐.
+	case 0b0100: return 2;	//参.
+	case 0b1000: return 3;	//肆.
+	case 0b0011: return 4;	//壱と弐.
+	case 0b0101: return 5;	//壱と参.
+	case 0b1001: return 6;	//壱と肆.
+	case 0b0110: return 7;	//弐と参.
+	case 0b1010: return 8;	//弐と肆.
+	case 0b1100: return 9;	//参と肆.
+	case 0b0111: return 10;	//壱と弐と参.
+	case 0b1011: return 11;	//壱と弐と肆.
+	case 0b1101: return 12;	//壱と参と肆.
+	case 0b1110: return 13;	//弐と参と肆.
+	case 0b1111: return 14;	//全員.
+	default:	 return 0;	//参加者なしなど.
+	}
 }
 
 CWinnerResultUI::~CWinnerResultUI()
@@ -175,7 +203,7 @@ CWinnerResultUI::~CWinnerResultUI()
 			m_Decided = true;
 		}
 
-#if 1
+#if 0	//ゲームの結果と連動したので無効化(確認用に残す).
 		//仮で１５パターンん
 	if (GetAsyncKeyState('Q') & 0x8000)
 	{

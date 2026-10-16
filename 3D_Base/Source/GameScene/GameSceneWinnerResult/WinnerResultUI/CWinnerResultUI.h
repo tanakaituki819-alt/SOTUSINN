@@ -101,6 +101,8 @@ public:
 	//図形をまとめた関数.
 	void Shape();
 
+	//1位のプレイヤーのビットから表示パターン番号に変換する.
+	static int GetWinPattern(int Mask);
 
 
 private:

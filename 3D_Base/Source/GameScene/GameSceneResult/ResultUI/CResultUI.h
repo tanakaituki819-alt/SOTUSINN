@@ -16,13 +16,11 @@ public:
 	void Update()override;
 
 	void Draw()override;
-	
-	//二人.
-	void TwoDraw();
-	//三人.
-	void ThreeDraw();
-	//四人.
-	void FourDraw();
+
+	//参加しているプレイヤーのフォント、スコア、順位アイコンを描画する.
+	void DrawPlayers();
+	//プレイヤー番号と順位から対応するアイコンを描画する.
+	void DrawPlayerRank(int PlayerIndex, int Rank);
 
 	bool IsADecided() const { return m_ADecided; }	//決定されたかどうか
 	bool IsBDecided() const { return m_BDecided; }	//決定されたかどうか
@@ -167,12 +165,6 @@ private:
 	CSprite2D* Number_Img;
 	CSprite2D* ReStart_Img[RESTART_MAM];
 
-	int Rank;	//仮の条件のためのもの
-	int Count;	//仮の条件のためのもの
-
 	bool PushA;
-
-	//ｶﾞﾁ仮
-	int ZTMY;
 
 };
