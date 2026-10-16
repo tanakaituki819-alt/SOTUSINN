@@ -60,4 +60,5 @@ private:
 	int			m_SelectchangeTimer			= 0;		//セレクトフレームを変更で期までのタイマー.
 	bool		m_GameMainSceneChangeflag	= false;	//ゲームメインシーンチェンジ判定フラグ.
 	bool		m_TitleSceneChangeflag		= false;	//タイトルシーンチェンジ判定フラグ.
+	bool		m_ControllerConnectSEflag[hand_Max] = {};	//コントローラーが接続されたときのSEを鳴らすかのフラグ.
 };

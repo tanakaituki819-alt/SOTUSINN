@@ -196,11 +196,19 @@ void CGameRdyUI::Update()
 	for (int i = 0; i < hand_Max; i++) {
 		//接続されているコントローラーの数をカウントする.
 		if (m_pController[i]->IsConnect()) {
+			//接続されていればSEを鳴らす.
+			if (!m_ControllerConnectSEflag[i]) {
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Connected); //コントローラー接続時のSE.
+				m_ControllerConnectSEflag[i] = true;	//SEを再生済へfalseにする.
+			}
 			++m_Connectedcnt;	//接続されているコントローラーの数をカウントする.
 			//準備完了状態なら.
 			if ( m_Handclapflag[i]) {
 				++m_Readycnt;	//準備完了状態のコントローラーの数をカウントする.
 			}
+		}
+		else {
+			m_ControllerConnectSEflag[i] = false;
 		}
 	}
 	//接続されているコントローラー1Pだけであれば、全員が準備完了状態を解除する.
