@@ -69,6 +69,8 @@ public:
 	void m_IsCollectingEnd() { m_IsCollecting = false; }
 
 	float GetCost() {return Cost;};
+
+	void Setisappear(bool i) { isappear=i; };
 protected:
 	D3DXVECTOR3 m_OldPosition;
 	Ingredients IngredientsNo;
@@ -86,4 +88,5 @@ protected:
 	 int EffC;
 	 int EffC1;
 	 enCharStatus Status;
+	 bool isappear=true;//見える
 };

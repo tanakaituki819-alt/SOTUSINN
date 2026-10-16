@@ -42,6 +42,7 @@ public:
 		KANSEI,			//
 		KIRAN,//
 		lightning,		//雷
+		PointGetEfect,
 		Max				//最大数
 	};
 public:

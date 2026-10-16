@@ -164,6 +164,7 @@
     <ClCompile Include="Source\GameScene\GameSceneGameMain\CGameSceneGameMain.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\CollisionManager\CCollisionManager.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffect.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffectManager.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\IngredientsManager\CIngredientsmanager.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\Ingredients\CIngredients.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\Nabe\CNabe.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Source\GameScene\GameSceneGameMain\CGameSceneGameMain.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\CollisionManager\CCollisionManager.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffect.h" />
+    <ClInclude Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffectManager.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\IngredientsManager\CIngredientsmanager.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\Ingredients\CIngredients.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\Nabe\CNabe.h" />
