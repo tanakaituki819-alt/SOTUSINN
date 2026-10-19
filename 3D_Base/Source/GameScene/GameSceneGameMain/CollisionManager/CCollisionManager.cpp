@@ -28,7 +28,7 @@ void CCollisionManager::Update()
 		if (!m_pPlayer[i]->GetConnected()) continue;			//コントローラー未接続なら対象外.
 		if (!m_pPlayer[i]->GetIsCollecting()) continue;			//回収動作中でないなら対象外.
 		if (m_pPlayer[i]->GetIsParalysis()) continue;			//既にマヒ中なら対象外.
-		if (m_pPlayer[i]->GetIsMashBattle()) continue;			//連打対決中は下の②でまとめて処理する.
+		if (m_pPlayer[i]->GetIsMashBattle()) continue;			//連打対決中は下でまとめて処理する.
 
 		for (auto& j : Ingredients) {
 			if (j->GetCharStatus() != enCharStatus::Live) continue;	//生存していない具材は対象外.

@@ -43,7 +43,7 @@ private:
 
 	//当たり判定クラス.
 	CCollisionManager* m_pCollisionManager;
-	//連打対決UI(具材の取り合いが発生した時に使用する).
+	//連打対決UI.
 	CButtonMashBattleUI* m_pButtonMashBattleUI;
 
 	//ポーズ関連.

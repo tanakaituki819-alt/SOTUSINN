@@ -24,7 +24,7 @@ public:
 		LIGHT& Light, CAMERA& Camera) override;
 	//コントローラー情報.
 	void SetXInput( CXInput* Input) { MyController = Input; }
-	//コントローラー情報を取得(連打対決でボタン入力を直接読むために使用).
+	//コントローラー情報を取得.
 	CXInput* GetXInput() const { return MyController; }
 	//UIの描画.
 	void DrawUI();
@@ -44,7 +44,7 @@ public:
 	bool GetIsParalysis() { return m_IsParalysis; }
 	//連打対決中かどうか.
 	bool GetIsMashBattle() const { return m_IsMashBattle; }
-	//連打対決の参加/終了をセットする(対決中は移動や新規の具材取得を禁止する).
+	//連打対決の参加/終了をセットする.
 	void SetMashBattleLock(bool IsMashBattle) { m_IsMashBattle = IsMashBattle; }
 	//CBoundingSphere* GetTipBSphere();
 	void IngredientsGetter(CIngredients* Ingredients);
@@ -88,13 +88,13 @@ private:
 	float					m_Collectingtime	 = 0;		//回収中のカウント.
 	bool					m_IsConnected		 = false;	//コントローラー接続中か判定.
 	bool					m_IsParalysis		 = false;	//マヒ中かどうか.
-	bool					m_IsMashBattle		 = false;	//連打対決中かどうか(true中は移動・新規の具材取得を止める).
+	bool					m_IsMashBattle		 = false;	//連打対決中かどうか.
 	float					m_ParalysisTimer	 = 0;		//マヒ経過時間.
 	float					m_ParalysisMovetime  = 0;		//マヒの動きをさせるためのタイム.
 	float					m_Speed				 = 0.8f;	//震える速度.
 	float					m_Amount			 = 0.05f;	//震える大きさ.	
 	D3DXVECTOR3				m_CousorPosition	 = {};		//カーソルのポジションを入れる.
-	D3DXVECTOR3				m_Point3Dto2DConverter = {};	//ボタン連打を表示するポジション(3D座標から2Dように変換).
+	D3DXVECTOR3				m_Point3Dto2DConverter = {};	//ボタン連打を表示するポジション.
 	D3DXVECTOR3 m_OldPosition;
 	CIngredients*			m_pIngredients = nullptr;
 

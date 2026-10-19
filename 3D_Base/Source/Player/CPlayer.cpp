@@ -69,7 +69,6 @@ void CPlayer::Update()
 			}
 		}
 		//具材回収中なら.
-		//※連打対決中は箸を伸ばしたまま止めておきたいので、対決中はタイムを進めない.
 		if (!m_pIngredients) {
 			if (m_IsCollecting && !m_IsMashBattle) {
 				++m_Collectingtime;	//タイム増加.

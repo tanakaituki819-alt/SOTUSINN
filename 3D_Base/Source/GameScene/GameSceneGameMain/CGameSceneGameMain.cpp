@@ -33,7 +33,6 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pCollisionManager = new CCollisionManager();
 
 	//連打対決UIの生成と当たり判定クラスへのセット.
-	//(具材の取り合いを検知したCCollisionManagerがこのUIに対決開始を伝える).
 	m_pButtonMashBattleUI = new CButtonMashBattleUI();
 	m_pCollisionManager->SetButtonMashBattleUI(m_pButtonMashBattleUI);
 
@@ -129,10 +128,7 @@ void CGameSceneGameMain::Update()
 
 	m_IngredientsGetEffectManager->Update();
 
-	//連打対決の更新(参加者の連打回数の集計・勝敗判定).
-	//※プレイヤーの移動/回収処理より先に更新することで、
-	//  この対決が今フレームで決着した場合にそのまま同じフレームで
-	//  勝者のお箸が具材を持ち上げ始められるようにしている.
+	//連打対決の更新.
 	m_pButtonMashBattleUI->Update();
 
 	for (int i = 0;i < PlayerMax;i++) {
@@ -218,7 +214,6 @@ void CGameSceneGameMain::Draw()
 	m_pTimer->Draw();
 
 	//連打対決中なら、対象の具材の真上にゲージを描画する.
-	//(具材の3D座標を2D画面座標に変換するためカメラ行列が必要なので、描画の直前に更新する).
 	m_pButtonMashBattleUI->UpdateScreenPosition(m_pCamera->GetView(), m_mProj);
 	m_pButtonMashBattleUI->Draw();
 
