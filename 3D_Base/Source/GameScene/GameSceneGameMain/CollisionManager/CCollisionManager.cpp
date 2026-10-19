@@ -21,13 +21,12 @@ void CCollisionManager::Update()
 	std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
 
 	//--------------------------------------------------------------------
-	//	①生の具材に触れたプレイヤーをマヒさせる.
-	//	マヒはプレイヤー単位で独立して発生するので、取り合い(連打対決)とは別に判定する.
+	//	生の具材に触れたプレイヤーをマヒさせる.
 	//--------------------------------------------------------------------
 	for (int i = 0; i < Player_Max; i++) {
 		if (!m_pPlayer[i]) continue;
 		if (!m_pPlayer[i]->GetConnected()) continue;			//コントローラー未接続なら対象外.
-		if (!m_pPlayer[i]->GetIsCollecting()) continue;		//回収動作中でないなら対象外.
+		if (!m_pPlayer[i]->GetIsCollecting()) continue;			//回収動作中でないなら対象外.
 		if (m_pPlayer[i]->GetIsParalysis()) continue;			//既にマヒ中なら対象外.
 		if (m_pPlayer[i]->GetIsMashBattle()) continue;			//連打対決中は下の②でまとめて処理する.
 
@@ -43,18 +42,14 @@ void CCollisionManager::Update()
 	}
 
 	//--------------------------------------------------------------------
-	//	②煮えた具材の取り合い判定.
-	//	同じ具材に複数のプレイヤーが触れていたら連打対決を発生させる.
-	//	※完全に同じフレームで触れていなくても対決に発展できるように、
-	//	  最初に触れてからGRACE_FRAMESの間は他のプレイヤーの参加を待つ
-	//	  「猶予期間」を設ける(PendingClaimで管理する).
+	//	煮えた具材の取り合い判定.
 	//--------------------------------------------------------------------
 	for (auto& j : Ingredients) {
 		if (j->GetCharStatus() != enCharStatus::Live) continue;	//生存していない具材は対象外.
-		if (!j->GetBoiledc()) continue;						//生の具材はここでは扱わない(①でマヒ判定済み).
-		if (j->GetCollecting()) continue;						//既に確保済み(通常回収中 or 連打対決中)の具材は対象外.
+		if (!j->GetBoiledc()) continue;							//生の具材はここでは扱わない.
+		if (j->GetCollecting()) continue;						//既に確保済みの具材は対象外.
 
-		//この具材に「今」触れている(取りに来ている)プレイヤーを集める.
+		//この具材に触れているプレイヤーを集める.
 		CPlayer* Touchers[Player_Max] = {};
 		int TouchCount = 0;
 
@@ -79,11 +74,11 @@ void CCollisionManager::Update()
 			continue;
 		}
 
-		//この具材の猶予枠を取得する(まだ無ければ新規に確保して猶予期間を開始する).
+		//この具材の猶予枠を取得する.
 		PendingClaim* pClaim = FindPendingClaim(j);
 		if (!pClaim) {
 			pClaim = FindFreePendingClaimSlot();
-			if (!pClaim) continue;	//空き枠が無ければ今回は諦める(次フレーム以降に再判定される).
+			if (!pClaim) continue;	//空き枠が無ければ今回は諦める.
 
 			pClaim->pTarget = j;
 			pClaim->TouchCount = 0;
@@ -144,7 +139,7 @@ void CCollisionManager::ResolvePendingClaim(PendingClaim& Claim)
 		return;
 	}
 
-	//2人以上いれば連打対決を開始する(最大2組まで同時進行可能).
+	//2人以上いれば連打対決を開始する.
 	//空いているスロットが無い場合は今回は開始せず、具材は未確保のまま次フレーム以降で再判定させる.
 	if (m_pButtonMashBattleUI && m_pButtonMashBattleUI->CanStartBattle()) {
 		m_pButtonMashBattleUI->StartBattle(Claim.pTarget, Claim.Touchers, Claim.TouchCount);
@@ -178,7 +173,6 @@ bool CCollisionManager::IsHitForRay(const RAY& pRay,  CStaticMeshObjObject* obj,
 		obj->GetPosition().x, obj->GetPosition().y, obj->GetPosition().z);
 
 	//回転処理.
-	//※この行列計算は「CStaticMesh::Render()関数」と同じにする必要あり.
 	D3DXMATRIX mRot, mYaw, mPitch, mRoll;
 	//Y軸回転行列生成.
 	D3DXMatrixRotationY(&mYaw, obj->GetRotation().y);
