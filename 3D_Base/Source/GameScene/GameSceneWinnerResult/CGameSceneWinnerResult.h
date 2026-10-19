@@ -1,6 +1,7 @@
 #pragma once
 #include"GameScene/CGameScene.h"
 #include "GameScene/GameSceneWinnerResult/WinnerResultUI/CWinnerResultUI.h"
+#include "GameScene/GameSceneWinnerResult/WinnerResultFood/CWinnerResultFavoriteFood.h"
 
 class CGameSceneWinnerResult
 	:public CGameScene
@@ -14,5 +15,6 @@ public:
 
 private:
 	CWinnerResultUI* m_pWinnerResultUI;
+	CWinnerResultFavoriteFood* m_pFavoriteFood;	//お気に入り食材.
 	CXInput* m_pController;
 };

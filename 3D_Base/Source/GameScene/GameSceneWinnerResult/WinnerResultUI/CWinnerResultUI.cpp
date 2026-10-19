@@ -13,71 +13,27 @@ struct Transform {
 	D3DXVECTOR3 GetScl() const { return D3DXVECTOR3(sclX, sclY, 0.0f); }
 };
 
-//あっぱれ文字
-static constexpr Transform WINNER_FONT = { 145.f,90.f,300.f,90.f };
-
-//色付きプレイヤーフォント１人目.
-static constexpr Transform PLAYER_FIRST_FONT = { 165.f,180.f,135.f,43.f };
-//色付きプレイヤーフォント２人目.
-static constexpr Transform PLAYER_SECOND_FONT = { 304.f,166.f,135.f,43.f };
-//色付きプレイヤーフォント3人目.
-static constexpr Transform PLAYER_THIRD_FONT = { 443.f,152.f,135.f,43.f };
-//色付きプレイヤーフォント4人目.
-static constexpr Transform PLAYER_FOURTH_FONT = { 582.f,138.f,135.f,43.f };
-
-//-単独1位-.
-//プレイヤー壱
-static constexpr Transform P1_SOLO_WIN = { 135.f, 90.f, 400.f, 630.f };
-//プレイヤー弐
-static constexpr Transform P2_SOLO_WIN = { 80.f, 90.f, 400.f, 630.f };
-//プレイヤー参
-static constexpr Transform P3_SOLO_WIN = { 100.f, 30.f, 460.f, 700.f };
-//プレイヤー肆
-static constexpr Transform P4_SOLO_WIN = { 135.f, 90.f, 400.f, 630.f };
-//-2人同率-.
-//プレイヤー壱と誰かが同率時のプレイヤー壱の立ち絵.
-static constexpr Transform DUO_P1_ALL_P1 = { 0.f,0.f,0.f,0.f };
-//プレイヤー弐と誰かが同率時のプレイヤー弐の立ち絵.
-static constexpr Transform DUO_P2_ALL_P2 = { 0.f,0.f,0.f,0.f };
-//誰かとプレイヤー参が同率時のプレイイヤー参の立ち絵
-static constexpr Transform DUO_ALL_P3_P3 = { 0.f,0.f,0.f,0.f };
-//誰かとプレイヤー肆が同率時のプレイイヤー肆の立ち絵
-static constexpr Transform DUO_ALL_P4_P4 = { 0.f,0.f,0.f,0.f };
-//プレイヤー壱とプレイヤー弐が同率時のプレイヤー弐の立ち絵.
-static constexpr Transform DUO_P1_P2_P2 = {0.f,0.f,0.f,0.f};
-//プレイヤー弐とプレイヤー参が同率時のプレイヤー参の立ち絵.
-static constexpr Transform DUO_P2_P3_P2 = { 0.f,0.f,0.f,0.f };
-//プレイヤー参とプレイヤー肆が同率時のプレイヤー参の立ち絵.
-static constexpr Transform DUO_P3_P4_P3 = { 0.f,0.f,0.f,0.f };
-//-3人同率-.
-//プレイヤー壱と誰かと誰かが同率時のプレイヤー壱の立ち絵
-static constexpr Transform TRIO_P1_ALL_ALL_P1 = { 0.f,0.f,0.f,0.f };
-//誰かとプレイヤー弐と誰かが同率時のプレイヤー弐の立ち絵.
-static constexpr Transform TRIO_ALL_P2_ALL_P2 = { 0.f,0.f,0.f,0.f };
-//誰かと誰かとプレイヤー参が同率時のプレイヤー肆の立ち絵.
-static constexpr Transform TRIO_ALL_ALL_P4_P4 = { 0.f,0.f,0.f,0.f };
-//プレイヤー壱とプレイヤー弐とプレイヤー参が同率時のプレイヤー参の立ち絵
-static constexpr Transform TRIO_P1_P2_P3_P3 = { 0.f,0.f,0.f,0.f };
-//プレイヤー壱とプレイヤー参とプレイヤー肆が同率時のプレイヤー参の立ち絵
-static constexpr Transform TRIO_P1_P3_P4_P3 = { 0.f,0.f,0.f,0.f };
-//プレイヤー壱とプレイヤー参とプレイヤー肆が同率時のプレイヤー肆の立ち絵
-static constexpr Transform TRIO_P1_P3_P4_P4 = { 0.f,0.f,0.f,0.f };
-//レイヤー弐とプレイヤー参とプレイヤー肆が同率時のプレイヤー弐の立ち絵
-static constexpr Transform TRIO_P2_P3_P4_P2 = { 0.f,0.f,0.f,0.f };
-//レイヤー弐とプレイヤー参とプレイヤー肆が同率時のプレイヤー参の立ち絵
-static constexpr Transform TRIO_P2_P3_P4_P3 = { 0.f,0.f,0.f,0.f };
-//-4人同率-.
-//プレイヤー全員が同率の時のプレイヤー壱の立ち絵
-static constexpr Transform ALL_P1 = { 0.f,0.f,300.f,500.f };
-//プレイヤー全員が同率の時のプレイヤー弐の立ち絵
-static constexpr Transform ALL_P2 = { 100.f,0.f,300.f,500.f };
-//プレイヤー全員が同率の時のプレイヤー参の立ち絵
-static constexpr Transform ALL_P3 = { 200.f,0.f,300.f,500.f };
-//プレイヤー全員が同率の時のプレイヤー肆の立ち絵
-static constexpr Transform ALL_P4 = { 300.f,0.f,300.f,500.f };
-
+//文字を傾ける角度.
+static constexpr float FONT_RAD = -0.1f;
 //角度(5度傾ける).
 static constexpr float RAD = -0.08726646;
+
+//====================================================
+//	単独1位の画面.
+//====================================================
+//あっぱれ文字
+static constexpr Transform WINNER_FONT = { 145.f,90.f,300.f,90.f };
+//色付きプレイヤーフォント.
+static constexpr Transform PLAYER_FIRST_FONT = { 165.f,180.f,135.f,43.f };
+
+//立ち絵.
+static constexpr Transform SOLO_WIN[CWinnerResultUI::PLAYER_MAX] =
+{
+	{ 135.f, 90.f, 400.f, 630.f },	//プレイヤー壱.
+	{  80.f, 90.f, 400.f, 630.f },	//プレイヤー弐.
+	{ 100.f, 30.f, 460.f, 700.f },	//プレイヤー参.
+	{ 135.f, 90.f, 400.f, 630.f },	//プレイヤー肆.
+};
 
 //緑の平行四辺形1.
 static constexpr Transform GPARA1 = { 600.f,150.f,430.f,90.f };
@@ -90,17 +46,81 @@ static constexpr Transform UGPARA = { 545.f,480.f,450.f,90.f };
 //角丸四角形.
 static constexpr Transform ROUNDRECT = {1040.f,408.f,160.f,160.f};
 
+//ポイントの文字.
+static constexpr Transform FONT_GET			= { 656.f,162.f,303.f,56.f };	//かくとくポイント.
+static constexpr Transform FONT_INGREDIENT	= { 610.f,290.f,217.f,40.f };	//具材ポイント.
+static constexpr Transform FONT_SPECIAL		= { 605.f,390.f,217.f,40.f };	//高級具材ポイント.
+static constexpr Transform FONT_TOTAL		= { 575.f,497.f,303.f,56.f };	//合計ポイント.
+
+//ポイントの数字.
+static constexpr Transform NUMBER_INGREDIENT	= { 955.f,290.f,24.f,40.f };	//具材ポイント.
+static constexpr Transform NUMBER_SPECIAL		= { 955.f,390.f,24.f,40.f };	//高級具材ポイント.
+static constexpr Transform NUMBER_TOTAL			= { 960.f,497.f,32.f,56.f };	//合計ポイント.
+
+//お気に入り食材の文字.
+static constexpr Transform FAVORITE_FONT = { 1050.f,420.f,140.f,27.f };
+//お気に入り食材のポイント.
+static constexpr Transform FAVORITE_NUMBER = { 1120.f,532.f,16.f,28.f };
+
+//====================================================
+//	同率1位の画面.
+//====================================================
+//あっぱれ文字.
+static constexpr Transform TIE_WINNER_FONT = { 150.f,105.f,390.f,105.f };
+
+//色付きプレイヤーフォント.
+static constexpr Transform TIE_PLAYER_FONT[CWinnerResultUI::PLAYER_MAX] =
+{
+	{ 180.f,215.f,145.f,46.f },	//1人目.
+	{ 330.f,200.f,145.f,46.f },	//2人目.
+	{ 480.f,185.f,145.f,46.f },	//3人目.
+	{ 630.f,170.f,145.f,46.f },	//4人目.
+};
+
+//立ち絵の大きさ.
+static constexpr Transform TIE_PLAYER_SIZE[CWinnerResultUI::PLAYER_MAX] =
+{
+	{ 0.f,0.f,280.f,448.f },	//プレイヤー壱.
+	{ 0.f,0.f,280.f,448.f },	//プレイヤー弐.
+	{ 0.f,0.f,300.f,480.f },	//プレイヤー参.
+	{ 0.f,0.f,280.f,448.f },	//プレイヤー肆.
+};
+//立ち絵の下端の位置.
+static constexpr float TIE_PLAYER_BOTTOM = 735.f;
+
+//立ち絵の中心のX座標.
+static constexpr float TIE_CENTER_X_2[2] = { 330.f, 760.f };
+static constexpr float TIE_CENTER_X_3[3] = { 200.f, 560.f, 920.f };
+static constexpr float TIE_CENTER_X_4[4] = { 150.f, 455.f, 790.f, 1060.f };
+
+//影のずらす量と濃さ.
+static constexpr float SHADOW_OFFSET_X = 45.f;
+static constexpr float SHADOW_OFFSET_Y = -12.f;
+static constexpr float SHADOW_ALPHA = 0.35f;
+
+//緑の平行四辺形.
+static constexpr Transform TIE_GPARA = { 705.f,228.f,290.f,62.f };
+//薄緑の平行四辺形.
+static constexpr Transform TIE_UGPARA = { 782.f,273.f,445.f,88.f };
+//かくとくポイントの文字.
+static constexpr Transform TIE_FONT_GET = { 741.f,235.f,217.f,40.f };
+//合計ポイントの文字.
+static constexpr Transform TIE_FONT_TOTAL = { 820.f,289.f,282.f,52.f };
+//合計ポイントの数字.
+static constexpr Transform TIE_NUMBER_TOTAL = { 1170.f,289.f,32.f,55.f };
+
 CWinnerResultUI::CWinnerResultUI()
-	:Win (0)
-	, m_Decided  (false)
+	: m_Decided  (false)
 	, m_pController(nullptr)
+	, m_WinnerNo()
+	, m_WinnerCount(0)
 {
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
 	Winner_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_WinnerText);		//あっぱれ.
-	Player1_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player1);			//プレイヤー壱
-	Player2_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player2);			//プレイヤー弐
-	Player3_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player3);			//プレイヤー参
-	Player4_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player4);			//プレイヤー肆
+	Player_Img[0] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player1);		//プレイヤー壱
+	Player_Img[1] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player2);		//プレイヤー弐
+	Player_Img[2] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player3);		//プレイヤー参
+	Player_Img[3] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Player4);		//プレイヤー肆
 	for (int i = 0; i < FONT_MAM; i++)
 	{
 		PlayerFont_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_WinnerFont);	//色付きプレイヤーフォント
@@ -110,32 +130,26 @@ CWinnerResultUI::CWinnerResultUI()
 		Para_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_Para);	//平行四辺形.
 	}
 	RoundRect_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_RoundRect);	//角丸四角形.
+	ResultFont_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_ResultFont);	//ポイントの文字.
+	Number_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Digit0_9);				//数字.
+	FavoriteFont_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_FavoriteFont);	//お気に入り食材の文字.
 
-	//ゲームの結果から表示パターンを決める.
-	Win = GetWinPattern(CResultDataManager::GetInstance()->GetTiedFirstPlaceMask());
-}
-
-//1位のプレイヤーのビット(壱=1,弐=2,参=4,肆=8)から表示パターン番号(0〜14)に変換する.
-int CWinnerResultUI::GetWinPattern(int Mask)
-{
-	switch (Mask)
+	//ゲームの結果から1位のプレイヤーを順番に集める.
+	const CResultDataManager* pData = CResultDataManager::GetInstance();
+	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-	case 0b0001: return 0;	//壱.
-	case 0b0010: return 1;	//弐.
-	case 0b0100: return 2;	//参.
-	case 0b1000: return 3;	//肆.
-	case 0b0011: return 4;	//壱と弐.
-	case 0b0101: return 5;	//壱と参.
-	case 0b1001: return 6;	//壱と肆.
-	case 0b0110: return 7;	//弐と参.
-	case 0b1010: return 8;	//弐と肆.
-	case 0b1100: return 9;	//参と肆.
-	case 0b0111: return 10;	//壱と弐と参.
-	case 0b1011: return 11;	//壱と弐と肆.
-	case 0b1101: return 12;	//壱と参と肆.
-	case 0b1110: return 13;	//弐と参と肆.
-	case 0b1111: return 14;	//全員.
-	default:	 return 0;	//参加者なしなど.
+		const SPlayerResultData& Data = pData->GetPlayerData(i);
+		if (Data.m_bActive && Data.m_nRank == 1)
+		{
+			m_WinnerNo[m_WinnerCount] = i;
+			m_WinnerCount++;
+		}
+	}
+	//参加者がいない場合はプレイヤー壱を表示する.
+	if (m_WinnerCount == 0)
+	{
+		m_WinnerNo[0] = 0;
+		m_WinnerCount = 1;
 	}
 }
 
@@ -143,10 +157,10 @@ CWinnerResultUI::~CWinnerResultUI()
 {
 	BackGround_Img = nullptr;
 	Winner_Img = nullptr;
-	Player1_Img = nullptr;
-	Player2_Img = nullptr;
-	Player3_Img = nullptr;
-	Player4_Img = nullptr;
+	for (int i = 0; i < PLAYER_MAX; i++)
+	{
+		Player_Img[i] = nullptr;
+	}
 	for (int i = 0; i < FONT_MAM; i++)
 	{
 		PlayerFont_Img[i] = nullptr;
@@ -156,208 +170,34 @@ CWinnerResultUI::~CWinnerResultUI()
 		Para_Img[i] = nullptr;
 	}
 	RoundRect_Img = nullptr;
+	ResultFont_Img = nullptr;
+	Number_Img = nullptr;
+	FavoriteFont_Img = nullptr;
 }
-	void CWinnerResultUI::Update()
+
+void CWinnerResultUI::Update()
 {
-#if 0
-	//実行中に動かすやつ
-		static float ananana = 10;
-		static float ananana2 = 10;
-
-		if (GetAsyncKeyState('W') & 0x8000)
-		{
-			ananana--;
-		}
-		if (GetAsyncKeyState('S') & 0x8000)
-		{
-			ananana++;
-		}
-		if (GetAsyncKeyState('D') & 0x8000)
-		{
-			ananana2++;
-		}
-		if (GetAsyncKeyState('A') & 0x8000)
-		{
-			ananana2--;
-		}
-
-		FILE* pFile;
-		//stdout（標準出力）を新しく作成したコンソールにリダイレクト
-		freopen_s(&pFile, "CONOUT$", "w", stdout);
-		std::cout << ananana << std::endl;
-	
-#endif
-		//if (m_pController == nullptr)
-		//{
-		//	return;
-		//}
-		//if (m_pController->IsConnect() == false)
-		//{
-		//	return;
-		//}
-
-
-		//Aボタンで決定.
-		if (m_pController->IsDown(CXInput::A, true))
-		{
-			m_Decided = true;
-		}
-
-#if 0	//ゲームの結果と連動したので無効化(確認用に残す).
-		//仮で１５パターンん
-	if (GetAsyncKeyState('Q') & 0x8000)
+	//Aボタンで決定.
+	if (m_pController->IsDown(CXInput::A, true))
 	{
-		Win = 0;
+		m_Decided = true;
 	}
-	if (GetAsyncKeyState('E') & 0x8000)
-	{
-		Win = 1;
-	}
-	if (GetAsyncKeyState('R') & 0x8000)
-	{
-		Win = 2;
-	}
-	if (GetAsyncKeyState('T') & 0x8000)
-	{
-		Win = 3;
-	}
-	if (GetAsyncKeyState('Y') & 0x8000)
-	{
-		Win = 4;
-	}
-	if (GetAsyncKeyState('U') & 0x8000)
-	{
-		Win = 5;
-	}
-	if (GetAsyncKeyState('I') & 0x8000)
-	{
-		Win = 6;
-	}
-	if (GetAsyncKeyState('O') & 0x8000)
-	{
-		Win = 7;
-	}
-	if (GetAsyncKeyState('P') & 0x8000)
-	{
-		Win = 8;
-	}
-	if (GetAsyncKeyState('F') & 0x8000)
-	{
-		Win = 9;
-	}
-	if (GetAsyncKeyState('G') & 0x8000)
-	{
-		Win = 10;
-	}
-	if (GetAsyncKeyState('H') & 0x8000)
-	{
-		Win = 11;
-	}
-	if (GetAsyncKeyState('J') & 0x8000)
-	{
-		Win = 12;
-	}
-	if (GetAsyncKeyState('K') & 0x8000)
-	{
-		Win = 13;
-	}
-	if (GetAsyncKeyState('L') & 0x8000)
-	{
-		Win = 14;
-	}
-#endif
-
 }
 
 void CWinnerResultUI::Draw()
 {
 	WinnerResultBackUI();
-	WinnerTextUI();
 
-#if 1
-	//仮 2026.07.23
-	if (Win == 0)
+	//単独1位の画面.
+	if (m_WinnerCount == 1)
 	{
-		Player1WinnerUI();
-		Player1FontUI();
-		Shape();
+		SoloWinnerUI();
 	}
-	else if (Win == 1)
+	//同率1位の画面.
+	else
 	{
-		Player2WinnerUI();
-		Player2FontUI();
-		Shape();
+		TieWinnerUI();
 	}
-	else if (Win == 2)
-	{
-		Player3WinnerUI();
-		Player3FontUI();
-		Shape();
-	}
-	else if (Win == 3)
-	{
-		Player4WinnerUI();
-		Player4FontUI();
-		Shape();
-	}
-	else if (Win == 4)
-	{
-		Player1AndPlayer2WinnerUI();
-		Player1AndPlayer2FontUI();
-	}
-	else if (Win == 5)
-	{
-		Player1AndPlayer3WinnerUI();
-		Player1AndPlayer3FontUI();
-	}
-	else if (Win == 6)
-	{
-		Player1AndPlayer4WinnerUI();
-		Player1AndPlayer4FontUI();
-	}
-	else if (Win == 7)
-	{
-		Player2AndPlayer3WinnerUI();
-		Player2AndPlayer3FontUI();
-	}
-	else if (Win == 8)
-	{
-		Player2AndPlayer4WinnerUI();
-		Player2AndPlayer4FontUI();
-	}
-	else if (Win == 9)
-	{
-		Player3AndPlayer4WinnerUI();
-		Player3AndPlayer4FontUI();
-	}
-	else if (Win == 10)
-	{
-		Player1AndPlayer2AndPlayer3WinnerUI();
-		Player1AndPlayer2AndPlayer3FontUI();
-	}
-	else if (Win == 11)
-	{
-		Player1AndPlayer2AndPlayer4WinnerUI();
-		Player1AndPlayer2AndPlayer4FontUI();
-	}
-	else if (Win == 12)
-	{
-		Player1AndPlayer3AndPlayer4WinnerUI();
-		Player1AndPlayer3AndPlayer4FontUI();
-	}
-	else if (Win == 13)
-	{
-		Player2AndPlayer3AndPlayer4WinnerUI();
-		Player2AndPlayer3AndPlayer4FontUI();
-	}
-	else if (Win == 14)
-	{
-		AllPlayerWinnerUI();
-		AllPlayerFontUI();
-	}
-#endif
-
-
 }
 
 void CWinnerResultUI::Init()
@@ -372,469 +212,299 @@ void CWinnerResultUI::WinnerResultBackUI()
 	BackGround_Img->SetScale(D3DXVECTOR3(WND_W, WND_H, 0));
 	BackGround_Img->Render();
 }
-//あっぱれ.
-void CWinnerResultUI::WinnerTextUI()
+
+//====================================================
+//	単独1位の画面.
+//====================================================
+void CWinnerResultUI::SoloWinnerUI()
 {
-	Winner_Img->SetPosition(D3DXVECTOR3(WINNER_FONT.GetPos()));
-	Winner_Img->SetScale(D3DXVECTOR3(WINNER_FONT.GetScl()));
-	Winner_Img->SetRotation(D3DXVECTOR3(0, 0, -0.1));
+	SoloWinnerTextUI();
+	SoloPlayerUI();
+	SoloPlayerFontUI();
+	SoloShape();
+	SoloPointUI();
+	SoloFavoriteUI();
+}
+
+//あっぱれ.
+void CWinnerResultUI::SoloWinnerTextUI()
+{
+	Winner_Img->SetPosition(WINNER_FONT.GetPos());
+	Winner_Img->SetScale(WINNER_FONT.GetScl());
+	Winner_Img->SetRotation(D3DXVECTOR3(0, 0, FONT_RAD));
 	Winner_Img->Render();
 }
 
-//プレイヤー壱が一人で一位の立ち絵.
-void CWinnerResultUI::Player1WinnerUI()
+//1位のプレイヤーの立ち絵.
+void CWinnerResultUI::SoloPlayerUI()
 {
-	Player1_Img->SetPosition(P1_SOLO_WIN.GetPos());
-	Player1_Img->SetScale(P1_SOLO_WIN.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-}
-//プレイヤー弐が一人で一位の立ち絵.
-void CWinnerResultUI::Player2WinnerUI()
-{
-	Player2_Img->SetPosition(P1_SOLO_WIN.GetPos());
-	Player2_Img->SetScale(P1_SOLO_WIN.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-}
-//プレイヤー参が一人で一位の立ち絵.
-void CWinnerResultUI::Player3WinnerUI()
-{
-	Player3_Img->SetPosition(P1_SOLO_WIN.GetPos());
-	Player3_Img->SetScale(P1_SOLO_WIN.GetScl());
-	Player3_Img->SetPatternNo(1.f, 0.f);
-	Player3_Img->Render();
-}
-//プレイヤー肆が一人で一位の立ち絵.
-void CWinnerResultUI::Player4WinnerUI()
-{
-	Player4_Img->SetPosition(P1_SOLO_WIN.GetPos());
-	Player4_Img->SetScale(P1_SOLO_WIN.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
-}
-//プレイヤー壱とプレイヤー弐の立ち絵
-void CWinnerResultUI::Player1AndPlayer2WinnerUI()
-{
-	Player1_Img->SetPosition(DUO_P1_ALL_P1.GetPos());
-	Player1_Img->SetScale(DUO_P1_ALL_P1.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-
-	Player2_Img->SetPosition(DUO_P1_P2_P2.GetPos());
-	Player2_Img->SetScale(DUO_P1_P2_P2.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-}
-//プレイヤー壱とプレイヤー参の立ち絵
-void CWinnerResultUI::Player1AndPlayer3WinnerUI()
-{
-	Player1_Img->SetPosition(DUO_P1_ALL_P1.GetPos());
-	Player1_Img->SetScale(DUO_P1_ALL_P1.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-
-	Player2_Img->SetPosition(DUO_ALL_P3_P3.GetPos());
-	Player2_Img->SetScale(DUO_ALL_P3_P3.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-}
-//プレイヤー壱とプレイヤー肆の立ち絵
-void CWinnerResultUI::Player1AndPlayer4WinnerUI()
-{
-	Player1_Img->SetPosition(DUO_P1_ALL_P1.GetPos());
-	Player1_Img->SetScale(DUO_P1_ALL_P1.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-
-	Player4_Img->SetPosition(DUO_ALL_P4_P4.GetPos());
-	Player4_Img->SetScale(DUO_ALL_P4_P4.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
-}
-//プレイヤー弐とプレイヤー参の立ち絵
-void CWinnerResultUI::Player2AndPlayer3WinnerUI()
-{
-	Player2_Img->SetPosition(DUO_P2_ALL_P2.GetPos());
-	Player2_Img->SetScale(DUO_P2_ALL_P2.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-
-	Player3_Img->SetPosition(DUO_ALL_P3_P3.GetPos());
-	Player3_Img->SetScale(DUO_ALL_P3_P3.GetScl());
-	Player3_Img->SetPatternNo(1.f, 0.f);
-	Player3_Img->Render();
-}
-//プレイヤー弐とプレイヤー肆の立ち絵
-void CWinnerResultUI::Player2AndPlayer4WinnerUI()
-{
-	Player2_Img->SetPosition(DUO_P2_ALL_P2.GetPos());
-	Player2_Img->SetScale(DUO_P2_ALL_P2.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-
-	Player4_Img->SetPosition(DUO_ALL_P4_P4.GetPos());
-	Player4_Img->SetScale(DUO_ALL_P4_P4.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
-}
-//プレイヤー参とプレイヤー肆の立ち絵
-void CWinnerResultUI::Player3AndPlayer4WinnerUI()
-{
-	Player3_Img->SetPosition(DUO_P3_P4_P3.GetPos());
-	Player3_Img->SetScale(DUO_P3_P4_P3.GetScl());
-	Player3_Img->SetPatternNo(1.f, 0.f);
-	Player3_Img->Render();
-
-	Player4_Img->SetPosition(DUO_ALL_P4_P4.GetPos());
-	Player4_Img->SetScale(DUO_ALL_P4_P4.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
-}
-// プレイヤー壱とプレイヤー弐とプレイヤー参の立ち絵
-void CWinnerResultUI::Player1AndPlayer2AndPlayer3WinnerUI()
-{
-	Player1_Img->SetPosition(TRIO_P1_ALL_ALL_P1.GetPos());
-	Player1_Img->SetScale(TRIO_P1_ALL_ALL_P1.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-
-	Player2_Img->SetPosition(TRIO_ALL_P2_ALL_P2.GetPos());
-	Player2_Img->SetScale(TRIO_ALL_P2_ALL_P2.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-
-	Player3_Img->SetPosition(TRIO_P1_P2_P3_P3.GetPos());
-	Player3_Img->SetScale(TRIO_P1_P2_P3_P3.GetScl());
-	Player3_Img->SetPatternNo(1.f, 0.f);
-	Player3_Img->Render();
-}
-// プレイヤー壱とプレイヤー弐とプレイヤー肆の立ち絵
-void CWinnerResultUI::Player1AndPlayer2AndPlayer4WinnerUI()
-{
-	Player1_Img->SetPosition(TRIO_P1_ALL_ALL_P1.GetPos());
-	Player1_Img->SetScale(TRIO_P1_ALL_ALL_P1.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-
-	Player2_Img->SetPosition(TRIO_ALL_P2_ALL_P2.GetPos());
-	Player2_Img->SetScale(TRIO_ALL_P2_ALL_P2.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-
-	Player4_Img->SetPosition(TRIO_ALL_ALL_P4_P4.GetPos());
-	Player4_Img->SetScale(TRIO_ALL_ALL_P4_P4.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
-}
-// プレイヤー壱とプレイヤー参とプレイヤー肆の立ち絵
-void CWinnerResultUI::Player1AndPlayer3AndPlayer4WinnerUI()
-{
-	Player1_Img->SetPosition(TRIO_P1_ALL_ALL_P1.GetPos());
-	Player1_Img->SetScale(TRIO_P1_ALL_ALL_P1.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-
-	Player3_Img->SetPosition(TRIO_P1_P3_P4_P3.GetPos());
-	Player3_Img->SetScale(TRIO_P1_P3_P4_P3.GetScl());
-	Player3_Img->SetPatternNo(1.f, 0.f);
-	Player3_Img->Render();
-
-	Player4_Img->SetPosition(TRIO_P1_P3_P4_P4.GetPos());
-	Player4_Img->SetScale(TRIO_P1_P3_P4_P4.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
-
-}
-// プレイヤー弐とプレイヤー参とプレイヤー肆の立ち絵
-void CWinnerResultUI::Player2AndPlayer3AndPlayer4WinnerUI()
-{
-	Player2_Img->SetPosition(TRIO_P2_P3_P4_P2.GetPos());
-	Player2_Img->SetScale(TRIO_P2_P3_P4_P2.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-
-	Player3_Img->SetPosition(TRIO_P2_P3_P4_P3.GetPos());
-	Player3_Img->SetScale(TRIO_P2_P3_P4_P3.GetScl());
-	Player3_Img->SetPatternNo(1.f, 0.f);
-	Player3_Img->Render();
-
-	Player4_Img->SetPosition(TRIO_ALL_ALL_P4_P4.GetPos());
-	Player4_Img->SetScale(TRIO_ALL_ALL_P4_P4.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
-}
-// プレイヤー壱とプレイヤー弐とプレイヤー参とプレイヤー肆の立ち絵
-void CWinnerResultUI::AllPlayerWinnerUI()
-{
-	Player1_Img->SetPosition(ALL_P1.GetPos());
-	Player1_Img->SetScale(ALL_P1.GetScl());
-	Player1_Img->SetPatternNo(1.f, 0.f);
-	Player1_Img->Render();
-
-	Player2_Img->SetPosition(ALL_P2.GetPos());
-	Player2_Img->SetScale(ALL_P2.GetScl());
-	Player2_Img->SetPatternNo(1.f, 0.f);
-	Player2_Img->Render();
-
-	Player3_Img->SetPosition(ALL_P3.GetPos());
-	Player3_Img->SetScale(ALL_P3.GetScl());
-	Player3_Img->SetPatternNo(1.f, 0.f);
-	Player3_Img->Render();
-
-	Player4_Img->SetPosition(ALL_P4.GetPos());
-	Player4_Img->SetScale(ALL_P4.GetScl());
-	Player4_Img->SetPatternNo(1.f, 0.f);
-	Player4_Img->Render();
+	int No = m_WinnerNo[0];
+	Player_Img[No]->SetPosition(SOLO_WIN[No].GetPos());
+	Player_Img[No]->SetScale(SOLO_WIN[No].GetScl());
+	Player_Img[No]->SetRotation(D3DXVECTOR3(0, 0, 0));
+	Player_Img[No]->SetisCOLOR(false);
+	Player_Img[No]->SetAlpha(1.f);
+	Player_Img[No]->SetPatternNo(1, 0);
+	Player_Img[No]->Render();
 }
 
-
-//プレイヤー壱のプレイヤー文字
-void CWinnerResultUI::Player1FontUI()
+//1位のプレイヤーの文字.
+void CWinnerResultUI::SoloPlayerFontUI()
 {
-	PlayerFont_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
-	PlayerFont_Img[0]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
-	PlayerFont_Img[0]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[0]->SetPatternNo(0.f, 0.f);
-	PlayerFont_Img[0]->Render();
-}
-//プレイヤー弐のプレイヤー文字
-void CWinnerResultUI::Player2FontUI()
-{
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
-}
-//プレイヤー参のプレイヤー文字
-void CWinnerResultUI::Player3FontUI()
-{
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
-}
-//プレイヤー肆のプレイヤー文字
-void CWinnerResultUI::Player4FontUI()
-{
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FIRST_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FIRST_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
-}
-// プレイヤー壱とプレイヤー弐のプレイヤー文字.
-void CWinnerResultUI::Player1AndPlayer2FontUI()
-{
-	Player1FontUI();
-
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
-}
-//プレイヤー壱とプレイヤー参のプレイヤー文字.
-void CWinnerResultUI::Player1AndPlayer3FontUI()
-{
-	Player1FontUI();
-
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
-}
-//プレイヤー壱とプレイヤー肆のプレイヤー文字.
-void CWinnerResultUI::Player1AndPlayer4FontUI()
-{
-	Player1FontUI();
-
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
-}
-//プレイヤー弐とプレイヤー参のプレイヤー文字.
-void CWinnerResultUI::Player2AndPlayer3FontUI()
-{
-	Player2FontUI();
-
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
-}
-//プレイヤー弐とプレイヤー肆のプレイヤー文字.
-void CWinnerResultUI::Player2AndPlayer4FontUI()
-{
-	Player2FontUI();
-
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
-}
-//プレイヤー参とプレイヤー肆のプレイヤー文字.
-void CWinnerResultUI::Player3AndPlayer4FontUI()
-{
-	Player3FontUI();
-
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
-}
-// プレイヤー壱とプレイヤー弐とプレイヤー参のプレイヤー文字.
-void CWinnerResultUI::Player1AndPlayer2AndPlayer3FontUI()
-{
-	Player1FontUI();
-
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
-
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_THIRD_FONT.GetScl()));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
-
-}
-// プレイヤー壱とプレイヤー弐とプレイヤー肆のプレイヤー文字.
-void CWinnerResultUI::Player1AndPlayer2AndPlayer4FontUI()
-{
-	Player1FontUI();
-
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
-
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
-
-}
-// プレイヤー壱とプレイヤー参とプレイヤー肆のプレイヤー文字.
-void CWinnerResultUI::Player1AndPlayer3AndPlayer4FontUI()
-{
-	Player1FontUI();
-
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
-
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
-
-}
-// プレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
-void CWinnerResultUI::Player2AndPlayer3AndPlayer4FontUI()
-{
-	Player2FontUI();
-
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
-
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
-}
-// プレイヤー壱とプレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
-void CWinnerResultUI::AllPlayerFontUI()
-{
-	Player1FontUI();
-
-	PlayerFont_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_SECOND_FONT.GetPos()));
-	PlayerFont_Img[1]->SetScale(D3DXVECTOR3(PLAYER_SECOND_FONT.GetScl()));
-	PlayerFont_Img[1]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[1]->SetPatternNo(0.f, 1.f);
-	PlayerFont_Img[1]->Render();
-
-	PlayerFont_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_THIRD_FONT.GetPos()));
-	PlayerFont_Img[2]->SetScale(D3DXVECTOR3(PLAYER_THIRD_FONT.GetScl()));
-	PlayerFont_Img[2]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[2]->SetPatternNo(0.f, 2.f);
-	PlayerFont_Img[2]->Render();
-
-	PlayerFont_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_FOURTH_FONT.GetPos()));
-	PlayerFont_Img[3]->SetScale(D3DXVECTOR3(PLAYER_FOURTH_FONT.GetScl()));
-	PlayerFont_Img[3]->SetRotation(D3DXVECTOR3(0, 0, -0.1));
-	PlayerFont_Img[3]->SetPatternNo(0.f, 3.f);
-	PlayerFont_Img[3]->Render();
+	int No = m_WinnerNo[0];
+	PlayerFont_Img[No]->SetPosition(PLAYER_FIRST_FONT.GetPos());
+	PlayerFont_Img[No]->SetScale(PLAYER_FIRST_FONT.GetScl());
+	PlayerFont_Img[No]->SetRotation(D3DXVECTOR3(0, 0, FONT_RAD));
+	PlayerFont_Img[No]->SetPatternNo(0, No);
+	PlayerFont_Img[No]->Render();
 }
 
-//緑の平行四辺形１
-void CWinnerResultUI::GPara1()
+//ポイントの枠.
+void CWinnerResultUI::SoloShape()
 {
-	Para_Img[0]->SetPosition(D3DXVECTOR3(GPARA1.GetPos()));
-	Para_Img[0]->SetScale(D3DXVECTOR3(GPARA1.GetScl()));
+	//緑の平行四辺形1.
+	Para_Img[0]->SetPosition(GPARA1.GetPos());
+	Para_Img[0]->SetScale(GPARA1.GetScl());
 	Para_Img[0]->SetRotation(D3DXVECTOR3(0, 0, RAD));
 	Para_Img[0]->SetPatternNo(0, 0);
 	Para_Img[0]->Render();
-}
-//緑の平行四辺形２
-void CWinnerResultUI::GPara2()
-{
-	Para_Img[1]->SetPosition(D3DXVECTOR3(GPARA2.GetPos()));
-	Para_Img[1]->SetScale(D3DXVECTOR3(GPARA2.GetScl()));
+	//緑の平行四辺形2.
+	Para_Img[1]->SetPosition(GPARA2.GetPos());
+	Para_Img[1]->SetScale(GPARA2.GetScl());
 	Para_Img[1]->SetRotation(D3DXVECTOR3(0, 0, 0));
 	Para_Img[1]->SetPatternNo(0, 0);
 	Para_Img[1]->Render();
-}
-//緑の平行四辺形３
-void CWinnerResultUI::GPara3()
-{
-	Para_Img[2]->SetPosition(D3DXVECTOR3(GPARA3.GetPos()));
-	Para_Img[2]->SetScale(D3DXVECTOR3(GPARA3.GetScl()));
+	//緑の平行四辺形3.
+	Para_Img[2]->SetPosition(GPARA3.GetPos());
+	Para_Img[2]->SetScale(GPARA3.GetScl());
+	Para_Img[2]->SetRotation(D3DXVECTOR3(0, 0, 0));
 	Para_Img[2]->SetPatternNo(0, 0);
 	Para_Img[2]->Render();
-}
-//薄緑の平行四辺形
-void CWinnerResultUI::UGPara()
-{
-	Para_Img[3]->SetPosition(D3DXVECTOR3(UGPARA.GetPos()));
-	Para_Img[3]->SetScale(D3DXVECTOR3(UGPARA.GetScl()));
+	//薄緑の平行四辺形.
+	Para_Img[3]->SetPosition(UGPARA.GetPos());
+	Para_Img[3]->SetScale(UGPARA.GetScl());
+	Para_Img[3]->SetRotation(D3DXVECTOR3(0, 0, 0));
 	Para_Img[3]->SetPatternNo(0, 1);
 	Para_Img[3]->Render();
 }
-//角丸四角形.
-void CWinnerResultUI::RoundRect()
+
+//ポイントの文字と数字.
+void CWinnerResultUI::SoloPointUI()
 {
-	RoundRect_Img->SetPosition(D3DXVECTOR3(ROUNDRECT.GetPos()));
-	RoundRect_Img->SetScale(D3DXVECTOR3(ROUNDRECT.GetScl()));
+	const SPlayerResultData& Data = CResultDataManager::GetInstance()->GetPlayerData(m_WinnerNo[0]);
+
+	//かくとくポイント.
+	ResultFont_Img->SetPosition(FONT_GET.GetPos());
+	ResultFont_Img->SetScale(FONT_GET.GetScl());
+	ResultFont_Img->SetRotation(D3DXVECTOR3(0, 0, RAD));
+	ResultFont_Img->SetPatternNo(0, 0);
+	ResultFont_Img->Render();
+	ResultFont_Img->SetRotation(D3DXVECTOR3(0, 0, 0));
+
+	//具材ポイント.
+	ResultFont_Img->SetPosition(FONT_INGREDIENT.GetPos());
+	ResultFont_Img->SetScale(FONT_INGREDIENT.GetScl());
+	ResultFont_Img->SetPatternNo(0, 1);
+	ResultFont_Img->Render();
+	DrawNumber(Data.m_nIngredientScore,
+		NUMBER_INGREDIENT.posX - GetNumberWidth(Data.m_nIngredientScore, NUMBER_INGREDIENT.sclX),
+		NUMBER_INGREDIENT.posY, NUMBER_INGREDIENT.sclX, NUMBER_INGREDIENT.sclY);
+
+	//高級具材ポイント.
+	ResultFont_Img->SetPosition(FONT_SPECIAL.GetPos());
+	ResultFont_Img->SetScale(FONT_SPECIAL.GetScl());
+	ResultFont_Img->SetPatternNo(0, 2);
+	ResultFont_Img->Render();
+	DrawNumber(Data.m_nSpecialScore,
+		NUMBER_SPECIAL.posX - GetNumberWidth(Data.m_nSpecialScore, NUMBER_SPECIAL.sclX),
+		NUMBER_SPECIAL.posY, NUMBER_SPECIAL.sclX, NUMBER_SPECIAL.sclY);
+
+	//合計ポイント.
+	ResultFont_Img->SetPosition(FONT_TOTAL.GetPos());
+	ResultFont_Img->SetScale(FONT_TOTAL.GetScl());
+	ResultFont_Img->SetPatternNo(0, 3);
+	ResultFont_Img->Render();
+	DrawNumber(Data.m_nScore,
+		NUMBER_TOTAL.posX - GetNumberWidth(Data.m_nScore, NUMBER_TOTAL.sclX),
+		NUMBER_TOTAL.posY, NUMBER_TOTAL.sclX, NUMBER_TOTAL.sclY);
+}
+
+//お気に入り食材の枠と文字と数字.
+void CWinnerResultUI::SoloFavoriteUI()
+{
+	const SPlayerResultData& Data = CResultDataManager::GetInstance()->GetPlayerData(m_WinnerNo[0]);
+
+	//角丸四角形.
+	RoundRect_Img->SetPosition(ROUNDRECT.GetPos());
+	RoundRect_Img->SetScale(ROUNDRECT.GetScl());
 	RoundRect_Img->Render();
+
+	//お気に入り食材の文字.
+	FavoriteFont_Img->SetPosition(FAVORITE_FONT.GetPos());
+	FavoriteFont_Img->SetScale(FAVORITE_FONT.GetScl());
+	FavoriteFont_Img->Render();
+
+	//お気に入り食材で獲得したポイント.
+	DrawNumber(Data.m_nFavoriteScore,
+		FAVORITE_NUMBER.posX - GetNumberWidth(Data.m_nFavoriteScore, FAVORITE_NUMBER.sclX) / 2.f,
+		FAVORITE_NUMBER.posY, FAVORITE_NUMBER.sclX, FAVORITE_NUMBER.sclY);
 }
-//図形まとめ
-void CWinnerResultUI::Shape()
+
+//====================================================
+//	同率1位の画面.
+//====================================================
+void CWinnerResultUI::TieWinnerUI()
 {
-	GPara1();
-	GPara2();
-	GPara3();
-	UGPara();
-	RoundRect();
+	TieWinnerTextUI();
+	TiePlayerUI();
+	TiePlayerFontUI();
+	TiePointUI();
 }
 
+//あっぱれ.
+void CWinnerResultUI::TieWinnerTextUI()
+{
+	Winner_Img->SetPosition(TIE_WINNER_FONT.GetPos());
+	Winner_Img->SetScale(TIE_WINNER_FONT.GetScl());
+	Winner_Img->SetRotation(D3DXVECTOR3(0, 0, FONT_RAD));
+	Winner_Img->Render();
+}
 
+//1位のプレイヤーたちの立ち絵.
+void CWinnerResultUI::TiePlayerUI()
+{
+	for (int i = 0; i < m_WinnerCount; i++)
+	{
+		int No = m_WinnerNo[i];
+
+		//人数に合わせて立ち絵の中心を決める.
+		float CenterX = 0.f;
+		if (m_WinnerCount == 2)		CenterX = TIE_CENTER_X_2[i];
+		else if (m_WinnerCount == 3)	CenterX = TIE_CENTER_X_3[i];
+		else						CenterX = TIE_CENTER_X_4[i];
+
+		float W = TIE_PLAYER_SIZE[No].sclX;
+		float H = TIE_PLAYER_SIZE[No].sclY;
+		float X = CenterX - W / 2.f;
+		float Y = TIE_PLAYER_BOTTOM - H;
+
+		Player_Img[No]->SetScale(D3DXVECTOR3(W, H, 0.f));
+		Player_Img[No]->SetRotation(D3DXVECTOR3(0, 0, 0));
+		Player_Img[No]->SetPatternNo(1, 0);	
+
+		//影.
+		Player_Img[No]->SetPosition(D3DXVECTOR3(X + SHADOW_OFFSET_X, Y + SHADOW_OFFSET_Y, 0.f));
+		Player_Img[No]->SetisCOLOR(true);
+		Player_Img[No]->SetCOLOR(D3DXVECTOR3(0.f, 0.f, 0.f));
+		Player_Img[No]->SetAlpha(SHADOW_ALPHA);
+		Player_Img[No]->Render();
+
+		//立ち絵.
+		Player_Img[No]->SetPosition(D3DXVECTOR3(X, Y, 0.f));
+		Player_Img[No]->SetisCOLOR(false);
+		Player_Img[No]->SetAlpha(1.f);
+		Player_Img[No]->Render();
+	}
+}
+
+//1位のプレイヤーたちの文字.
+void CWinnerResultUI::TiePlayerFontUI()
+{
+	for (int i = 0; i < m_WinnerCount; i++)
+	{
+		int No = m_WinnerNo[i];
+		PlayerFont_Img[No]->SetPosition(TIE_PLAYER_FONT[i].GetPos());
+		PlayerFont_Img[No]->SetScale(TIE_PLAYER_FONT[i].GetScl());
+		PlayerFont_Img[No]->SetRotation(D3DXVECTOR3(0, 0, FONT_RAD));
+		PlayerFont_Img[No]->SetPatternNo(0, No);
+		PlayerFont_Img[No]->Render();
+	}
+}
+
+//かくとくポイントと合計ポイント.
+void CWinnerResultUI::TiePointUI()
+{
+	//同率なので1人目の合計ポイントを表示する.
+	const SPlayerResultData& Data = CResultDataManager::GetInstance()->GetPlayerData(m_WinnerNo[0]);
+
+	//緑の平行四辺形.
+	Para_Img[0]->SetPosition(TIE_GPARA.GetPos());
+	Para_Img[0]->SetScale(TIE_GPARA.GetScl());
+	Para_Img[0]->SetRotation(D3DXVECTOR3(0, 0, RAD));
+	Para_Img[0]->SetPatternNo(0, 0);
+	Para_Img[0]->Render();
+	//薄緑の平行四辺形.
+	Para_Img[1]->SetPosition(TIE_UGPARA.GetPos());
+	Para_Img[1]->SetScale(TIE_UGPARA.GetScl());
+	Para_Img[1]->SetRotation(D3DXVECTOR3(0, 0, 0));
+	Para_Img[1]->SetPatternNo(0, 1);
+	Para_Img[1]->Render();
+
+	//かくとくポイント.
+	ResultFont_Img->SetPosition(TIE_FONT_GET.GetPos());
+	ResultFont_Img->SetScale(TIE_FONT_GET.GetScl());
+	ResultFont_Img->SetRotation(D3DXVECTOR3(0, 0, RAD));
+	ResultFont_Img->SetPatternNo(0, 0);
+	ResultFont_Img->Render();
+	ResultFont_Img->SetRotation(D3DXVECTOR3(0, 0, 0));
+
+	//合計ポイント.
+	ResultFont_Img->SetPosition(TIE_FONT_TOTAL.GetPos());
+	ResultFont_Img->SetScale(TIE_FONT_TOTAL.GetScl());
+	ResultFont_Img->SetPatternNo(0, 3);
+	ResultFont_Img->Render();
+	DrawNumber(Data.m_nScore,
+		TIE_NUMBER_TOTAL.posX - GetNumberWidth(Data.m_nScore, TIE_NUMBER_TOTAL.sclX),
+		TIE_NUMBER_TOTAL.posY, TIE_NUMBER_TOTAL.sclX, TIE_NUMBER_TOTAL.sclY);
+}
+
+//====================================================
+//	数字.
+//====================================================
+//数字と点を並べたときの幅.
+float CWinnerResultUI::GetNumberWidth(int Score, float W)
+{
+	//桁数を数える.
+	int Digit = 1;
+	for (int S = Score; S >= 10; S /= 10)
+	{
+		Digit++;
+	}
+	//数字の桁数＋点の文字.
+	return W * (Digit + 1);
+}
+
+//数字と点の表示.
+void CWinnerResultUI::DrawNumber(int Score, float PosX, float PosY, float W, float H)
+{
+	if (Score < 0) Score = 0;
+
+	//一番上の位を求める.
+	int M = 1;
+	while (Score / M >= 10)
+	{
+		M *= 10;
+	}
+
+	Number_Img->SetRotation(D3DXVECTOR3(0, 0, 0));
+	Number_Img->SetScale(D3DXVECTOR3(W, H, 0.f));
+
+	//上の位から1文字ずつ.
+	int S = Score;
+	float X = PosX;
+	while (M > 0)
+	{
+		Number_Img->SetPosition(D3DXVECTOR3(X, PosY, 0.f));
+		Number_Img->SetPatternNo(static_cast<SHORT>(S / M), 0);
+		Number_Img->Render();
+
+		S -= (S / M) * M;
+		M /= 10;
+		X += W;
+	}
+
+	//点.
+	Number_Img->SetPosition(D3DXVECTOR3(X, PosY, 0.f));
+	Number_Img->SetPatternNo(10, 0);
+	Number_Img->Render();
+}

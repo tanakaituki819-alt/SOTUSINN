@@ -56,8 +56,19 @@ public:
 
 	//スコアを取得.
 	int GetScore() const { return Score; }
+	//指定した食材で獲得したスコアを取得.
+	int GetIngredientScore(Ingredients No) const
+	{
+		if (No <= Ingredients::none || No >= Ingredients::MAX) return 0;
+		return m_IngredientScore[static_cast<int>(No)];
+	}
 	//スコアと獲得した具材のリストをリセットする(もう一度プレイ用).
-	void ResetGameData() { Score = 0; my_list.clear(); }
+	void ResetGameData()
+	{
+		Score = 0;
+		my_list.clear();
+		for (auto& IngredientScore : m_IngredientScore) IngredientScore = 0;
+	}
 
 	void SetIngredientsGetEffectManager(IngredientsGetEffectManager* IngredientsGetEffectManager) {
 		m_IngredientsGetEffectManager = IngredientsGetEffectManager;
@@ -69,6 +80,7 @@ private:
 	CStaticMeshObjObject*	m_pChopsticks[Chopsticks_Max];	//お箸(お箸を二つ描画するために配列化).
 	std::list<Ingredients>	my_list;						//リスト.
 	int						Score;							//スコア.
+	int						m_IngredientScore[static_cast<int>(Ingredients::MAX)] = {};	//食材ごとの獲得スコア.
 	CPlayerUI*				P_UI;							//プレイヤーUI.
 	int						PlayerNo;						//プレイヤーNo.
 	CPlayerParalysisUI*		m_pPlayerParalysisUI = nullptr;	//プレイヤーマヒ中のボタンUI.

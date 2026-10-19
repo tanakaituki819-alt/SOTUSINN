@@ -147,6 +147,8 @@ void CGameSceneGameMain::Update()
 	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45)
 	{
 		XAudio2::GetInstance()->AllStopBGM();
+		//リザルトで使う結果を保存.
+		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
 	}
 	//ゲームタイマーが0秒になった.
@@ -164,6 +166,8 @@ void CGameSceneGameMain::Update()
 	}
 	if (GetAsyncKeyState('Z') & 0x0001) {
 		XAudio2::GetInstance()->AllStopBGM();
+		//リザルトで使う結果を保存.
+		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);
 		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 30, 120);
 	}
 	m_pTimer->Update();

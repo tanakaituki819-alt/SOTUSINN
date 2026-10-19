@@ -60,6 +60,7 @@ public:
 		Img_GameMainGround,		//ゲームメインでの背景.
 		IMG_FUSUMA,				//ふすま
 		IMG_Gage,				//連打対決のゲージの.
+		IMG_FavoriteFont,		//お気に入り食材の文字.
 		MAX
 	};
 	//ｘファイル

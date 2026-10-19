@@ -23,19 +23,26 @@ struct SPlayerResultData
 {
 	bool	m_bActive;			//このプレイヤーが参加しているか.
 	int		m_nScore;			//合計スコア.
+	int		m_nIngredientScore;	//具材ポイント.
+	int		m_nSpecialScore;	//高級具材ポイント.
+	int		m_nFavoriteScore;	//お気に入り食材で獲得したスコア.
 	int		m_nMeatCount;		//獲得した肉系食材の数.
 	int		m_nFishCount;		//獲得した魚系食材の数.
 	int		m_nVeggieCount;		//獲得した野菜系食材の数.
 	int		m_nMushroomCount;	//獲得したきのこ系食材の数.
 	int		m_nTofuCount;		//獲得した豆腐の数.
 	int		m_nSpecialCount;	//獲得した高級食材の数.
-	int		m_nRank;			//順位(同点は同じ順位).
-	enIngredientCategory	m_FavoriteCategory;	//お気に入り(一番多く取った)カテゴリ.
+	int		m_nRank;			//順位.
+	enIngredientCategory	m_FavoriteCategory;	//お気に入りカテゴリ.
+	Ingredients				m_FavoriteIngredient;	//お気に入りカテゴリの中で一番多く取った食材.
 
 	//初期化.
 	SPlayerResultData()
 		: m_bActive			(false)
 		, m_nScore			(0)
+		, m_nIngredientScore(0)
+		, m_nSpecialScore	(0)
+		, m_nFavoriteScore	(0)
 		, m_nMeatCount		(0)
 		, m_nFishCount		(0)
 		, m_nVeggieCount	(0)
@@ -44,6 +51,7 @@ struct SPlayerResultData
 		, m_nSpecialCount	(0)
 		, m_nRank			(0)
 		, m_FavoriteCategory(enIngredientCategory::None)
+		, m_FavoriteIngredient(Ingredients::none)
 	{
 	}
 };

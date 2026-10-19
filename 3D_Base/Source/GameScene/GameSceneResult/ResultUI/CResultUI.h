@@ -28,6 +28,9 @@ public:
 	//コントローラー
 	void SetXInput(CXInput* Input) { m_pController = Input; }
 
+	//プレイヤーの列の中心のX座標を取得.
+	float GetCenterX(int PlayerIndex) const { return m_CenterX[PlayerIndex]; }
+
 	//フラグ初期化
 	void BoolInit();
 
@@ -152,10 +155,14 @@ public:
 	//もう一度プレイ
 	void ReStart();
 
+	//列の中心からずらした位置.
+	D3DXVECTOR3 ColumnPos(int PlayerIndex, float OffsetX, float PosY);
+
 	private:
 		bool m_ADecided;			//A決定フラグ
 		bool m_BDecided;			//B決定フラグ
 		CXInput* m_pController;	//コントローラー
+		float m_CenterX[PLAYER_MAX];	//プレイヤーの列の中心のX座標.
 private:
 	CSprite2D* BackGround_Img;
 	CSprite2D* PlayerBack_Img[PLAYER_MAX];

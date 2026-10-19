@@ -105,9 +105,17 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 		//合計スコア.
 		m_PlayerData[i].m_nScore = pPlayer[i]->GetScore();
 
+		//食材ごとの獲得数.
+		int IngredientCount[static_cast<int>(Ingredients::MAX)] = {};
+
 		//獲得した食材のリストから内訳をカウントする.
 		for (const auto& Item : pPlayer[i]->GetAllIngredients())
 		{
+			if (Item > Ingredients::none && Item < Ingredients::MAX)
+			{
+				IngredientCount[static_cast<int>(Item)]++;
+			}
+
 			switch (GetCategory(Item))
 			{
 			case enIngredientCategory::Meat:		m_PlayerData[i].m_nMeatCount++;		break;
@@ -120,8 +128,35 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 			}
 		}
 
+		//具材ポイントと高級具材ポイント.
+		for (int No = static_cast<int>(Ingredients::none) + 1; No < static_cast<int>(Ingredients::MAX); No++)
+		{
+			int IngredientScore = pPlayer[i]->GetIngredientScore(static_cast<Ingredients>(No));
+			if (GetCategory(static_cast<Ingredients>(No)) == enIngredientCategory::Special)
+			{
+				m_PlayerData[i].m_nSpecialScore += IngredientScore;
+			}
+			else
+			{
+				m_PlayerData[i].m_nIngredientScore += IngredientScore;
+			}
+		}
+
 		//お気に入りカテゴリを判定.
 		m_PlayerData[i].m_FavoriteCategory = CalculateFavoriteCategory(m_PlayerData[i]);
+
+		//お気に入りカテゴリの中で一番多く取った食材を判定.
+		int MaxCount = 0;
+		for (int No = static_cast<int>(Ingredients::none) + 1; No < static_cast<int>(Ingredients::MAX); No++)
+		{
+			if (GetCategory(static_cast<Ingredients>(No)) != m_PlayerData[i].m_FavoriteCategory) continue;
+			if (IngredientCount[No] > MaxCount)
+			{
+				MaxCount = IngredientCount[No];
+				m_PlayerData[i].m_FavoriteIngredient = static_cast<Ingredients>(No);
+			}
+		}
+		m_PlayerData[i].m_nFavoriteScore = pPlayer[i]->GetIngredientScore(m_PlayerData[i].m_FavoriteIngredient);
 	}
 
 	//順位を計算する.

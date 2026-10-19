@@ -1,6 +1,7 @@
 #pragma once
 #include"GameScene/CGameScene.h"
 #include "GameScene/GameSceneResult/ResultUI/CResultUI.h"
+#include "GameScene/GameSceneWinnerResult/WinnerResultFood/CWinnerResultFavoriteFood.h"
 
 class CGameSceneResult
 	:public CGameScene

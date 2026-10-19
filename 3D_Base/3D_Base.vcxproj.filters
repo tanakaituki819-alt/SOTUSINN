@@ -69,6 +69,7 @@
     <ClCompile Include="Source\System\XInput\CXInput.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneResult\CGameSceneResult.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneWinnerResult\WinnerResultFood\CWinnerResultFavoriteFood.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.cpp" />
     <ClCompile Include="Source\ResultDataManager\CResultDataManager.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Source\System\XInput\CXInput.h" />
     <ClInclude Include="Source\GameScene\GameSceneResult\CGameSceneResult.h" />
     <ClInclude Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.h" />
+    <ClInclude Include="Source\GameScene\GameSceneWinnerResult\WinnerResultFood\CWinnerResultFavoriteFood.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.h" />
     <ClInclude Include="Source\ResultDataManager\CResultDataManager.h" />

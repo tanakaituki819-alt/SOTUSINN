@@ -283,6 +283,8 @@ void CSpriteManager::Load2D()
 	
 	//ゲージ.
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_Gage),		_T("Data\\Texture\\Gauge.png"),		{ {1, 1, 1}, {300, 400}, {300, 400/4}} });
+	//お気に入り食材の文字.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_FavoriteFont),	_T("Data\\Texture\\FavoriteFont.png"),	{ {1, 1, 1}, {420, 80}, {420, 80}} });
 	
 	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
 		return a.listNo < b.listNo;

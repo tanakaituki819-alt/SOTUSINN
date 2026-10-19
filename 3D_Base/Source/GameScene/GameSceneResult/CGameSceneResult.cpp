@@ -1,5 +1,9 @@
 #include "CGameSceneResult.h"
 
+//お気に入り食材の列の中心からのずれと高さ、大きさ.
+static constexpr float FAVORITE_FOOD_OFFSET_X = 115.f;
+static constexpr float FAVORITE_FOOD_POS_Y = 515.f;
+static constexpr float FAVORITE_FOOD_RADIUS = 38.f;
 
 CGameSceneResult::CGameSceneResult(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	: CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
@@ -39,5 +43,5 @@ void CGameSceneResult::Draw()
 {
 	m_pDx11->SetDepth(false);	//深度テスト無効.
 	m_pResultUI->Draw();
-	m_pDx11->SetDepth(true);	//深度テスト無効.
+	m_pDx11->SetDepth(true);	//深度テスト有効.
 }

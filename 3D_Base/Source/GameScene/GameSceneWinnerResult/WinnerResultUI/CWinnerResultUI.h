@@ -5,6 +5,7 @@ class CWinnerResultUI
 	: public CUIObject
 {
 public:
+	static const int PLAYER_MAX = 4;	//プレイヤーの最大数.
 	static const int FONT_MAM = 4;	//フォントの最大値
 	static const int PARA_MAM = 4;	//平行四辺形最大値
 
@@ -23,102 +24,60 @@ public:
 	//初期化
 	void Init();
 
+	//1位の人数を取得.
+	int GetWinnerCount() const { return m_WinnerCount; }
+	//1位のプレイヤー番号を取得.
+	int GetWinnerNo(int No) const { return m_WinnerNo[No]; }
+
 	//背景.
 	void WinnerResultBackUI();
+
+	//-単独1位の画面-.
+	void SoloWinnerUI();
 	//あっぱれ.
-	void WinnerTextUI();
-	//プレイヤー壱の立ち絵
-	void Player1WinnerUI();
-	//プレイヤー弐の立ち絵
-	void Player2WinnerUI();
-	//プレイヤー参の立ち絵
-	void Player3WinnerUI();
-	//プレイヤー肆の立ち絵
-	void Player4WinnerUI();
-	//プレイヤー壱とプレイヤー弐の立ち絵
-	void Player1AndPlayer2WinnerUI();
-	//プレイヤー壱とプレイヤー参の立ち絵
-	void Player1AndPlayer3WinnerUI();
-	//プレイヤー壱とプレイヤー肆の立ち絵
-	void Player1AndPlayer4WinnerUI();
-	//プレイヤー弐とプレイヤー参の立ち絵
-	void Player2AndPlayer3WinnerUI();
-	//プレイヤー弐とプレイヤー肆の立ち絵
-	void Player2AndPlayer4WinnerUI();
-	//プレイヤー参とプレイヤー肆の立ち絵
-	void Player3AndPlayer4WinnerUI();
-	// プレイヤー壱とプレイヤー弐とプレイヤー参の立ち絵
-	void Player1AndPlayer2AndPlayer3WinnerUI();
-	// プレイヤー壱とプレイヤー弐とプレイヤー肆の立ち絵
-	void Player1AndPlayer2AndPlayer4WinnerUI();
-	// プレイヤー壱とプレイヤー参とプレイヤー肆の立ち絵
-	void Player1AndPlayer3AndPlayer4WinnerUI();
-	// プレイヤー弐とプレイヤー参とプレイヤー肆の立ち絵
-	void Player2AndPlayer3AndPlayer4WinnerUI();
-	// プレイヤー壱とプレイヤー弐とプレイヤー参とプレイヤー肆の立ち絵
-	void AllPlayerWinnerUI();
-	//プレイヤー壱のプレイヤー文字
-	void Player1FontUI();
-	//プレイヤー弐のプレイヤー文字
-	void Player2FontUI();
-	//プレイヤー参のプレイヤー文字
-	void Player3FontUI();
-	//プレイヤー肆のプレイヤー文字
-	void Player4FontUI();
-	//プレイヤー壱とプレイヤー弐のプレイヤー文字
-	void Player1AndPlayer2FontUI();
-	//プレイヤー壱とプレイヤー参のプレイヤー文字
-	void Player1AndPlayer3FontUI();
-	//プレイヤー壱とプレイヤー肆のプレイヤー文字
-	void Player1AndPlayer4FontUI();
-	//プレイヤー弐とプレイヤー参のプレイヤー文字.
-	void Player2AndPlayer3FontUI();
-	//プレイヤー弐とプレイヤー肆のプレイヤー文字.
-	void Player2AndPlayer4FontUI();
-	//プレイヤー参とプレイヤー肆のプレイヤー文字.
-	void Player3AndPlayer4FontUI();
-	// プレイヤー壱とプレイヤー弐とプレイヤー参のプレイヤー文字.
-	void Player1AndPlayer2AndPlayer3FontUI();
-	// プレイヤー壱とプレイヤー弐とプレイヤー肆のプレイヤー文字.
-	void Player1AndPlayer2AndPlayer4FontUI();
-	// プレイヤー壱とプレイヤー参とプレイヤー肆のプレイヤー文字.
-	void Player1AndPlayer3AndPlayer4FontUI();
-	// プレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
-	void Player2AndPlayer3AndPlayer4FontUI();
-	// プレイヤー壱とプレイヤー弐とプレイヤー参とプレイヤー肆のプレイヤー文字.
-	void AllPlayerFontUI();
+	void SoloWinnerTextUI();
+	//1位のプレイヤーの立ち絵.
+	void SoloPlayerUI();
+	//1位のプレイヤーの文字.
+	void SoloPlayerFontUI();
+	//ポイントの枠.
+	void SoloShape();
+	//ポイントの文字と数字.
+	void SoloPointUI();
+	//お気に入り食材の枠と文字と数字.
+	void SoloFavoriteUI();
 
-	//緑の平行四辺形関数
-	void GPara1();
-	//緑の平行四辺形関数
-	void GPara2();
-	//緑の平行四辺形関数
-	void GPara3();
-	//薄緑の平行四辺形関数
-	void UGPara();
-	//角丸四角形関数.
-	void RoundRect();
-	//図形をまとめた関数.
-	void Shape();
+	//-同率1位の画面-.
+	void TieWinnerUI();
+	//あっぱれ.
+	void TieWinnerTextUI();
+	//1位のプレイヤーたちの立ち絵.
+	void TiePlayerUI();
+	//1位のプレイヤーたちの文字.
+	void TiePlayerFontUI();
+	//かくとくポイントと合計ポイント.
+	void TiePointUI();
 
-	//1位のプレイヤーのビットから表示パターン番号に変換する.
-	static int GetWinPattern(int Mask);
-
+	//数字と点の表示.
+	void DrawNumber(int Score, float PosX, float PosY, float W, float H);
+	//数字と点を並べたときの幅.
+	float GetNumberWidth(int Score, float W);
 
 private:
 	bool m_Decided;			//決定フラグ
 	CXInput* m_pController;	//コントローラー
 
+	int m_WinnerNo[PLAYER_MAX];	//1位のプレイヤー番号.
+	int m_WinnerCount;			//1位の人数.
+
 private:
 	CSprite2D* BackGround_Img;
 	CSprite2D* Winner_Img;
-	CSprite2D* Player1_Img;
-	CSprite2D* Player2_Img;
-	CSprite2D* Player3_Img;
-	CSprite2D* Player4_Img;
+	CSprite2D* Player_Img[PLAYER_MAX];
 	CSprite2D* PlayerFont_Img[FONT_MAM];
 	CSprite2D* Para_Img[PARA_MAM];
 	CSprite2D* RoundRect_Img;
-
-	int Win;
+	CSprite2D* ResultFont_Img;
+	CSprite2D* Number_Img;
+	CSprite2D* FavoriteFont_Img;
 };

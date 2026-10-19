@@ -15,61 +15,31 @@ struct Transform {
 //90度
 static constexpr float IMAGE_ROTATION_ANGLE = 1.5707963;
 
+//位置は参加人数で画面を等分した列の中心からのずらす量.
+//posXが列の中心からのずれ、posYが画面上の位置.
+
 //プレイヤー背景
-static constexpr Transform PLAYER_1_BACK = { 155.f,340.f,630.f,350.f };
-static constexpr Transform PLAYER_2_BACK = { 290.f,340.f,630.f,350.f };
-static constexpr Transform PLAYER_3_BACK = { 765.f,340.f,630.f,350.f };
-static constexpr Transform PLAYER_4_BACK = { 1070.f,340.f,630.f,350.f };
+static constexpr Transform PLAYER_BACK = { 0.f,340.f,630.f,350.f };
 
-//プレイヤーアイコン(人数に関係なくプレイヤーごとに位置は固定).
-static constexpr Transform PLAYER_1_ICON = { 45.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_2_ICON = { 350.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_3_ICON = { 655.f,100.f,120.f,120.f };
-static constexpr Transform PLAYER_4_ICON = { 960.f,100.f,120.f,120.f };
-
+//プレイヤーアイコン.
+static constexpr Transform PLAYER_ICON = { -110.f,100.f,120.f,120.f };
 
 //メダル関連.
-static constexpr Transform P1_MEDAL = { 170.f,90.f,85.f,125.f };
-static constexpr Transform P2_MEDAL = { 475.f,90.f,85.f,125.f };
-static constexpr Transform P3_MEDAL = { 780.f,90.f,85.f,125.f };
-static constexpr Transform P4_MEDAL = { 1085.f,90.f,85.f,125.f };
+static constexpr Transform MEDAL = { 15.f,90.f,85.f,125.f };
 
 //フォント関連.
 static constexpr Transform FONT_SCALE = { 0.f,0.f,210.f,45.f };
-
-//四人の時
-//プレイヤー壱
-static constexpr Transform P1_FONT_1 = { 45.f, 215.f };     //かくとくポイント
-static constexpr Transform P1_FONT_2 = { 45.f, 270.f };     //具材ポイント
-static constexpr Transform P1_FONT_3 = { 45.f, 360.f };     //高級具材ポイント
-static constexpr Transform P1_FONT_4 = { 45.f, 450.f };     //合計ポイント
-//プレイヤー弐
-static constexpr Transform P2_FONT_1 = { 350.f, 215.f };    //かくとくポイント
-static constexpr Transform P2_FONT_2 = { 350.f, 270.f };    //具材ポイント
-static constexpr Transform P2_FONT_3 = { 350.f, 360.f };    //高級具材ポイント
-static constexpr Transform P2_FONT_4 = { 350.f, 450.f };    //合計ポイント
-//プレイヤー参
-static constexpr Transform P3_FONT_1 = { 655.f, 215.f };    //かくとくポイント
-static constexpr Transform P3_FONT_2 = { 655.f, 270.f };    //具材ポイント
-static constexpr Transform P3_FONT_3 = { 655.f, 360.f };    //高級具材ポイント
-static constexpr Transform P3_FONT_4 = { 655.f, 450.f };    //合計ポイント
-//プレイヤー肆
-static constexpr Transform P4_FONT_1 = { 960.f, 215.f };    //かくとくポイント
-static constexpr Transform P4_FONT_2 = { 960.f, 270.f };    //具材ポイント
-static constexpr Transform P4_FONT_3 = { 960.f, 360.f };    //高級具材ポイント
-static constexpr Transform P4_FONT_4 = { 960.f, 450.f };    //合計ポイント
-
-
+static constexpr Transform FONT_1 = { -110.f, 215.f };    //かくとくポイント
+static constexpr Transform FONT_2 = { -110.f, 270.f };    //具材ポイント
+static constexpr Transform FONT_3 = { -110.f, 360.f };    //高級具材ポイント
+static constexpr Transform FONT_4 = { -110.f, 450.f };    //合計ポイント
 
 //数字の1文字あたりの幅高さ.
 static constexpr float NUMBER_SIZE_W = 30.f;
 static constexpr float NUMBER_SIZE_H = 45.f;
 
-//各プレイヤーの合計スコア表示位置.
-static constexpr Transform P1_ALL_SCORE_POS = { 90.f,  500.f };
-static constexpr Transform P2_ALL_SCORE_POS = { 395.f, 500.f };
-static constexpr Transform P3_ALL_SCORE_POS = { 700.f, 500.f };
-static constexpr Transform P4_ALL_SCORE_POS = { 1005.f, 500.f };
+//合計スコア表示位置.
+static constexpr Transform ALL_SCORE_POS = { -65.f, 500.f };
 
 
 //ReStart関連.
@@ -80,7 +50,20 @@ CResultUI::CResultUI()
     : m_ADecided(false)
     , m_BDecided(false)
     , m_pController(nullptr)
+    , m_CenterX()
 {
+    //参加人数で画面を等分して、参加しているプレイヤーを左から順に並べる.
+    const CResultDataManager* pData = CResultDataManager::GetInstance();
+    int PlayerCount = pData->GetPlayerCount();
+    if (PlayerCount < 1) PlayerCount = 1;
+    int No = 0;
+    for (int i = 0; i < PLAYER_MAX; i++)
+    {
+        if (!pData->GetPlayerData(i).m_bActive) continue;
+        m_CenterX[i] = static_cast<float>(WND_W) * (No * 2 + 1) / (PlayerCount * 2);
+        No++;
+    }
+
 	BackGround_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround);	//背景.
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
@@ -237,53 +220,49 @@ void CResultUI::ResultBackUI()
 	BackGround_Img->Render();
 }
 
+//参加しているプレイヤーの背景.
 void CResultUI::FourPlayerBackUI()
 {
-    PlayerBack_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_BACK.GetPos()));
-    PlayerBack_Img[0]->SetScale(D3DXVECTOR3(PLAYER_1_BACK.GetScl()));
-    PlayerBack_Img[0]->SetRotationZ(IMAGE_ROTATION_ANGLE);
-    PlayerBack_Img[0]->Render();
+    const CResultDataManager* pData = CResultDataManager::GetInstance();
+    for (int i = 0; i < PLAYER_MAX; i++)
+    {
+        if (!pData->GetPlayerData(i).m_bActive) continue;
 
-    PlayerBack_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_BACK.GetPos()));
-    PlayerBack_Img[1]->SetPosition(D3DXVECTOR3(460,340,0));
-    PlayerBack_Img[1]->SetScale(D3DXVECTOR3(PLAYER_2_BACK.GetScl()));
-    PlayerBack_Img[1]->SetRotationZ(IMAGE_ROTATION_ANGLE);
-    PlayerBack_Img[1]->Render();
+        PlayerBack_Img[i]->SetPosition(ColumnPos(i, PLAYER_BACK.posX, PLAYER_BACK.posY));
+        PlayerBack_Img[i]->SetScale(D3DXVECTOR3(PLAYER_BACK.GetScl()));
+        PlayerBack_Img[i]->SetRotationZ(IMAGE_ROTATION_ANGLE);
+        PlayerBack_Img[i]->Render();
+    }
+}
 
-    PlayerBack_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_BACK.GetPos()));
-    PlayerBack_Img[2]->SetScale(D3DXVECTOR3(PLAYER_3_BACK.GetScl()));
-    PlayerBack_Img[2]->SetRotationZ(IMAGE_ROTATION_ANGLE);
-    PlayerBack_Img[2]->Render();
-
-    PlayerBack_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_BACK.GetPos()));
-    PlayerBack_Img[3]->SetScale(D3DXVECTOR3(PLAYER_4_BACK.GetScl()));
-    PlayerBack_Img[3]->SetRotationZ(IMAGE_ROTATION_ANGLE);
-    PlayerBack_Img[3]->Render();
-
+//列の中心からずらした位置.
+D3DXVECTOR3 CResultUI::ColumnPos(int PlayerIndex, float OffsetX, float PosY)
+{
+    return D3DXVECTOR3(m_CenterX[PlayerIndex] + OffsetX, PosY, 0.f);
 }
 
 void CResultUI::Player1Pos()
 {
-    PlayerIcon_Img[0]->SetPosition(D3DXVECTOR3(PLAYER_1_ICON.GetPos()));
+    PlayerIcon_Img[0]->SetPosition(ColumnPos(0, PLAYER_ICON.posX, PLAYER_ICON.posY));
 }
 void CResultUI::Player2Pos()
 {
-    PlayerIcon_Img[1]->SetPosition(D3DXVECTOR3(PLAYER_2_ICON.GetPos()));
+    PlayerIcon_Img[1]->SetPosition(ColumnPos(1, PLAYER_ICON.posX, PLAYER_ICON.posY));
 }
 void CResultUI::Player3Pos()
 {
-    PlayerIcon_Img[2]->SetPosition(D3DXVECTOR3(PLAYER_3_ICON.GetPos()));
+    PlayerIcon_Img[2]->SetPosition(ColumnPos(2, PLAYER_ICON.posX, PLAYER_ICON.posY));
 }
 void CResultUI::Player4Pos()
 {
-    PlayerIcon_Img[3]->SetPosition(D3DXVECTOR3(PLAYER_4_ICON.GetPos()));
+    PlayerIcon_Img[3]->SetPosition(ColumnPos(3, PLAYER_ICON.posX, PLAYER_ICON.posY));
 }
 
 void CResultUI::PlayerScl()
 {
 	for (int i = 0; i < PLAYER_MAX; i++)
 	{
-		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(PLAYER_1_ICON.GetScl()));
+		PlayerIcon_Img[i]->SetScale(D3DXVECTOR3(PLAYER_ICON.GetScl()));
 	}
 }
 
@@ -428,87 +407,87 @@ void CResultUI::Player4Fourth()
 //プレイヤー壱のメダルUI
 void CResultUI::Medal_P1_1st_UI()
 {
-    Medal_Img[0]->SetPosition(D3DXVECTOR3(P1_MEDAL.GetPos()));
+    Medal_Img[0]->SetPosition(ColumnPos(0, MEDAL.posX, MEDAL.posY));
     Medal_Gold_Render();
 }
 void CResultUI::Medal_P1_2nd_UI()
 {
-    Medal_Img[1]->SetPosition(D3DXVECTOR3(P1_MEDAL.GetPos()));
+    Medal_Img[1]->SetPosition(ColumnPos(0, MEDAL.posX, MEDAL.posY));
     Medal_Silver_Render();
 }
 void CResultUI::Medal_P1_3rd_UI()
 {
-    Medal_Img[2]->SetPosition(D3DXVECTOR3(P1_MEDAL.GetPos()));
+    Medal_Img[2]->SetPosition(ColumnPos(0, MEDAL.posX, MEDAL.posY));
     Medal_Bronze_Render();
 }
 
 //プレイヤー弐のメダルUI
 void CResultUI::Medal_P2_1st_UI()
 {
-    Medal_Img[0]->SetPosition(D3DXVECTOR3(P2_MEDAL.GetPos()));
+    Medal_Img[0]->SetPosition(ColumnPos(1, MEDAL.posX, MEDAL.posY));
     Medal_Gold_Render();
 }
 void CResultUI::Medal_P2_2nd_UI()
 {
-    Medal_Img[1]->SetPosition(D3DXVECTOR3(P2_MEDAL.GetPos()));
+    Medal_Img[1]->SetPosition(ColumnPos(1, MEDAL.posX, MEDAL.posY));
     Medal_Silver_Render();
 }
 void CResultUI::Medal_P2_3rd_UI()
 {
-    Medal_Img[2]->SetPosition(D3DXVECTOR3(P2_MEDAL.GetPos()));
+    Medal_Img[2]->SetPosition(ColumnPos(1, MEDAL.posX, MEDAL.posY));
     Medal_Bronze_Render();
 }
 
 //プレイヤー参のメダルUI
 void CResultUI::Medal_P3_1st_UI()
 {
-    Medal_Img[0]->SetPosition(D3DXVECTOR3(P3_MEDAL.GetPos()));
+    Medal_Img[0]->SetPosition(ColumnPos(2, MEDAL.posX, MEDAL.posY));
     Medal_Gold_Render();
 }
 void CResultUI::Medal_P3_2nd_UI()
 {
-    Medal_Img[1]->SetPosition(D3DXVECTOR3(P3_MEDAL.GetPos()));
+    Medal_Img[1]->SetPosition(ColumnPos(2, MEDAL.posX, MEDAL.posY));
     Medal_Silver_Render();
 }
 void CResultUI::Medal_P3_3rd_UI()
 {
-    Medal_Img[2]->SetPosition(D3DXVECTOR3(P3_MEDAL.GetPos()));
+    Medal_Img[2]->SetPosition(ColumnPos(2, MEDAL.posX, MEDAL.posY));
     Medal_Bronze_Render();
 }
 
 //プレイヤー肆のメダルUI
 void CResultUI::Medal_P4_1st_UI()
 {
-    Medal_Img[0]->SetPosition(D3DXVECTOR3(P4_MEDAL.GetPos()));
+    Medal_Img[0]->SetPosition(ColumnPos(3, MEDAL.posX, MEDAL.posY));
     Medal_Gold_Render();
 }
 void CResultUI::Medal_P4_2nd_UI()
 {
-    Medal_Img[1]->SetPosition(D3DXVECTOR3(P4_MEDAL.GetPos()));
+    Medal_Img[1]->SetPosition(ColumnPos(3, MEDAL.posX, MEDAL.posY));
     Medal_Silver_Render();
 }
 void CResultUI::Medal_P4_3rd_UI()
 {
-    Medal_Img[2]->SetPosition(D3DXVECTOR3(P4_MEDAL.GetPos()));
+    Medal_Img[2]->SetPosition(ColumnPos(3, MEDAL.posX, MEDAL.posY));
     Medal_Bronze_Render();
 }
 
 //メダルのスケール、パターンナンバー、レンダ関数をまとめた関数.
 void CResultUI::Medal_Gold_Render()
 {
-    Medal_Img[0]->SetScale(D3DXVECTOR3(P1_MEDAL.GetScl()));
+    Medal_Img[0]->SetScale(D3DXVECTOR3(MEDAL.GetScl()));
     Medal_Img[0]->SetPatternNo(0.f, 0.f);
     Medal_Img[0]->Render();
 }
 void CResultUI::Medal_Silver_Render()
 {
-    Medal_Img[1]->SetScale(D3DXVECTOR3(P1_MEDAL.GetScl()));
+    Medal_Img[1]->SetScale(D3DXVECTOR3(MEDAL.GetScl()));
     Medal_Img[1]->SetPatternNo(1.f, 0.f);
     Medal_Img[1]->Render();
 }
 void CResultUI::Medal_Bronze_Render()
 {
-    Medal_Img[2]->SetScale(D3DXVECTOR3(P1_MEDAL.GetScl()));
+    Medal_Img[2]->SetScale(D3DXVECTOR3(MEDAL.GetScl()));
     Medal_Img[2]->SetPatternNo(2.f, 0.f);
     Medal_Img[2]->Render();
 }
@@ -545,88 +524,88 @@ void CResultUI::Font_P4_UI()
 //プレイヤー壱.
 void CResultUI::Font_P1_1st_UI()
 {
-    Font_Img[0]->SetPosition(D3DXVECTOR3(P1_FONT_1.GetPos()));
+    Font_Img[0]->SetPosition(ColumnPos(0, FONT_1.posX, FONT_1.posY));
     Font_1st_Render();
 }
 void CResultUI::Font_P1_2nd_UI()
 {
-    Font_Img[1]->SetPosition(D3DXVECTOR3(P1_FONT_2.GetPos()));
+    Font_Img[1]->SetPosition(ColumnPos(0, FONT_2.posX, FONT_2.posY));
     Font_2nd_Render();
 }
 void CResultUI::Font_P1_3rd_UI()
 {
-    Font_Img[2]->SetPosition(D3DXVECTOR3(P1_FONT_3.GetPos()));
+    Font_Img[2]->SetPosition(ColumnPos(0, FONT_3.posX, FONT_3.posY));
     Font_3rd_Render();
 }
 void CResultUI::Font_P1_4th_UI()
 {
-    Font_Img[3]->SetPosition(D3DXVECTOR3(P1_FONT_4.GetPos()));
+    Font_Img[3]->SetPosition(ColumnPos(0, FONT_4.posX, FONT_4.posY));
     Font_4th_Render();
 }
 
 //プレイヤー弐.
 void CResultUI::Font_P2_1st_UI()
 {
-    Font_Img[0]->SetPosition(D3DXVECTOR3(P2_FONT_1.GetPos()));
+    Font_Img[0]->SetPosition(ColumnPos(1, FONT_1.posX, FONT_1.posY));
     Font_1st_Render();
 }
 void CResultUI::Font_P2_2nd_UI()
 {
-    Font_Img[1]->SetPosition(D3DXVECTOR3(P2_FONT_2.GetPos()));
+    Font_Img[1]->SetPosition(ColumnPos(1, FONT_2.posX, FONT_2.posY));
     Font_2nd_Render();
 }
 void CResultUI::Font_P2_3rd_UI()
 {
-    Font_Img[2]->SetPosition(D3DXVECTOR3(P2_FONT_3.GetPos()));
+    Font_Img[2]->SetPosition(ColumnPos(1, FONT_3.posX, FONT_3.posY));
     Font_3rd_Render();
 }
 void CResultUI::Font_P2_4th_UI()
 {
-    Font_Img[3]->SetPosition(D3DXVECTOR3(P2_FONT_4.GetPos()));
+    Font_Img[3]->SetPosition(ColumnPos(1, FONT_4.posX, FONT_4.posY));
     Font_4th_Render();
 }
 
 //プレイヤー参.
 void CResultUI::Font_P3_1st_UI()
 {
-    Font_Img[0]->SetPosition(D3DXVECTOR3(P3_FONT_1.GetPos()));
+    Font_Img[0]->SetPosition(ColumnPos(2, FONT_1.posX, FONT_1.posY));
     Font_1st_Render();
 }
 void CResultUI::Font_P3_2nd_UI()
 {
-    Font_Img[1]->SetPosition(D3DXVECTOR3(P3_FONT_2.GetPos()));
+    Font_Img[1]->SetPosition(ColumnPos(2, FONT_2.posX, FONT_2.posY));
     Font_2nd_Render();
 }
 void CResultUI::Font_P3_3rd_UI()
 {
-    Font_Img[2]->SetPosition(D3DXVECTOR3(P3_FONT_3.GetPos()));
+    Font_Img[2]->SetPosition(ColumnPos(2, FONT_3.posX, FONT_3.posY));
     Font_3rd_Render();
 }
 void CResultUI::Font_P3_4th_UI()
 {
-    Font_Img[3]->SetPosition(D3DXVECTOR3(P3_FONT_4.GetPos()));
+    Font_Img[3]->SetPosition(ColumnPos(2, FONT_4.posX, FONT_4.posY));
     Font_4th_Render();
 }
 
 //プレイヤー肆.
 void CResultUI::Font_P4_1st_UI()
 {
-    Font_Img[0]->SetPosition(D3DXVECTOR3(P4_FONT_1.GetPos()));
+    Font_Img[0]->SetPosition(ColumnPos(3, FONT_1.posX, FONT_1.posY));
     Font_1st_Render();
 }
 void CResultUI::Font_P4_2nd_UI()
 {
-    Font_Img[1]->SetPosition(D3DXVECTOR3(P4_FONT_2.GetPos()));
+    Font_Img[1]->SetPosition(ColumnPos(3, FONT_2.posX, FONT_2.posY));
     Font_2nd_Render();
 }
 void CResultUI::Font_P4_3rd_UI()
 {
-    Font_Img[2]->SetPosition(D3DXVECTOR3(P4_FONT_3.GetPos()));
+    Font_Img[2]->SetPosition(ColumnPos(3, FONT_3.posX, FONT_3.posY));
     Font_3rd_Render();
 }
 void CResultUI::Font_P4_4th_UI()
 {
-    Font_Img[3]->SetPosition(D3DXVECTOR3(P4_FONT_4.GetPos()));
+    Font_Img[3]->SetPosition(ColumnPos(3, FONT_4.posX, FONT_4.posY));
     Font_4th_Render();
 }
 
@@ -686,22 +665,22 @@ void CResultUI::DrawNumber(int Score, const D3DXVECTOR3& Pos)
 void CResultUI::Number_P1_UI()
 {
     int Score = CResultDataManager::GetInstance()->GetPlayerData(0).m_nScore;
-    DrawNumber(Score, D3DXVECTOR3(P1_ALL_SCORE_POS.GetPos()));
+    DrawNumber(Score, ColumnPos(0, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 void CResultUI::Number_P2_UI()
 {
     int Score = CResultDataManager::GetInstance()->GetPlayerData(1).m_nScore;
-    DrawNumber(Score, D3DXVECTOR3(P2_ALL_SCORE_POS.GetPos()));
+    DrawNumber(Score, ColumnPos(1, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 void CResultUI::Number_P3_UI()
 {
     int Score = CResultDataManager::GetInstance()->GetPlayerData(2).m_nScore;
-    DrawNumber(Score, D3DXVECTOR3(P3_ALL_SCORE_POS.GetPos()));
+    DrawNumber(Score, ColumnPos(2, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 void CResultUI::Number_P4_UI()
 {
     int Score = CResultDataManager::GetInstance()->GetPlayerData(3).m_nScore;
-    DrawNumber(Score, D3DXVECTOR3(P4_ALL_SCORE_POS.GetPos()));
+    DrawNumber(Score, ColumnPos(3, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 
 void CResultUI::ReStart()

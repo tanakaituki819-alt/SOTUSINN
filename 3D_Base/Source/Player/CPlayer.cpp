@@ -264,6 +264,10 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 {
 	my_list.push_back(YASAI->GetIngredientsNo());
 	Score += YASAI->GetScore();
+	if (YASAI->GetIngredientsNo() > Ingredients::none && YASAI->GetIngredientsNo() < Ingredients::MAX)
+	{
+		m_IngredientScore[static_cast<int>(YASAI->GetIngredientsNo())] += YASAI->GetScore();
+	}
 	YASAI->DeadCharStatus();
 	//m_pIngredients = nullptr;
 	
