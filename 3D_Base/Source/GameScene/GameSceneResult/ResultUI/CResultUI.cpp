@@ -38,6 +38,10 @@ static constexpr Transform FONT_4 = { -110.f, 450.f };    //合計ポイント
 static constexpr float NUMBER_SIZE_W = 30.f;
 static constexpr float NUMBER_SIZE_H = 45.f;
 
+//具材ポイント表示位置.
+static constexpr Transform INGREDIENT_SCORE_POS = { -65.f, 315.f };
+//高級具材ポイント表示位置.
+static constexpr Transform SPECIAL_SCORE_POS = { -65.f, 405.f };
 //合計スコア表示位置.
 static constexpr Transform ALL_SCORE_POS = { -65.f, 500.f };
 
@@ -661,26 +665,34 @@ void CResultUI::DrawNumber(int Score, const D3DXVECTOR3& Pos)
     Number_Img->Render();
 }
 
-//CResultDataManagerから取得した合計スコアを表示する.
+//CResultDataManagerから取得した具材ポイント、高級具材ポイント、合計スコアを表示する.
 void CResultUI::Number_P1_UI()
 {
-    int Score = CResultDataManager::GetInstance()->GetPlayerData(0).m_nScore;
-    DrawNumber(Score, ColumnPos(0, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
+    const SPlayerResultData& Data = CResultDataManager::GetInstance()->GetPlayerData(0);
+    DrawNumber(Data.m_nIngredientScore, ColumnPos(0, INGREDIENT_SCORE_POS.posX, INGREDIENT_SCORE_POS.posY));
+    DrawNumber(Data.m_nSpecialScore, ColumnPos(0, SPECIAL_SCORE_POS.posX, SPECIAL_SCORE_POS.posY));
+    DrawNumber(Data.m_nScore, ColumnPos(0, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 void CResultUI::Number_P2_UI()
 {
-    int Score = CResultDataManager::GetInstance()->GetPlayerData(1).m_nScore;
-    DrawNumber(Score, ColumnPos(1, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
+    const SPlayerResultData& Data = CResultDataManager::GetInstance()->GetPlayerData(1);
+    DrawNumber(Data.m_nIngredientScore, ColumnPos(1, INGREDIENT_SCORE_POS.posX, INGREDIENT_SCORE_POS.posY));
+    DrawNumber(Data.m_nSpecialScore, ColumnPos(1, SPECIAL_SCORE_POS.posX, SPECIAL_SCORE_POS.posY));
+    DrawNumber(Data.m_nScore, ColumnPos(1, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 void CResultUI::Number_P3_UI()
 {
-    int Score = CResultDataManager::GetInstance()->GetPlayerData(2).m_nScore;
-    DrawNumber(Score, ColumnPos(2, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
+    const SPlayerResultData& Data = CResultDataManager::GetInstance()->GetPlayerData(2);
+    DrawNumber(Data.m_nIngredientScore, ColumnPos(2, INGREDIENT_SCORE_POS.posX, INGREDIENT_SCORE_POS.posY));
+    DrawNumber(Data.m_nSpecialScore, ColumnPos(2, SPECIAL_SCORE_POS.posX, SPECIAL_SCORE_POS.posY));
+    DrawNumber(Data.m_nScore, ColumnPos(2, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 void CResultUI::Number_P4_UI()
 {
-    int Score = CResultDataManager::GetInstance()->GetPlayerData(3).m_nScore;
-    DrawNumber(Score, ColumnPos(3, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
+    const SPlayerResultData& Data = CResultDataManager::GetInstance()->GetPlayerData(3);
+    DrawNumber(Data.m_nIngredientScore, ColumnPos(3, INGREDIENT_SCORE_POS.posX, INGREDIENT_SCORE_POS.posY));
+    DrawNumber(Data.m_nSpecialScore, ColumnPos(3, SPECIAL_SCORE_POS.posX, SPECIAL_SCORE_POS.posY));
+    DrawNumber(Data.m_nScore, ColumnPos(3, ALL_SCORE_POS.posX, ALL_SCORE_POS.posY));
 }
 
 void CResultUI::ReStart()
