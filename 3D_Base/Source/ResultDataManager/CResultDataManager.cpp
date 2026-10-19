@@ -84,6 +84,15 @@ enIngredientCategory CResultDataManager::CalculateFavoriteCategory(const SPlayer
 	return Favorite;
 }
 
+//スコアを上限で止める.
+int CResultDataManager::ClampScore(int Score)
+{
+	if (Score > SCORE_MAX) {
+		Score = SCORE_MAX;
+	}
+	return Score;
+}
+
 //CPlayerの配列からスナップショットを取る.
 void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 {
@@ -103,7 +112,7 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 		m_nPlayerCount++;
 
 		//合計スコア.
-		m_PlayerData[i].m_nScore = pPlayer[i]->GetScore();
+		m_PlayerData[i].m_nScore = ClampScore(pPlayer[i]->GetScore());
 
 		//食材ごとの獲得数.
 		int IngredientCount[static_cast<int>(Ingredients::MAX)] = {};
@@ -141,6 +150,8 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 				m_PlayerData[i].m_nIngredientScore += IngredientScore;
 			}
 		}
+		m_PlayerData[i].m_nSpecialScore = ClampScore(m_PlayerData[i].m_nSpecialScore);
+		m_PlayerData[i].m_nIngredientScore = ClampScore(m_PlayerData[i].m_nIngredientScore);
 
 		//お気に入りカテゴリを判定.
 		m_PlayerData[i].m_FavoriteCategory = CalculateFavoriteCategory(m_PlayerData[i]);
@@ -156,7 +167,7 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 				m_PlayerData[i].m_FavoriteIngredient = static_cast<Ingredients>(No);
 			}
 		}
-		m_PlayerData[i].m_nFavoriteScore = pPlayer[i]->GetIngredientScore(m_PlayerData[i].m_FavoriteIngredient);
+		m_PlayerData[i].m_nFavoriteScore = ClampScore(pPlayer[i]->GetIngredientScore(m_PlayerData[i].m_FavoriteIngredient));
 	}
 
 	//順位を計算する.
