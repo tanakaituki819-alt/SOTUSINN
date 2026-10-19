@@ -23,6 +23,11 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 	m_pGround = new CNabe();
 
+	m_pElectricHotPlate = new CStaticMeshObjObject();
+	m_pElectricHotPlate->AttachMesh(*CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::ElectricHotPlate));
+	m_pElectricHotPlate->SetPosition(D3DXVECTOR3(0.f, -4.8f, 1.4f));
+	m_pElectricHotPlate->SetScale(45.f, 37.f, 37.f);
+
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 	m_pBackGround = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_GameMainGround);
 	m_pBackGround->SetScale(D3DXVECTOR3{ 1920, 1080, 200 });
@@ -190,6 +195,7 @@ void CGameSceneGameMain::Draw()
 
 	m_pGround->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
+	m_pElectricHotPlate->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pCIngredientsM->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 

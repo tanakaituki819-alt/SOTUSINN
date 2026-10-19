@@ -35,6 +35,7 @@ private:
 
 
 	CStaticMesh* m_pStaticMeshBSphere;	//バウンディングスフィア(当たり判定用).
+	CStaticMeshObjObject* m_pElectricHotPlate;	//コンロ.
 	CNabe* m_pGround;
 
 	CIngredients* m_pCing;
