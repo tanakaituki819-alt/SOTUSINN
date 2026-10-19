@@ -17,6 +17,9 @@ private:
 	static const int Chopsticks_Max = 2;	//お箸描画最大数.
 
 public:
+	static const int SCORE_MAX = 999;		//スコアの上限.
+
+public:
 	CPlayer();
 	~CPlayer();
 	void Update() override;

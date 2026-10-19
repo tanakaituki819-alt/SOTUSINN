@@ -63,6 +63,7 @@ class CResultDataManager
 {
 public:
 	static const int PLAYER_MAX = 4;	//プレイヤー最大数.
+	static const int SCORE_MAX = CPlayer::SCORE_MAX;	//スコアの上限.
 
 public:
 	//インスタンス取得.
@@ -98,6 +99,9 @@ private:
 	CResultDataManager(const CResultDataManager& rhs) = delete;
 	//代入演算子によるコピーを禁止する.
 	CResultDataManager& operator=(CResultDataManager& rhs) = delete;
+
+	//スコアを上限で止める.
+	static int ClampScore(int Score);
 
 	//各カテゴリの獲得数からお気に入りカテゴリを判定する.
 	static enIngredientCategory CalculateFavoriteCategory(const SPlayerResultData& Data);
