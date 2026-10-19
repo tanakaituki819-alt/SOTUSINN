@@ -71,25 +71,27 @@ public:
 
 	enum class enMeshObjList
 	{
-		NABE,//なべ
-		S_NIKU,//肉
-		S_NINZIN,//人参
-		S_DAIKON,//大根
-		S_ENOKI,//エノキ
-		S_HAKUSAI1,//白菜
-		S_HAKUSAI2,//白菜
-		S_KANI,//かに
-		S_KUMANOTE,//クマの手
-		S_NEGI,//ねぎ
-		S_ROBUSTER,//ロブスター
-		S_SAKANA,//リュウグウノツカイ
-		S_SITAKE,//シイタケ
-		S_TAI,//タイ
-		S_TARA,//タラ
-		S_TOUHU,//豆腐
-		S_UINNER,//ウインナー
-		Chopsticks,	//箸.
+		NABE,			//なべ
+		S_NIKU,			//肉
+		S_NINZIN,		//人参
+		S_DAIKON,		//大根
+		S_ENOKI,		//エノキ
+		S_HAKUSAI1,		//白菜
+		S_HAKUSAI2,		//白菜
+		S_KANI,			//かに
+		S_KUMANOTE,		//クマの手
+		S_NEGI,			//ねぎ
+		S_ROBUSTER,		//ロブスター
+		S_SAKANA,		//リュウグウノツカイ
+		S_SITAKE,		//シイタケ
+		S_TAI,			//タイ
+		S_TARA,			//タラ
+		S_TOUHU,		//豆腐
+		S_UINNER,		//ウインナー
+		Chopsticks,		//箸.
 		Chopsticks2,	//２つセット箸.
+		ElectricHotPlate,	//コンロ.
+
 		MAX
 	};
 
