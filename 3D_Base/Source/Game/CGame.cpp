@@ -60,7 +60,7 @@ void CGame::Create()
 		m_pController[i] = new CXInput(i);
 	}
 
-	ChangeScene(enScene::GameMain);
+	ChangeScene(enScene::TitleSequence);
 //	ChangeScene(enScene::GameMain);
 }
 

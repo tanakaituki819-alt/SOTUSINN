@@ -28,11 +28,13 @@ void CGameSceneResult::Update()
 
 	if (m_pResultUI->IsADecided())
 	{
+		XAudio2::GetInstance()->AllStopBGM();
 		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);
 		m_pResultUI->BoolInit();
 	}
 	else if (m_pResultUI->IsBDecided())
 	{
+		XAudio2::GetInstance()->AllStopBGM();
 		SenenChang(enScene::PlayerSetUp, CSceneChange::TransitionType::FUSUMA, 60, 60);
 		m_pResultUI->BoolInit();
 	}

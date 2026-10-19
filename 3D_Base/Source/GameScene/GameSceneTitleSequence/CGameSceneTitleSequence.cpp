@@ -9,9 +9,13 @@ CGameSceneTitleSequence::CGameSceneTitleSequence(HWND Hwnd, CDirectX9* Dx9, CDir
 	m_pBackImg->SetScale(WND_W, WND_H, 100.f);		//スケール.
 	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//背景設定.
 	//ライト情報.
-	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	// ライト方向.
-	m_Light.fIntensity = 2;//	ライトパワー
+	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	//ライト方向.
+	m_Light.fIntensity = 2;	//ライトパワー
 
+	for (int i = 0; i < Controller_Max; i++) {
+		m_pController[i] = new CXInput(i);
+		m_pTitleChopsticks->SetXInput(m_pController[i], i);
+	}
 }
 
 CGameSceneTitleSequence::~CGameSceneTitleSequence()
@@ -20,6 +24,12 @@ CGameSceneTitleSequence::~CGameSceneTitleSequence()
 
 void CGameSceneTitleSequence::Update()
 {
+	//コントローラー最大分.
+	for (int i = 0; i < Controller_Max; i++) {
+			m_pController[i]->Update();
+	}
+
+	//シーンチェンジフラグが上がっていればタイトルへシーンチェンジ
 	if (m_pTitleChopsticks->GetSceneChangeflag()) {
 		SenenChang(enScene::Title, CSceneChange::TransitionType::Fade, 10, 0);
 	}

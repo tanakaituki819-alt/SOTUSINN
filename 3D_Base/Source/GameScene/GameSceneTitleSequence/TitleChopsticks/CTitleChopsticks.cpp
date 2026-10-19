@@ -39,9 +39,12 @@ CTitleChopsticks::~CTitleChopsticks()
 
 void CTitleChopsticks::Update()
 {
-	//デバッグ用.
-	if (GetAsyncKeyState('Z') & 0x8000) {
-		SetCaseId(1);
+	
+	//Aボタンでシーンスキップ.
+	if(m_pController[0]->IsConnect()){
+		if (m_pController[0]->IsDown(CXInput::A, false)) {
+			m_SceneChangeflag = true;
+		}
 	}
 
 	//エフェクト処理.

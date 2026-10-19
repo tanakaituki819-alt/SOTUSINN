@@ -31,6 +31,9 @@ public:
 
 	bool GetSceneChangeflag() { return m_SceneChangeflag; }
 
+	//コントローラー(XInput)のセット.
+	void SetXInput(CXInput* Input, int i) { m_pController[i] = Input; }
+
 private:
 	//メッシュステート.
 	CStaticMeshObjObject* m_pChopsticks[Chopsticks_Max] = {};		//お箸オブジェクト配列.
@@ -41,6 +44,7 @@ private:
 	//移動速度.
 	D3DXVECTOR2 m_MoveOffset = D3DXVECTOR2(0.3f, 0.3f);				//現在の移動オフセット量(X, Y).
 	D3DXVECTOR2 m_MoveSpeed = D3DXVECTOR2(0.18f, 0.18f / 1.68f);	//移動スピード(X, Y).
+
 	//制御フラグ状態.
 	bool    m_AttackMoveNow		= true;		//攻撃移動中フラグ.
 	bool	m_SceneChangeflag	= false;	//シーン移動していいか判定.
@@ -51,4 +55,6 @@ private:
 	D3DXMATRIX  m_MatZoom		= {};		//ケース3演出用のズーム行列.
 	bool		m_Effectflag	= false;	//エフェクトを出していいかの判定.
 	float		m_StopTimer		= 0;		//中央で止まるときのタイマー.
+	CXInput*	m_pController[Chopsticks_Max];	//コントローラー参照.
+	
 };

@@ -21,10 +21,12 @@ CTitleBackUI::~CTitleBackUI()
 
 void CTitleBackUI::Update()
 {
+	//Bボタンを押すと、タイトルバックフラグを上げる.
 	if (m_pController[0]->IsDown(CXInput::B, false))
 	{
 		m_TitleBackflag = true;
 	}
+	//Aボタンを押すと、タイトルバックフラグを解除する.
 	if (m_pController[0]->IsDown(CXInput::A, false))
 	{
 		m_TitleBackflag = false;
@@ -33,6 +35,7 @@ void CTitleBackUI::Update()
 
 void CTitleBackUI::Draw()
 {
+	//タイトルバッグフラグが立っている場合、白い背景を描画する.
 	if (m_TitleBackflag)
 	{
 		m_pWhiteBack->SetAlpha(0.5f);

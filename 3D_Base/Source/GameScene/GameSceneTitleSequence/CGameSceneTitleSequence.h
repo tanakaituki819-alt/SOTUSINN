@@ -6,6 +6,7 @@ class CGameSceneTitleSequence		//タイトル前シーンクラス.
 	:public CGameScene				//ゲームシーンクラス継承.
 {
 public:
+	static const int Controller_Max = 4;	//コントローラー最大数.
 	CGameSceneTitleSequence(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera);
 	~CGameSceneTitleSequence()override;
 	void Update()override;
@@ -13,5 +14,6 @@ public:
 private:
 	CTitleChopsticks*	m_pTitleChopsticks  = nullptr;	//お箸.
 	CUIObject*			m_pBackImg			= nullptr;	//背景.
+	CXInput*			m_pController[Controller_Max] = {};
 };
 
