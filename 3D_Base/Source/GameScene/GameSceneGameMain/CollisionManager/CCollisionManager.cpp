@@ -16,32 +16,24 @@ CCollisionManager::~CCollisionManager()
 void CCollisionManager::Update()
 {
 	if (!m_pIngredientsManager) return;
-
 	//具材リストを取得.
 	std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
 
-	//--------------------------------------------------------------------
-	//	①生の具材に触れたプレイヤーをマヒさせる.
-	//	マヒはプレイヤー単位で独立して発生するので、取り合い(連打対決)とは別に判定する.
-	//--------------------------------------------------------------------
 	for (int i = 0; i < Player_Max; i++) {
 		if (!m_pPlayer[i]) continue;
-		if (!m_pPlayer[i]->GetConnected()) continue;			//コントローラー未接続なら対象外.
-		if (!m_pPlayer[i]->GetIsCollecting()) continue;		//回収動作中でないなら対象外.
-		if (m_pPlayer[i]->GetIsParalysis()) continue;			//既にマヒ中なら対象外.
-		if (m_pPlayer[i]->GetIsMashBattle()) continue;			//連打対決中は下の②でまとめて処理する.
-
+		if (!m_pPlayer[i]->GetConnected())		continue;			//コントローラー未接続なら対象外.
+		if (!m_pPlayer[i]->GetIsCollecting())	continue;			//回収動作中でないなら対象外.
+		if (m_pPlayer[i]->GetIsParalysis())		continue;			//既にマヒ中なら対象外.
+		if (m_pPlayer[i]->GetIsMashBattle())	continue;			//連打対決中は下でまとめて処理する.
 		for (auto& j : Ingredients) {
-			if (j->GetCharStatus() != enCharStatus::Live) continue;	//生存していない具材は対象外.
+			if (j->GetCharStatus() != enCharStatus::Live)continue;				//生存していない具材は対象外.
 			if (!m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) continue;	//接触していなければ対象外.
-
 			//具材が煮えていないなら触れた瞬間にマヒさせる.
 			if (!j->GetBoiledc()) {
 				m_pPlayer[i]->OnTouchRawIngredient();
 			}
 		}
 	}
-
 	//--------------------------------------------------------------------
 	//	②煮えた具材の取り合い判定.
 	//	同じ具材に複数のプレイヤーが触れていたら連打対決を発生させる.
@@ -51,7 +43,7 @@ void CCollisionManager::Update()
 	//--------------------------------------------------------------------
 	for (auto& j : Ingredients) {
 		if (j->GetCharStatus() != enCharStatus::Live) continue;	//生存していない具材は対象外.
-		if (!j->GetBoiledc()) continue;						//生の具材はここでは扱わない(①でマヒ判定済み).
+		if (!j->GetBoiledc()) continue;							//生の具材はここでは扱わない(①でマヒ判定済み).
 		if (j->GetCollecting()) continue;						//既に確保済み(通常回収中 or 連打対決中)の具材は対象外.
 
 		//この具材に「今」触れている(取りに来ている)プレイヤーを集める.
@@ -65,7 +57,6 @@ void CCollisionManager::Update()
 			if (m_pPlayer[i]->GetIsParalysis()) continue;
 			if (m_pPlayer[i]->GetIsMashBattle()) continue;		//既に別の対決に参加中なら重複して数えない.
 			if (!m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) continue;
-
 			Touchers[TouchCount] = m_pPlayer[i];
 			TouchCount++;
 		}
@@ -104,7 +95,6 @@ void CCollisionManager::Update()
 				pClaim->TouchCount++;
 			}
 		}
-
 		//猶予時間を減らし、時間切れになったらその時点の参加人数で決着をつける.
 		pClaim->GraceTimer--;
 		if (pClaim->GraceTimer <= 0) {
