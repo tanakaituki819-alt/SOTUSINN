@@ -18,15 +18,22 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pCamera->SetUpVec(D3DXVECTOR3(0.f, 0.f,1.0f ));//前が上
 
 	//ライト情報.
-	m_Light.vDirection = D3DXVECTOR3(1.5f, 1.f, -1.f);	// ライト方向.
+	m_Light.vDirection = D3DXVECTOR3(1.5f,1.f, -1.f);	// ライト方向.
 	m_Light.fIntensity = 1;//	ライトパワー
 
 	m_pGround = new CNabe();
 
-	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
-	m_pBackGround = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_GameMainGround);
-	m_pBackGround->SetScale(D3DXVECTOR3{ 1920, 1080, 200 });
+	m_pElectricHotPlate = new CStaticMeshObjObject();
+	m_pElectricHotPlate->AttachMesh(*CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::ElectricHotPlate));
+	m_pElectricHotPlate->SetPosition(D3DXVECTOR3(0.f, -4.8f, 1.3f));
+	m_pElectricHotPlate->SetRotation(0, 0, D3DXToRadian(0));
+	m_pElectricHotPlate->SetScale(-45.f, 37.f, 37.f);
 
+	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
+	m_pBackGround = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_GameMainGround);
+	m_pBackGround->SetScale(D3DXVECTOR3{ 100, 100, 100 });
+
+	m_pBackGround->SetRotation({ D3DXToRadian(90), D3DXToRadian(0), D3DXToRadian(0) });
 	m_pCing = new CIngredients();
 
 	//当たり判定クラス.
@@ -87,6 +94,22 @@ void CGameSceneGameMain::StartFinalSetup()
 
 void CGameSceneGameMain::Update()
 {
+	//m_pBackGround->SetRotation({ D3DXToRadian(m_BackGroundRotation.x), D3DXToRadian(m_BackGroundRotation.y), D3DXToRadian(m_BackGroundRotation.z) });
+
+
+	if (GetAsyncKeyState('W') & 0x8000) {
+		m_BackGroundRotation.x += 1.f;
+	}
+	else if (GetAsyncKeyState('S') & 0x8000) {
+		m_BackGroundRotation.x -= 1.f;
+	}
+	//else if (GetAsyncKeyState('A') & 0x8000) {
+	//	m_BackGroundRotation.z += 1.f;
+	//}
+	//else if (GetAsyncKeyState('D') & 0x8000) {
+	//	m_BackGroundRotation.z -= 1.f;
+	//}
+
 	for (int i = 0;i < PlayerMax;i++) {
 		CONTROLA[i]->Update();
 	}
@@ -183,13 +206,14 @@ void CGameSceneGameMain::Draw()
 	m_pDx11->SetDepth(false);
 
 
-	m_pBackGround->Render();
+	m_pBackGround->Render(m_pCamera->GetView(), m_mProj);
 
 	m_pDx11->SetDepth(true);
 
 
 	m_pGround->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
-
+	
+	m_pElectricHotPlate->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pCIngredientsM->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 

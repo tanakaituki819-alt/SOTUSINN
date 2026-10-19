@@ -16,7 +16,6 @@ CCollisionManager::~CCollisionManager()
 void CCollisionManager::Update()
 {
 	if (!m_pIngredientsManager) return;
-
 	//具材リストを取得.
 	std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
 
@@ -31,16 +30,14 @@ void CCollisionManager::Update()
 		if (m_pPlayer[i]->GetIsMashBattle()) continue;			//連打対決中は下でまとめて処理する.
 
 		for (auto& j : Ingredients) {
-			if (j->GetCharStatus() != enCharStatus::Live) continue;	//生存していない具材は対象外.
+			if (j->GetCharStatus() != enCharStatus::Live)continue;				//生存していない具材は対象外.
 			if (!m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) continue;	//接触していなければ対象外.
-
 			//具材が煮えていないなら触れた瞬間にマヒさせる.
 			if (!j->GetBoiledc()) {
 				m_pPlayer[i]->OnTouchRawIngredient();
 			}
 		}
 	}
-
 	//--------------------------------------------------------------------
 	//	煮えた具材の取り合い判定.
 	//--------------------------------------------------------------------
@@ -60,7 +57,6 @@ void CCollisionManager::Update()
 			if (m_pPlayer[i]->GetIsParalysis()) continue;
 			if (m_pPlayer[i]->GetIsMashBattle()) continue;		//既に別の対決に参加中なら重複して数えない.
 			if (!m_pPlayer[i]->GetBSphere()->IsHit(*j->GetBSphere())) continue;
-
 			Touchers[TouchCount] = m_pPlayer[i];
 			TouchCount++;
 		}
@@ -99,7 +95,6 @@ void CCollisionManager::Update()
 				pClaim->TouchCount++;
 			}
 		}
-
 		//猶予時間を減らし、時間切れになったらその時点の参加人数で決着をつける.
 		pClaim->GraceTimer--;
 		if (pClaim->GraceTimer <= 0) {

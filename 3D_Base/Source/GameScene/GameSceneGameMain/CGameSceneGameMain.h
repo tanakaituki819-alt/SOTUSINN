@@ -35,6 +35,7 @@ private:
 
 
 	CStaticMesh* m_pStaticMeshBSphere;	//バウンディングスフィア(当たり判定用).
+	CStaticMeshObjObject* m_pElectricHotPlate;	//コンロ.
 	CNabe* m_pGround;
 
 	CIngredients* m_pCing;
@@ -51,13 +52,15 @@ private:
 	bool m_Pause;
 	float		m_EndTimer = 0;
 	CIngredientsmanager* m_pCIngredientsM;//野菜マネージャー
-	CSprite2D* m_pBackGround;
+	CSprite3D* m_pBackGround;
 	CIngredientsmanager* m_pCingM;
 	
 	CXInput* CONTROLA[PlayerMax] = {};
 	CPlayer* m_pPlayer[PlayerMax] = {};
 
 	IngredientsGetEffectManager* m_IngredientsGetEffectManager = nullptr;
+
+	D3DXVECTOR3	m_BackGroundRotation = {};
 };
 
 
