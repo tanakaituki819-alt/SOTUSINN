@@ -74,7 +74,7 @@ enIngredientCategory CResultDataManager::CalculateFavoriteCategory(const SPlayer
 	int MaxCount = 0;
 	for (const auto& Entry : Table)
 	{
-		//同数なら先に見つかった方(優先度が高い方)を残す.
+		//同数なら先に見つかった方を残す.
 		if (Entry.Count > MaxCount)
 		{
 			MaxCount = Entry.Count;
@@ -188,7 +188,7 @@ void CResultDataManager::CalculateRanks()
 		}
 	}
 
-	//スコアが高い順(同点の場合はプレイヤー番号が若い順)にソート.
+	//スコアが高い順に.
 	std::sort(Indices, Indices + Num, [this](int a, int b)
 		{
 			if (m_PlayerData[a].m_nScore == m_PlayerData[b].m_nScore)
@@ -199,7 +199,6 @@ void CResultDataManager::CalculateRanks()
 		});
 
 	//順位を設定.
-	//同点のプレイヤーは同じ順位にし、次の順位は詰める(例:1位,1位,2位,3位).
 	int Rank = 0;
 	for (int i = 0; i < Num; i++)
 	{

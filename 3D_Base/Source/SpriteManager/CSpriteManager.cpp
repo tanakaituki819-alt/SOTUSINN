@@ -286,6 +286,20 @@ void CSpriteManager::Load2D()
 	//お気に入り食材の文字.
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_FavoriteFont),	_T("Data\\Texture\\FavoriteFont.png"),	{ {1, 1, 1}, {420, 80}, {420, 80}} });
 	
+	//銅の称号フォント.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_BronzeFonst),	_T("Data\\Texture\\Bronze.png"),{{1,1,1},{500,950},{500,950 / 19}} });
+	//銀の称号フォント.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_SilverFonst),	_T("Data\\Texture\\Silver.png"),{{1,1,1},{500,650},{500,650 / 13}} });
+	//金の称号フォント.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_GoldFonst),	_T("Data\\Texture\\Gold.png"),{{1,1,1},{500,750},{500,750 / 15}} });
+	//虹の称号フォント.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_RainbowFonst),	_T("Data\\Texture\\rainbow.png"),{{1,1,1},{500,50},{500,50}} });
+	//木札.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_WoodenTag),	_T("Data\\Texture\Woodentag\.png"),{{1,1,1},{577,212},{577,212}} });
+
+
+
+
 	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
 		return a.listNo < b.listNo;
 		});
