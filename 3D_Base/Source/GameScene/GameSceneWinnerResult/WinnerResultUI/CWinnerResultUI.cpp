@@ -169,6 +169,7 @@ CWinnerResultUI::~CWinnerResultUI()
 	{
 		Para_Img[i] = nullptr;
 	}
+
 	RoundRect_Img = nullptr;
 	ResultFont_Img = nullptr;
 	Number_Img = nullptr;
@@ -378,10 +379,7 @@ void CWinnerResultUI::TiePlayerUI()
 		int No = m_WinnerNo[i];
 
 		//人数に合わせて立ち絵の中心を決める.
-		float CenterX = 0.f;
-		if (m_WinnerCount == 2)		CenterX = TIE_CENTER_X_2[i];
-		else if (m_WinnerCount == 3)	CenterX = TIE_CENTER_X_3[i];
-		else						CenterX = TIE_CENTER_X_4[i];
+		float CenterX = GetTieCenterX(i);
 
 		float W = TIE_PLAYER_SIZE[No].sclX;
 		float H = TIE_PLAYER_SIZE[No].sclY;
@@ -456,6 +454,14 @@ void CWinnerResultUI::TiePointUI()
 	DrawNumber(Data.m_nScore,
 		TIE_NUMBER_TOTAL.posX - GetNumberWidth(Data.m_nScore, TIE_NUMBER_TOTAL.sclX),
 		TIE_NUMBER_TOTAL.posY, TIE_NUMBER_TOTAL.sclX, TIE_NUMBER_TOTAL.sclY);
+}
+
+//i人目の立ち絵の中心のX座標.
+float CWinnerResultUI::GetTieCenterX(int i) const
+{
+	if (m_WinnerCount == 2)		return TIE_CENTER_X_2[i];
+	if (m_WinnerCount == 3)		return TIE_CENTER_X_3[i];
+	return TIE_CENTER_X_4[i];
 }
 
 //====================================================

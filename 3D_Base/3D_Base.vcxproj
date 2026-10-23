@@ -192,6 +192,7 @@
     <ClCompile Include="Source\Player\PlayerParalysisUI\CPlayerParalysisUI.cpp" />
     <ClCompile Include="Source\Player\PlayerUI\CPlayerUI.cpp" />
     <ClCompile Include="Source\ResultDataManager\CResultDataManager.cpp" />
+    <ClCompile Include="Source\ResultDataManager\PlayerTitle\CPlayerTitle.cpp" />
     <ClCompile Include="Source\SceneChange\CSceneChange.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\CSceneTransitionRenderer.cpp" />
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FadeSceneTransition\CFadeSceneTransition.cpp" />
@@ -263,6 +264,7 @@
     <ClInclude Include="Source\Player\PlayerParalysisUI\CPlayerParalysisUI.h" />
     <ClInclude Include="Source\Player\PlayerUI\CPlayerUI.h" />
     <ClInclude Include="Source\ResultDataManager\CResultDataManager.h" />
+    <ClInclude Include="Source\ResultDataManager\PlayerTitle\CPlayerTitle.h" />
     <ClInclude Include="Source\SceneChange\CSceneChange.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\CSceneTransitionRenderer.h" />
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FadeSceneTransition\CFadeSceneTransition.h" />

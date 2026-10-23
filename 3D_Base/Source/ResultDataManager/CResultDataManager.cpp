@@ -28,11 +28,8 @@ enIngredientCategory CResultDataManager::GetCategory(Ingredients IngredientsNo)
 	//肉系.
 	case Ingredients::NIKU:		//肉.
 	case Ingredients::UINNER:	//ウインナー.
-		return enIngredientCategory::Meat;
-
-	//魚系.
 	case Ingredients::TARA:		//タラ.
-		return enIngredientCategory::Fish;
+		return enIngredientCategory::Meat;
 
 	//野菜系.
 	case Ingredients::NINZIN:	//にんじん.
@@ -40,6 +37,7 @@ enIngredientCategory CResultDataManager::GetCategory(Ingredients IngredientsNo)
 	case Ingredients::HAKUSAI1:	//白菜.
 	case Ingredients::HAKUSEI2:	//白菜.
 	case Ingredients::NEGI:		//ねぎ.
+	case Ingredients::TOUHU:	//豆腐.
 		return enIngredientCategory::Veggie;
 
 	//きのこ系.
@@ -47,27 +45,21 @@ enIngredientCategory CResultDataManager::GetCategory(Ingredients IngredientsNo)
 	case Ingredients::SITAKE:	//シイタケ.
 		return enIngredientCategory::Mushroom;
 
-	//豆腐.
-	case Ingredients::TOUHU:	//豆腐.
-		return enIngredientCategory::Tofu;
-
 	//none,MAXなど食材ではないもの.
 	default:
 		return enIngredientCategory::None;
 	}
 }
 
-//各カテゴリの獲得数からお気に入りカテゴリを判定する（同数の場合は高級食材 > 肉 > 魚 > 野菜 > きのこ > 豆腐 の順）.
+//各カテゴリの獲得数からお気に入りカテゴリを判定する（同数の場合は高級食材 > 肉 > 野菜 > きのこ の順）.
 enIngredientCategory CResultDataManager::CalculateFavoriteCategory(const SPlayerResultData& Data)
 {
 	const struct { enIngredientCategory Category; int Count; } Table[] =
 	{
 		{ enIngredientCategory::Special,	Data.m_nSpecialCount	},
 		{ enIngredientCategory::Meat,		Data.m_nMeatCount		},
-		{ enIngredientCategory::Fish,		Data.m_nFishCount		},
 		{ enIngredientCategory::Veggie,		Data.m_nVeggieCount		},
 		{ enIngredientCategory::Mushroom,	Data.m_nMushroomCount	},
-		{ enIngredientCategory::Tofu,		Data.m_nTofuCount		},
 	};
 
 	enIngredientCategory Favorite = enIngredientCategory::None;
@@ -125,17 +117,26 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 				IngredientCount[static_cast<int>(Item)]++;
 			}
 
+			//称号の判定用に、食材の種類ごとにも数える.
+			enFoodKind Kind = CPlayerTitle::ToFoodKind(Item);
+			if (Kind != enFoodKind::None)
+			{
+				m_PlayerData[i].m_nFoodKindCount[static_cast<int>(Kind)]++;
+			}
+
 			switch (GetCategory(Item))
 			{
 			case enIngredientCategory::Meat:		m_PlayerData[i].m_nMeatCount++;		break;
-			case enIngredientCategory::Fish:		m_PlayerData[i].m_nFishCount++;		break;
 			case enIngredientCategory::Veggie:		m_PlayerData[i].m_nVeggieCount++;	break;
 			case enIngredientCategory::Mushroom:	m_PlayerData[i].m_nMushroomCount++;	break;
-			case enIngredientCategory::Tofu:		m_PlayerData[i].m_nTofuCount++;		break;
 			case enIngredientCategory::Special:		m_PlayerData[i].m_nSpecialCount++;	break;
 			default: break;
 			}
 		}
+
+		//連打対決の勝ち負けの回数.
+		m_PlayerData[i].m_nMashWinCount = pPlayer[i]->GetMashWinCount();
+		m_PlayerData[i].m_nMashLoseCount = pPlayer[i]->GetMashLoseCount();
 
 		//具材ポイントと高級具材ポイント.
 		for (int No = static_cast<int>(Ingredients::none) + 1; No < static_cast<int>(Ingredients::MAX); No++)
@@ -172,6 +173,9 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 
 	//順位を計算する.
 	CalculateRanks();
+
+	//称号を決める(他のプレイヤーと被らないように選ぶものがあるので、全員分のデータが揃ってから).
+	CPlayerTitle::DecideTitles(m_PlayerData, PLAYER_MAX);
 }
 
 //参加プレイヤーのみを対象に、スコアが高い順に順位を計算する.

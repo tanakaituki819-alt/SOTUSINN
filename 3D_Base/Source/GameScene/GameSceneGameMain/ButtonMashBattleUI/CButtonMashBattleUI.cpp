@@ -244,6 +244,17 @@ void CButtonMashBattleUI::EndSlot(BattleSlot& Slot, int WinnerNo)
 		Slot.pEntries[i]->SetMashBattleLock(false);
 	}
 
+	//称号の判定用に、勝者は勝ち、それ以外の参加者は全員負けとして数える.
+	if (WinnerNo >= 0 && WinnerNo < GAUGE_MAX && Slot.pEntries[WinnerNo])
+	{
+		for (int i = 0; i < GAUGE_MAX; i++)
+		{
+			if (!Slot.pEntries[i]) continue;
+			if (i == WinnerNo)	Slot.pEntries[i]->AddMashWin();
+			else				Slot.pEntries[i]->AddMashLose();
+		}
+	}
+
 	//勝者がいれば、通常の具材獲得処理と同じ流れに合流させて具材を渡す.
 	if (WinnerNo >= 0 && WinnerNo < GAUGE_MAX && Slot.pEntries[WinnerNo] && Slot.pTargetIngredients)
 	{

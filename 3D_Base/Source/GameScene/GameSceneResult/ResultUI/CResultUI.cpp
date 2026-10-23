@@ -45,6 +45,16 @@ static constexpr Transform SPECIAL_SCORE_POS = { -65.f, 405.f };
 //合計スコア表示位置.
 static constexpr Transform ALL_SCORE_POS = { -65.f, 500.f };
 
+//称号の木札.
+static constexpr Transform WOODEN_TAG = { -140.f, 565.f, 280.f, 56.f };
+
+//称号の文字.
+//木札の高さに対する文字の高さの割合.
+static constexpr float TITLE_FONT_HEIGHT_RATE = 0.45f;
+//木札の高さに対する、木札の左端から文字までの余白の割合.
+static constexpr float TITLE_FONT_PADDING_RATE = 0.25f;
+//称号画像1行の横幅と高さの比率.
+static constexpr float TITLE_FONT_ASPECT = 10.f;
 
 //ReStart関連.
 static constexpr Transform RESTART = { 490.f,603.f,380.f,120.f };
@@ -87,11 +97,22 @@ CResultUI::CResultUI()
     {
         ReStart_Img[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_ReStart);      //フォント.
     }
+    WoodenTag_Img = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_WoodenTag);	//木札.
+    //称号の文字(enTitleRankの順).
+    TitleFont_Img[static_cast<int>(enTitleRank::Bronze)]  = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_BronzeFonst);
+    TitleFont_Img[static_cast<int>(enTitleRank::Silver)]  = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_SilverFonst);
+    TitleFont_Img[static_cast<int>(enTitleRank::Gold)]    = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_GoldFonst);
+    TitleFont_Img[static_cast<int>(enTitleRank::Rainbow)] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_RainbowFonst);
     PushA = true;
 }
 
 CResultUI::~CResultUI()
 {
+    for (int i = 0; i < TITLE_FONT_MAM; i++)
+    {
+        TitleFont_Img[i] = nullptr;
+    }
+    WoodenTag_Img = nullptr;
     for (int i = 0; i < RESTART_MAM; i++)
     {
         ReStart_Img[i] = nullptr;
@@ -141,7 +162,6 @@ void CResultUI::Draw()
 
     FourPlayerBackUI();
 
-    //ゲームの結果(CResultDataManager)をもとに描画.
     DrawPlayers();
 }
 
@@ -177,7 +197,37 @@ void CResultUI::DrawPlayers()
 
         //順位アイコンとメダル.
         DrawPlayerRank(i, Data.m_nRank);
+
+        //木札と称号.
+        DrawPlayerTitle(i);
     }
+}
+
+//木札とその上に乗せる称号を描画する.
+void CResultUI::DrawPlayerTitle(int PlayerIndex)
+{
+    //木札.
+    const D3DXVECTOR3 TagPos = ColumnPos(PlayerIndex, WOODEN_TAG.posX, WOODEN_TAG.posY);
+    WoodenTag_Img->SetPosition(TagPos);
+    WoodenTag_Img->SetScale(WOODEN_TAG.GetScl());
+    WoodenTag_Img->Render();
+
+    //称号が決まっていなければ木札だけ.
+    const STitle& Title = CResultDataManager::GetInstance()->GetPlayerData(PlayerIndex).m_Title;
+    if (Title.Rank == enTitleRank::None) return;
+
+    //文字の大きさと位置は木札の大きさに合わせる.
+    const float FontH = WOODEN_TAG.sclY * TITLE_FONT_HEIGHT_RATE;
+    const float FontW = FontH * TITLE_FONT_ASPECT;
+    const float FontX = TagPos.x + WOODEN_TAG.sclY * TITLE_FONT_PADDING_RATE;
+    const float FontY = TagPos.y + (WOODEN_TAG.sclY - FontH) / 2.f;
+
+    //レア度で画像を選び、行番号で称号を選ぶ.
+    CSprite2D* pFont = TitleFont_Img[static_cast<int>(Title.Rank)];
+    pFont->SetPosition(D3DXVECTOR3(FontX, FontY, 0.f));
+    pFont->SetScale(D3DXVECTOR3(FontW, FontH, 0.f));
+    pFont->SetPatternNo(0, static_cast<SHORT>(Title.PatternNo));
+    pFont->Render();
 }
 
 //プレイヤー番号と順位から対応するアイコンを描画する.

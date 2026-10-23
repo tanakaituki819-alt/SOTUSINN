@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject/UIObject/CUIObject.h"
+#include "ResultDataManager/PlayerTitle/CPlayerTitle.h"
 
 class CResultUI
 	: public CUIObject
@@ -9,6 +10,7 @@ public:
 	static const int MEDAL_MAM = 3;
 	static const int FONT_MAM = 4;
 	static const int RESTART_MAM = 2;
+	static const int TITLE_FONT_MAM = static_cast<int>(enTitleRank::MAX);	//称号の文字画像の数.
 public:
 	CResultUI();
 	~CResultUI()override;
@@ -21,6 +23,8 @@ public:
 	void DrawPlayers();
 	//プレイヤー番号と順位から対応するアイコンを描画する.
 	void DrawPlayerRank(int PlayerIndex, int Rank);
+	//木札とその上に乗せる称号を描画する.
+	void DrawPlayerTitle(int PlayerIndex);
 
 	bool IsADecided() const { return m_ADecided; }	//決定されたかどうか
 	bool IsBDecided() const { return m_BDecided; }	//決定されたかどうか
@@ -171,6 +175,8 @@ private:
 	CSprite2D* Font_Img[FONT_MAM];
 	CSprite2D* Number_Img;
 	CSprite2D* ReStart_Img[RESTART_MAM];
+	CSprite2D* WoodenTag_Img;					//木札.
+	CSprite2D* TitleFont_Img[TITLE_FONT_MAM];	//称号の文字.
 
 	bool PushA;
 

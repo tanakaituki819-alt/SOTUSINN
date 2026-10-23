@@ -1,24 +1,19 @@
 #pragma once
 #include "Player/CPlayer.h"
 #include "GameScene/GameSceneGameMain/Ingredients/CIngredients.h"	//Ingredients列挙体を使うため.
+#include "ResultDataManager/PlayerTitle/CPlayerTitle.h"				//称号を使うため.
 
-//========================================================
 //	食材のカテゴリ.
-//========================================================
 enum class enIngredientCategory
 {
 	None,		//未分類(何も取っていない).
-	Meat,		//肉系(肉、ウインナー).
-	Fish,		//魚系(タラ).
-	Veggie,		//野菜系(にんじん、大根、白菜、ねぎ).
+	Meat,		//肉系(肉、ウインナー、タラ).
+	Veggie,		//野菜系(にんじん、大根、白菜、ねぎ、豆腐).
 	Mushroom,	//きのこ系(エノキ、シイタケ).
-	Tofu,		//豆腐.
 	Special,	//高級食材(カニ、クマの手、ロブスター、リュウグウノツカイ、タイ).
 };
 
-//========================================================
 //	リザルト画面用のプレイヤー結果データ構造体.
-//========================================================
 struct SPlayerResultData
 {
 	bool	m_bActive;			//このプレイヤーが参加しているか.
@@ -27,31 +22,35 @@ struct SPlayerResultData
 	int		m_nSpecialScore;	//高級具材ポイント.
 	int		m_nFavoriteScore;	//お気に入り食材で獲得したスコア.
 	int		m_nMeatCount;		//獲得した肉系食材の数.
-	int		m_nFishCount;		//獲得した魚系食材の数.
 	int		m_nVeggieCount;		//獲得した野菜系食材の数.
 	int		m_nMushroomCount;	//獲得したきのこ系食材の数.
-	int		m_nTofuCount;		//獲得した豆腐の数.
 	int		m_nSpecialCount;	//獲得した高級食材の数.
+	int		m_nFoodKindCount[static_cast<int>(enFoodKind::MAX)];	//食材の種類ごとの獲得数.
+	int		m_nMashWinCount;	//連打対決で勝った回数.
+	int		m_nMashLoseCount;	//連打対決で負けた回数.
 	int		m_nRank;			//順位.
 	enIngredientCategory	m_FavoriteCategory;	//お気に入りカテゴリ.
 	Ingredients				m_FavoriteIngredient;	//お気に入りカテゴリの中で一番多く取った食材.
+	STitle					m_Title;			//称号.
 
 	//初期化.
 	SPlayerResultData()
 		: m_bActive			(false)
-		, m_nScore			(0)
-		, m_nIngredientScore(0)
-		, m_nSpecialScore	(0)
-		, m_nFavoriteScore	(0)
-		, m_nMeatCount		(0)
-		, m_nFishCount		(0)
-		, m_nVeggieCount	(0)
-		, m_nMushroomCount	(0)
-		, m_nTofuCount		(0)
-		, m_nSpecialCount	(0)
-		, m_nRank			(0)
+		, m_nScore			()
+		, m_nIngredientScore()
+		, m_nSpecialScore	()
+		, m_nFavoriteScore	()
+		, m_nMeatCount		()
+		, m_nVeggieCount	()
+		, m_nMushroomCount	()
+		, m_nSpecialCount	()
+		, m_nFoodKindCount	()
+		, m_nMashWinCount	()
+		, m_nMashLoseCount	()
+		, m_nRank			()
 		, m_FavoriteCategory(enIngredientCategory::None)
 		, m_FavoriteIngredient(Ingredients::none)
+		, m_Title			()
 	{
 	}
 };
