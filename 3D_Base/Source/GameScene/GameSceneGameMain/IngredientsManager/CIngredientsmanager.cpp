@@ -29,13 +29,6 @@ CIngredientsmanager::CIngredientsmanager()
 
 	//SAVE();
 
-
-
-
-
-
-
-
 	IngredientsStetoLoad(static_cast<int>(Ingredients::none), CS::GetObjMesh(OL::S_NIKU));
 	IngredientsStetoLoad(static_cast<int>(Ingredients::NIKU), CS::GetObjMesh(OL::S_NIKU));
 	IngredientsStetoLoad(static_cast<int>(Ingredients::NINZIN), CS::GetObjMesh(OL::S_NINZIN));

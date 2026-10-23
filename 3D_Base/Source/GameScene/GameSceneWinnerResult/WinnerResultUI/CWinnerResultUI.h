@@ -57,6 +57,8 @@ public:
 	void TiePlayerFontUI();
 	//かくとくポイントと合計ポイント.
 	void TiePointUI();
+	//i人目の立ち絵の中心のX座標.
+	float GetTieCenterX(int i) const;
 
 	//数字と点の表示.
 	void DrawNumber(int Score, float PosX, float PosY, float W, float H);

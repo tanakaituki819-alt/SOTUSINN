@@ -73,6 +73,7 @@
     <ClCompile Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.cpp" />
     <ClCompile Include="Source\ResultDataManager\CResultDataManager.cpp" />
+    <ClCompile Include="Source\ResultDataManager\PlayerTitle\CPlayerTitle.cpp" />
     <ClCompile Include="Source\Effect\Effect2D.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffect.cpp" />
     <ClCompile Include="Source\XAudio2\AudioLoaderMp3.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="Source\SceneChange\SceneTransitionRenderer\FUSUMASceneTransition\CFUSUMASceneTransition.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\ButtonMashBattleUI\CButtonMashBattleUI.h" />
     <ClInclude Include="Source\ResultDataManager\CResultDataManager.h" />
+    <ClInclude Include="Source\ResultDataManager\PlayerTitle\CPlayerTitle.h" />
     <ClInclude Include="Source\Effect\Effect2D.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffect.h" />
     <ClInclude Include="Source\XAudio2\AudioLoaderMp3.h" />

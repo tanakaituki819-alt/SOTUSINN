@@ -49,6 +49,14 @@ public:
 	bool GetIsMashBattle() const { return m_IsMashBattle; }
 	//連打対決の参加/終了をセットする.
 	void SetMashBattleLock(bool IsMashBattle) { m_IsMashBattle = IsMashBattle; }
+	//連打対決で勝った回数を1増やす.
+	void AddMashWin() { m_MashWinCount++; }
+	//連打対決で負けた回数を1増やす.
+	void AddMashLose() { m_MashLoseCount++; }
+	//連打対決で勝った回数を取得.
+	int GetMashWinCount() const { return m_MashWinCount; }
+	//連打対決で負けた回数を取得.
+	int GetMashLoseCount() const { return m_MashLoseCount; }
 	//CBoundingSphere* GetTipBSphere();
 	void IngredientsGetter(CIngredients* Ingredients);
 	//具材回収中の処理.
@@ -65,12 +73,14 @@ public:
 		if (No <= Ingredients::none || No >= Ingredients::MAX) return 0;
 		return m_IngredientScore[static_cast<int>(No)];
 	}
-	//スコアと獲得した具材のリストをリセットする(もう一度プレイ用).
+	//スコアと獲得した具材のリスト、連打対決の勝敗数をリセットする(もう一度プレイ用).
 	void ResetGameData()
 	{
 		Score = 0;
 		my_list.clear();
 		for (auto& IngredientScore : m_IngredientScore) IngredientScore = 0;
+		m_MashWinCount = 0;
+		m_MashLoseCount = 0;
 	}
 
 	void SetIngredientsGetEffectManager(IngredientsGetEffectManager* IngredientsGetEffectManager) {
@@ -92,6 +102,8 @@ private:
 	bool					m_IsConnected		 = false;	//コントローラー接続中か判定.
 	bool					m_IsParalysis		 = false;	//マヒ中かどうか.
 	bool					m_IsMashBattle		 = false;	//連打対決中かどうか.
+	int						m_MashWinCount		 = 0;		//連打対決で勝った回数.
+	int						m_MashLoseCount		 = 0;		//連打対決で負けた回数.
 	float					m_ParalysisTimer	 = 0;		//マヒ経過時間.
 	float					m_ParalysisMovetime  = 0;		//マヒの動きをさせるためのタイム.
 	float					m_Speed				 = 0.8f;	//震える速度.
