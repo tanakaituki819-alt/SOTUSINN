@@ -26,6 +26,27 @@ cbuffer per_frame : register(b2)
 {
     float4 g_CameraPos; //カメラ位置(視点位置).
     float4 g_vLightDir; //ライトの方向ベクトル.
+    float LightPower; //ライトの強さ.
+    float3 arr; //アライメント.
+};
+// ポイントライト1個分の構造体
+struct PointLight
+{
+    float3 position; // ワールド位置
+    float range; // 影響範囲
+    float3 color; // ライトの色 (RGB)
+    float intensity; // 強度
+    float3 attenuation; // 減衰係数 (x: 定数項, y: 線形項, z: 2次項)
+    float pad; // アライメント用
+};
+// C++側から送られる動的配列バッファ (t1レジスタにバインド)
+StructuredBuffer<PointLight> g_PointLights : register(t1);
+
+// ライトの個数を管理する定数バッファ (b3レジスタ等に追加)
+cbuffer per_light_count : register(b3)
+{
+    uint g_PointLightCount; // 実際に描画するポイントライトの数
+    float3 g_LightPad;
 };
 
 //頂点シェーダの出力パラメータ.
@@ -78,33 +99,69 @@ VS_OUTPUT VS_Main(
 //	ピクセルシェーダ.
 //-------------------------------------------------
 float4 PS_Main(VS_OUTPUT input) : SV_Target
-{
+{    
 	//テクスチャカラー.
     float4 texColor = g_Texture.Sample(g_SamLinear, input.UV);
-
-	//環境光　※１.
-    float4 ambient = texColor * g_Ambient;
+    float3 N = normalize(input.Normal);
+    float3 viewDir = normalize(g_CameraPos.xyz - input.PosWorld.xyz);
     
-	//拡散反射光 ※２.
-    
-     // メインの光
-    float NL1 = saturate(dot(input.Normal, input.Light.xyz));
-    // 裏側からの光（ライトの方向を反転させる）
-    float NL2 = saturate(dot(input.Normal, -input.Light.xyz));
-    
-    // メインの光に、裏からの光をうっすら（例えば0.3倍して）足す
-    float NL = NL1 + NL2 * 0.5;
-    float4 diffuse = (g_Diffuse / 2 + texColor / 2) * NL;
+    float3 totalPointDiffuse = float3(0.0f, 0.0f, 0.0f);
+    float3 totalPointSpecular = float3(0.0f, 0.0f, 0.0f);
 
-	//鏡面反射光 ※３.
-    float3 reflect = normalize(2 * NL * input.Normal - input.Light.xyz);
-    float4 specular =
-		pow(saturate(dot(reflect, input.EyeVector)), 4) * g_Specular;
+    // --- 1. 複数ポイントライトのループ処理 ---
+    for (uint i = 0; i < g_PointLightCount; ++i)
+    {
+        PointLight light = g_PointLights[i];
 
-	//最終色　※１，２，３の合計.
-    float4 Color = ambient + (diffuse + specular) * input.Light.w;
-   // Color.a = 0.5;
-    return Color;
+        float3 lightVector = light.position - input.PosWorld.xyz;
+        float distance = length(lightVector);
+
+        // ライトの影響範囲外ならこのライトの計算をスキップ
+        if (distance > light.range)
+        {
+            continue;
+        }
+
+        // 方向ベクトルの正規化
+        float3 lightDir = lightVector / distance;
+
+        // 距離による減衰の計算
+        float att = 1.0f / (light.attenuation.x +
+                            light.attenuation.y * distance +
+                            light.attenuation.z * (distance * distance));
+
+        // ランバート拡散反射 (Diffuse)
+        float diffuseFactor = max(dot(N, lightDir), 0.0f);
+        totalPointDiffuse += diffuseFactor * light.color * light.intensity * att;
+
+        // 鏡面反射 (Specular) - フォン反射モデル
+        float3 reflectDir = reflect(-lightDir, N);
+        float specFactor = pow(max(dot(viewDir, reflectDir), 0.0f), 32.0f);
+        totalPointSpecular += specFactor * light.color * light.intensity * att;
+    }
+    
+// --- 2. 平行光源（ディレクショナルライト）と環境光の計算 ---
+    float4 ambient = g_Ambient;
+
+    // input.Light.xyz の方向ベクトルを再正規化
+    float3 dirLightDir = normalize(input.Light.xyz);
+    float NL = saturate(dot(N, dirLightDir));
+    float4 diffuse = g_Diffuse * NL;
+
+    float3 reflectVec = normalize(2.0f * NL * N - dirLightDir);
+    float4 specular = pow(saturate(dot(reflectVec, input.EyeVector)), 4.0f) * g_Specular;
+
+
+    // --- 3. 最終カラーの合成 ---
+    // テクスチャなしのため、マテリアル色（g_Diffuse）ベースで合成
+    float3 finalDiffuse = (totalPointDiffuse + diffuse.rgb * LightPower + ambient.rgb * LightPower) * texColor.rgb;
+    float3 finalSpecular = totalPointSpecular + specular.rgb * LightPower;
+
+    float3 finalColor = finalDiffuse + finalSpecular;
+
+    return float4(finalColor, 1.0f);
+    
+    
 }
 
 //========= テクスチャ無し用 ========================================
@@ -144,20 +201,69 @@ VS_OUTPUT VS_NoTex(
 //-------------------------------------------------
 float4 PS_NoTex(VS_OUTPUT input) : SV_Target
 {
-	//テクスチャカラー.
-	//環境光　※１.
+    
+    	//テクスチャカラー.
+    float4 texColor = { 1, 1, 1, 1 };
+    
+    
+    float3 N = normalize(input.Normal);
+    float3 viewDir = normalize(g_CameraPos.xyz - input.PosWorld.xyz);
+    
+    float3 totalPointDiffuse = float3(0.0f, 0.0f, 0.0f);
+    float3 totalPointSpecular = float3(0.0f, 0.0f, 0.0f);
+
+    // --- 1. 複数ポイントライトのループ処理 ---
+    for (uint i = 0; i < g_PointLightCount; ++i)
+    {
+        PointLight light = g_PointLights[i];
+
+        float3 lightVector = light.position - input.PosWorld.xyz;
+        float distance = length(lightVector);
+
+        // ライトの影響範囲外ならこのライトの計算をスキップ
+        if (distance > light.range)
+        {
+            continue;
+        }
+
+        // 方向ベクトルの正規化
+        float3 lightDir = lightVector / distance;
+
+        // 距離による減衰の計算
+        float att = 1.0f / (light.attenuation.x +
+                            light.attenuation.y * distance +
+                            light.attenuation.z * (distance * distance));
+
+        // ランバート拡散反射 (Diffuse)
+        float diffuseFactor = max(dot(N, lightDir), 0.0f);
+        totalPointDiffuse += diffuseFactor * light.color * light.intensity * att;
+
+        // 鏡面反射 (Specular) - フォン反射モデル
+        float3 reflectDir = reflect(-lightDir, N);
+        float specFactor = pow(max(dot(viewDir, reflectDir), 0.0f), 32.0f);
+        totalPointSpecular += specFactor * light.color * light.intensity * att;
+    }
+    
+// --- 2. 平行光源（ディレクショナルライト）と環境光の計算 ---
     float4 ambient = g_Ambient;
 
-	//拡散反射光 ※２.
-    float NL = saturate(dot(input.Normal, input.Light));
+    // input.Light.xyz の方向ベクトルを再正規化
+    float3 dirLightDir = normalize(input.Light.xyz);
+    float NL = saturate(dot(N, dirLightDir));
     float4 diffuse = g_Diffuse * NL;
 
-	//鏡面反射光 ※３.
-    float3 reflect = normalize(2 * NL * input.Normal - input.Light);
-    float4 specular =
-		pow(saturate(dot(reflect, input.EyeVector)), 4) * g_Specular;
+    float3 reflectVec = normalize(2.0f * NL * N - dirLightDir);
+    float4 specular = pow(saturate(dot(reflectVec, input.EyeVector)), 4.0f) * g_Specular;
 
-	//最終色　※１，２，３の合計.
-    float4 Color = ambient + diffuse + specular;
-    return Color;
+
+    // --- 3. 最終カラーの合成 ---
+    // テクスチャなしのため、マテリアル色（g_Diffuse）ベースで合成
+    float3 finalDiffuse = (totalPointDiffuse + diffuse.rgb + ambient.rgb) * texColor.rgb;
+    float3 finalSpecular = totalPointSpecular+ specular.rgb;
+
+    float3 finalColor = finalDiffuse + finalSpecular;
+
+    return float4(finalColor, 1.0f);
+    
+
 }

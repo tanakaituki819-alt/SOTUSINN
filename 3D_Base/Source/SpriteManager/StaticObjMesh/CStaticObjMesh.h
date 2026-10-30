@@ -4,7 +4,6 @@
 
 
 
-
 //警告についてのコード分析を無効にする. 4005:再定義.
 #pragma warning( disable:4005)
 
@@ -50,6 +49,8 @@ public:
 	{
 		D3DXVECTOR4	CameraPos;		//カメラ位置(視点位置).
 		D3DXVECTOR4	vLightDir;		//ライト方向.
+		float LightPower;		//ライトの強さ.
+		D3DXVECTOR3 arr;				//アライメント.
 	};
 
 	//頂点の構造体.
@@ -106,6 +107,14 @@ public:
 		}
 	};
 
+
+	// 個数管理用定数バッファ構造体
+	struct LightCountBufferData
+	{
+		UINT              pointLightCount; // 4 bytes
+		DirectX::XMFLOAT3 pad;             // 12 bytes -> 計 16 bytes
+	};
+
 public:
 	CStaticObjMesh();		//コンストラクタ.
 	~CStaticObjMesh();		//デストラクタ.
@@ -160,10 +169,12 @@ public:
 	//使用前に、ポジションスケールローテーションを設定すること//ちなみにｚには奥行きが入っている
 	D3DXVECTOR3 GetPos2D( D3DXMATRIX& mView, D3DXMATRIX& mProj);
 
-
-
-
 	bool CreateMeshForRay();
+	// ポイントライトの情報を更新し、シェーダーにバインドする//変わらないならしなくていい
+	void UpdateAndBind( const std::vector<PointLightData>& lights);
+
+	D3DXVECTOR3 GetPosition(){ return m_Position; };
+	D3DXVECTOR3 GetRotation(){ return m_Rotation; };
 private:
 	//メッシュ読み込み.
 
@@ -226,4 +237,10 @@ private:
 	bool isCOLOR;
 	D3DXVECTOR3 LightCOLOR;
 	void Multiply(D3DXVECTOR4* base, D3DXVECTOR4 multiplier);
+
+	ID3D11Buffer* m_pStructuredBuffer = nullptr;// 1. ポイントライトの実データを保持するGPUバッファ
+	ID3D11ShaderResourceView* m_pSRV = nullptr;// 2. ピクセルシェーダー（HLSL）からアクセスするためのビュー
+	ID3D11Buffer* m_pCountBuffer = nullptr;// 3. 現在のライトの個数をシェーダーに伝える定数バッファ
+	UINT                       m_allocatedCapacity = 0;// 4. 現在GPU上に確保されているメモリ容量（最大要素数）の記録
+
  };

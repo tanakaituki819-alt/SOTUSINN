@@ -21,6 +21,9 @@
 #ifdef max
 #undef max
 #endif
+
+#define TINYOBJLOADER_DISABLE_FAST_FLOAT
+#define TINYOBJLOADER_IMPLEMENTATION
 // ライブラリ本体のインクルード（ここで安全にマクロが展開される）
 #include "tiny_obj_loader.h"
 
@@ -108,7 +111,7 @@ HRESULT CStaticObjMesh::Init(
 	std::string filename(wFilename.begin(), wFilename.end());
 	std::string baseDir(wBaseDir.begin(), wBaseDir.end());
 	//ファイル読み込み.
-	// 
+
 // LoadXMesh の代わりに新設した .obj 用パーサー関数を呼び出す
 	if (FAILED(LoadObjToMyStructures(filename, baseDir)))
 	{
@@ -129,6 +132,11 @@ HRESULT CStaticObjMesh::Init(
 	{
 		return E_FAIL;
 	}
+
+	// ポイントライトを初期化する
+	std::vector<PointLightData> m_pointLightss;
+	UpdateAndBind(m_pointLightss);
+
 	//サンプラ作成.
 	if( FAILED( CreateSampler() ) )
 	{
@@ -137,6 +145,9 @@ HRESULT CStaticObjMesh::Init(
 	if (CreateMeshForRay()==false) {
 		return E_FAIL;
 	}
+
+
+
 	return S_OK;
 }
 
@@ -259,6 +270,70 @@ bool CStaticObjMesh::CreateMeshForRay()
 	}
 
 	return true;
+}
+
+void CStaticObjMesh::UpdateAndBind(const std::vector<PointLightData>& lights)
+{
+	//本来のライト個数（0個の場合もある）
+	UINT actualCount = static_cast<UINT>(lights.size());
+
+	//個数管理バッファ (b3) の更新
+	// シェーダーには「正確な個数 (0)」を伝えることで、シェーダー内の for ループは 0 回になり計算されません
+	LightCountBufferData countData = { actualCount, DirectX::XMFLOAT3(0, 0, 0) };
+	m_pContext11->UpdateSubresource(m_pCountBuffer, 0, nullptr, &countData, 0, 0);
+	m_pContext11->PSSetConstantBuffers(3, 1, &m_pCountBuffer);
+
+	//GPUバッファの容量計算
+	// ライトが 0 個の時も、Null SRV による GPU 崩壊を防ぐために「最低 1 個分」のバッファ容量を確保します
+	UINT neededCapacity = 0;
+	if (actualCount == 0){neededCapacity = 1;}
+	else{neededCapacity = actualCount;}
+	
+	// 容量が不足している（初期化時含む）場合のみ、GPUバッファとSRVを再生成
+	if (neededCapacity > m_allocatedCapacity)
+	{
+		SAFE_RELEASE(m_pSRV);
+		SAFE_RELEASE(m_pStructuredBuffer);
+
+		m_allocatedCapacity = neededCapacity;
+
+		D3D11_BUFFER_DESC bufDesc = {};
+		bufDesc.ByteWidth = sizeof(PointLightData) * m_allocatedCapacity;
+		bufDesc.Usage = D3D11_USAGE_DYNAMIC;
+		bufDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+		bufDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		bufDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+		bufDesc.StructureByteStride = sizeof(PointLightData);
+
+		HRESULT hr = m_pDevice11->CreateBuffer(&bufDesc, nullptr, &m_pStructuredBuffer);
+		if (FAILED(hr)) return;
+
+		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
+		srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+		srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFER;
+		srvDesc.Buffer.FirstElement = 0;
+		srvDesc.Buffer.NumElements = m_allocatedCapacity;
+
+		hr = m_pDevice11->CreateShaderResourceView(m_pStructuredBuffer, &srvDesc, &m_pSRV);
+		if (FAILED(hr)) return;
+	}
+
+	//実際のライトデータがある場合のみ GPU メモリへ転送 (Map / Unmap)
+	if (actualCount > 0 && !lights.empty())
+	{
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		if (SUCCEEDED(m_pContext11->Map(m_pStructuredBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource)))
+		{
+			memcpy(mappedResource.pData, lights.data(), sizeof(PointLightData) * actualCount);
+			m_pContext11->Unmap(m_pStructuredBuffer, 0);
+		}
+	}
+
+	//作成した有効な SRV を t1 レジスタにバインド
+	if (m_pSRV)
+	{
+		m_pContext11->PSSetShaderResources(1, 1, &m_pSRV);
+	}
 }
 
 bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const std::string& baseDir)
@@ -563,6 +638,12 @@ void CStaticObjMesh::Release()
 
 	m_pDevice9 = nullptr;
 	m_pDx9 = nullptr;
+
+	SAFE_RELEASE(m_pSRV);
+	SAFE_RELEASE(m_pStructuredBuffer);
+	SAFE_RELEASE(m_pCountBuffer);
+	m_allocatedCapacity = 0;
+	
 }
 
 //===========================================================
@@ -692,6 +773,17 @@ HRESULT CStaticObjMesh::CreateShader()
 	}
 	SAFE_RELEASE( pCompiledShader );
 
+
+	// 個数伝達用の定数バッファ作成
+	D3D11_BUFFER_DESC cbDesc = {};
+	cbDesc.ByteWidth = sizeof(LightCountBufferData);
+	cbDesc.Usage = D3D11_USAGE_DEFAULT;
+	cbDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cbDesc.CPUAccessFlags = 0;
+	HRESULT hr = m_pDevice11->CreateBuffer(&cbDesc, nullptr, &m_pCountBuffer);
+
+
+	
 	return S_OK;
 }
 
@@ -788,6 +880,16 @@ void CStaticObjMesh::Render(
 	m_pContext11->VSSetShader( m_pVertexShader, nullptr, 0 );	//頂点シェーダ.
 	m_pContext11->PSSetShader( m_pPixelShader, nullptr, 0 );	//ピクセルシェーダ.
 
+	//ポイントライト用のバッファ・SRVが生成済みであれば、描画直前に必ず再バインドする
+	if (m_pCountBuffer)
+	{
+		m_pContext11->PSSetConstantBuffers(3, 1, &m_pCountBuffer);
+	}
+	if (m_pSRV)
+	{
+		m_pContext11->PSSetShaderResources(1, 1, &m_pSRV);
+	}
+
 	//シェーダのコンスタントバッファに各種データを渡す.
 	D3D11_MAPPED_SUBRESOURCE pData;
 	//バッファ内のデータの書き換え開始時にMap.
@@ -810,8 +912,8 @@ void CStaticObjMesh::Render(
 		// ※モデルからライトへ向かう方向. ディレクショナルライトで重要な要素.
 		D3DXVec4Normalize( &cb.vLightDir, &cb.vLightDir );
 		cb.vLightDir.w = Light.fIntensity;
-
-		
+		cb.LightPower = Light.fIntensity;
+		cb.arr = D3DXVECTOR3(0, 0, 0);
 		memcpy_s(
 			pData.pData,	//コピー先のバッファ.
 			pData.RowPitch,	//コピー先のバッファサイズ.

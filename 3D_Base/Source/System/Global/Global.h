@@ -14,6 +14,10 @@
 #include <D3DX10.h>	//「D3DX～」の定義使用時に必要.
 #include <D3D10.h>
 
+
+#include <DirectXMath.h>
+
+
 #include "System/MyMacro.h"
 
 
@@ -102,6 +106,17 @@ struct CROSSRAY
 			Ray[i].Length = 1.f;
 		}
 	}
+};
+//ポイントライト
+//HLSL側の struct PointLight と完全に構造を合わせる
+struct PointLightData
+{
+	DirectX::XMFLOAT3 position;    // 12 bytes//ライトの場所
+	float             range;       //  4 bytes//ライトの最大距離
+	DirectX::XMFLOAT3 color;       // 12 bytes//カラー
+	float             intensity;   //  4 bytes//ライトの強さ
+	DirectX::XMFLOAT3 attenuation; // 12 bytes//減衰// DirectX::XMFLOAT3(1.0f, 0.02f, 0.022f); // 標準的な減衰係数
+	float             pad;         //  4 bytes // パディング（16バイト境界に揃えるため）
 };
 
 

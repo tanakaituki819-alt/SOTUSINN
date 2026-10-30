@@ -212,7 +212,35 @@ void CGameSceneGameMain::Draw()
 
 
 	m_pGround->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
-	
+	static bool c = true;
+	static int i = 0;
+
+	if (c) {
+		i++;
+		if (i >= 60) {
+			c = false;
+		}
+	}
+	else {
+		i--;
+		if (i <= 0) {
+			c = true;
+		}
+	}
+
+	std::vector<PointLightData> m_pointLightss;
+	PointLightData light1 = {};
+	light1.position = DirectX::XMFLOAT3(0, 1.5, 0);
+	light1.range = 20.0f;
+	light1.color = DirectX::XMFLOAT3(0.3f, .3f, 1.0f); // 光
+	light1.intensity = 2*(i/60.0)*(i/60.0) + 3;
+	light1.attenuation = DirectX::XMFLOAT3(1.0f, 0.02f, 0.022f); // 
+	light1.pad = 0.0f;
+	m_pointLightss.push_back(light1);
+	light1.color = DirectX::XMFLOAT3(1.0f, .3f, 0.3f); // 光
+	light1.intensity =( 4 * ((60-i) / 60.0) * ((60 - i) / 60.0)) + 1;
+	m_pointLightss.push_back(light1);
+	m_pElectricHotPlate->GetMesh()->UpdateAndBind(m_pointLightss);
 	m_pElectricHotPlate->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
 
 	m_pCIngredientsM->Draw(m_pCamera->GetView(), m_mProj, m_Light, m_pCamera->GetCamera());
