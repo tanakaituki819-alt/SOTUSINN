@@ -8,7 +8,7 @@
 class CIngredientsmanager
 {
 private:
-	std::string filePath = "Data/いつき.いつき";
+	std::string filePath = "Data/YASAIDate.Date";
 public:
 	CIngredientsmanager();
 	~CIngredientsmanager();
