@@ -61,6 +61,7 @@ public:
 	void Render2(float i);
 	//座標情報を設定.
 	void SetPosition(const D3DXVECTOR3& Pos) {	m_Position = Pos;	}
+	void SetPosition(const D3DXVECTOR2& Pos) { m_Position.x = Pos.x; m_Position.y = Pos.y;}
 	//座標xを設定.
 	void SetPositionX( float x ){ m_Position.x = x; }
 	//座標yを設定.
@@ -97,6 +98,9 @@ public:
 		COLOR = COLORE;
 	};
 	void SetTopleftreferenceis(bool i) { Topleftreferenceis = i; }
+	void SetPiPot(D3DXVECTOR3 P) { PiPot = P; }
+	void SetRotPot(D3DXVECTOR3 P) { RotPot = P; }
+	
 private:
 	CDirectX11*				m_pDx11;
 	ID3D11Device*			m_pDevice11;
@@ -135,4 +139,5 @@ private:
 
 	bool Topleftreferenceis;
 	D3DXVECTOR3 PiPot;
+	D3DXVECTOR3 RotPot = {0,0,0};
 };

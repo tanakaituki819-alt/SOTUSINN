@@ -60,6 +60,8 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 
 
 	m_IngredientsGetEffectManager = new IngredientsGetEffectManager();
+
+	m_pGameStartIntro = new GameStartIntro();
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
@@ -94,6 +96,8 @@ void CGameSceneGameMain::StartFinalSetup()
 
 void CGameSceneGameMain::Update()
 {
+	m_pGameStartIntro->Update();
+
 	//m_pBackGround->SetRotation({ D3DXToRadian(m_BackGroundRotation.x), D3DXToRadian(m_BackGroundRotation.y), D3DXToRadian(m_BackGroundRotation.z) });
 
 
@@ -247,7 +251,7 @@ void CGameSceneGameMain::Draw()
 	{
 		m_pPauseUI->Draw();
 	}
-
+	m_pGameStartIntro->Draw();
 	m_pDx11->SetDepth(true);
 
 

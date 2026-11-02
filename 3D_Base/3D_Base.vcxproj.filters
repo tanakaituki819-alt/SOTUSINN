@@ -79,6 +79,7 @@
     <ClCompile Include="Source\XAudio2\XAudio2.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffectManager.cpp" />
     <ClCompile Include="Source\JsonFileIO\JsonFileIO.cpp" />
+    <ClCompile Include="Source\GameScene\GameSceneGameMain\GameStartIntro\GameStartIntro.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\stdafx.h">
@@ -151,6 +152,7 @@
     <ClInclude Include="Source\XAudio2\XAudio2Memo.h" />
     <ClInclude Include="Source\GameScene\GameSceneGameMain\IngredientsGetEffect\IngredientsGetEffectManager.h" />
     <ClInclude Include="Source\JsonFileIO\JsonFileIO.h" />
+    <ClInclude Include="Source\GameScene\GameSceneGameMain\GameStartIntro\GameStartIntro.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Data\Shader\Sprite3D.hlsl">
