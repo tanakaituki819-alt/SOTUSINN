@@ -84,7 +84,7 @@ enum class enRainbowTitle
 struct STitle
 {
 	enTitleRank	Rank;		//レア度.
-	int			PatternNo;	//画像の行番号.
+	int	PatternNo;			//画像の行番号.
 
 	STitle()								: Rank(enTitleRank::None),		PatternNo(0) {}
 	explicit STitle(enBronzeTitle Title)	: Rank(enTitleRank::Bronze),	PatternNo(static_cast<int>(Title)) {}

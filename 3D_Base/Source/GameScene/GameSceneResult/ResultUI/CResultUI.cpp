@@ -46,7 +46,7 @@ static constexpr Transform SPECIAL_SCORE_POS = { -65.f, 405.f };
 static constexpr Transform ALL_SCORE_POS = { -65.f, 500.f };
 
 //称号の木札.
-static constexpr Transform WOODEN_TAG = { -140.f, 565.f, 280.f, 56.f };
+static constexpr Transform WOODEN_TAG = { -140.f, 575.f, 280.f, 56.f };
 
 //称号の文字.
 //木札の高さに対する文字の高さの割合.
