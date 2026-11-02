@@ -281,7 +281,8 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 	{
 		Score = SCORE_MAX;
 	}
-	if (YASAI->GetIngredientsNo() > Ingredients::none && YASAI->GetIngredientsNo() < Ingredients::MAX)
+	//noneも肉として出てくるので記録しておく.
+	if (YASAI->GetIngredientsNo() >= Ingredients::none && YASAI->GetIngredientsNo() < Ingredients::MAX)
 	{
 		int& IngredientScore = m_IngredientScore[static_cast<int>(YASAI->GetIngredientsNo())];
 		IngredientScore += YASAI->GetScore();

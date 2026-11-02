@@ -84,6 +84,8 @@ void CGameSceneGameMain::StartFinalSetup()
 			m_pPlayer[i]->SetXInput(CONTROLA[i]);
 			m_pPlayer[i]->SetPlayerNo(i);
 			m_pPlayer[i]->SetIngredientsGetEffectManager(m_IngredientsGetEffectManager);
+			//前のゲームのスコアをリセット.
+			m_pPlayer[i]->ResetGameData();
 		}
 	}
 	for (int i = 0; i < PlayerMax; i++) {

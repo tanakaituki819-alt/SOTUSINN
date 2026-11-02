@@ -15,9 +15,9 @@ public:
 	static const int MASH_GOAL = 10;			//この回数を先に連打したプレイヤーが即座に勝利する.
 	static const int BATTLE_TIME_LIMIT = 180;	//連打対決本編の制限時間.
 
-	static const int COUNTDOWN_STEP_FRAMES = 30;					//カウントダウンの数字1つ分の表示フレーム数.
+	static const int COUNTDOWN_STEP_FRAMES = 30;	//カウントダウンの数字1つ分の表示フレーム数.
 	static const int COUNTDOWN_TOTAL_FRAMES = COUNTDOWN_STEP_FRAMES * 3;
-	static const int GO_FLASH_FRAMES = 15;							//カウントダウン終了直後、ゲージを光らせるフレーム数.
+	static const int GO_FLASH_FRAMES = 15;		//カウントダウン終了直後、ゲージを光らせるフレーム数.
 
 public:
 	CButtonMashBattleUI();
