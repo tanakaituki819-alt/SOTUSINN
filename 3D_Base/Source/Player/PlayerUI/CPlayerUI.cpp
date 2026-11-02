@@ -32,7 +32,7 @@ CPlayerUI::~CPlayerUI()
 	
 }
 
-void CPlayerUI::Draw(int Score)
+void CPlayerUI::Draw(int Score, int status)
 {
 	int x=0, y=0;
 	//各プレイヤーのUIpos
@@ -57,7 +57,7 @@ void CPlayerUI::Draw(int Score)
 	PlayerBackground->Draw();
 
 	Playericon->SetPosition(m_Position.x+UIW-UIH, m_Position.y,0);
-	Playericon->SetPatternNo(0,PlayerNo);
+	Playericon->SetPatternNo(status,PlayerNo);
 	Playericon->Draw();
 
 	Playerfont->SetPosition(m_Position.x, m_Position.y,0);

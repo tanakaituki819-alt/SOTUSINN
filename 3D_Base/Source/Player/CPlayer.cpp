@@ -32,7 +32,19 @@ CPlayer::~CPlayer()
 void CPlayer::Update()
 {
 
-	
+	if (m_IsParalysis) {
+		m_Status = 3;	//マヒ中.
+	}
+	else if(!m_IsParalysis && m_Status == 3){
+		m_Status = 1;	//デフォルト状態.
+	}
+	if (m_Status == 0) {
+		++m_SmileTimer;
+		if (m_SmileTimer > 90) {
+			m_Status = 1;		//デフォルト状態.
+			m_SmileTimer = 0;	//タイマー初期化. 
+		}
+	}
 	//コントローラーが接続されていれば.
 	if (MyController->IsConnect()==true) {
 		m_IsConnected = true;	//コントローラー接続状態に.
@@ -206,7 +218,7 @@ void CPlayer::DrawUI()
 	//コントローラーが接続されているのなら.
 	if (MyController->IsConnect() == true) {
 		P_UI->SetPlayerNo(PlayerNo);
-		P_UI->Draw(Score);
+		P_UI->Draw(Score,m_Status);
 	}
 }
 //マヒ状態処理.
@@ -255,6 +267,7 @@ void CPlayer::IngredientsCollecting()
 		m_pIngredients->Setisappear(false);
 		m_pIngredients = nullptr;
 		m_IsCollecting = false;
+		m_Status = 0;	//笑顔状態.
 	}
 
 }

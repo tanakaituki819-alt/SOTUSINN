@@ -99,7 +99,8 @@ private:
 	D3DXVECTOR3				m_CousorPosition	 = {};		//カーソルのポジションを入れる.
 	D3DXVECTOR3				m_Point3Dto2DConverter = {};	//ボタン連打を表示するポジション.
 	D3DXVECTOR3 m_OldPosition;
-	CIngredients*			m_pIngredients = nullptr;
-
+	CIngredients*			m_pIngredients = nullptr;					
+	int						m_Status = 1;					//プレイヤーの状態を入れる変数(0:笑顔 1:デフォルト 3:マヒ中 ).
+	float					m_SmileTimer = 0;				//笑顔の時間を計るタイマー.	
 	IngredientsGetEffectManager* m_IngredientsGetEffectManager=nullptr;//エフェクトのマネージャー
 };

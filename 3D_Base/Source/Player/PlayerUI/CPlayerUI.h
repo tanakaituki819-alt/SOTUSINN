@@ -5,15 +5,15 @@
 class CPlayerUI
 {
 private:
-	static constexpr int UIH=95;
-	static constexpr int UIW=255;
-	static constexpr int NoSize=40;
+	static constexpr int UIH = 95;
+	static constexpr int UIW = 255;
+	static constexpr int NoSize = 40;
 public:
 	CPlayerUI();
 	~CPlayerUI();
 
 	void SetPlayerNo(int No) { PlayerNo = No; }
-	void Draw(int Score);
+	void Draw(int Score, int status);
 	D3DXVECTOR2 GetPosition() { return m_Position; }
 	float GetUIW() { return UIW; }
 	float GetUIH() { return UIH; }
