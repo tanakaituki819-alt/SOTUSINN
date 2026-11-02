@@ -49,6 +49,7 @@ public:
 		Img_ButtonPush2,		//ボタン.
 		Img_TitleBackground,	//タイトル背景
 		Img_TitleText,			//タイトルテキスト.
+		Img_TitleText2,			//タイトルテキスト.
 		Img_TitleNabe,			//タイトルの鍋.
 		IMG_TitleWaribashi,		//タイトルの割りばし.
 		Img_ScrollRed,			//赤色の巻物.(全員が準備完了になったときに表示するUIで使う).

@@ -252,6 +252,9 @@ void CPlayer::IngredientsGetter(CIngredients* Ingredients)
 	m_pIngredients = Ingredients;
 	m_Position = { m_pIngredients->GetPosition() };
 	
+	m_IsCollecting = true;	//回収中へ.
+	m_Collectingtime = 0;	//タイマーリセット.
+
 }
 
 void CPlayer::IngredientsCollecting()
@@ -267,7 +270,8 @@ void CPlayer::IngredientsCollecting()
 		m_pIngredients->Setisappear(false);
 		m_pIngredients = nullptr;
 		m_IsCollecting = false;
-		m_Status = 0;	//笑顔状態.
+		m_Collectingtime = 0;	//タイマーリセット.
+		m_Status = 0;			//笑顔状態.
 	}
 
 }

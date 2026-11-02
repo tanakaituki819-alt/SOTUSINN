@@ -58,7 +58,10 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	SoundHandleX SEHandle = XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Boiling, XAudio2::SubmixTargetType::Reverb, true);	//沸騰音をループ再生.
 	XAudio2::GetInstance()->SetSoundVolume(SEHandle, 1.5f);
 
-
+	m_pGameEndText = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleText2);
+	m_pGameEndText->SetPatternNo(0, 3);
+	m_pGameEndText->SetPosition({120.f,50.f,0.f });
+	m_pGameEndText->SetScale({ 1020.f,500.f,1.5f });
 	m_IngredientsGetEffectManager = new IngredientsGetEffectManager();
 }
 
@@ -165,12 +168,20 @@ void CGameSceneGameMain::Update()
 	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
 	m_pCIngredientsM->Update();
 	//タイマーが0秒になっているかつ鍋に残った具材が0になるまたは、強制終了タイマーが45秒経過したら.
-	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45)
+	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 1)
 	{
+		m_IsEnd = true;	//ゲーム終了フラグを立てる.
 		XAudio2::GetInstance()->AllStopBGM();
 		//リザルトで使う結果を保存.
 		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);
-		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
+	}
+	if (m_IsEnd) {
+		m_SceneChangeTimer++;	//シーン切り替えタイマーを増加する.
+		if (m_SceneChangeTimer >= 60 * 4) {
+			m_IsEnd = false;
+			m_SceneChangeTimer = 0;
+			SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
+		}
 	}
 	//ゲームタイマーが0秒になった.
 	if (m_pTimer->GetTimu() <= 0) {
@@ -249,10 +260,10 @@ void CGameSceneGameMain::Draw()
 	{
 		m_pPauseUI->Draw();
 	}
-
+	if (m_IsEnd) {
+		m_pGameEndText->Render();
+	}
 	m_pDx11->SetDepth(true);
-
-
 
 }
 

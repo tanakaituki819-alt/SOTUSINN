@@ -253,6 +253,7 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleBackground),	_T("Data\\Texture\\Title.png"),				{ {1, 1, 1}, {539, 247}, {539, 247}} });
 	//タイトルテキスト.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleText),		_T("Data\\Texture\\TitleText.png"),			{ {1, 1, 1}, {650, 300}, {650, 300/3}} });
+	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleText2),		_T("Data\\Texture\\TitleText2.png"),		{ {1, 1, 1}, {650, 400}, {650, 400/4}} });
 	//タイトル鍋.
 	Img_List.push_back({ static_cast<int>(enImagList::Img_TitleNabe),		_T("Data\\Texture\\TitleNabe.png"),			{ {1, 1, 1}, {433, 577}, {433, 577}} });
 	// タイトルの割りばし.
