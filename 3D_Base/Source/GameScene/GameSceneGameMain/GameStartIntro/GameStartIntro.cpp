@@ -21,7 +21,8 @@ void GameStartIntro::Update()
 		m_steat = steat::close;
 		SCX = WND_W / 2 - offSetX;
 		UpS = 1;
-		PatternNoY = 0;
+		LPatternNo = { 0,0 };
+		RPatternNo = { 1,0 };
 	}
 	switch (m_steat)
 	{
@@ -40,7 +41,7 @@ void GameStartIntro::Update()
 		if (C==90) {
 			m_steat = steat::miseru;
 			C = 0;
-			PatternNoY = 1;
+			RPatternNo = {1,1};
 		}
 		break;
 	case GameStartIntro::steat::miseru:
@@ -77,7 +78,7 @@ void GameStartIntro::Draw()
 	switch (m_steat)
 	{
 	case GameStartIntro::steat::close:
-		m_pKONDATE->SetPatternNo(0, PatternNoY);
+		m_pKONDATE->SetPatternNo(LPatternNo.x, LPatternNo.y);
 		m_pKONDATE->SetRotPot({ 0.5,0.5,0 });
 		m_pKONDATE->SetPosition(L_Position);
 		m_pKONDATE->SetRotation(L_Rotation);
@@ -88,7 +89,7 @@ void GameStartIntro::Draw()
 	}
 
 	m_pKONDATE->SetRotPot({-0.5,0.5,0});
-	m_pKONDATE->SetPatternNo(1, PatternNoY);
+	m_pKONDATE->SetPatternNo(RPatternNo.x, RPatternNo.y);
 	m_pKONDATE->SetPosition(R_Position);
 	m_pKONDATE->SetRotation(R_Rotation);
 	m_pKONDATE->Render();

@@ -27,12 +27,14 @@ private:
 	D3DXVECTOR3	L_Rotation = {};
 	D3DXVECTOR2 R_Position = {WND_W/2,offSetY };
 	D3DXVECTOR3	R_Rotation = {};
-
+	D3DXVECTOR2 LPatternNo = { 0,0 };
+	D3DXVECTOR2 RPatternNo = { 1,0 };
 	int Timu;
 	int C;
 	bool End=false;
 	float R(float i);
 	steat m_steat = steat::close;
+
 	float UpS = 1;
-	int PatternNoY = 0;
+
 };
