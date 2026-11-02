@@ -76,6 +76,16 @@ enIngredientCategory CResultDataManager::CalculateFavoriteCategory(const SPlayer
 	return Favorite;
 }
 
+//リザルトで数えるときの食材.※noneは肉.
+Ingredients CResultDataManager::ToResultIngredient(Ingredients IngredientsNo)
+{
+	if (IngredientsNo == Ingredients::none)
+	{
+		return Ingredients::NIKU;
+	}
+	return IngredientsNo;
+}
+
 //スコアを上限で止める.
 int CResultDataManager::ClampScore(int Score)
 {
@@ -111,8 +121,11 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 		int IngredientCount[static_cast<int>(Ingredients::MAX)] = {};
 
 		//獲得した食材のリストから内訳をカウントする.
-		for (const auto& Item : pPlayer[i]->GetAllIngredients())
+		for (const auto& RawItem : pPlayer[i]->GetAllIngredients())
 		{
+			//noneは肉.
+			Ingredients Item = ToResultIngredient(RawItem);
+
 			if (Item > Ingredients::none && Item < Ingredients::MAX)
 			{
 				IngredientCount[static_cast<int>(Item)]++;
@@ -140,10 +153,10 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 		m_PlayerData[i].m_nMashLoseCount = pPlayer[i]->GetMashLoseCount();
 
 		//具材ポイントと高級具材ポイント.
-		for (int No = static_cast<int>(Ingredients::none) + 1; No < static_cast<int>(Ingredients::MAX); No++)
+		for (int No = static_cast<int>(Ingredients::none); No < static_cast<int>(Ingredients::MAX); No++)
 		{
 			int IngredientScore = pPlayer[i]->GetIngredientScore(static_cast<Ingredients>(No));
-			if (GetCategory(static_cast<Ingredients>(No)) == enIngredientCategory::Special)
+			if (GetCategory(ToResultIngredient(static_cast<Ingredients>(No))) == enIngredientCategory::Special)
 			{
 				m_PlayerData[i].m_nSpecialScore += IngredientScore;
 			}
@@ -169,13 +182,19 @@ void CResultDataManager::CaptureFromPlayers(CPlayer* pPlayer[])
 				m_PlayerData[i].m_FavoriteIngredient = static_cast<Ingredients>(No);
 			}
 		}
-		m_PlayerData[i].m_nFavoriteScore = ClampScore(pPlayer[i]->GetIngredientScore(m_PlayerData[i].m_FavoriteIngredient));
+		//お気に入り食材のポイント.肉ならnoneの分も足す.
+		int FavoriteScore = pPlayer[i]->GetIngredientScore(m_PlayerData[i].m_FavoriteIngredient);
+		if (m_PlayerData[i].m_FavoriteIngredient == Ingredients::NIKU)
+		{
+			FavoriteScore += pPlayer[i]->GetIngredientScore(Ingredients::none);
+		}
+		m_PlayerData[i].m_nFavoriteScore = ClampScore(FavoriteScore);
 	}
 
 	//順位を計算する.
 	CalculateRanks();
 
-	//称号を決める(他のプレイヤーと被らないように選ぶものがあるので、全員分のデータが揃ってから).
+	//称号を決める.
 	CPlayerTitle::DecideTitles(m_PlayerData, PLAYER_MAX);
 }
 

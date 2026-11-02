@@ -102,6 +102,8 @@ private:
 
 	//スコアを上限で止める.
 	static int ClampScore(int Score);
+	//リザルトで数えるときの食材.noneは肉として扱う.
+	static Ingredients ToResultIngredient(Ingredients IngredientsNo);
 
 	//各カテゴリの獲得数からお気に入りカテゴリを判定する.
 	static enIngredientCategory CalculateFavoriteCategory(const SPlayerResultData& Data);

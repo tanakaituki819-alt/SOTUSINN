@@ -70,7 +70,7 @@ public:
 	//指定した食材で獲得したスコアを取得.
 	int GetIngredientScore(Ingredients No) const
 	{
-		if (No <= Ingredients::none || No >= Ingredients::MAX) return 0;
+		if (No < Ingredients::none || No >= Ingredients::MAX) return 0;
 		return m_IngredientScore[static_cast<int>(No)];
 	}
 	//スコアと獲得した具材のリスト、連打対決の勝敗数をリセットする(もう一度プレイ用).
