@@ -97,7 +97,16 @@ void CGameSceneGameMain::StartFinalSetup()
 void CGameSceneGameMain::Update()
 {
 	m_pGameStartIntro->Update();
+	if (!m_pGameStartIntro->GetEnd()) {
 
+		m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
+		m_pCIngredientsM->Update();
+
+
+		UpdateBSpherePos();
+	
+		return;
+	}
 	//m_pBackGround->SetRotation({ D3DXToRadian(m_BackGroundRotation.x), D3DXToRadian(m_BackGroundRotation.y), D3DXToRadian(m_BackGroundRotation.z) });
 
 
