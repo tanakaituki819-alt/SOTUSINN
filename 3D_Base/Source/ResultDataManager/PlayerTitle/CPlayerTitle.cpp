@@ -1,11 +1,10 @@
 #include "CPlayerTitle.h"
 #include "ResultDataManager/CResultDataManager.h"
-#include <cstdlib>	//rand用.
+#include <cstdlib>
 
 namespace
 {
-	//食材の種類ごとのIngredients(enFoodKindと同じ順).
-	//白菜はゲームで使っているHAKUSEI2だけを扱う(HAKUSAI1は読み込まれているだけ).
+	//食材の種類ごとのIngredients.
 	const Ingredients FOOD_KIND_INGREDIENTS[static_cast<int>(enFoodKind::MAX)] =
 	{
 		Ingredients::NINZIN,	//人参.
@@ -70,7 +69,7 @@ std::vector<STitle> CPlayerTitle::FindCandidates(const SPlayerResultData& Data)
 {
 	STitle Title;
 
-	//レア度の高い順に判定して、最初に当てはまったものにする.
+	//レア度の高い順に判定.
 	if (JudgeRainbow(Data, &Title))	return { Title };
 	if (JudgeGold(Data, &Title))	return { Title };
 	if (JudgeSilver(Data, &Title))	return { Title };
@@ -243,7 +242,7 @@ std::vector<STitle> CPlayerTitle::JudgeBronze(const SPlayerResultData& Data)
 		return { CategoryTitle(FirstCategory) };
 	}
 
-	//別の系統が混ざっていれば、それぞれの〇〇好きを候補にする(他のプレイヤーと被らないものを後で選ぶ).
+	//別の系統が混ざっていれば、それぞれの〇〇好きを候補にする.
 	std::vector<STitle> Candidates;
 	for (enFoodKind Kind : MostKinds)
 	{
@@ -273,7 +272,7 @@ STitle CPlayerTitle::ChooseUnusedTitle(const std::vector<STitle>& Candidates,
 		if (!IsUsed) Unused.push_back(Candidate);
 	}
 
-	//被らない候補があればその中から、全部被っていれば候補全体からランダムに選ぶ.
+	//被らない候補があればその中から、全部被っていれば候補全体からランダムに.
 	const std::vector<STitle>& ChooseFrom = Unused.empty() ? Candidates : Unused;
 	return ChooseFrom[rand() % ChooseFrom.size()];
 }

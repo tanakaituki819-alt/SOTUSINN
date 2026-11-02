@@ -308,8 +308,8 @@ void CWinnerResultUI::SoloPointUI()
 	ResultFont_Img->SetPatternNo(0, 1);
 	ResultFont_Img->Render();
 	DrawNumber(Data.m_nIngredientScore,
-		NUMBER_INGREDIENT.posX - GetNumberWidth(Data.m_nIngredientScore, NUMBER_INGREDIENT.sclX),
-		NUMBER_INGREDIENT.posY, NUMBER_INGREDIENT.sclX, NUMBER_INGREDIENT.sclY);
+	NUMBER_INGREDIENT.posX - GetNumberWidth(Data.m_nIngredientScore, NUMBER_INGREDIENT.sclX),
+	NUMBER_INGREDIENT.posY, NUMBER_INGREDIENT.sclX, NUMBER_INGREDIENT.sclY);
 
 	//高級具材ポイント.
 	ResultFont_Img->SetPosition(FONT_SPECIAL.GetPos());
@@ -317,8 +317,8 @@ void CWinnerResultUI::SoloPointUI()
 	ResultFont_Img->SetPatternNo(0, 2);
 	ResultFont_Img->Render();
 	DrawNumber(Data.m_nSpecialScore,
-		NUMBER_SPECIAL.posX - GetNumberWidth(Data.m_nSpecialScore, NUMBER_SPECIAL.sclX),
-		NUMBER_SPECIAL.posY, NUMBER_SPECIAL.sclX, NUMBER_SPECIAL.sclY);
+	NUMBER_SPECIAL.posX - GetNumberWidth(Data.m_nSpecialScore, NUMBER_SPECIAL.sclX),
+	NUMBER_SPECIAL.posY, NUMBER_SPECIAL.sclX, NUMBER_SPECIAL.sclY);
 
 	//合計ポイント.
 	ResultFont_Img->SetPosition(FONT_TOTAL.GetPos());
@@ -326,8 +326,8 @@ void CWinnerResultUI::SoloPointUI()
 	ResultFont_Img->SetPatternNo(0, 3);
 	ResultFont_Img->Render();
 	DrawNumber(Data.m_nScore,
-		NUMBER_TOTAL.posX - GetNumberWidth(Data.m_nScore, NUMBER_TOTAL.sclX),
-		NUMBER_TOTAL.posY, NUMBER_TOTAL.sclX, NUMBER_TOTAL.sclY);
+	NUMBER_TOTAL.posX - GetNumberWidth(Data.m_nScore, NUMBER_TOTAL.sclX),
+	NUMBER_TOTAL.posY, NUMBER_TOTAL.sclX, NUMBER_TOTAL.sclY);
 }
 
 //お気に入り食材の枠と文字と数字.
@@ -347,8 +347,8 @@ void CWinnerResultUI::SoloFavoriteUI()
 
 	//お気に入り食材で獲得したポイント.
 	DrawNumber(Data.m_nFavoriteScore,
-		FAVORITE_NUMBER.posX - GetNumberWidth(Data.m_nFavoriteScore, FAVORITE_NUMBER.sclX) / 2.f,
-		FAVORITE_NUMBER.posY, FAVORITE_NUMBER.sclX, FAVORITE_NUMBER.sclY);
+	FAVORITE_NUMBER.posX - GetNumberWidth(Data.m_nFavoriteScore, FAVORITE_NUMBER.sclX) / 2.f,
+	FAVORITE_NUMBER.posY, FAVORITE_NUMBER.sclX, FAVORITE_NUMBER.sclY);
 }
 
 //====================================================
@@ -455,6 +455,7 @@ void CWinnerResultUI::TiePointUI()
 		TIE_NUMBER_TOTAL.posX - GetNumberWidth(Data.m_nScore, TIE_NUMBER_TOTAL.sclX),
 		TIE_NUMBER_TOTAL.posY, TIE_NUMBER_TOTAL.sclX, TIE_NUMBER_TOTAL.sclY);
 }
+
 
 //i人目の立ち絵の中心のX座標.
 float CWinnerResultUI::GetTieCenterX(int i) const

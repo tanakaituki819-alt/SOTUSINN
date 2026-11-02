@@ -1,12 +1,12 @@
 #pragma once
 #include "Player/CPlayer.h"
-#include "GameScene/GameSceneGameMain/Ingredients/CIngredients.h"	//Ingredients列挙体を使うため.
-#include "ResultDataManager/PlayerTitle/CPlayerTitle.h"				//称号を使うため.
+#include "GameScene/GameSceneGameMain/Ingredients/CIngredients.h"
+#include "ResultDataManager/PlayerTitle/CPlayerTitle.h"
 
 //	食材のカテゴリ.
 enum class enIngredientCategory
 {
-	None,		//未分類(何も取っていない).
+	None,		//何も取っていない.
 	Meat,		//肉系(肉、ウインナー、タラ).
 	Veggie,		//野菜系(にんじん、大根、白菜、ねぎ、豆腐).
 	Mushroom,	//きのこ系(エノキ、シイタケ).
@@ -29,9 +29,9 @@ struct SPlayerResultData
 	int		m_nMashWinCount;	//連打対決で勝った回数.
 	int		m_nMashLoseCount;	//連打対決で負けた回数.
 	int		m_nRank;			//順位.
-	enIngredientCategory	m_FavoriteCategory;	//お気に入りカテゴリ.
+	enIngredientCategory	m_FavoriteCategory;		//お気に入りカテゴリ.
 	Ingredients				m_FavoriteIngredient;	//お気に入りカテゴリの中で一番多く取った食材.
-	STitle					m_Title;			//称号.
+	STitle					m_Title;				//称号.
 
 	//初期化.
 	SPlayerResultData()
@@ -94,6 +94,7 @@ public:
 private:
 	CResultDataManager();
 	~CResultDataManager();
+
 	//コピーコンストラクタによるコピーを禁止する.
 	CResultDataManager(const CResultDataManager& rhs) = delete;
 	//代入演算子によるコピーを禁止する.
