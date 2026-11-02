@@ -190,8 +190,8 @@ void CButtonMashBattleUI::UpdateSlot(BattleSlot& Slot)
 		CXInput* pInput = Slot.pEntries[i]->GetXInput();
 		if (!pInput) continue;
 
-		//Aボタンが押された瞬間だけを1回としてカウントする.
-		if (pInput->IsDown(CXInput::A, true))
+		//Bボタンが押された瞬間だけを1回としてカウントする.
+		if (pInput->IsDown(CXInput::B, true))
 		{
 			Slot.MashCount[i]++;
 		}

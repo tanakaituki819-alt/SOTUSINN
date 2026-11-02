@@ -61,6 +61,11 @@ public:
 		IMG_FUSUMA,				//ふすま
 		IMG_Gage,				//連打対決のゲージの.
 		IMG_FavoriteFont,		//お気に入り食材の文字.
+		IMG_BronzeFonst,		//銅の称号のフォント.
+		IMG_SilverFonst,		//銀の称号のフォント.
+		IMG_GoldFonst,			//金の称号のフォント.
+		IMG_RainbowFonst,		//虹の称号のフォント.
+		IMG_WoodenTag,			//木札.
 		MAX
 	};
 	//ｘファイル

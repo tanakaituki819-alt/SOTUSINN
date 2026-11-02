@@ -13,7 +13,8 @@ CIngredientsmanager::CIngredientsmanager()
 {
 
 
-	JsonFileIO::LoadEncrypted(filePath, LoadData);
+	SAVE();
+	JsonFileIO::Load(filePath, LoadData);
 
 
 	// 1. 乱数生成器の初期化
@@ -27,7 +28,6 @@ CIngredientsmanager::CIngredientsmanager()
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
 
-	//SAVE();
 
 
 
@@ -324,7 +324,7 @@ void CIngredientsmanager::SAVE()
 			});
 	}
 
-	JsonFileIO::SaveEncrypted(filePath, SAVEData);
+	JsonFileIO::SAVE(filePath, SAVEData);
 	return;
 }
 
