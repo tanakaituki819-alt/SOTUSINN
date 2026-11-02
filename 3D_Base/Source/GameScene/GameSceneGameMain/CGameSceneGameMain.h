@@ -51,7 +51,7 @@ private:
 	CPauseUI* m_pPauseUI;
 	bool m_Pause;
 	float		m_EndTimer = 0;			//ゲームメイン強制終了タイマー.
-	bool		m_IsEnd = false;		//ゲーム終了フラグ.
+	bool		m_IsEnd = true;		//ゲーム終了フラグ.
 	float		m_SceneChangeTimer = 0;	//シーン切り替えタイマー.
 	CIngredientsmanager* m_pCIngredientsM;//野菜マネージャー
 	CSprite3D* m_pBackGround;
