@@ -10,6 +10,26 @@ namespace {
 	constexpr float GAUGE_MARGIN  = 8.f;	//ゲージ同士の縦の間隔.
 	constexpr float GAUGE_ANCHOR_OFFSET_Y = 70.f;	//具材の画面上の位置から、どれだけ上にゲージをずらすか.
 	constexpr float GAUGE_BG_ALPHA = 0.3f;	//連打していない部分のα値.
+
+	//---------------------------------------------------
+	//	カウントダウン中の対戦者表示に関する定数.
+	//---------------------------------------------------
+	constexpr float NAME_HEIGHT  = 30.f;						//プレイヤー名1つ分の表示高さ.
+	constexpr float NAME_WIDTH   = NAME_HEIGHT * 226.f / 59.f;	//プレイヤー名1つ分の表示幅(元画像の縦横比を保つ).
+	constexpr float VS_HEIGHT    = 34.f;						//「対」の文字の表示高さ.
+	constexpr float VS_WIDTH     = VS_HEIGHT * 50.f / 49.f;		//「対」の文字の表示幅(画像1コマ分の縦横比を保つ).
+	constexpr float NAME_SPACING = 6.f;							//プレイヤー名と「対」の間隔.
+	constexpr float TOP_ROW_HEIGHT = (VS_HEIGHT > NAME_HEIGHT) ? VS_HEIGHT : NAME_HEIGHT;	//上段(対戦者名)全体の高さ.
+	constexpr float ROW_GAP      = 6.f;							//上段(対戦者名)と下段(数字)の間隔.
+	constexpr float DIGIT_SIZE   = GAUGE_HEIGHT;				//カウントダウンの数字の表示サイズ.
+
+	//---------------------------------------------------
+	//	連打中のボタン表示に関する定数.
+	//---------------------------------------------------
+	constexpr float BUTTON_WIDTH  = 70.f;					//ボタン表示の幅(マヒ中の表示 100x130 と同じ比率).
+	constexpr float BUTTON_HEIGHT = 91.f;					//ボタン表示の高さ.
+	constexpr float BUTTON_OFFSET_X = 8.f;					//ゲージの右端からボタン表示までの間隔.
+	constexpr int   BUTTON_ANIM_FRAMES = 4;					//ボタンの押す/離すの絵を切り替えるフレーム数.
 }
 
 CButtonMashBattleUI::CButtonMashBattleUI()
@@ -21,6 +41,11 @@ CButtonMashBattleUI::CButtonMashBattleUI()
 	}
 	//カウントダウン表示用(スコア表示等でも使っている0〜9の数字画像を流用する).
 	m_pCountdownDigit = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Digit0_9);
+	//対戦者表示用(ゲージと同じ色の付いたプレイヤーフォントを流用する).
+	m_pPlayerName = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_WinnerFont);
+	m_pVsFont = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::IMG_VsFont);
+	//連打するボタンの表示用(マヒ中に出しているボタン画像を流用する).
+	m_pButtonGuide = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_ButtonPush);
 
 	//全スロットを未使用状態に初期化しておく.
 	InitMashBattle();
@@ -34,6 +59,9 @@ CButtonMashBattleUI::~CButtonMashBattleUI()
 		m_pGaugeImg[i] = nullptr;
 	}
 	m_pCountdownDigit = nullptr;
+	m_pPlayerName = nullptr;
+	m_pVsFont = nullptr;
+	m_pButtonGuide = nullptr;
 }
 
 void CButtonMashBattleUI::Update()
@@ -72,10 +100,19 @@ void CButtonMashBattleUI::Draw()
 
 	//カウントダウン中のスロットは、参加者ごとに数字を出すと重複してしまうため、
 	//スロットにつき1つだけ代表してゲージの中央に表示する.
+	//上段に「プレイヤー壱 対 プレイヤー弐」、下段に数字を出し、カウントダウン終了と同時に両方消える.
 	for (auto& Slot : m_Slots)
 	{
 		if (!Slot.IsActive || !Slot.IsCountdown) continue;
+		RenderMatchupNames(Slot);
 		RenderCountdownNumber(Slot);
+	}
+
+	//連打が始まったスロットには、Bボタンを連打することが分かるようにボタンを表示する.
+	for (auto& Slot : m_Slots)
+	{
+		if (!Slot.IsActive || Slot.IsCountdown) continue;
+		RenderButtonGuide(Slot);
 	}
 }
 
@@ -369,20 +406,6 @@ void CButtonMashBattleUI::RenderCountdownNumber(const BattleSlot& Slot)
 {
 	if (!m_pCountdownDigit) return;
 
-	//このスロットの参加人数を数える.
-	int EntryCount = 0;
-	for (int i = 0; i < GAUGE_MAX; i++)
-	{
-		if (Slot.pEntries[i]) EntryCount++;
-	}
-	if (EntryCount <= 0) return;
-
-	//本編開始後に参加者のゲージが並ぶ範囲を求め、
-	const float RowStep = GAUGE_HEIGHT + GAUGE_MARGIN;
-	const float NearestRowTop = Slot.ScreenPos.y - GAUGE_ANCHOR_OFFSET_Y;					//具材に一番近い段の上端.
-	const float FarthestRowTop = NearestRowTop - (EntryCount - 1) * RowStep;				//一番遠い段の上端.
-	const float StackCenterY = (FarthestRowTop + NearestRowTop + GAUGE_HEIGHT) * 0.5f;		//全段をまとめた範囲の中心.
-
 	//カウントダウン開始からの経過フレーム数を求め、何段階目かを算出する.
 	int Elapsed = COUNTDOWN_TOTAL_FRAMES - Slot.CountdownTimer;
 	if (Elapsed < 0) Elapsed = 0;
@@ -392,13 +415,119 @@ void CButtonMashBattleUI::RenderCountdownNumber(const BattleSlot& Slot)
 	if (Digit > 3) Digit = 3;
 	if (Digit < 1) Digit = 1;
 
-	//ゲージが並ぶ範囲の中央に、ゲージの高さに合わせた正方形で大きく表示する.
-	const float Size = GAUGE_HEIGHT;
+	//対戦者名の下段に、ゲージの高さに合わせた正方形で大きく表示する.
+	const float PosY = GetCountdownAreaTop(Slot) + TOP_ROW_HEIGHT + ROW_GAP;
 	m_pCountdownDigit->SetPatternNo(static_cast<SHORT>(Digit), 0);
-	m_pCountdownDigit->SetPosition(D3DXVECTOR3(Slot.ScreenPos.x - Size * 0.5f, StackCenterY - Size * 0.5f, 0.f));
-	m_pCountdownDigit->SetScale(D3DXVECTOR3(Size, Size, 0.f));
+	m_pCountdownDigit->SetPosition(D3DXVECTOR3(Slot.ScreenPos.x - DIGIT_SIZE * 0.5f, PosY, 0.f));
+	m_pCountdownDigit->SetScale(D3DXVECTOR3(DIGIT_SIZE, DIGIT_SIZE, 0.f));
 	m_pCountdownDigit->SetAlpha(1.f);
 	m_pCountdownDigit->Render();
+}
+
+//カウントダウン中に、誰と誰の対決かを描画する.
+void CButtonMashBattleUI::RenderMatchupNames(const BattleSlot& Slot)
+{
+	if (!m_pPlayerName || !m_pVsFont) return;
+
+	//このスロットの参加人数を数える.
+	int EntryCount = 0;
+	for (int i = 0; i < GAUGE_MAX; i++)
+	{
+		if (Slot.pEntries[i]) EntryCount++;
+	}
+	if (EntryCount <= 0) return;
+
+	//「名前 対 名前 対 …」を横一列に並べたときの全体の幅を求め、具材の真上を中心にする.
+	const float VsStep = NAME_SPACING + VS_WIDTH + NAME_SPACING;
+	const float TotalWidth = EntryCount * NAME_WIDTH + (EntryCount - 1) * VsStep;
+	float PosX = Slot.ScreenPos.x - TotalWidth * 0.5f;
+
+	//画面端の具材でも名前が見切れないように、画面内に収める.
+	if (PosX + TotalWidth > static_cast<float>(WND_W)) PosX = static_cast<float>(WND_W) - TotalWidth;
+	if (PosX < 0.f) PosX = 0.f;
+
+	//上段の中で、名前と「対」をそれぞれ縦方向の中央にそろえる.
+	const float RowTop = GetCountdownAreaTop(Slot);
+	const float NamePosY = RowTop + (TOP_ROW_HEIGHT - NAME_HEIGHT) * 0.5f;
+	const float VsPosY = RowTop + (TOP_ROW_HEIGHT - VS_HEIGHT) * 0.5f;
+
+	int Drawn = 0;
+	for (int i = 0; i < GAUGE_MAX; i++)
+	{
+		if (!Slot.pEntries[i]) continue;
+
+		//2人目以降は、名前の前に「対」を挟む.
+		if (Drawn > 0)
+		{
+			//画像は1列2行構成(上段:対 下段:VS)で、上段の「対」だけを使う.
+			m_pVsFont->SetPatternNo(0, 0);
+			m_pVsFont->SetPosition(D3DXVECTOR3(PosX + NAME_SPACING, VsPosY, 0.f));
+			m_pVsFont->SetScale(D3DXVECTOR3(VS_WIDTH, VS_HEIGHT, 0.f));
+			m_pVsFont->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
+			m_pVsFont->SetAlpha(1.f);
+			m_pVsFont->Render();
+			PosX += VsStep;
+		}
+
+		//プレイヤーフォント画像は1列4行構成で、行番号(y)がプレイヤー番号に対応する.
+		//(リザルト画面で回転させて使っているため、回転は毎回リセットしておく)
+		m_pPlayerName->SetPatternNo(0, static_cast<SHORT>(i));
+		m_pPlayerName->SetPosition(D3DXVECTOR3(PosX, NamePosY, 0.f));
+		m_pPlayerName->SetScale(D3DXVECTOR3(NAME_WIDTH, NAME_HEIGHT, 0.f));
+		m_pPlayerName->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
+		m_pPlayerName->SetAlpha(1.f);
+		m_pPlayerName->Render();
+
+		PosX += NAME_WIDTH;
+		Drawn++;
+	}
+}
+
+//連打中に、ゲージの横へボタン表示を描画する.
+void CButtonMashBattleUI::RenderButtonGuide(const BattleSlot& Slot)
+{
+	if (!m_pButtonGuide) return;
+
+	//ゲージが並ぶ範囲の縦の中心を求める(カウントダウン表示の範囲と中心は同じ).
+	const float AreaHeight = TOP_ROW_HEIGHT + ROW_GAP + DIGIT_SIZE;
+	const float CenterY = GetCountdownAreaTop(Slot) + AreaHeight * 0.5f;
+
+	//ボタン画像は中央基準なので、ゲージの右端からボタンの半分だけずらした位置を中心にする.
+	const float CenterX = Slot.ScreenPos.x + GAUGE_WIDTH * 0.5f + BUTTON_OFFSET_X + BUTTON_WIDTH * 0.5f;
+
+	//マヒ中の表示と同じく、ボタン画像は1列3行構成で、
+	//0行目(押す前)と2行目(押した瞬間)を交互に切り替えて連打している様子を見せる.
+	const int Elapsed = BATTLE_TIME_LIMIT - Slot.BattleTimer;
+	const SHORT PatternY = ((Elapsed / BUTTON_ANIM_FRAMES) % 2 == 0) ? 0 : 2;
+
+	m_pButtonGuide->SetPatternNo(0, PatternY);
+	m_pButtonGuide->SetPosition(D3DXVECTOR3(CenterX, CenterY, 0.f));
+	m_pButtonGuide->SetScale(D3DXVECTOR3(BUTTON_WIDTH, BUTTON_HEIGHT, 1.f));
+	m_pButtonGuide->SetRotation(D3DXVECTOR3(0.f, 0.f, 0.f));
+	m_pButtonGuide->SetAlpha(1.f);
+	m_pButtonGuide->Render();
+}
+
+//カウントダウン表示(上段:対戦者名 下段:数字)をまとめた範囲の上端を求める.
+float CButtonMashBattleUI::GetCountdownAreaTop(const BattleSlot& Slot) const
+{
+	//このスロットの参加人数を数える.
+	int EntryCount = 0;
+	for (int i = 0; i < GAUGE_MAX; i++)
+	{
+		if (Slot.pEntries[i]) EntryCount++;
+	}
+	if (EntryCount <= 0) EntryCount = 1;
+
+	//本編開始後に参加者のゲージが並ぶ範囲を求め、
+	const float RowStep = GAUGE_HEIGHT + GAUGE_MARGIN;
+	const float NearestRowTop = Slot.ScreenPos.y - GAUGE_ANCHOR_OFFSET_Y;					//具材に一番近い段の上端.
+	const float FarthestRowTop = NearestRowTop - (EntryCount - 1) * RowStep;				//一番遠い段の上端.
+	const float StackCenterY = (FarthestRowTop + NearestRowTop + GAUGE_HEIGHT) * 0.5f;		//全段をまとめた範囲の中心.
+
+	//その中心に、上段と下段をまとめた範囲の中心が来るようにする.
+	const float AreaHeight = TOP_ROW_HEIGHT + ROW_GAP + DIGIT_SIZE;
+	return StackCenterY - AreaHeight * 0.5f;
 }
 
 //同じスロット内で、指定したプレイヤーが何番目の参加者かを求める.

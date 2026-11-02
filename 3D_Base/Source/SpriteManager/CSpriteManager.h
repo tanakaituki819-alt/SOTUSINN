@@ -66,6 +66,7 @@ public:
 		IMG_GoldFonst,			//金の称号のフォント.
 		IMG_RainbowFonst,		//虹の称号のフォント.
 		IMG_WoodenTag,			//木札.
+		IMG_VsFont,				//連打対決の「対」の文字.
 		MAX
 	};
 	//ｘファイル

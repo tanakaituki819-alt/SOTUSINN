@@ -297,6 +297,8 @@ void CSpriteManager::Load2D()
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_RainbowFonst),	_T("Data\\Texture\\rainbow.png"),{{1,1,1},{500,50},{500,50}} });
 	//木札.
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_WoodenTag),	_T("Data\\Texture\\Woodentag.png"),{{1,1,1},{577,212},{577,212}} });
+	//連打対決の「対」の文字.(上段:対 下段:VS)
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_VsFont),		_T("Data\\Texture\\Vs.png"),{{1,1,1},{50,99},{50,99 / 2}} });
 
 
 
