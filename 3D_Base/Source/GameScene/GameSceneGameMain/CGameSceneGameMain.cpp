@@ -180,7 +180,7 @@ void CGameSceneGameMain::Update()
 		if (m_SceneChangeTimer >= 60 * 4) {
 			m_IsEnd = false;
 			m_SceneChangeTimer = 0;
-			SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 90, 120);
+			SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 90, 180,60);
 		}
 	}
 	//ゲームタイマーが0秒になった.
@@ -195,6 +195,7 @@ void CGameSceneGameMain::Update()
 	if (GetAsyncKeyState('C') & 0x0001) {
 		static ::EsHandle handle = -1;
 		handle=Effect::Play(EFE::KANSEI,D3DXVECTOR3(0.f, 0.f, 0.f));
+		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 90, 180, 60);
 	}
 	if (GetAsyncKeyState('Z') & 0x0001) {
 		XAudio2::GetInstance()->AllStopBGM();
