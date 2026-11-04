@@ -301,6 +301,9 @@ void CSpriteManager::Load2D()
 	//連打対決の「対」の文字.(上段:対 下段:VS)
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_VsFont),		_T("Data\\Texture\\Vs.png"),{{1,1,1},{50,99},{50,99 / 2}} });
 
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_WoodenTag),	_T("Data\\Texture\\Woodentag.png"),{{1,1,1},{577,212},{577,212}} });
+	//献立画像.
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_KONDATE),	_T("Data\\Texture\\Menu.png"),{{1,1,1},{1,1},{0.5,0.5}} });
 
 
 

@@ -110,7 +110,7 @@ void CIngredientsmanager::Update()
 
 	if (gameTimu >0) {
 		if (StartSettingis) {
-			if (TimuC > 15) {
+			if (TimuC > 5) {
 				TimuC = 0;
 				Create();
 			}

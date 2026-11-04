@@ -376,14 +376,22 @@ HRESULT CSprite2D::CreateSampler()
 //レンダリング用.
 void CSprite2D::Render()
 {
-	//基準点（ピボット）のオフセットを設定
-	D3DXMATRIX mPio = {};
-	D3DXMatrixIdentity(&mPio); // 単位行列に設定//０で初期化だとかけた時に０すべて０になる
-	if (Topleftreferenceis) {
-	//基準点が左上に来るように引き算（逆方向へ移動）
-	D3DXMatrixTranslation(&mPio, PiPot.x, PiPot.y, PiPot.z);
-	}
 
+
+	// 基準点オフセット（左上基準のときだけ有効）
+	D3DXVECTOR3 off = Topleftreferenceis ? PiPot : D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXMATRIX mPio;
+	D3DXMatrixTranslation(&mPio, off.x, off.y, off.z);
+
+	// 回転中心：画像上の点（画像中心からの相対 RotPot）を、
+	// 基準点補正＋拡縮後の座標に変換する
+	D3DXVECTOR3 pv(
+		(RotPot.x + off.x) * m_Scale.x,
+		(RotPot.y + off.y) * m_Scale.y,
+		(RotPot.z + off.z) * m_Scale.z);
+	D3DXMATRIX mRotIn, mRotOut;
+	D3DXMatrixTranslation(&mRotIn, -pv.x, -pv.y, -pv.z);
+	D3DXMatrixTranslation(&mRotOut, pv.x, pv.y, pv.z);
 	//ワールド行列.
 	D3DXMATRIX	mWorld;
 	D3DXMATRIX	mTrans, mRot, mScale;
@@ -406,7 +414,7 @@ void CSprite2D::Render()
 
 	//ワールド座標変換.
 	//重要: 拡縮行列 * 回転行列 * 平行行列.
-	mWorld = mPio*mScale * mRot * mTrans;
+	mWorld = mPio * mScale * mRotIn * mRot * mRotOut * mTrans;
 
 	//使用するシェーダの登録.
 	m_pContext11->VSSetShader( m_pVertexShader, nullptr, 0 );
@@ -487,6 +495,12 @@ void CSprite2D::Render()
 }
 void CSprite2D::Render2(float i)
 {
+	//基準点（ピボット）のオフセットを設定
+	D3DXMATRIX mPio = {};
+	D3DXMatrixIdentity(&mPio); // 単位行列に設定//０で初期化だとかけた時に０すべて０になる
+
+
+
 	//ワールド行列.
 	D3DXMATRIX	mWorld;
 	D3DXMATRIX	mTrans, mRot, mScale;
@@ -509,7 +523,7 @@ void CSprite2D::Render2(float i)
 
 	//ワールド座標変換.
 	//重要: 拡縮行列 * 回転行列 * 平行行列.
-	mWorld = mScale * mRot * mTrans;
+	mWorld = mPio* mScale * mRot * mTrans;
 
 	//使用するシェーダの登録.
 	m_pContext11->VSSetShader(m_pVertexShader, nullptr, 0);

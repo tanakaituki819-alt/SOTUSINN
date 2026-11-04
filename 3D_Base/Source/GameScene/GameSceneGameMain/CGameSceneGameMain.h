@@ -12,6 +12,7 @@
 #include "GameScene/GameSceneGameMain/ButtonMashBattleUI/CButtonMashBattleUI.h"
 
 #include "GameScene/GameSceneGameMain/IngredientsGetEffect/IngredientsGetEffectManager.h"
+#include "GameStartIntro/GameStartIntro.h"
 class CGameSceneGameMain
 	:public CGameScene
 {
@@ -63,6 +64,8 @@ private:
 	IngredientsGetEffectManager* m_IngredientsGetEffectManager = nullptr;
 
 	D3DXVECTOR3	m_BackGroundRotation = {};
+
+	GameStartIntro* m_pGameStartIntro = nullptr;
 };
 
 
