@@ -86,7 +86,7 @@ private:
 	void RenderMatchupNames(const BattleSlot& Slot);
 	//連打中に、ゲージの横へ「Bボタンを連打」のボタン表示を描画する.
 	void RenderButtonGuide(const BattleSlot& Slot);
-	//カウントダウン表示(上段:対戦者名 下段:数字)をまとめた範囲の上端を求める.
+	//カウントダウン表示をまとめた範囲の上端を求める.
 	float GetCountdownAreaTop(const BattleSlot& Slot) const;
 	//同じスロット内で、指定したプレイヤーが何番目の参加者かを求める.
 	int GetLocalRank(const BattleSlot& Slot, int PlayerNo) const;
@@ -94,7 +94,7 @@ private:
 private:
 	CSprite2D* m_pGaugeImg[GAUGE_MAX];	//ゲージ画像.
 	CSprite2D* m_pCountdownDigit;		//カウントダウンの数字表示用.
-	CSprite2D* m_pPlayerName;			//対戦者の名前表示用(ゲージと同じ色付きのプレイヤーフォント).
-	CSprite2D* m_pVsFont;				//「対」の文字表示用.
-	CSprite2D* m_pButtonGuide;			//連打するボタンの表示用(マヒ中と同じボタン画像).
+	CSprite2D* m_pPlayerName;			//対戦者の名前表示用.
+	CSprite2D* m_pVsFont;				//対の文字表示用.
+	CSprite2D* m_pButtonGuide;			//連打するボタンの表示用.
 };
