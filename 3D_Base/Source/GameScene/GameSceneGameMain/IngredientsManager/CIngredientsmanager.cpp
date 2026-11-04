@@ -187,6 +187,7 @@ void CIngredientsmanager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light,
 
 void CIngredientsmanager::Create()
 { 
+	RareIngredients = false;
 	//std::cout << GetIngredientsliveing() << std::endl;
 	if (GetIngredientsliveing() >= 40) {
 		StartSettingis = false;
@@ -194,6 +195,8 @@ void CIngredientsmanager::Create()
 	}
 	int index;
 	if (StartSettingis) {
+
+
 		index = Normaldist(gen);//最初の配置ならレア役が出ない
 	}
 	else {
@@ -217,20 +220,19 @@ void CIngredientsmanager::Create()
 		if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Standby) {
 			m_pIngredients[i]->SetPosition({static_cast<FLOAT>(rand() % 100 + 1) / 100,5,static_cast<FLOAT>(rand() % 100 + 1) / 100});
 			m_pIngredients[i]->SetIngredients(IngredientsSetting, index);
-			if (RareIngredients) {
-				m_pIngredients[i]->RareIngredientsEffect();
-				RareIngredients = false;
-			}
+			m_pIngredients[i]->RareIngredientsEffect(RareIngredients);
+
 			return;
 		}
 	}
 	CIngredients* now = new CIngredients;
 	now->SetNabe(Nabe);
 	now->SetPosition({ static_cast<float>(x) *(NABE/ static_cast<float>(R-1))- NABE/2.0f ,5,static_cast<float>(z) * (NABE / static_cast<float>(R-1))- NABE/2.0f });
-
-
-
 	now->SetIngredients(IngredientsSetting, index);
+
+		now->RareIngredientsEffect(RareIngredients);
+
+
 	m_pIngredients.push_back(now);
 
 

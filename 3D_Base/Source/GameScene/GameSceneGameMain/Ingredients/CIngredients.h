@@ -63,7 +63,7 @@ public:
 	void SetNabe(CNabe* CNabe) { Nabe = CNabe; }
 	void SetIngredients(IngredientsSetting* pIngredientsSetting,int i);//野菜の設定
 	void IsCollecting();
-	void RareIngredientsEffect();
+	void RareIngredientsEffect(bool Rare);
 	enCharStatus GetCharStatus() {return Status;}
 	void DeadCharStatus() { Status = enCharStatus::Dead; }
 	//重複して取ったら

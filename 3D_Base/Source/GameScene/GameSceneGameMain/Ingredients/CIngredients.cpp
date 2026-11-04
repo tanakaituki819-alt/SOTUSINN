@@ -56,9 +56,9 @@ void CIngredients::IsCollecting()
 	m_IsCollecting = true;	//回収中へ.
 }
 
-void CIngredients::RareIngredientsEffect()
+void CIngredients::RareIngredientsEffect(bool Rare)
 {
-	RareIngredients = true;
+	RareIngredients = Rare;
 }
 
 
@@ -106,18 +106,23 @@ void CIngredients::Update()
 		}
 		if (IsInTheWater == true) {
 			EffC += rand() % 2;
-			if (EffC >= 60) {
-				::EsHandle handle = -1;
+			::EsHandle handle = -1;
 				if(RareIngredients){
-					handle = Effect::Play(EFE::SSR, { m_Position.x ,m_Position.y - 0.1f,m_Position.z });
-					Effect::SetScale(handle, D3DXVECTOR3(0.5f, 0.1f, 0.5f));
+					if (EffC >= 40) {
+						handle = Effect::Play(EFE::SSR, { m_Position.x ,m_Position.y ,m_Position.z });
+						Effect::SetScale(handle, D3DXVECTOR3(0.4f, 0.4f, 0.4f));	// SSR: uniform scale (Y=0.1 squashed billboards)
+						EffC = 0;
+					}
 				}
 				else {
-					handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y - 0.1f,m_Position.z });
-					Effect::SetScale(handle, D3DXVECTOR3(0.3f, 0.1f, 0.3f));
+					if (EffC >= 60) {
+						handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y ,m_Position.z });
+						Effect::SetScale(handle, D3DXVECTOR3(0.4f, 0.4f, 0.4f));
+						EffC = 0;
+					}
 				}
-				EffC = 0;
-			}
+	
+		
 
 		}
 		if (!m_IsCollecting) {

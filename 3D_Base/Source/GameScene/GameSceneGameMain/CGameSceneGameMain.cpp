@@ -159,11 +159,12 @@ void CGameSceneGameMain::Update()
 	//連打対決の更新.
 	m_pButtonMashBattleUI->Update();
 
-	for (int i = 0;i < PlayerMax;i++) {
-		if (m_pPlayer[i] != nullptr) {
-		m_pPlayer[i]->Update();
+	if(!m_IsEnd){
+		for (int i = 0;i < PlayerMax;i++) {
+			if (m_pPlayer[i] != nullptr) {
+				m_pPlayer[i]->Update();
+			}
 		}
-		
 	}
 	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
 	m_pCIngredientsM->Update();

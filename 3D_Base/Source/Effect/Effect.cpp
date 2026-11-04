@@ -54,7 +54,7 @@ HRESULT Effect::LoadData()
 	};
 	EffectList EList[] =
 	{
-	{ enList::NAMI,			u"Data\\Effekseer\\波.efk"			},
+	{ enList::NAMI,			u"Data\\Effekseer\\common.efk"			},
 	{ enList::ORA1,			u"Data\\Effekseer\\O-RA1.efk"		},
 	{ enList::KANSEI,		u"Data\\Effekseer\\完成.efk"			},
 	{ enList::KIRAN,		u"Data\\Effekseer\\KIRAN.efk"		},
