@@ -4,6 +4,8 @@ GameStartIntro::GameStartIntro()
 {
 	m_pKONDATE = CSpM::GetSprite2D(CSpMLstiImg::IMG_KONDATE);
 	m_pKONDATE->SetScale({ SCX, WND_H - offSetY * 2,0.1 });
+	OSAKINIITADAKIMASU= CSpM::GetSprite2D(CSpMLstiImg::Img_TitleText);
+	OSAKINIITADAKIMASU->SetScale({0,0,0});
 }
 
 GameStartIntro::~GameStartIntro()
@@ -68,10 +70,16 @@ void GameStartIntro::Update()
 		R_Position.y -= UpS;
 		if (R_Position.y+ WND_H - offSetY * 2<0) {
 			m_steat = steat::END;
+
 		}
 		break;
 	case GameStartIntro::steat::END:
 		End = true;
+		OSAKINIITADAKIMASU_T += 1.0 / 120.0;
+		if (OSAKINIITADAKIMASU_T>1) {
+			m_steat = steat::AllEND;
+		}
+
 		break;
 	default:
 		break;
@@ -97,6 +105,13 @@ void GameStartIntro::Draw()
 		m_pKONDATE->SetRotation(L_Rotation);
 		m_pKONDATE->Render();
 		break;
+		case  GameStartIntro::steat::END:
+			float W =	1260 * Quadraticfunction(OSAKINIITADAKIMASU_T);
+			float H= 560 * Quadraticfunction(OSAKINIITADAKIMASU_T);
+			OSAKINIITADAKIMASU->SetPosition({WND_W/2-W/2,WND_H/2-H/2,0});
+			OSAKINIITADAKIMASU->SetScale({W,H,0});
+			OSAKINIITADAKIMASU->Render();
+			break;
 	}
 
 
@@ -115,5 +130,20 @@ float GameStartIntro::R(float i)
 
 	//result = std::max(0.0f, result);
 	//result = std::min(1.0f, result);
+	return result;
+}
+
+float GameStartIntro::Quadraticfunction(float i)
+{
+	float result = 0;
+	float w = 0.4;//幅
+	float k = 4 / (w * w);
+
+	result = -k * ((i - 0.5) * (i - 0.5)) + 1;
+	// 例：最大輝度を 1.0 から 2.0（または 200%）に上げたい場合
+	//result = (-4 * ((i - 0.5) * (i - 0.5)) + 1) * 2.0f;
+	// 例：i = 0.8 のときに明るさのピークを持ってきたい場合
+	//result = -4.0f * ((i - 0.8f) * (i - 0.8f)) + 1.0f
+	result = std::max(0.0f, result);
 	return result;
 }

@@ -15,6 +15,7 @@ public:
 		miseru,
 		Up,
 		END,
+		AllEND
 	};
 	GameStartIntro();
 	~GameStartIntro();
@@ -39,4 +40,7 @@ private:
 
 	float UpS = 1;
 
+	CSprite2D* OSAKINIITADAKIMASU;
+	float OSAKINIITADAKIMASU_T = 0;
+	float Quadraticfunction(float i);
 };
