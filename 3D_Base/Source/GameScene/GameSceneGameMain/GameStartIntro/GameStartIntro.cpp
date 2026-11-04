@@ -108,6 +108,9 @@ void GameStartIntro::Draw()
 		case  GameStartIntro::steat::END:
 			float W =	1260 * Quadraticfunction(OSAKINIITADAKIMASU_T);
 			float H= 560 * Quadraticfunction(OSAKINIITADAKIMASU_T);
+			float t = std::min(Quadraticfunction(OSAKINIITADAKIMASU_T) / 0.8f, 1.0f);
+			float eased = 1.0f - (1.0f - t) * (1.0f - t);   // 最初は速く、0.8 に近づくほどゆっくり
+			OSAKINIITADAKIMASU->SetRotationZ(D3DXToRadian((720-35) * eased));
 			OSAKINIITADAKIMASU->SetPosition({WND_W/2-W/2,WND_H/2-H/2,0});
 			OSAKINIITADAKIMASU->SetScale({W,H,0});
 			OSAKINIITADAKIMASU->Render();
@@ -135,8 +138,9 @@ float GameStartIntro::R(float i)
 
 float GameStartIntro::Quadraticfunction(float i)
 {
+	//ピークは0.5
 	float result = 0;
-	float w = 0.4;//幅
+	float w = 0.6;//幅
 	float k = 4 / (w * w);
 
 	result = -k * ((i - 0.5) * (i - 0.5)) + 1;
