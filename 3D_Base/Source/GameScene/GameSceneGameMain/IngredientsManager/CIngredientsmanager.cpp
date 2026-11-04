@@ -199,6 +199,7 @@ void CIngredientsmanager::Create()
 	else {
 		if (Gacha(gen)==0) {//レアなら０
 			index = Raredist(gen); 
+			RareIngredients = true;
 		}
 		else {
 			index = Normaldist(gen); // 確率に基づいたインデックスが返る
@@ -216,6 +217,10 @@ void CIngredientsmanager::Create()
 		if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Standby) {
 			m_pIngredients[i]->SetPosition({static_cast<FLOAT>(rand() % 100 + 1) / 100,5,static_cast<FLOAT>(rand() % 100 + 1) / 100});
 			m_pIngredients[i]->SetIngredients(IngredientsSetting, index);
+			if (RareIngredients) {
+				m_pIngredients[i]->RareIngredientsEffect();
+				RareIngredients = false;
+			}
 			return;
 		}
 	}

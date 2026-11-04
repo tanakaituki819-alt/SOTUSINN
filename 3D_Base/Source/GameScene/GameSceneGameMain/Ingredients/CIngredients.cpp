@@ -56,6 +56,11 @@ void CIngredients::IsCollecting()
 	m_IsCollecting = true;	//回収中へ.
 }
 
+void CIngredients::RareIngredientsEffect()
+{
+	RareIngredients = true;
+}
+
 
 void CIngredients::Update()
 {
@@ -103,8 +108,14 @@ void CIngredients::Update()
 			EffC += rand() % 2;
 			if (EffC >= 60) {
 				::EsHandle handle = -1;
-				handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y - 0.1f,m_Position.z });
-				Effect::SetScale(handle, D3DXVECTOR3(0.3f, 0.1f, 0.3f));
+				if(RareIngredients){
+					handle = Effect::Play(EFE::SSR, { m_Position.x ,m_Position.y - 0.1f,m_Position.z });
+					Effect::SetScale(handle, D3DXVECTOR3(0.5f, 0.1f, 0.5f));
+				}
+				else {
+					handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y - 0.1f,m_Position.z });
+					Effect::SetScale(handle, D3DXVECTOR3(0.3f, 0.1f, 0.3f));
+				}
 				EffC = 0;
 			}
 

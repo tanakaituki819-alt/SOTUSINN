@@ -178,8 +178,6 @@ void CGameSceneGameMain::Update()
 	if (m_IsEnd) {
 		m_SceneChangeTimer++;	//シーン切り替えタイマーを増加する.
 		if (m_SceneChangeTimer >= 60 * 4) {
-			m_IsEnd = false;
-			m_SceneChangeTimer = 0;
 			SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 90, 180,60);
 		}
 	}
