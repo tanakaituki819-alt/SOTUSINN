@@ -73,7 +73,7 @@ public:
 		if (No < Ingredients::none || No >= Ingredients::MAX) return 0;
 		return m_IngredientScore[static_cast<int>(No)];
 	}
-	//スコアと獲得した具材のリスト、連打対決の勝敗数をリセットする(もう一度プレイ用).
+	//スコアと獲得した具材のリスト、連打対決の勝敗数、カーソルの位置を初期化.
 	void ResetGameData()
 	{
 		Score = 0;
@@ -81,6 +81,9 @@ public:
 		for (auto& IngredientScore : m_IngredientScore) IngredientScore = 0;
 		m_MashWinCount = 0;
 		m_MashLoseCount = 0;
+		m_Position = { 0.f, 0.f, 0.f };
+		m_OldPosition = { 0.f, 0.f, 0.f };
+		m_CousorPosition = { 0.f, 0.f, 0.f };
 	}
 
 	void SetIngredientsGetEffectManager(IngredientsGetEffectManager* IngredientsGetEffectManager) {
