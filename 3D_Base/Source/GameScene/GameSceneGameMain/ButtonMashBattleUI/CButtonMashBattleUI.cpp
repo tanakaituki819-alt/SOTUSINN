@@ -448,7 +448,7 @@ void CButtonMashBattleUI::RenderMatchupNames(const BattleSlot& Slot)
 	if (PosX + TotalWidth > static_cast<float>(WND_W)) PosX = static_cast<float>(WND_W) - TotalWidth;
 	if (PosX < 0.f) PosX = 0.f;
 
-	//上段の中で、名前と「対」をそれぞれ縦方向の中央にそろえる.
+	//上段の中で、名前と対をそれぞれ縦方向の中央にそろえる.
 	const float RowTop = GetCountdownAreaTop(Slot);
 	const float NamePosY = RowTop + (TOP_ROW_HEIGHT - NAME_HEIGHT) * 0.5f;
 	const float VsPosY = RowTop + (TOP_ROW_HEIGHT - VS_HEIGHT) * 0.5f;
@@ -461,7 +461,6 @@ void CButtonMashBattleUI::RenderMatchupNames(const BattleSlot& Slot)
 		//2人目以降は、名前の前に「対」を挟む.
 		if (Drawn > 0)
 		{
-			//画像は1列2行構成(上段:対 下段:VS)で、上段の「対」だけを使う.
 			m_pVsFont->SetPatternNo(0, 0);
 			m_pVsFont->SetPosition(D3DXVECTOR3(PosX + NAME_SPACING, VsPosY, 0.f));
 			m_pVsFont->SetScale(D3DXVECTOR3(VS_WIDTH, VS_HEIGHT, 0.f));
@@ -471,8 +470,6 @@ void CButtonMashBattleUI::RenderMatchupNames(const BattleSlot& Slot)
 			PosX += VsStep;
 		}
 
-		//プレイヤーフォント画像は1列4行構成で、行番号(y)がプレイヤー番号に対応する.
-		//(リザルト画面で回転させて使っているため、回転は毎回リセットしておく)
 		m_pPlayerName->SetPatternNo(0, static_cast<SHORT>(i));
 		m_pPlayerName->SetPosition(D3DXVECTOR3(PosX, NamePosY, 0.f));
 		m_pPlayerName->SetScale(D3DXVECTOR3(NAME_WIDTH, NAME_HEIGHT, 0.f));
