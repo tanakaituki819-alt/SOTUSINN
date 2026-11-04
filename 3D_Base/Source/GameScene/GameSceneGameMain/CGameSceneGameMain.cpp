@@ -58,11 +58,10 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	SoundHandleX SEHandle = XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Boiling, XAudio2::SubmixTargetType::Reverb, true);	//沸騰音をループ再生.
 	XAudio2::GetInstance()->SetSoundVolume(SEHandle, 1.5f);
 
-	m_pGameEndText = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleText2);
-	m_pGameEndText->SetPatternNo(0, 3);
-	m_pGameEndText->SetPosition({160.f,240.f,0.f });
-	m_pGameEndText->SetScale({ 1000.f,270.f,1.5f });
+
 	m_IngredientsGetEffectManager = new IngredientsGetEffectManager();
+
+	m_pGameStartIntro = new GameStartIntro();
 }
 
 CGameSceneGameMain::~CGameSceneGameMain()
@@ -87,8 +86,6 @@ void CGameSceneGameMain::StartFinalSetup()
 			m_pPlayer[i]->SetXInput(CONTROLA[i]);
 			m_pPlayer[i]->SetPlayerNo(i);
 			m_pPlayer[i]->SetIngredientsGetEffectManager(m_IngredientsGetEffectManager);
-			//前のゲームのスコアをリセット.
-			m_pPlayer[i]->ResetGameData();
 		}
 	}
 	for (int i = 0; i < PlayerMax; i++) {
@@ -99,6 +96,17 @@ void CGameSceneGameMain::StartFinalSetup()
 
 void CGameSceneGameMain::Update()
 {
+	m_pGameStartIntro->Update();
+	if (!m_pGameStartIntro->GetEnd()) {
+
+		m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
+		m_pCIngredientsM->Update();
+
+
+		UpdateBSpherePos();
+	
+		return;
+	}
 	//m_pBackGround->SetRotation({ D3DXToRadian(m_BackGroundRotation.x), D3DXToRadian(m_BackGroundRotation.y), D3DXToRadian(m_BackGroundRotation.z) });
 
 
@@ -168,20 +176,12 @@ void CGameSceneGameMain::Update()
 	m_pCIngredientsM->SetTimu(m_pTimer->GetTimu());
 	m_pCIngredientsM->Update();
 	//タイマーが0秒になっているかつ鍋に残った具材が0になるまたは、強制終了タイマーが45秒経過したら.
-	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 40)
+	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45)
 	{
-		m_IsEnd = true;	//ゲーム終了フラグを立てる.
 		XAudio2::GetInstance()->AllStopBGM();
 		//リザルトで使う結果を保存.
 		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);
-	}
-	if (m_IsEnd) {
-		m_SceneChangeTimer++;	//シーン切り替えタイマーを増加する.
-		if (m_SceneChangeTimer >= 60 * 4) {
-			m_IsEnd = false;
-			m_SceneChangeTimer = 0;
-			SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 90, 180,60);
-		}
+		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::RSRIDE, 60, 60);
 	}
 	//ゲームタイマーが0秒になった.
 	if (m_pTimer->GetTimu() <= 0) {
@@ -195,13 +195,12 @@ void CGameSceneGameMain::Update()
 	if (GetAsyncKeyState('C') & 0x0001) {
 		static ::EsHandle handle = -1;
 		handle=Effect::Play(EFE::KANSEI,D3DXVECTOR3(0.f, 0.f, 0.f));
-		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 90, 180, 60);
 	}
 	if (GetAsyncKeyState('Z') & 0x0001) {
 		XAudio2::GetInstance()->AllStopBGM();
 		//リザルトで使う結果を保存.
 		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);
-		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 60, 120);
+		SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 30, 120);
 	}
 	m_pTimer->Update();
 	
@@ -261,10 +260,10 @@ void CGameSceneGameMain::Draw()
 	{
 		m_pPauseUI->Draw();
 	}
-	if (m_IsEnd) {
-		m_pGameEndText->Render();
-	}
+	m_pGameStartIntro->Draw();
 	m_pDx11->SetDepth(true);
+
+
 
 }
 
