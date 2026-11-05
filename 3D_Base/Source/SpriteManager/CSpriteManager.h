@@ -68,6 +68,7 @@ public:
 		IMG_RainbowFonst,		//虹の称号のフォント.
 		IMG_WoodenTag,			//木札.
 		IMG_VsFont,				//連打対決の「対」の文字.
+		IMG_KONDATE,			//献立画像
 		MAX
 	};
 	//ｘファイル

@@ -28,13 +28,18 @@ CDirectX11::~CDirectX11()
 //DirectX構築関数.
 HRESULT CDirectX11::Create(HWND hWnd)
 {
+	TxsW = WND_H;
+	TxsH = WND_W;
+	TxsW = 1920;
+	TxsH = 1080;
+
 	//デバイスとスワップチェインを作成.
 	if( FAILED(
 		CreateDeviceAndSwapChain(
 			hWnd,
 			static_cast<UINT>(FPS),
-			static_cast<UINT>(WND_W),
-			static_cast<UINT>(WND_H) )))
+			static_cast<UINT>(TxsW),
+			static_cast<UINT>(TxsH) )))
 	{
 		return E_FAIL;
 	}
@@ -74,8 +79,8 @@ HRESULT CDirectX11::Create(HWND hWnd)
 	//	ビューポート設定.
 	//------------------------------------------------
 	D3D11_VIEWPORT vp;
-	vp.Width	= WND_W;	//幅.
-	vp.Height	= WND_H;	//高さ.
+	vp.Width	= TxsW;	//幅.
+	vp.Height	= TxsH;	//高さ.
 	vp.MinDepth = 0.0f;		//最小深度（手前）.
 	vp.MaxDepth = 1.0f;		//最大深度（奥）.
 	vp.TopLeftX = 0.0f;		//左上位置x.
@@ -407,8 +412,8 @@ HRESULT CDirectX11::CreateDepthStencilBackBufferRTV()
 
 	//デプス（深さor深度）ステンシルビュー用のテクスチャを作成.
 	D3D11_TEXTURE2D_DESC	descDepth;
-	descDepth.Width = WND_W;		//幅.
-	descDepth.Height = WND_H;		//高さ.
+	descDepth.Width =  TxsW;		//幅.
+	descDepth.Height = TxsH;		//高さ.
 	descDepth.MipLevels = 1;		//ミップマップレベル：1.
 	descDepth.ArraySize	= 1;		//配列数：1.
 	descDepth.Format = DXGI_FORMAT_D32_FLOAT;	//32ビットフォーマット.
