@@ -14,6 +14,7 @@ GameStartIntro::~GameStartIntro()
 
 void GameStartIntro::Update()
 {
+# if DEBUG
 	if (GetAsyncKeyState('A')) {
 		Timu = 0;
 		C = 0;
@@ -28,6 +29,8 @@ void GameStartIntro::Update()
 		RPatternNo = { 1,0 };
 		L_RotPot = { 0.5,0.5,0 };
 	}
+
+#endif
 	switch (m_steat)
 	{
 	case GameStartIntro::steat::close:
@@ -75,7 +78,7 @@ void GameStartIntro::Update()
 		break;
 	case GameStartIntro::steat::END:
 		End = true;
-		OSAKINIITADAKIMASU_T += 1.0 / 120.0;
+		OSAKINIITADAKIMASU_T += 1.0 / 180.0;
 		if (OSAKINIITADAKIMASU_T>1) {
 			m_steat = steat::AllEND;
 		}
@@ -110,7 +113,7 @@ void GameStartIntro::Draw()
 			float H= 560 * Quadraticfunction(OSAKINIITADAKIMASU_T);
 			float t = std::min(Quadraticfunction(OSAKINIITADAKIMASU_T) / 0.8f, 1.0f);
 			float eased = 1.0f - (1.0f - t) * (1.0f - t);   // 最初は速く、0.8 に近づくほどゆっくり
-			OSAKINIITADAKIMASU->SetRotationZ(D3DXToRadian((720-35) * eased));
+			OSAKINIITADAKIMASU->SetRotationZ(D3DXToRadian((360*4-35) * eased));
 			OSAKINIITADAKIMASU->SetPosition({WND_W/2-W/2,WND_H/2-H/2,0});
 			OSAKINIITADAKIMASU->SetScale({W,H,0});
 			OSAKINIITADAKIMASU->Render();

@@ -42,9 +42,16 @@ CMain::CMain()
 	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
 	Gdiplus::GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, nullptr);
 
+
+	AllocConsole();//ここを消せばコンソールが消える（コメント化して）
+	FILE* pFile;
+	//stdout（標準出力）を新しく作成したコンソールにリダイレクト
+	freopen_s(&pFile, "CONOUT$", "w", stdout);
+	//freopen_s(&pFile, "CONOUT$", "w", stderr);
+	std::cout.clear();   // 念のためエラー状態を解除
+
 	// コンソールの出力文字コードを UTF-8 に変更する
 	SetConsoleOutputCP(65001);
-
 }
 
 
@@ -166,7 +173,8 @@ void CMain::Loop()
 
 			if (i >= 1000)	//1秒経過.
 			{
-				std::cout << c << std::endl;
+		
+				std::cout << c<<"A" << std::endl;
 				i = 0;	//現在の時間に更新.
 				c = 0;
 			}

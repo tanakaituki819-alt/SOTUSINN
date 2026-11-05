@@ -63,7 +63,7 @@ private:
 
 	IngredientsGetEffectManager* m_IngredientsGetEffectManager = nullptr;
 
-	D3DXVECTOR3	m_BackGroundRotation = {};
+
 
 	GameStartIntro* m_pGameStartIntro = nullptr;
 };

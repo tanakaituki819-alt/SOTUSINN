@@ -20,7 +20,7 @@ public:
 
 private:
 	CSprite2D* m_pTSprite;
-	CUIObject* m_pTImg;
+
 
 private:
 	CTitleUI* m_pTitleUI;

@@ -17,7 +17,7 @@ void CCollisionManager::Update()
 {
 	if (!m_pIngredientsManager) return;
 	//具材リストを取得.
-	std::vector<CIngredients*>Ingredients = m_pIngredientsManager->GetIngredients();
+	std::vector<CIngredients*>&Ingredients = m_pIngredientsManager->GetIngredients();
 
 	//--------------------------------------------------------------------
 	//	生の具材に触れたプレイヤーをマヒさせる.
