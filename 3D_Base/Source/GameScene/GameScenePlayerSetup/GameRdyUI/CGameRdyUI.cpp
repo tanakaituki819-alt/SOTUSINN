@@ -157,13 +157,15 @@ void CGameRdyUI::Update()
 	//準備完了状態になる処理.
 	//プレイヤーの最大数分.
 	for (int i = 0; i < hand_Max; i++) {
-		//Aボタン準備完了.
-		if (m_pController[i]->IsDown(CXInput::A, true)) {
-			m_Handclapflag[i] = true;	//準備完了状態へ.
-			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Handclap);	//手を叩く音.
+		if (!m_Handclapflag[i]) {
+			//Aボタン準備完了.
+			if (m_pController[i]->IsDown(CXInput::A, true)) {
+				m_Handclapflag[i] = true;	//準備完了状態へ.
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Handclap);	//手を叩く音.
+			}
 		}
 		//Bボタンを押すと準備完了解除.
-		else if (m_pController[i]->IsDown(CXInput::B, true)) {
+		else if(m_pController[i]->IsDown(CXInput::B, true)) {
 			//準備完了状態なら.
 			if (m_Handclapflag[i]) {
 				m_Handclapflag[i] = false;	//準備完了解除.

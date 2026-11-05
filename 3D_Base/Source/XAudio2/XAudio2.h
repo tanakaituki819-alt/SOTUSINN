@@ -110,6 +110,7 @@ public:
 		ChopsticksHit,	//お箸同士の衝突音.
 		SelectChange,	//セレクトチェンジ.
 		AllrdyCutin,	//全員が準備完了になった時のカットインSE.
+		Volt,			//電気の音.
 
 		MAX,
 	};

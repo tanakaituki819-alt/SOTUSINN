@@ -5,6 +5,7 @@ GameStartIntro::GameStartIntro()
 	m_pKONDATE = CSpM::GetSprite2D(CSpMLstiImg::IMG_KONDATE);
 	m_pKONDATE->SetScale({ SCX, WND_H - offSetY * 2,0.1 });
 	OSAKINIITADAKIMASU= CSpM::GetSprite2D(CSpMLstiImg::Img_TitleText);
+	OSAKINIITADAKIMASU->SetPatternNo(0,0);
 	OSAKINIITADAKIMASU->SetScale({0,0,0});
 }
 

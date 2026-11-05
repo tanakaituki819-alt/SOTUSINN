@@ -1512,6 +1512,7 @@ void XAudio2::SELoad()
     SEdata.push_back({ static_cast<int>(SEList::ChopsticksHit), _T("Data\\Sound\\SE\\ChopsticksHit.mp3") });
     SEdata.push_back({ static_cast<int>(SEList::SelectChange),  _T("Data\\Sound\\SE\\SelectChange.mp3")  });
     SEdata.push_back({ static_cast<int>(SEList::AllrdyCutin),   _T("Data\\Sound\\SE\\AllrdyCutin.mp3")   });
+    SEdata.push_back({ static_cast<int>(SEList::Volt),          _T("Data\\Sound\\SE\\Volt.mp3")           });
 
     //SEdata.push_back();
 
