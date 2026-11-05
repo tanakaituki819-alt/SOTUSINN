@@ -113,21 +113,6 @@ void CGameSceneGameMain::Update()
 	
 		return;
 	}
-	//m_pBackGround->SetRotation({ D3DXToRadian(m_BackGroundRotation.x), D3DXToRadian(m_BackGroundRotation.y), D3DXToRadian(m_BackGroundRotation.z) });
-
-
-	if (GetAsyncKeyState('W') & 0x8000) {
-		m_BackGroundRotation.x += 1.f;
-	}
-	else if (GetAsyncKeyState('S') & 0x8000) {
-		m_BackGroundRotation.x -= 1.f;
-	}
-	//else if (GetAsyncKeyState('A') & 0x8000) {
-	//	m_BackGroundRotation.z += 1.f;
-	//}
-	//else if (GetAsyncKeyState('D') & 0x8000) {
-	//	m_BackGroundRotation.z -= 1.f;
-	//}
 
 	for (int i = 0;i < PlayerMax;i++) {
 		CONTROLA[i]->Update();
