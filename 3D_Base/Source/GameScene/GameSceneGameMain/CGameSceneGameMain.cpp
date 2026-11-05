@@ -58,6 +58,10 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	SoundHandleX SEHandle = XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Boiling, XAudio2::SubmixTargetType::Reverb, true);	//沸騰音をループ再生.
 	XAudio2::GetInstance()->SetSoundVolume(SEHandle, 1.5f);
 
+	m_pGameEndText = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TitleText2);
+	m_pGameEndText->SetPatternNo(0, 3);
+	m_pGameEndText->SetPosition({ 160.f,240.f,0.f });
+	m_pGameEndText->SetScale({ 1000.f,270.f,1.5f });
 
 	m_IngredientsGetEffectManager = new IngredientsGetEffectManager();
 
@@ -268,6 +272,10 @@ void CGameSceneGameMain::Draw()
 	if (m_Pause)
 	{
 		m_pPauseUI->Draw();
+	}
+	//ゲーム終了時のテキスト描画.
+	if (m_IsEnd) {
+		m_pGameEndText->Render();
 	}
 	m_pGameStartIntro->Draw();
 	m_pDx11->SetDepth(true);
