@@ -14,23 +14,7 @@ GameStartIntro::~GameStartIntro()
 
 void GameStartIntro::Update()
 {
-# if DEBUG
-	if (GetAsyncKeyState('A')) {
-		Timu = 0;
-		C = 0;
-		R_Rotation = {0,0,0};
-		R_Position = { WND_W / 2,offSetY };
-		L_Rotation = { 0,0,0 };
-		L_Position = { offSetX,offSetY };
-		m_steat = steat::close;
-		SCX = WND_W / 2 - offSetX;
-		UpS = 1;
-		LPatternNo = { 0,0 };
-		RPatternNo = { 1,0 };
-		L_RotPot = { 0.5,0.5,0 };
-	}
 
-#endif
 	switch (m_steat)
 	{
 	case GameStartIntro::steat::close:

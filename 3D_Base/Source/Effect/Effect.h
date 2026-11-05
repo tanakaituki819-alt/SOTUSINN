@@ -53,6 +53,7 @@ public:
 		KANSEI,			//
 		KIRAN,//
 		lightning,		//雷
+		SSR,			//レアエフェクト.
 		Max				//最大数
 	};
 public:

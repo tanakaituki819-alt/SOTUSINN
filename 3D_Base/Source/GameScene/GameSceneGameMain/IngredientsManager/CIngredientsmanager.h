@@ -43,6 +43,6 @@ private:
 	bool StartSettingis;//開始時の配置中
 	float IngredientsSettingTimu;
 	float gameTimu = 0;
-
+	bool	RareIngredients = false;
 	nlohmann::json LoadData;//読み込んだjson
 };
