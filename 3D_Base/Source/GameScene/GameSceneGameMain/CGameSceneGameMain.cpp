@@ -181,6 +181,7 @@ void CGameSceneGameMain::Update()
 	//タイマーが0秒になっているかつ鍋に残った具材が0になるまたは、強制終了タイマーが45秒経過したら.
 	if (m_pTimer->GetTimu()<=0 && m_pCIngredientsM->GetIngredientsliveing() <=0 || m_EndTimer >= 60 * 45)
 	{
+		m_IsEnd = true;	//ゲーム終了フラグを立てる.
 		XAudio2::GetInstance()->AllStopBGM();
 		//リザルトで使う結果を保存.
 		CResultDataManager::GetInstance()->CaptureFromPlayers(m_pPlayer);

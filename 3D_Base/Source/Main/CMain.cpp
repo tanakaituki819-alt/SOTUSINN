@@ -163,9 +163,14 @@ void CMain::Loop()
 
 			//更新処理.
 			Update();
-
+			AllocConsole();//ここを消せばコンソールが消える（コメント化して）
+			FILE* pFile;
+			//stdout（標準出力）を新しく作成したコンソールにリダイレクト
+			freopen_s(&pFile, "CONOUT$", "w", stdout);
 			if (i >= 1000)	//1秒経過.
 			{
+
+
 				std::cout << c << std::endl;
 				i = 0;	//現在の時間に更新.
 				c = 0;
