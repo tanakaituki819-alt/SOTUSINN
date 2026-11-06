@@ -26,10 +26,10 @@ namespace {
 	const D3DXVECTOR3 TITLEBACK2_TEXT_POS = { 748.f, 432.f, 0.f };			//テキストのポジション.
 	const D3DXVECTOR3 TITLEBACK3_TEXT_POS = { 262.f, 406.f, 0.f };			//テキストのポジション.
 	//準備完了の初期ポジション.
-	const D3DXVECTOR3 PLAYER1_GAMEREADY_POS  = { 36.f	, 50.f, 0.f };		//プレイヤー1準備完了のポジション.
-	const D3DXVECTOR3 PLAYER2_GAMEREADY_POS  = { 325.4f	, 50.f, 0.f };		//プレイヤー2準備完了のポジション.
-	const D3DXVECTOR3 PLAYER3_GAMEREADY_POS  = { 645.4f	, 50.f, 0.f };		//プレイヤー3準備完了のポジション.
-	const D3DXVECTOR3 PLAYER4_GAMEREADY_POS  = { 965.4f	, 50.f, 0.f };		//プレイヤー4準備完了のポジション.
+	const D3DXVECTOR3 PLAYER1_GAMEREADY_POS  = { 16.f	, 50.f, 0.f };		//プレイヤー1準備完了のポジション.
+	const D3DXVECTOR3 PLAYER2_GAMEREADY_POS  = { 305.4f	, 50.f, 0.f };		//プレイヤー2準備完了のポジション.
+	const D3DXVECTOR3 PLAYER3_GAMEREADY_POS  = { 605.4f	, 50.f, 0.f };		//プレイヤー3準備完了のポジション.
+	const D3DXVECTOR3 PLAYER4_GAMEREADY_POS  = { 945.4f	, 50.f, 0.f };		//プレイヤー4準備完了のポジション.
 	//全員が準備完了時に表示されるUIのポジション.
 	const D3DXVECTOR3 PLAYER_ALLREADY_POS	= { -150, 250, 0 };				//全員が準備完了時に表示されるUIのポジション
 	//パターンナンバー.

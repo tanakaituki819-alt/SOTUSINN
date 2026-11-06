@@ -57,7 +57,7 @@ void CGameScenePlayerSetup::Update()
 			if (!m_pController[i]->IsConnect()&&i!=0) {
 			SAFE_DELETE(CG->m_pPlayer[i]);
 			}
-			
+
 		}
 	}
 	if (m_pGameRdyUI->GetTitleSceneChangeflag()) {
