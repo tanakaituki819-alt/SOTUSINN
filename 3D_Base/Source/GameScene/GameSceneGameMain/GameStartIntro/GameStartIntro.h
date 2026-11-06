@@ -40,6 +40,8 @@ private:
 
 	float UpS = 1;
 
+	float REINVO = 0;
+
 	CSprite2D* OSAKINIITADAKIMASU;
 	float OSAKINIITADAKIMASU_T = 0;
 	float Quadraticfunction(float i);

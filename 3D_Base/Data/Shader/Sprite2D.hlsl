@@ -27,7 +27,11 @@ struct VS_OUTPUT
 	float2	UV		: TEXCOORD0;	//UV座標.
  
 };
-
+// 色相(0〜1) → 虹色のRGB. h が 1 を超えても frac で自動的にループする.
+float3 HueToRGB(float h)
+{
+    return saturate(abs(frac(h + float3(1.0f, 2.0f / 3.0f, 1.0f / 3.0f)) * 6.0f - 3.0f) - 1.0f);
+}
 //頂点シェーダ.
 //主にモデルの頂点の表示位置を決定する.
 VS_OUTPUT VS_Main(
@@ -99,6 +103,26 @@ float4 PS_Main2(VS_OUTPUT input) : SV_Target
     color.r *= g_Color.r;
     color.g *= g_Color.g;
     color.b *= g_Color.b;
+	//プログラム制御のα値をテクスチャが持っているα値にかけ合わせる.
+    color.a *= g_Color.a;
+
+    return color;
+}
+float4 PS_Main3(VS_OUTPUT input) : SV_Target
+{
+	
+    float4 color = g_Texture.Sample(g_samLinear, input.UV); //色を返す.
+
+    if (color.r == 0 && color.g == 0 && color.b == 0 && color.a!=0)
+    {
+        return color;
+    }
+    
+    
+    float L = length(input.UV - 0.5);
+    
+    // ★虹色: Padding.x が増えるほど色相が回る.
+    color.rgb = HueToRGB(g_i-L);
 	//プログラム制御のα値をテクスチャが持っているα値にかけ合わせる.
     color.a *= g_Color.a;
 

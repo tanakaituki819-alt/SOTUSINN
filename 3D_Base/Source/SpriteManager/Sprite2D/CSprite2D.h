@@ -59,6 +59,7 @@ public:
 	//レンダリング用.
 	void Render();
 	void Render2(float i);
+	void Render3(float i);
 	//座標情報を設定.
 	void SetPosition(const D3DXVECTOR3& Pos) {	m_Position = Pos;	}
 	void SetPosition(const D3DXVECTOR2& Pos) { m_Position.x = Pos.x; m_Position.y = Pos.y;}
@@ -113,7 +114,7 @@ private:
 	ID3D11Buffer*			m_pConstantBuffer;	//コンスタントバッファ.
 
 	ID3D11PixelShader* m_pPixelShader2;		//ピクセルシェーダ.
-
+	ID3D11PixelShader* m_pPixelShader3;		//ピクセルシェーダ.
 
 
 	ID3D11Buffer*			m_pVertexBuffer;	//頂点バッファ.

@@ -305,7 +305,7 @@ void CSpriteManager::Load2D()
 	//献立画像.
 	Img_List.push_back({ static_cast<int>(enImagList::IMG_KONDATE),	_T("Data\\Texture\\Menu.png"),{{1,1,1},{1,1},{0.5,0.5}} });
 
-
+	Img_List.push_back({ static_cast<int>(enImagList::IMG_OSAKIText),	_T("Data\\Texture\\OSAKIText.png"),{{1,1,1},{1,1},{1,1}} });
 
 	std::sort(Img_List.begin(), Img_List.end(), [](const auto& a, const auto& b) {
 		return a.listNo < b.listNo;

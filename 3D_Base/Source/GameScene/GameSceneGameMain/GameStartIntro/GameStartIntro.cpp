@@ -4,7 +4,7 @@ GameStartIntro::GameStartIntro()
 {
 	m_pKONDATE = CSpM::GetSprite2D(CSpMLstiImg::IMG_KONDATE);
 	m_pKONDATE->SetScale({ SCX, WND_H - offSetY * 2,0.1 });
-	OSAKINIITADAKIMASU= CSpM::GetSprite2D(CSpMLstiImg::Img_TitleText);
+	OSAKINIITADAKIMASU= CSpM::GetSprite2D(CSpMLstiImg::IMG_OSAKIText);
 	OSAKINIITADAKIMASU->SetPatternNo(0,0);
 	OSAKINIITADAKIMASU->SetScale({0,0,0});
 }
@@ -63,6 +63,7 @@ void GameStartIntro::Update()
 		break;
 	case GameStartIntro::steat::END:
 		End = true;
+		REINVO+=0.02;
 		OSAKINIITADAKIMASU_T += 1.0 / 180.0;
 		if (OSAKINIITADAKIMASU_T>1) {
 			m_steat = steat::AllEND;
@@ -101,7 +102,7 @@ void GameStartIntro::Draw()
 			OSAKINIITADAKIMASU->SetRotationZ(D3DXToRadian((360*4-35) * eased));
 			OSAKINIITADAKIMASU->SetPosition({WND_W/2-W/2,WND_H/2-H/2,0});
 			OSAKINIITADAKIMASU->SetScale({W,H,0});
-			OSAKINIITADAKIMASU->Render();
+			OSAKINIITADAKIMASU->Render3(REINVO);
 			break;
 	}
 
