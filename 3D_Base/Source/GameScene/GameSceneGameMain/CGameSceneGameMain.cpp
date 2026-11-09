@@ -140,6 +140,8 @@ void CGameSceneGameMain::Update()
 				//タイトルに戻る
 				SenenChang(enScene::Title, CSceneChange::TransitionType::Fade, 60, 60);
 				m_Pause = false;
+				XAudio2::GetInstance()->AllStopBGM();
+				XAudio2::GetInstance()->AllStopSE();
 			}
 			else
 			{
@@ -179,6 +181,7 @@ void CGameSceneGameMain::Update()
 		m_SceneChangeTimer++;	//シーン切り替えタイマーを増加する.
 		if (m_SceneChangeTimer >= 60 * 4) {
 			SenenChang(enScene::WinnnerResult, CSceneChange::TransitionType::FUSUMA, 90, 180,60);
+			XAudio2::GetInstance()->AllStopSE();
 		}
 	}
 	//ゲームタイマーが0秒になった.

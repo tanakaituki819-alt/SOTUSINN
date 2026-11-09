@@ -61,7 +61,7 @@ void CGameScenePlayerSetup::Update()
 		}
 	}
 	if (m_pGameRdyUI->GetTitleSceneChangeflag()) {
-		SenenChang(enScene::Title, CSceneChange::TransitionType::FUSUMA, 60, 120,120);
+		SenenChang(enScene::TitleSequence, CSceneChange::TransitionType::FUSUMA, 60, 120,120);
 		XAudio2::GetInstance()->AllStopBGM();
 	}
 

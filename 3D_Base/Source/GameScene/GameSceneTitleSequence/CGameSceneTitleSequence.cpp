@@ -1,9 +1,18 @@
 #include "CGameSceneTitleSequence.h"
 #include "Game/CGame.h"
 
+namespace {
+	namespace {
+		//タイトル前演出用のカメラ設定(起動時の値と同じにする).
+		const D3DXVECTOR3 TITLE_CAMERA_POS = { 0.f, 0.f, -0.5f };	
+		const D3DXVECTOR3 TITLE_CAMERA_LOOK = { 0.f, 0.f, 0.f };	
+	}
+}
 CGameSceneTitleSequence::CGameSceneTitleSequence(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
 	:CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
 {
+	m_pCamera->SetPosition(TITLE_CAMERA_POS);		
+	m_pCamera->SetLookPosition(TITLE_CAMERA_LOOK);
 	m_pTitleChopsticks = new CTitleChopsticks();	//お箸クラスインスタンス作成.
 	m_pBackImg = new CUIObject();					//背景インスタンス作成.
 	m_pBackImg->SetScale(WND_W, WND_H, 100.f);		//スケール.

@@ -29,7 +29,6 @@ public:
 	void DrawTitleBack();
 	//全員が準備完了になったときに表示されるUI.
 	void AllGameRdy();
-
 	//コントローラー(XInput)のセット.
 	void SetXInput(CXInput* Input, int i) { m_pController[i] = Input; }
 	//ゲームメインに戻る際のフラグ.

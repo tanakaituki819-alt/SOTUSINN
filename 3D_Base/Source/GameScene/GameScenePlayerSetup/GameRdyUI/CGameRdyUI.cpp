@@ -93,56 +93,11 @@ CGameRdyUI::~CGameRdyUI()
 
 void CGameRdyUI::Update()
 {
-	//連続でセレクトを動かせないようにするため(バグ防止、後で数値かえるかも).
-	{
-		//セレクトフレームを動かせないなら.
-		if (!m_SelectTimeOver) {
-			++m_SelectchangeTimer;	//タイマー増加.
-			//タイマーが一定のフレーム数を超えたなら.
-			if (m_SelectchangeTimer > SELECT_CHANGE_INTERVAL) {
-				m_SelectTimeOver = true;	//セレクトフレームを動かせるようにする.
-				m_SelectchangeTimer = 0;	//タイマー初期化.
-			}
-		}
-	}
-
-	//タイトルに戻る画面が出ているなら.
+	//タイトル画面に戻る画面が出ている間はその処理だけ行って終わる.
 	if (m_TitleBackflag) {
-		//セレクトフレームを移動させていいか.
-		if (m_SelectTimeOver) {
-			//左スティックを左に倒したなら.
-			if (m_pController[0]->GetLThumbX() > STICK_DEAD_ZONE) {
-				m_IsYesSelected = true;		//はいを選択中.
-				m_SelectTimeOver = false;	//セレクトフレームを動かせないようにする.
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange); //セレクトチェンジ音.
-			}
-			//左スティックを右に倒したなら.
-			else if (m_pController[0]->GetLThumbX() < -STICK_DEAD_ZONE) {
-				m_IsYesSelected = false;	//いいえを選択中.
-				m_SelectTimeOver = false;	//セレクトフレームを動かせないようにする.
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange); //セレクトチェンジ音.
-			}
-		}
-		//はいを選択中なら.
-		if (m_IsYesSelected) {
-			//Aボタンを押した.
-			if (m_pController[0]->IsDown(CXInput::A, true)) {
-				//タイトルに戻るフラグ.
-				m_TitleSceneChangeflag = true;
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision); //決定音.
-			}
-		}
-		//いいえを選択中なら.
-		else {
-			//Aボタンを押した.
-			if (m_pController[0]->IsDown(CXInput::A, true)) {
-				m_TitleBackflag = false;	//タイトルに戻る描画をしない.
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision); //決定音.
-			}
-		}
-		return;	//リターンで返して以降通らないようにする.
+		TitleBackUpdate();
+		return;
 	}
-
 
 	//準備完了ではないなら.
 	if (!m_Handclapflag[0]) {
@@ -247,10 +202,46 @@ void CGameRdyUI::Draw()
 	DrawTitleBack();
 	AllGameRdy();
 }
+//タイトルに戻る画面の更新.
 void CGameRdyUI::TitleBackUpdate()
 {
-}
-void CGameRdyUI::GameRdyHandUpdate()
+	//連続でセレクトを動かせないようにするため.
+	if (!m_SelectTimeOver) {
+		++m_SelectchangeTimer;
+		if (m_SelectchangeTimer > SELECT_CHANGE_INTERVAL) {
+			m_SelectTimeOver = true;
+			m_SelectchangeTimer = 0;
+		}
+	}
+	//動かせない間は、選択も決定も受け付けない.
+	if (!m_SelectTimeOver) return;
+
+	const float stickX = m_pController[0]->GetLThumbX();
+	const bool prevYesSelected = m_IsYesSelected;
+
+	if (stickX > STICK_DEAD_ZONE) {
+		m_IsYesSelected = true;
+	}
+	else if (stickX < -STICK_DEAD_ZONE) {
+		m_IsYesSelected = false;
+	}
+	//選択が変わったときだけ音を鳴らす.
+	if (m_IsYesSelected != prevYesSelected) {
+		XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange);
+		m_SelectTimeOver = false;
+		return;
+	}
+	//Aボタンで決定.
+	if (m_pController[0]->IsDown(CXInput::A, true)) {
+		if (m_IsYesSelected) {
+			m_TitleSceneChangeflag = true;	//タイトルに戻る.
+		}
+		else {
+			m_TitleBackflag = false;		//タイトルに戻る画面を閉じる.
+		}
+		XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision);
+	}
+}void CGameRdyUI::GameRdyHandUpdate()
 {
 }
 //右手.

@@ -10,6 +10,7 @@ namespace
 	constexpr float IMPACT_THRESHOLD = 1.65f;							//衝突判定位置 (X座標).
 	constexpr float NEXT_PHASE_LIMIT = -3.0f;							//次のフェーズへ移動する戻り限界値(X座標).
 
+
 	//カメラを中央に引き寄せる深さ.
 	constexpr float CAMERA_ZOOM_DEPTH = 3.0f;
 }
