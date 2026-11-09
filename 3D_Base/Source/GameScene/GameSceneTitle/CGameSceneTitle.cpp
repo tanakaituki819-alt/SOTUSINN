@@ -52,7 +52,7 @@ void CGameSceneTitle::Update()
 		}
 		else if (m_pTitleUI->GetSelect() == CTitleUI::enSelect::Fin)
 		{
-			SenenChang(enScene::WinnnerResult);
+			DestroyWindow(m_hWnd);
 
 		}
 	}
