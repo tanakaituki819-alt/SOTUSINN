@@ -2,221 +2,204 @@
 
 namespace
 {
-	constexpr float CHOPSTICKS_DEFAULT_SCALE = 2.0f;					//お箸メッシュの初期スケール.
-	constexpr float INITIAL_SPEED_X = 0.18f;							//X軸の初期移動速度.
-	constexpr float SPEED_Y_RATIO = 1.68f;								//Y軸速度の計算比率 (SpeedX / 1.5).
-	constexpr float INITIAL_SPEED_Y = INITIAL_SPEED_X / SPEED_Y_RATIO;	//Y座標の初期移動速度.
-	constexpr float REFLECT_BOUNCE_DECAY = 1.5f;						//Caseでの跳ね返り減衰率.
-	constexpr float IMPACT_THRESHOLD = 1.65f;							//衝突判定位置 (X座標).
-	constexpr float NEXT_PHASE_LIMIT = -3.0f;							//次のフェーズへ移動する戻り限界値(X座標).
+	//お箸1本ぶんの設定(データ)
+	struct ChopstickDef
+	{
+		float signX, signY;				//出発する角(X: +右 / -左、Y: +上 / -下).
+		int   pairIndex;				//一緒に動く組(0:右上と左下、1:左上と右下).
+		float colorR, colorG, colorB;	//お箸の色(0〜255).
+	};
+	//お箸の色.
+	constexpr ChopstickDef CHOPSTICK_DEFS[] = {
+		//signX  signY  pair  R      G      B
+		{  1.f,   1.f,  0,    255.f, 0.f,   0.f		},	//[0]右上・赤.
+		{ -1.f,   1.f,  1,    255.f, 255.f, 0.f		},	//[1]左上・黄.
+		{  1.f,  -1.f,  1,    0.f,   255.f, 0.f		},	//[2]右下・緑.
+		{ -1.f,  -1.f,  0,    0.f,   0.f,   255.f	},	//[3]左下・青.
+	};
 
-	//カメラを中央に引き寄せる深さ.
-	constexpr float CAMERA_ZOOM_DEPTH = 3.0f;
+	//お箸の見た目
+	constexpr float CHOPSTICKS_SCALE = 2.0f;	//お箸メッシュの拡大率.
+
+	//動き(X方向の移動量で表す。Y方向は BasePos の縦横比から自動で決まる)
+	constexpr float APPROACH_SPEED		= 0.18f;			//中心へ向かう速さ(ワールド単位/フレーム).
+	constexpr float RETURN_SPEED_RATE	= 1.f / 1.68f;		//衝突後に戻るときの速さの倍率(ゆっくり戻る).
+	constexpr float CONTACT_GAP_X		= 0.88f;			//ぶつかる瞬間の、中心から各お箸の原点までのX方向の隙間(元の停止位置 2.5 - 1.62 に合わせた値. 見た目で調整).
+	constexpr float RETURN_LIMIT		= -3.0f;			//ここまで戻ったら次の組へ(出発位置より外側).
+	constexpr int   HIT_STOP_FRAME		= 40;				//衝突後に止まるフレーム数(60FPSで約0.7秒).
+
+	//---- 演出 ----
+	constexpr float CAMERA_ZOOM_DEPTH	= 3.0f;			//最終段階でカメラを寄せる距離.
+	constexpr float LIGHTNING_POS_X		= 0.9f;			//雷エフェクトのX位置.
+	constexpr float LIGHTNING_POS_Y		= 0.4f;			//雷エフェクトのY位置.
+	constexpr float LIGHTNING_POS_Z		= 15.4f;		//雷エフェクトのZ位置.
+	constexpr float LIGHTNING_SCALE		= 0.1f;			//雷エフェクトの大きさ.
+
+	float Clamp01(float value)
+	{
+		if (value < 0.f) {
+			return 0.f;		//0より小さければ0にする.
+		}
+		else if (value > 1.f) {
+			return 1.f;		//1より大きければ1にする.
+		}
+		else {
+			return value;	//範囲内ならそのまま.
+		}
+	}
 }
 
 CTitleChopsticks::CTitleChopsticks()
 {
 	for (int i = 0; i < Chopsticks_Max; i++) {
-		m_pChopsticks[i] = new CStaticMeshObjObject();
+		const ChopstickDef& def = CHOPSTICK_DEFS[i];
+
+		m_pChopsticks[i] = std::make_unique<CStaticMeshObjObject>();
 		m_pChopsticks[i]->AttachMesh(*CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::Chopsticks2));	//お箸(メッシュ).
-		m_pChopsticks[i]->SetScale(CHOPSTICKS_DEFAULT_SCALE, CHOPSTICKS_DEFAULT_SCALE, CHOPSTICKS_DEFAULT_SCALE);
-	}
+		m_pChopsticks[i]->SetScale(CHOPSTICKS_SCALE, CHOPSTICKS_SCALE, CHOPSTICKS_SCALE);
 
-	//角度調整.
-	m_pChopsticks[0]->SetRotation(m_BaseRot.x, m_BaseRot.y, m_BaseRot.z);
-	m_pChopsticks[1]->SetRotation(m_BaseRot.x, -m_BaseRot.y, -m_BaseRot.z);
-	m_pChopsticks[2]->SetRotation(-m_BaseRot.x, m_BaseRot.y, -m_BaseRot.z);
-	m_pChopsticks[3]->SetRotation(-m_BaseRot.x, -m_BaseRot.y, m_BaseRot.z);
+		//向きは右上を基準に、角の位置に合わせて符号を変える(上下でX、左右でY、斜めの組でZが反転).
+		m_pChopsticks[i]->SetRotation(
+			def.signY * m_BaseRot.x,
+			def.signX * m_BaseRot.y,
+			def.signX * def.signY * m_BaseRot.z);
+	}
+	SetPhase(Phase::FirstPair);	//最初の組から始める.
 }
 
-CTitleChopsticks::~CTitleChopsticks()
-{
-	//お箸最大数分.
-	for (int i = 0; i < Chopsticks_Max; i++) {
-		SAFE_DELETE(m_pChopsticks[i]);
-	}
-}
+CTitleChopsticks::~CTitleChopsticks() = default;
 
 void CTitleChopsticks::Update()
 {
-	
 	//Aボタンでシーンスキップ.
-	if(m_pController[0]->IsConnect()){
-		if (m_pController[0]->IsDown(CXInput::A, false)) {
-			m_SceneChangeflag = true;
-		}
+	if (m_pController[0]->IsConnect() && m_pController[0]->IsDown(CXInput::A, false)) {
+		m_SceneChangeflag = true;
 	}
-
-	//エフェクト処理.
-	if (m_Effectflag) {
-		::EsHandle handle = -1;
-		handle = Effect::Play(EFE::lightning, { 0.9, 0.4 ,15.4 });
-		Effect::SetScale(handle, D3DXVECTOR3(0.1f, 0.1f, 0.1f));
-		m_Effectflag = false;
-	}
-
-	//停止タイマーの更新処理.
+	//衝突後の静止中は動かさずに待つ.
 	if (m_StopTimer > 0) {
-		m_StopTimer--; //カウントダウン.
-		//2秒経過したら移動スピードを反転させて復帰開始.
-		if (m_StopTimer == 0) {
-			if (m_CaseId == 1 || m_CaseId == 2) {
-				m_MoveSpeed.x = -m_MoveSpeed.x / SPEED_Y_RATIO; //X軸の移動方向を反転.
-				m_MoveSpeed.y = -m_MoveSpeed.y / SPEED_Y_RATIO;	//Y軸の移動方向を反転.
-			}
-			else if (m_CaseId == 3) {
-				m_MoveSpeed.x = -m_MoveSpeed.x; //X方向反転.
-				m_MoveSpeed.y = -m_MoveSpeed.y; //Y方向反転.
-			}
-		}
-		//停止中は以降の移動計算を行わない.
+		UpdateHitStop();
 		return;
 	}
+	UpdateMove();
+}
 
-	//ケースごとの移動処理.
-	switch (m_CaseId)
-	{
-	case 1:
-		//ポジション設定.
-		m_pChopsticks[0]->SetPosition(m_BasePos.x + -m_MoveOffset.x, m_BasePos.y + -m_MoveOffset.y, m_BasePos.z);
-		m_pChopsticks[3]->SetPosition(-m_BasePos.x + m_MoveOffset.x, -m_BasePos.y + m_MoveOffset.y, m_BasePos.z);
+//衝突後の静止時間を数え、終わったら来た道を戻り始める.
+void CTitleChopsticks::UpdateHitStop()
+{
+	if (--m_StopTimer > 0) return;	//まだ止まっている.
 
-		//移動させる.
-		m_MoveOffset.x += m_MoveSpeed.x;
-		m_MoveOffset.y += m_MoveSpeed.y;
-
-		//中央付近で衝突（限界を超えた瞬間）.
-		if (m_AttackMoveNow && m_MoveOffset.x > IMPACT_THRESHOLD) {
-			m_AttackMoveNow = false;	//前進完了
-			m_Effectflag = true;		//エフェクトを出す
-			m_StopTimer = 40;			//タイマー増加.
-			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::ChopsticksHit);
-			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Volt);
-		}
-		//端まで戻ったら次のフェーズへ
-		if (!m_AttackMoveNow && m_MoveOffset.x < NEXT_PHASE_LIMIT) {
-			SetCaseId(2);
-		}
-		break;
-
-	case 2:
-		//ポジション設定.
-		m_pChopsticks[1]->SetPosition(-m_BasePos.x - -m_MoveOffset.x, m_BasePos.y - m_MoveOffset.y, m_BasePos.z);
-		m_pChopsticks[2]->SetPosition(m_BasePos.x + -m_MoveOffset.x, -m_BasePos.y + m_MoveOffset.y, m_BasePos.z);
-
-		//移動させる.
-		m_MoveOffset.x += m_MoveSpeed.x;
-		m_MoveOffset.y += m_MoveSpeed.y;
-
-		//中央付近で衝突.
-		if (m_AttackMoveNow && m_MoveOffset.x > IMPACT_THRESHOLD) {
-			m_AttackMoveNow = false;	//前進完了.
-			m_Effectflag = true;		//エフェクトを出す.
-			m_StopTimer = 40;			//タイマー増加.
-			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::ChopsticksHit);
-			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Volt);
-		}
-		//端まで戻ったら次のフェーズへ.
-		if (!m_AttackMoveNow && m_MoveOffset.x < NEXT_PHASE_LIMIT) {
-			SetCaseId(3);
-		}
-		break;
-
-	case 3:
-		//ポジション設定.
-		m_pChopsticks[0]->SetPosition(m_BasePos.x + -m_MoveOffset.x, m_BasePos.y + -m_MoveOffset.y, m_BasePos.z);
-		m_pChopsticks[3]->SetPosition(-m_BasePos.x + m_MoveOffset.x, -m_BasePos.y + m_MoveOffset.y, m_BasePos.z);
-		m_pChopsticks[1]->SetPosition(-m_BasePos.x - (-m_MoveOffset.x), m_BasePos.y - m_MoveOffset.y, m_BasePos.z);
-		m_pChopsticks[2]->SetPosition(m_BasePos.x + (-m_MoveOffset.x), -m_BasePos.y + m_MoveOffset.y, m_BasePos.z);
-
-		//移動させる.
-		m_MoveOffset.x += m_MoveSpeed.x;
-		m_MoveOffset.y += m_MoveSpeed.y;
-
-		//中央付近で衝突したら停止処理に入る.
-		if (m_AttackMoveNow && m_MoveOffset.x > IMPACT_THRESHOLD) {
-			m_SceneChangeflag = true;	//シーンチェンジ可能状態へ.
-			m_AttackMoveNow = false;	//前進完了.
-			m_Effectflag = true;		//エフェクトを出す.
-			m_StopTimer = 40;			//タイマー増加.
-		}
-		break;
+	m_MoveSpeed = -m_MoveSpeed;		//向きを反転して戻り始める.
+	if (m_Phase != Phase::Final) {
+		m_MoveSpeed *= RETURN_SPEED_RATE;	//最終段階以外は、ゆっくり戻る.
 	}
 }
 
+//お箸を動かし、衝突と次の組への切り替えを判定する.
+void CTitleChopsticks::UpdateMove()
+{
+	m_MoveDist += m_MoveSpeed;	//先に動かしてから、位置に反映する(1フレーム遅れを防ぐ).
+
+	//中心へ向かう.
+	if (m_AttackMoveNow) {
+		//中心へ向かっている途中.
+		if (m_MoveDist >= GetImpactDist()) {
+			m_MoveDist = GetImpactDist();	//行き過ぎた分を切り捨て、毎回同じ位置でぶつける.
+			OnImpact();	//ぶつかった瞬間の処理.
+		}
+	}
+	//最後のシーンじゃないかつ、一定値まで戻ったら次へ.
+	else if (m_Phase != Phase::Final && m_MoveDist < RETURN_LIMIT) {
+		//十分に戻ったので、次の組へ.
+		if (m_Phase == Phase::FirstPair) {
+			SetPhase(Phase::SecondPair);	//1組目の次は2組目.
+		}
+		else {
+			SetPhase(Phase::Final);			//2組目の次は最終段階.
+		}	
+		return;	
+	}
+	ApplyPositions();
+}
+
+//ぶつかった瞬間の処理.
+void CTitleChopsticks::OnImpact()
+{
+	m_AttackMoveNow = false;		//前進完了.
+	m_StopTimer = HIT_STOP_FRAME;	//しばらく止める.
+	PlayHitEffect();
+
+	//最終段階はシーンチェンジへ(SEは鳴らさない).
+	if (m_Phase == Phase::Final) {
+		m_SceneChangeflag = true;
+		return;
+	}
+	XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::ChopsticksHit);
+	XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Volt);
+}
+
+//雷のエフェクトを出す.
+void CTitleChopsticks::PlayHitEffect()
+{
+	const ::EsHandle handle = Effect::Play(EFE::lightning, { LIGHTNING_POS_X, LIGHTNING_POS_Y, LIGHTNING_POS_Z });
+	Effect::SetScale(handle, D3DXVECTOR3(LIGHTNING_SCALE, LIGHTNING_SCALE, LIGHTNING_SCALE));
+}
+
+//今の段階で動かすお箸か.
+bool CTitleChopsticks::IsActive(int index) const
+{
+	if (m_Phase == Phase::Final) return true;	//最終段階は4本とも動く.
+	return CHOPSTICK_DEFS[index].pairIndex == static_cast<int>(m_Phase);	//FirstPair=0、SecondPair=1.
+}
+
+//ぶつかる位置までの移動量(X方向).
+float CTitleChopsticks::GetImpactDist() const
+{
+	return m_BasePos.x - CONTACT_GAP_X;	//BasePos から求めるので、設定値どうしが食い違わない.
+}
+
+//移動量から、お箸の位置を決める.
+void CTitleChopsticks::ApplyPositions()
+{
+	//XもYも同じ割合で縮めるので、必ず中心へ向かう.
+	const float toCenter = 1.f - m_MoveDist / m_BasePos.x;
+	const float x = m_BasePos.x * toCenter;
+	const float y = m_BasePos.y * toCenter;
+
+	for (int i = 0; i < Chopsticks_Max; i++) {
+		if (!IsActive(i)) continue;
+		m_pChopsticks[i]->SetPosition(CHOPSTICK_DEFS[i].signX * x, CHOPSTICK_DEFS[i].signY * y, m_BasePos.z);
+	}
+}
 
 void CTitleChopsticks::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
-	//ケース3演出用のカメラ行列を複製.
-	m_CustomView = View;
-	//プレイヤーの番号に応じて色を変える
-
-	if (m_CaseId == 3)
-	{
-		//お箸が中央に向かう進捗率.
-		progress = m_MoveOffset.x / IMPACT_THRESHOLD;
-		if (progress < 0.0f) progress = 0.0f;
-		if (progress > 1.0f) progress = 1.0f;
-
-		//マイナス指定でカメラを中央へ引き寄せる.
-		D3DXMatrixTranslation(&m_MatZoom, 0.0f, 0.0f, -progress * CAMERA_ZOOM_DEPTH);
-
-		//元のView行列に掛け合わせて演出用行列を作成.
-		D3DXMatrixMultiply(&m_CustomView, &View, &m_MatZoom);
+	//最終段階だけ、お箸が中心に近づくほどカメラを寄せる.
+	D3DXMATRIX view = View;
+	if (m_Phase == Phase::Final) {
+		const float zoomRate = Clamp01(m_MoveDist / GetImpactDist());	//中心へ向かう進み具合(0〜1).
+		D3DXMATRIX zoom;
+		D3DXMatrixTranslation(&zoom, 0.f, 0.f, -zoomRate * CAMERA_ZOOM_DEPTH);	//マイナスで手前へ引き寄せる.
+		D3DXMatrixMultiply(&view, &View, &zoom);
 	}
 
-	switch (m_CaseId) {
-	case 1:
-		//[0]右上.
-		m_pChopsticks[0]->GetMesh()->SetLightCOLOR256({ 255,0,0 });
-		m_pChopsticks[0]->GetMesh()->SetisCOLOR(true);
-		m_pChopsticks[0]->Draw(View, Proj, Light, Camera);
-		//[3]左下. 
-		m_pChopsticks[3]->GetMesh()->SetLightCOLOR256({ 0,0,255 });
-		m_pChopsticks[3]->GetMesh()->SetisCOLOR(true);
-		m_pChopsticks[3]->Draw(View, Proj, Light, Camera);
-		break;
-	case 2:
-		//[1]左上.
-		m_pChopsticks[1]->GetMesh()->SetLightCOLOR256({ 255,255,0 });
-		m_pChopsticks[1]->GetMesh()->SetisCOLOR(true);
-		m_pChopsticks[1]->Draw(View, Proj, Light, Camera);
-		//[2]右下. 
-		m_pChopsticks[2]->GetMesh()->SetLightCOLOR256({ 0,255,0 });
-		m_pChopsticks[2]->GetMesh()->SetisCOLOR(true);
-		m_pChopsticks[2]->Draw(View, Proj, Light, Camera);
-		break;
-	case 3:
-		//ズーム演出を加えたcustomViewを渡して描画.
-		for (int i = 0; i < Chopsticks_Max; i++) {
-			m_pChopsticks[0]->GetMesh()->SetLightCOLOR256({ 255,0,0 });
-			m_pChopsticks[0]->GetMesh()->SetisCOLOR(true);
-			m_pChopsticks[0]->Draw(m_CustomView, Proj, Light, Camera);
-			m_pChopsticks[1]->GetMesh()->SetLightCOLOR256({ 255,255,0 });
-			m_pChopsticks[1]->GetMesh()->SetisCOLOR(true);
-			m_pChopsticks[1]->Draw(m_CustomView, Proj, Light, Camera);
-			m_pChopsticks[2]->GetMesh()->SetLightCOLOR256({ 0,255,0 });
-			m_pChopsticks[2]->GetMesh()->SetisCOLOR(true);
-			m_pChopsticks[2]->Draw(m_CustomView, Proj, Light, Camera);
-			m_pChopsticks[3]->GetMesh()->SetLightCOLOR256({ 0,0,255 });
-			m_pChopsticks[3]->GetMesh()->SetisCOLOR(true);
-			m_pChopsticks[3]->Draw(m_CustomView, Proj, Light, Camera);
-		}
-		break;
+	for (int i = 0; i < Chopsticks_Max; i++) {
+		if (!IsActive(i)) continue;
+
+		const ChopstickDef& def = CHOPSTICK_DEFS[i];
+		//色の設定はメッシュ側にあるので、1本ずつ描画の直前に設定する.
+		m_pChopsticks[i]->GetMesh()->SetLightCOLOR256({ def.colorR, def.colorG, def.colorB });
+		m_pChopsticks[i]->GetMesh()->SetisCOLOR(true);
+		m_pChopsticks[i]->Draw(view, Proj, Light, Camera);
 	}
 }
 
-//関数で初期速度をセットする
-void CTitleChopsticks::SetCaseId(int nextCaseId)
+//段階を切り替え、初期状態に戻す.
+void CTitleChopsticks::SetPhase(Phase next)
 {
-	if (m_CaseId == nextCaseId) return;
-
-	m_CaseId = nextCaseId;
-
-	m_AttackMoveNow = true;
-	m_Effectflag = false;
+	m_Phase = next;
+	m_AttackMoveNow = true;			//中心へ向かう状態から始める.
 	m_StopTimer = 0;
-
-	m_MoveOffset = D3DXVECTOR2(0.0f, 0.0f);
-	m_MoveSpeed = D3DXVECTOR2(INITIAL_SPEED_X, INITIAL_SPEED_Y);
+	m_MoveDist = 0.f;				//出発位置から.
+	m_MoveSpeed = APPROACH_SPEED;
+	ApplyPositions();				//切り替えた直後の描画でも、正しい位置にいるようにする.
 }
