@@ -1,22 +1,20 @@
 #pragma once
+#include "GameObject/UIObject/CUIObject.h"
 
-#include <GameObject/UIObject/CUIObject.h>
-
-
+//しびれ(麻痺)状態のプレイヤーのそばに出すボタン操作の案内UI.
 class CPlayerParalysisUI
 	: public CUIObject
 {
 public:
 	CPlayerParalysisUI();
-	~CPlayerParalysisUI()override;
+	~CPlayerParalysisUI() override;
 
-	void Update();
-	void Draw()override;
+	void Update() override;
+	void Draw() override;
 
-	void Paralysis(D3DXVECTOR3 Position);	//プレイヤーのポジションを受け取る.
+	//表示の基準になるプレイヤーの位置を設定する.
+	void SetPlayerPosition(const D3DXVECTOR3& playerPos);
 
 private:
-	bool	m_UIChange		= false;	//UIを変更していいか判定.
-	float	m_UIChangeTimer = 0;		//UIを変更するタイミングを決めるタイマー.
+	int m_AnimFrame = 0;	//絵の切り替えに使うフレームカウンタ.
 };
-
