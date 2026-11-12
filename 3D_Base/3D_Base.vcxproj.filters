@@ -35,7 +35,6 @@
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\CharacterUI\CCharacterUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\GameRdyUI\CGameRdyUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\PlayerSetupUI\CPlayerSetupUI.cpp" />
-    <ClCompile Include="Source\GameScene\GameScenePlayerSetup\TitleBackUI\CTitleBackUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\CGameScenePlayerSetup.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneTitle\TitleUI\CTitleUI.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneTitle\CGameSceneTitle.cpp" />
@@ -107,7 +106,6 @@
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\CharacterUI\CCharacterUI.h" />
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\GameRdyUI\CGameRdyUI.h" />
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\PlayerSetupUI\CPlayerSetupUI.h" />
-    <ClInclude Include="Source\GameScene\GameScenePlayerSetup\TitleBackUI\CTitleBackUI.h" />
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\CGameScenePlayerSetup.h" />
     <ClInclude Include="Source\GameScene\GameSceneTitle\TitleUI\CTitleUI.h" />
     <ClInclude Include="Source\GameScene\GameSceneTitle\CGameSceneTitle.h" />

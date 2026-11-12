@@ -175,7 +175,6 @@
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\CharacterUI\CCharacterUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\GameRdyUI\CGameRdyUI.cpp" />
     <ClCompile Include="Source\GameScene\GameScenePlayerSetup\PlayerSetupUI\CPlayerSetupUI.cpp" />
-    <ClCompile Include="Source\GameScene\GameScenePlayerSetup\TitleBackUI\CTitleBackUI.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneResult\CGameSceneResult.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.cpp" />
     <ClCompile Include="Source\GameScene\GameSceneWinnerResult\WinnerResultFood\CWinnerResultFavoriteFood.cpp" />
@@ -247,7 +246,6 @@
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\CharacterUI\CCharacterUI.h" />
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\GameRdyUI\CGameRdyUI.h" />
     <ClInclude Include="Source\GameScene\GameScenePlayerSetup\PlayerSetupUI\CPlayerSetupUI.h" />
-    <ClInclude Include="Source\GameScene\GameScenePlayerSetup\TitleBackUI\CTitleBackUI.h" />
     <ClInclude Include="Source\GameScene\GameSceneResult\CGameSceneResult.h" />
     <ClInclude Include="Source\GameScene\GameSceneResult\ResultUI\CResultUI.h" />
     <ClInclude Include="Source\GameScene\GameSceneWinnerResult\WinnerResultFood\CWinnerResultFavoriteFood.h" />

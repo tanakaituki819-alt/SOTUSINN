@@ -1,100 +1,116 @@
 #include "CGameScenePlayerSetup.h"
 #include "Game/CGame.h"
+#include "GameObject/UIObject/CUIObject.h"
+#include "CharacterUI/CCharacterUI.h"
+#include "PlayerSetupUI/CPlayerSetupUI.h"
+#include "GameRdyUI/CGameRdyUI.h"
 
-CGameScenePlayerSetup::CGameScenePlayerSetup(HWND	Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
-	:CGameScene::CGameScene(Hwnd, Dx9, Dx11, m_Camera)
+namespace {
+	constexpr float BGM_VOLUME = 0.5f;	//BGMの音量.
+}
+
+CGameScenePlayerSetup::CGameScenePlayerSetup(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx11, CCamera* m_Camera)
+	: CGameScene(Hwnd, Dx9, Dx11, m_Camera)
+	, m_pBackImg(std::make_unique<CUIObject>())
+	, m_pCharacterUI(std::make_unique<CCharacterUI>())
+	, m_pPlayerSetupUI(std::make_unique<CPlayerSetupUI>())
+	, m_pGameRdyUI(std::make_unique<CGameRdyUI>())
 {
-
-	m_pBackImg			= new CUIObject		();	//背景.
-	m_pCharacterUI		= new CCharacterUI	();	//キャラクターのUI.
-	m_pPlayerSetupUI	= new CPlayerSetupUI();	//その他UI.
-	m_pGameRdyUI		= new CGameRdyUI	();	//ゲームlady確認UI.
-
-	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));	//和室背景設定.
-	m_pBackImg->SetPosition	(0, 0, 0);		
-	m_pBackImg->SetScale	(WND_W, WND_H,0);	//画面最大数のサイズ.
+	//和室の背景を、画面全体に表示する.
+	m_pBackImg->AttachSprite(*CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_BackGround));
+	m_pBackImg->SetPosition(0, 0, 0);
+	m_pBackImg->SetScale(WND_W, WND_H, 0);
 
 	//BGM再生.
-	SoundHandleX BGMHandle = XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::PlayerSetUp);
-	XAudio2::GetInstance()->SetSoundVolume(BGMHandle, 0.5f);
+	const SoundHandleX bgmHandle = XAudio2::GetInstance()->BGMPlayHandle(XAudio2::BGMList::PlayerSetUp);
+	XAudio2::GetInstance()->SetSoundVolume(bgmHandle, BGM_VOLUME);
 }
 
 CGameScenePlayerSetup::~CGameScenePlayerSetup()
 {
-	SAFE_DELETE(m_pGameRdyUI);		
-	SAFE_DELETE(m_pPlayerSetupUI);
-	SAFE_DELETE(m_pCharacterUI);
-	SAFE_DELETE(m_pBackImg);
 	XAudio2::GetInstance()->AllStopBGM();
 	XAudio2::GetInstance()->AllStopSE();
 }
 
 void CGameScenePlayerSetup::StartFinalSetup()
 {
-	//コントローラー最大数.
+	//各UIにコントローラーを渡す.
 	for (int i = 0; i < Controller_Max; i++) {
-			
-		//コントローラーセット.
-		m_pPlayerSetupUI->SetXInput(m_pController[i],i);	
-		m_pCharacterUI->SetXInput(m_pController	[i], i);
-		m_pCharacterUI->SetXInput(m_pController	[i], i);
-		m_pGameRdyUI->SetXInput(m_pController	[i], i);
+		m_pPlayerSetupUI->SetXInput(m_pController[i], i);
+		m_pCharacterUI->SetXInput(m_pController[i], i);
+		m_pGameRdyUI->SetXInput(m_pController[i], i);
 	}
 }
 
 void CGameScenePlayerSetup::Update()
 {
-	//コントローラー最大分.
 	for (int i = 0; i < Controller_Max; i++) {
-		m_pController[i]->Update();	
-	}
-	//シーンチェンジフラグが立っていたら、シーンチェンジを行う.
-	if (m_pGameRdyUI->GetMainSceneChangeflag()) {
-		SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);	//ゲームメインへシーンチェンジ.
-		XAudio2::GetInstance()->AllStopBGM();	//BGM停止.
-		//コントローラーが接続されていないプレイヤーを削除する.
-		for (int i = 0; i < Controller_Max; i++) {
-			if (!m_pController[i]->IsConnect()&&i!=0) {
-			SAFE_DELETE(CG->m_pPlayer[i]);
-			}
-
+		if (m_pController[i] != nullptr) {
+			m_pController[i]->Update();
 		}
 	}
+
+	//シーン切り替えを始めたら、それ以降の操作は受け付けない.
+	if (m_IsSceneChanging) return;
+
+	//前のフレームでUIが出した切り替えの合図を確認する.
+	if (m_pGameRdyUI->GetMainSceneChangeflag()) {
+		ChangeToGameMain();
+		return;
+	}
 	if (m_pGameRdyUI->GetTitleSceneChangeflag()) {
-		SenenChang(enScene::Title, CSceneChange::TransitionType::FUSUMA, 60, 120,120);
-		XAudio2::GetInstance()->AllStopBGM();
+		ChangeToTitle();
+		return;
 	}
 
 	m_pGameRdyUI->Update();
 	m_pPlayerSetupUI->Update();
+	m_pCharacterUI->Update();
 }
 
 void CGameScenePlayerSetup::Draw()
 {
-	m_pDx11->SetDepth(false);	//深度テスト無効.
-	m_pBackImg->Draw();			//プレイヤーフォント描画.
-	m_pPlayerSetupUI->Draw();	//プレイヤーセットアップシーン関係の描画.
-	m_pCharacterUI->Draw();		//キャラクターUI描画.
-	m_pGameRdyUI->Draw();		//準備OK切り替え描画.
+	m_pDx11->SetDepth(false);	//深度テスト無効(UIは描いた順に重なる).
+	m_pBackImg->Draw();			//和室の背景.
+	m_pPlayerSetupUI->Draw();	//プレイヤーの背景・名前・コントローラーアイコン.
+	m_pCharacterUI->Draw();		//キャラクター.
+	m_pGameRdyUI->Draw();		//準備完了とタイトルに戻る画面(一番手前).
 	m_pDx11->SetDepth(true);	//深度テスト有効.
 }
 
-void CGameScenePlayerSetup::PlayerControllerSet(CXInput** Xinput, CPlayer** player)
+void CGameScenePlayerSetup::PlayerControllerSet(CGame* pGame)
 {
-	
-	for (int i = 0;i < Controller_Max;i++) {
-		m_pController[i] = Xinput[i];
-			m_pPlayer[i] = player[i];
+	m_pGame = pGame;
+	for (int i = 0; i < Controller_Max; i++) {
+		m_pController[i] = pGame->m_pController[i];
 	}
-
 }
 
-void CGameScenePlayerSetup::PlayerControllerSet(CGame* m_pCGame)
+//ゲームメインへ切り替える.
+void CGameScenePlayerSetup::ChangeToGameMain()
 {
-	CG = m_pCGame;
-	for (int i = 0;i < Controller_Max;i++) {
-		m_pController[i] = CG->m_pController[i];
+	m_IsSceneChanging = true;
+	SenenChang(enScene::GameMain, CSceneChange::TransitionType::FUSUMA, 60, 60);
+	XAudio2::GetInstance()->AllStopBGM();
+	RemoveDisconnectedPlayers();	//参加しないプレイヤーは、ゲームメインに持ち込まない.
+}
 
+//タイトルへ切り替える.
+void CGameScenePlayerSetup::ChangeToTitle()
+{
+	m_IsSceneChanging = true;
+	SenenChang(enScene::Title, CSceneChange::TransitionType::FUSUMA, 60, 120, 120);
+	XAudio2::GetInstance()->AllStopBGM();
+}
+
+//未接続のプレイヤーを削除する(1Pは必ず残す).
+void CGameScenePlayerSetup::RemoveDisconnectedPlayers()
+{
+	if (m_pGame == nullptr) return;
+
+	for (int i = 1; i < Controller_Max; i++) {	//1P(0番)は対象外なので1から.
+		const bool isConnected = (m_pController[i] != nullptr && m_pController[i]->IsConnect());
+		if (isConnected) continue;
+		SAFE_DELETE(m_pGame->m_pPlayer[i]);
 	}
-
 }

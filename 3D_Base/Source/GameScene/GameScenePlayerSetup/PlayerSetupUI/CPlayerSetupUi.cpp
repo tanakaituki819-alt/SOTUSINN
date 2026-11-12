@@ -1,192 +1,126 @@
 #include "CPlayerSetupUI.h"
 #include "SpriteManager/CSpriteManager.h"
-#include <iostream>
 
 namespace {
-	//プレイヤーの背景UIのポジション.
-	const D3DXVECTOR3 PLAYER1_UI = { 8.f	, 0.f, 0.f };	//プレイヤー1の背景UI.
-	const D3DXVECTOR3 PLAYER2_UI = { 332.8f	, 0.f, 0.f };	//プレイヤー2の背景UI.
-	const D3DXVECTOR3 PLAYER3_UI = { 652.8f	, 0.f, 0.f };	//プレイヤー3の背景UI.
-	const D3DXVECTOR3 PLAYER4_UI = { 972.8f	, 0.f, 0.f };	//プレイヤー4の背景UI.
-	//プレイヤーコントローラーUIのポジション.
-	const D3DXVECTOR3 PLAYER1_CONTROLLER_UI = { 154.f, 100.f, 0.f };	//コントローラーUIのポジション.
-	const D3DXVECTOR3 PLAYER2_CONTROLLER_UI = { 480.f, 100.f, 0.f };	//コントローラーUIのポジション.
-	const D3DXVECTOR3 PLAYER3_CONTROLLER_UI = { 800.f, 100.f, 0.f };	//コントローラーUIのポジション.
-	const D3DXVECTOR3 PLAYER4_CONTROLLER_UI = { 1120.f, 100.f, 0.f };	//コントローラーUIのポジション.
-	//巻物UIポジション.
-	const D3DXVECTOR3 SCROLL_UI_POS	 = { 788.f,683.f,0.f };				//スクロールUIポジション.
-	const D3DXVECTOR3 SCROLL_UI2_POS = { 1082.f,683.f,0.f };			//スクロールUIポジション.
-	//テキストUIのポジション.
-	const D3DXVECTOR3 TEXT_UI_POS = { 700.f, 638.f, 0.f };				//テキストUIのポジション.
-	//準備完了キャンセルテキストのポジション.
-	const D3DXVECTOR3 TEXT_UI2_POS = { 928.f, 638.f, 0.f };				//準備完了UIのポジション.
-	//プレイヤーの背景UIのスケール.
-	const D3DXVECTOR3 PLAYER_SCALE				= { 300.f, 630.f, 0.f };				//プレイヤー背景UIのスケール.
-	const D3DXVECTOR3 PLAYER_NAME_SCALE			= { 300.f, 75.f, 0.f };					//プレイヤーネームのスケール.
-	const D3DXVECTOR3 PLAYER_CONTROLLER_SCALE	= { 150.f, 75.f, 0.f };					//プレイヤーネームのスケール.
-	const D3DXVECTOR3 TEXT_UI_SCALE				= { 300.f, 100.f, 0.f };				//テキストUIのスケール.
-	const D3DXVECTOR3 SCROLL_UI_SCALE			= { 210.f, 100.f, 0.f };
-	const D3DXVECTOR3 SCROLL_UI2_SCALE			= { 380.f, 100.f, 0.f };
-	//ローテーション.
-	const D3DXVECTOR3 ROTATION_NONE = { 0.f, 0.f, 0.f };		//回転が必要ないときのローテーション.
+	//画像1枚ぶんの表示設定.
+	struct SpriteLayout
+	{
+		D3DXVECTOR3	pos;		//位置.
+		D3DXVECTOR3	scale;		//大きさ.
+		D3DXVECTOR3	rot;		//回転.
+		SHORT		patternX;	//画像の何列目を使うか.
+		SHORT		patternY;	//画像の何段目を使うか.
+	};
 
-	//アルファ.
-	constexpr float	ALPHA_OFF		= 0.2f;		//接続時アルファ.
-	constexpr float	ALPHA_CONNECTED = 1.0f;		//接続時アルファ.
+	const D3DXVECTOR3 ROT_NONE = { 0.f, 0.f, 0.f };	//回転なし.
 
+	//プレイヤーごとの位置(X座標)
+	struct PlayerSlot
+	{
+		float panelX;			//背景と名前の位置.
+		float controllerIconX;	//コントローラーアイコンの位置.
+	};
+	const PlayerSlot PLAYER_SLOTS[] = {
+		//背景・名前	コントローラー
+		{ 8.f,		154.f },	//1P.
+		{ 332.8f,	480.f },	//2P.
+		{ 652.8f,	800.f },	//3P.
+		{ 972.8f,	1120.f },	//4P.
+	};
+	//X座標とパターン番号はプレイヤーごとに決めるので、ここでは0にしておく.
+	const SpriteLayout BACKGROUND_LAYOUT		= { { 0.f, 0.f,   0.f },{ 300.f, 630.f, 0.f }, ROT_NONE, 0, 0 };	//画像の i 列目が iP 用.
+	const SpriteLayout NAME_LAYOUT				= { { 0.f, 0.f,   0.f },{ 300.f, 75.f,  0.f }, ROT_NONE, 0, 0 };	//画像の i 段目が iP 用.
+	const SpriteLayout CONTROLLER_ICON_LAYOUT	= { { 0.f, 100.f, 0.f },{ 150.f, 75.f,  0.f }, ROT_NONE, 0, 0 };
+
+	//画面下のボタン案内(巻物の上にテキストを重ねる).
+	const SpriteLayout GUIDE_SCROLL_LAYOUTS[] = {
+		{ { 788.f,  683.f, 0.f },{ 210.f, 100.f, 0.f }, ROT_NONE, 0, 0 },	//[0]タイトルに戻る.
+		{ { 1082.f, 683.f, 0.f },{ 380.f, 100.f, 0.f }, ROT_NONE, 0, 0 },	//[1]準備完了キャンセル.
+	};
+	const SpriteLayout GUIDE_TEXT_LAYOUTS[] = {
+		{ { 700.f,  638.f, 0.f },{ 300.f, 100.f, 0.f }, ROT_NONE, 0, 2 },	//[0]タイトルに戻る.
+		{ { 928.f,  638.f, 0.f },{ 300.f, 100.f, 0.f }, ROT_NONE, 0, 1 },	//[1]準備完了キャンセル.
+	};
+
+	//透明度.
+	constexpr float ALPHA_OPAQUE		= 1.0f;		//不透明.
+	constexpr float ALPHA_DISCONNECTED	= 0.2f;		//未接続のコントローラーアイコン.
+
+	//同じ画像を他のUIでも使うので、描画のたびに全部の設定をし直す.
+	void DrawSprite(CSprite2D* sprite, const SpriteLayout& layout, float alpha)
+	{
+		sprite->SetPosition(layout.pos);
+		sprite->SetScale(layout.scale);
+		sprite->SetRotation(layout.rot);
+		sprite->SetPatternNo(layout.patternX, layout.patternY);
+		sprite->SetAlpha(alpha);
+		sprite->Render();
+	}
 }
-
 
 CPlayerSetupUI::CPlayerSetupUI()
 {
-	//3つのスプライトを設定.
-	for (int i = 0; i < Ui_Max; i++) {
-		m_pPlayerSetUpUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);	//背景.
-		m_pPlayerNameUI[i]		 = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Playerfont);			//プレイヤー名前.
-		m_pPlayercontrollerUI[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_controller);			//コントローラーUI.
-	}
-	//テキストスプライトを設定.
-	for (int i = 0; i < Text_Max; i++) {
-		m_pTextUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);						//テキスト(文字).
-		m_pScrollUI[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);						//巻物.
-	}
+	m_pBackground		= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_PlayerBackground);
+	m_pName				= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Playerfont);
+	m_pControllerIcon	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_controller);
+	m_pText				= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);
+	m_pScroll			= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);
 }
 
-CPlayerSetupUI::~CPlayerSetupUI()
-{
-}
+CPlayerSetupUI::~CPlayerSetupUI() = default;	//画像もコントローラーも借りているだけなので、ここでは解放しない.
 
 void CPlayerSetupUI::Update()
 {
 }
-
 void CPlayerSetupUI::Draw()
 {
-
-	PlayerBackUI();
-	PlayerNameUI();
-	ControllerUI();
-	ScrollUI();
-	TextUI();
+	DrawBackgrounds();
+	DrawNames();
+	DrawControllerIcons();
+	DrawGuides();
 }
-
-//プレイヤーの背景UI.
-void CPlayerSetupUI::PlayerBackUI()
+//各プレイヤーの背景.
+void CPlayerSetupUI::DrawBackgrounds()
 {
-	//プレイヤー1の背景.
-	m_pPlayerSetUpUI[0]->SetPosition(D3DXVECTOR3(PLAYER1_UI));
-	m_pPlayerSetUpUI[0]->SetScale(D3DXVECTOR3(PLAYER_SCALE));
-	m_pPlayerSetUpUI[0]->SetPatternNo(0.f, 0.f);
-	m_pPlayerSetUpUI[0]->Render();
-	//プレイヤー2の背景.
-	m_pPlayerSetUpUI[1]->SetPosition(D3DXVECTOR3(PLAYER2_UI));
-	m_pPlayerSetUpUI[1]->SetScale(D3DXVECTOR3(PLAYER_SCALE));
-	m_pPlayerSetUpUI[1]->SetPatternNo(1.f, 0.f);
-	m_pPlayerSetUpUI[1]->Render();
-	//プレイヤー3の背景.
-	m_pPlayerSetUpUI[2]->SetPosition(D3DXVECTOR3(PLAYER3_UI));
-	m_pPlayerSetUpUI[2]->SetScale(D3DXVECTOR3(PLAYER_SCALE));
-	m_pPlayerSetUpUI[2]->SetPatternNo(2.f, 0.f);
-	m_pPlayerSetUpUI[2]->Render();
-	//プレイヤー4の背景.
-	m_pPlayerSetUpUI[3]->SetPosition(D3DXVECTOR3(PLAYER4_UI));
-	m_pPlayerSetUpUI[3]->SetScale(D3DXVECTOR3(PLAYER_SCALE));
-	m_pPlayerSetUpUI[3]->SetPatternNo(3.f, 0.f);
-	m_pPlayerSetUpUI[3]->Render();
-
+	for (int i = 0; i < Ui_Max; i++) {
+		SpriteLayout layout = BACKGROUND_LAYOUT;	//共通の設定をコピーして、プレイヤーごとの部分だけ変える.
+		layout.pos.x = PLAYER_SLOTS[i].panelX;
+		layout.patternX = static_cast<SHORT>(i);	//i列目の背景を使う.
+		DrawSprite(m_pBackground, layout, ALPHA_OPAQUE);
+	}
 }
-//プレイヤーの名前UI.
-void CPlayerSetupUI::PlayerNameUI()
+//各プレイヤーの名前(背景の上端に重ねる).
+void CPlayerSetupUI::DrawNames()
 {
-	//プレイヤー1の名前.
-	m_pPlayerNameUI[0]->SetPosition(D3DXVECTOR3(PLAYER1_UI));
-	m_pPlayerNameUI[0]->SetScale(D3DXVECTOR3(PLAYER_NAME_SCALE));
-	m_pPlayerNameUI[0]->SetPatternNo(0.f, 0.f);
-	m_pPlayerNameUI[0]->Render();
-	//プレイヤー2の名前.
-	m_pPlayerNameUI[1]->SetPosition(D3DXVECTOR3(PLAYER2_UI));
-	m_pPlayerNameUI[1]->SetScale(D3DXVECTOR3(PLAYER_NAME_SCALE));
-	m_pPlayerNameUI[1]->SetPatternNo(0.f, 1.f);
-	m_pPlayerNameUI[1]->Render();
-	//プレイヤー3の名前.
-	m_pPlayerNameUI[2]->SetPosition(D3DXVECTOR3(PLAYER3_UI));
-	m_pPlayerNameUI[2]->SetScale(D3DXVECTOR3(PLAYER_NAME_SCALE));
-	m_pPlayerNameUI[2]->SetPatternNo(0.f, 2.f);
-	m_pPlayerNameUI[2]->Render();
-	//プレイヤー4の名前.
-	m_pPlayerNameUI[3]->SetPosition(D3DXVECTOR3(PLAYER4_UI));
-	m_pPlayerNameUI[3]->SetScale(D3DXVECTOR3(PLAYER_NAME_SCALE));
-	m_pPlayerNameUI[3]->SetPatternNo(0.f, 3.f);
-	m_pPlayerNameUI[3]->Render();
+	for (int i = 0; i < Ui_Max; i++) {
+		SpriteLayout layout = NAME_LAYOUT;
+		layout.pos.x = PLAYER_SLOTS[i].panelX;
+		layout.patternY = static_cast<SHORT>(i);	//i段目の名前を使う.
+		DrawSprite(m_pName, layout, ALPHA_OPAQUE);
+	}
 }
-//プレイヤーのコントローラーUI.
-void CPlayerSetupUI::ControllerUI()
+//各プレイヤーのコントローラーアイコン(未接続なら薄く表示).
+void CPlayerSetupUI::DrawControllerIcons()
 {
-	//プレイヤー1.
-	m_pPlayercontrollerUI[0]->SetAlpha(ALPHA_OFF);
-	m_pPlayercontrollerUI[0]->SetPosition(D3DXVECTOR3(PLAYER1_CONTROLLER_UI));
-	m_pPlayercontrollerUI[0]->SetScale(D3DXVECTOR3(PLAYER_CONTROLLER_SCALE));
-	//コントローラーが接続されているなら.
-	if (m_pMyController[0]->IsConnect()) {
-		m_pPlayercontrollerUI[0]->SetAlpha(ALPHA_CONNECTED);
+	for (int i = 0; i < Ui_Max; i++) {
+		SpriteLayout layout = CONTROLLER_ICON_LAYOUT;
+		layout.pos.x = PLAYER_SLOTS[i].controllerIconX;
+		DrawSprite(m_pControllerIcon, layout, IsConnected(i) ? ALPHA_OPAQUE : ALPHA_DISCONNECTED);
 	}
-
-	m_pPlayercontrollerUI[0]->Render();
-	//プレイヤー2.
-	m_pPlayercontrollerUI[1]->SetAlpha(ALPHA_OFF);
-	m_pPlayercontrollerUI[1]->SetPosition(D3DXVECTOR3(PLAYER2_CONTROLLER_UI));
-	m_pPlayercontrollerUI[1]->SetScale(D3DXVECTOR3(PLAYER_CONTROLLER_SCALE));
-	//コントローラーが接続されているなら.
-	if (m_pMyController[1]->IsConnect()) {
-		m_pPlayercontrollerUI[1]->SetAlpha(ALPHA_CONNECTED);
-	}
-	m_pPlayercontrollerUI[1]->Render();
-	//プレイヤー3.
-	m_pPlayercontrollerUI[2]->SetAlpha(ALPHA_OFF);
-	m_pPlayercontrollerUI[2]->SetPosition(D3DXVECTOR3(PLAYER3_CONTROLLER_UI));
-	m_pPlayercontrollerUI[2]->SetScale(D3DXVECTOR3(PLAYER_CONTROLLER_SCALE));
-	//コントローラーが接続されているなら.
-	if (m_pMyController[2]->IsConnect()) {
-		m_pPlayercontrollerUI[2]->SetAlpha(ALPHA_CONNECTED);
-	}
-	m_pPlayercontrollerUI[2]->Render();
-	//プレイヤー4.
-	m_pPlayercontrollerUI[3]->SetAlpha(ALPHA_OFF);
-	m_pPlayercontrollerUI[3]->SetPosition(D3DXVECTOR3(PLAYER4_CONTROLLER_UI));
-	m_pPlayercontrollerUI[3]->SetScale(D3DXVECTOR3(PLAYER_CONTROLLER_SCALE));
-	//コントローラーが接続されているなら.
-	if (m_pMyController[3]->IsConnect()) {
-		m_pPlayercontrollerUI[3]->SetAlpha(ALPHA_CONNECTED);
-	}
-	m_pPlayercontrollerUI[3]->Render();
 }
-//テキストUI.
-void CPlayerSetupUI::TextUI()
-{	
-	//タイトルに戻るUI.
-	m_pTextUI[0]->SetPosition(D3DXVECTOR3(TEXT_UI_POS));
-	m_pTextUI[0]->SetScale(D3DXVECTOR3(TEXT_UI_SCALE));
-	m_pTextUI[0]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-	m_pTextUI[0]->SetPatternNo(0.f, 2.f);
-	m_pTextUI[0]->Render();
-	//準備完了キャンセルUI.
-	m_pTextUI[1]->SetPosition(D3DXVECTOR3(TEXT_UI2_POS));
-	m_pTextUI[1]->SetScale(D3DXVECTOR3(TEXT_UI_SCALE));
-	m_pTextUI[1]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-	m_pTextUI[1]->SetPatternNo(0.f, 1.f);
-	m_pTextUI[1]->Render();
-}
-//巻物UI.
-void CPlayerSetupUI::ScrollUI()
+//画面下のボタン案内.
+void CPlayerSetupUI::DrawGuides()
 {
-	//タイトルに戻るUI.
-	m_pScrollUI[0]->SetPosition(D3DXVECTOR3(SCROLL_UI_POS));
-	m_pScrollUI[0]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-	m_pScrollUI[0]->SetScale(D3DXVECTOR3(SCROLL_UI_SCALE));
-	m_pScrollUI[0]->Render();
-	//準備完了キャンセルUI.
-	m_pScrollUI[1]->SetPosition(D3DXVECTOR3(SCROLL_UI2_POS));
-	m_pScrollUI[1]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-	m_pScrollUI[1]->SetScale(D3DXVECTOR3(SCROLL_UI2_SCALE));
-	m_pScrollUI[1]->Render();
+	//巻物を全部描いてから、その上にテキストを重ねる.
+	for (const SpriteLayout& scroll : GUIDE_SCROLL_LAYOUTS) {
+		DrawSprite(m_pScroll, scroll, ALPHA_OPAQUE);
+	}
+	for (const SpriteLayout& text : GUIDE_TEXT_LAYOUTS) {
+		DrawSprite(m_pText, text, ALPHA_OPAQUE);
+	}
+}
+bool CPlayerSetupUI::IsConnected(int player) const
+{
+	//SetXInput が呼ばれていない番号でも落ちないよう、nullptr を確認する.
+	return m_pMyController[player] != nullptr && m_pMyController[player]->IsConnect();
 }
