@@ -231,12 +231,11 @@ void CPlayer::UpdateParalysis()
 	}
 
 	//震える動き.
-	//前のフレームとの差だけ動かすので、Bボタンを連打しても揺れの中心がずれない.
 	const float shakeY = sinf(m_ParalysisTimer * SHAKE_SPEED) * SHAKE_HEIGHT;
 	m_Position.y += shakeY - m_ParalysisShakeY;
 	m_ParalysisShakeY = shakeY;
 
-	//ボタン案内UIは、マヒする直前のカーソルの位置に出す.
+	//ボタンUIは、マヒする直前のカーソルの位置に出す.
 	m_ParalysisUI.SetPlayerPosition({ m_CousorPosition.x, m_CousorPosition.y, 0.f });
 	m_ParalysisUI.Update();
 }
