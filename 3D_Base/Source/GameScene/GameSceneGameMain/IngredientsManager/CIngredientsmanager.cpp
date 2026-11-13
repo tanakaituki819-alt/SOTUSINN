@@ -173,12 +173,28 @@ void CIngredientsmanager::Update()
 
 
 }
-
+float Quadraticfunction(float i)
+{
+	float result = 0;
+	result = -4 * ((i - 0.5) * (i - 0.5)) + 1;
+	// 例：最大輝度を 1.0 から 2.0（または 200%）に上げたい場合
+	//result = (-4 * ((i - 0.5) * (i - 0.5)) + 1) * 2.0f;
+	// 例：i = 0.8 のときに明るさのピークを持ってきたい場合
+	//result = -4.0f * ((i - 0.8f) * (i - 0.8f)) + 1.0f
+	result = std::max(0.0f, result);
+	return result;
+}
 void CIngredientsmanager::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Camera)
 {
+	static float A = 0;
 
+	A += 1.0 / 120.0;
+	if (A>1) {
+		A -= 1;
+	}
 	for (int i = 0; i < m_pIngredients.size(); i++) {
 		if (m_pIngredients[i]->GetCharStatus() == enCharStatus::Live || m_pIngredients[i]->GetCharStatus() == enCharStatus::Dying) {
+			m_pIngredients[i]->GetMesh()->SetOutlineWidth(0.03*(1.0-Quadraticfunction(A)));
 			m_pIngredients[i]->Draw(View, Proj, Light, Camera);
 		}
 
@@ -310,9 +326,10 @@ void CIngredientsmanager::SAVE()
 
 	nlohmann::json SAVEData;
 	SAVEData["IngredientsSteto"] = nlohmann::json::array();
-
+	
 	for (int i = 0;i < static_cast<int>(Ingredients::MAX);i++) {
 		SAVEData["IngredientsSteto"].push_back({
+			{"name",magic_enum::enum_name(static_cast<Ingredients>(i))},
 			{"No",          i},
 			{"probability", IngredientsSetting[i].probability},
 			{"HitSize",     IngredientsSetting[i].HitSize},

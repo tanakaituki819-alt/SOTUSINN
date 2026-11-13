@@ -168,6 +168,7 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 	if (isappear ==false) {
 		return;
 	}
+	
 	//描画直前で座標や回転情報などを更新.
 	m_pMesh->SetPosition(m_Position);
 	m_pMesh->SetRotation(m_Rotation);
@@ -186,11 +187,15 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 
 		m_pMesh->SetisCOLOR(true);
 		if (isBoiled) {//煮えている
-			D3DXVECTOR3 Coler = { 110,50,2 };
+			D3DXVECTOR3 Coler = { 110,80,30 };
 			m_pMesh->SetLightCOLOR256(Coler);
 			m_pMesh->SetEnableOutline(true);
 			if (IngredientsNo == Ingredients::KANI || IngredientsNo == Ingredients::ROBUSTER) {
-				Coler = { 200,100,75 };
+				Coler = { 180,100,75 };
+				m_pMesh->SetLightCOLOR256(Coler);
+			}
+			if (IngredientsNo == Ingredients::UINNER) {
+				Coler = { 200,10,7 };
 				m_pMesh->SetLightCOLOR256(Coler);
 			}
 		}
