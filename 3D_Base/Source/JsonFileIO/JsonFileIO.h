@@ -13,6 +13,7 @@
 
 #include <filesystem>  
 
+#include"magic_enum.hpp"
 //jsonファイルの読み書きをする
 class JsonFileIO
 {

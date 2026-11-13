@@ -259,7 +259,9 @@
     <ClInclude Include="Source\Game\CCamera.h" />
     <ClInclude Include="Source\Game\CGame.h" />
     <ClInclude Include="Source\Game\enScene.h" />
+    <ClInclude Include="Source\JsonFileIO\json.hpp" />
     <ClInclude Include="Source\JsonFileIO\JsonFileIO.h" />
+    <ClInclude Include="Source\JsonFileIO\magic_enum.hpp" />
     <ClInclude Include="Source\Main\CMain.h" />
     <ClInclude Include="Source\Player\CPlayer.h" />
     <ClInclude Include="Source\Player\PlayerParalysisUI\CPlayerParalysisUI.h" />
