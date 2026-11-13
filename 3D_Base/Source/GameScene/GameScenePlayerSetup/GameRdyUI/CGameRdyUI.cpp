@@ -1,502 +1,303 @@
 #include "CGameRdyUI.h"
-#include <iostream>
 
 namespace {
-	//手の初期ポジション.
-	const D3DXVECTOR3 PLAYER1_RIGHTHAND_POS  = { 80.f	, 80.f, 0.f };		//プレイヤー1の右手初期ポジション.
-	const D3DXVECTOR3 PLAYER2_RIGHTHAND_POS  = { 404.4f	, 80.f, 0.f };		//プレイヤー2の右手初期ポジション.
-	const D3DXVECTOR3 PLAYER3_RIGHTHAND_POS  = { 724.4f	, 80.f, 0.f };		//プレイヤー3の右手初期ポジション.
-	const D3DXVECTOR3 PLAYER4_RIGHTHAND_POS  = { 1044.4f	, 80.f, 0.f };	//プレイヤー4の右手初期ポジション.
-	//左手の初期ポジション.
-	const D3DXVECTOR3 PLAYER1_LEFTHAND_POS	 = { 0.f, 80.f, 0.f };			//プレイヤー1の右手初期ポジション.
-	const D3DXVECTOR3 PLAYER2_LEFTHAND_POS	 = { 325.4f	, 80.f, 0.f };		//プレイヤー2の右手初期ポジション.
-	const D3DXVECTOR3 PLAYER3_LEFTHAND_POS	 = { 645.4f	, 80.f, 0.f };		//プレイヤー3の右手初期ポジション.
-	const D3DXVECTOR3 PLAYER4_LEFTHAND_POS	 = { 965.4f	, 80.f, 0.f };		//プレイヤー4の右手初期ポジション.
-	//白背景のポジション.
-	const D3DXVECTOR3 WHITEBACK_POS = { 0.f,0.f,0.f };						//白背景のポジション.
-	//巻物のポジション.
-	const D3DXVECTOR3 SCROLL_POS	= { 650.f, 360.f, 0.f };				//白背景のポジション.
-	//テキストのポジション.
-	const D3DXVECTOR3 TEXT1_POS		= { 400.f, 484.f, 0.f };				//テキストのポジション.
-	const D3DXVECTOR3 TEXT2_POS		= { 860.f, 484.f, 0.f };				//テキストのポジション.
-	//セレクトフレームポジション.
-	const D3DXVECTOR3 SELECTIONFRAME_POS = { 400.f, 484.f, 0.f };			//セレクトフレームのポジション.
-	//タイトルに戻る時のテキスト.
-	const D3DXVECTOR3 TITLEBACK1_TEXT_POS = { 340.f, 140.f, 0.f };			//テキストのポジション.
-	const D3DXVECTOR3 TITLEBACK2_TEXT_POS = { 748.f, 432.f, 0.f };			//テキストのポジション.
-	const D3DXVECTOR3 TITLEBACK3_TEXT_POS = { 262.f, 406.f, 0.f };			//テキストのポジション.
-	//準備完了の初期ポジション.
-	const D3DXVECTOR3 PLAYER1_GAMEREADY_POS  = { 16.f	, 50.f, 0.f };		//プレイヤー1準備完了のポジション.
-	const D3DXVECTOR3 PLAYER2_GAMEREADY_POS  = { 305.4f	, 50.f, 0.f };		//プレイヤー2準備完了のポジション.
-	const D3DXVECTOR3 PLAYER3_GAMEREADY_POS  = { 605.4f	, 50.f, 0.f };		//プレイヤー3準備完了のポジション.
-	const D3DXVECTOR3 PLAYER4_GAMEREADY_POS  = { 945.4f	, 50.f, 0.f };		//プレイヤー4準備完了のポジション.
-	//全員が準備完了時に表示されるUIのポジション.
-	const D3DXVECTOR3 PLAYER_ALLREADY_POS	= { -150, 250, 0 };				//全員が準備完了時に表示されるUIのポジション
-	//パターンナンバー.
-	const SHORT PATTERN_NONE				= { 0 };						//x座標のpatternナンバー.
-	const SHORT RIGHT_HAND_YPATTERNNO		= { 1 };						//x座標のpatternナンバー.
-	const SHORT GAMEREADY_YPATTERNNO		= { 5 };						//準備完了のy座標のpatternナンバー.
-	const SHORT TITLEBACK2_TEXT_YPATTERNNO	= { 3 };						//準備完了のy座標のpatternナンバー.
-	const SHORT TITLEBACK3_TEXT_YPATTERNNO	= { 4 };						//タイトルバックテキストのy座標のpatternナンバー.
-	//スケール値.
-	const D3DXVECTOR3 PLAYER_HAND_SCALE		 = { 110.f	, 130.f , 0.f };	//プレイヤーの手の初期スケール値.
-	const D3DXVECTOR3 PLAYER_GAMEREADY_SCALE = { 350.f	, 170.f , 0.f };	//プレイヤーの準備完了のスケール値.
-	const D3DXVECTOR3 WHITEBACK_SCALE		 = { 1280.f , 720.f , 0.f };	//白い背景のスケール値.
-	const D3DXVECTOR3 SCROLL_SCALE			 = { 800.f	, 1350.f, 0.f };	//巻物のスケール値.
-	const D3DXVECTOR3 TEXT_SCALE			 = { 350.f	, 150.f , 0.f };	//テキストのスケール値.
-	const D3DXVECTOR3 SELECTIONFRAME_SCALE	 = { 350.f	, 150.f , 0.f };	//セレクトフレームのスケール値.
-	const D3DXVECTOR3 TITLEBACK1_TEXT_SCALE	 = { 600.f	, 260.f , 0.f };	//タイトルに戻る時のテキストスケール値.
-	const D3DXVECTOR3 TITLEBACK2_TEXT_SCALE	 = { 600.f	, 150.f , 0.f };	//タイトルに戻る時のテキストスケール値.	
-	const D3DXVECTOR3 PLAYER_ALLREADY_SCALE  = { 1550.f	, 450.f	, 0.f };	//全員が準備完了時に表示されるUIのスケール値.
-	//ローテーション.
-	const D3DXVECTOR3 PLAYER_GAMEREADY_ROTATION = { 0.f, 0.f, 0.3f };		//準備完了のローテーション(回転)値.
-	const D3DXVECTOR3 ROTATION_NONE				= { 0.f, 0.f, 0.f };		//回転が必要ないときのローテーション.
-	const D3DXVECTOR3 SCROLL_ROTATION			= { 0.f, 0.f, 1.57f };		//巻物のローテーション.
-	const D3DXVECTOR3 PLAYER_ALLREADY_ROTATION  = { 0.f, 0.f, -0.08f };		//全員が準備完了時に表示されるUIのローテーション.
+	//画像1枚ぶんの表示設定
+	struct SpriteLayout
+	{
+		D3DXVECTOR3	pos;		//位置.
+		D3DXVECTOR3	scale;		//大きさ.
+		D3DXVECTOR3	rot;		//回転.
+		SHORT		patternY;	//画像の何段目を使うか(横は常に0列目).
+	};
 
-	constexpr float	SELECT_CHANGE_INTERVAL   = 15.f;		//セレクトを切り替えるまでのフレーム.
-	constexpr float	STICK_DEAD_ZONE			 = 0.5f;		//デッドゾーン(スティックを傾けた際の倒す数値).
-	constexpr float	HANDCLAP_POS			 = 39.f;		//手の最終移動位置.
-	constexpr float	HAND_SPEED				 = 4.f;			//手の移動速度.
-	constexpr float	ALPHA_CONNECTED			 = 1.0f;		//接続時アルファ.
-	constexpr float	ALPHA_OFF				 = 0.f;			//非接続時アルファ.
-	constexpr float HAND_REACH_THRESHOLD	 = 39.f;		//手が一定のポジションまで移動する数値.
-	constexpr float ALPHA_TITLEBACK			 = 0.5f;		//タイトルに戻るときに背景を白くする際のアルファ値.
-	constexpr float ALPHA_ALLREADY			 = 0.9f;		//全員が準備完了の時に表示されるUIのアルファ値.	
+	constexpr SHORT		PATTERN_X = 0;					//画像の横のパターン番号(常に0列目).
+	const D3DXVECTOR3	ROT_NONE = { 0.f, 0.f, 0.f };	//回転なし.
+
+	//プレイヤーごとの手と「準備完了」の位置(X座標)
+	struct PlayerLayout
+	{
+		float rightHandX;	//右手の初期位置.
+		float leftHandX;	//左手の初期位置.
+		float readyTextX;	//「準備完了」の位置.
+	};
+	const PlayerLayout PLAYER_LAYOUTS[] = {
+		//右手		左手		準備完了
+		{ 80.f,		0.f,		16.f },		//1P.
+		{ 404.4f,	325.4f,		345.4f },	//2P.
+		{ 724.4f,	645.4f,		645.4f },	//3P.
+		{ 1044.4f,	965.4f,		985.4f },	//4P.
+	};
+	//X座標はプレイヤーごとの値を足して使うのでここでは0にしておく.
+	const SpriteLayout RIGHT_HAND_LAYOUT =	{ { 0.f, 80.f, 0.f },{ 110.f, 130.f, 0.f }, ROT_NONE,			1 };
+	const SpriteLayout LEFT_HAND_LAYOUT =	{ { 0.f, 80.f, 0.f },{ 110.f, 130.f, 0.f }, ROT_NONE,			0 };
+	const SpriteLayout READY_TEXT_LAYOUT =	{ { 0.f, 50.f, 0.f },{ 350.f, 170.f, 0.f },{ 0.f, 0.f, 0.3f },	5 };
+
+	//タイトルに戻る画面.
+	const SpriteLayout WHITEBACK_LAYOUT = { { 0.f,   0.f,   0.f },{ 1280.f, 720.f,  0.f }, ROT_NONE,		0 };
+	const SpriteLayout SCROLL_LAYOUT = { { 650.f, 360.f, 0.f },{ 800.f,  1350.f, 0.f },{ 0.f, 0.f, 1.57f },	0 };	//約90度回して横向きにする.
+
+	constexpr int FRAME_NO = 0;		//「いいえ」の枠の番号.
+	constexpr int FRAME_YES = 1;	//「はい」の枠の番号.
+	const SpriteLayout TEXT_FRAME_LAYOUTS[] = {
+		{ { 400.f, 484.f, 0.f },{ 350.f, 150.f, 0.f }, ROT_NONE, 0 },	//[0]左:いいえ.
+		{ { 860.f, 484.f, 0.f },{ 350.f, 150.f, 0.f }, ROT_NONE, 0 },	//[1]右:はい.
+	};
+	const SpriteLayout TITLEBACK_TEXT_LAYOUTS[] = {
+		{ { 340.f, 140.f, 0.f },{ 600.f, 260.f, 0.f }, ROT_NONE, 0 },	//[0]タイトルに戻りますか?
+		{ { 748.f, 432.f, 0.f },{ 600.f, 150.f, 0.f }, ROT_NONE, 3 },	//[1]はい.
+		{ { 262.f, 406.f, 0.f },{ 600.f, 150.f, 0.f }, ROT_NONE, 4 },	//[2]いいえ.
+	};
+
+	//全員準備完了
+	const SpriteLayout ALL_READY_LAYOUT = { { -150.f, 250.f, 0.f },{ 1550.f, 450.f, 0.f },{ 0.f, 0.f, -0.08f }, 0 };
+
+	//動き・操作
+	constexpr int	SELECT_COOLDOWN_FRAME = 16;	//選択を切り替えたあと、次に切り替えられるまでのフレーム.
+	constexpr float	STICK_DEAD_ZONE = 0.5f;		//スティックをこれ以上倒したら入力とみなす.
+	constexpr float	HANDCLAP_POS = 39.f;		//手を合わせきる移動量.
+	constexpr float	HAND_SPEED = 4.f;			//手の移動速度(1フレームあたり).
+
+	//透明度
+	constexpr float	ALPHA_OPAQUE = 1.0f;		//不透明.
+	constexpr float	ALPHA_WHITEBACK = 0.5f;		//タイトルに戻るときに、背景を白くぼかす.
+	constexpr float	ALPHA_ALL_READY = 0.9f;		//全員準備完了の表示.
+
+	//同じ画像を何か所にも描くので、描画のたびに全部の設定をし直す.
+	void DrawSprite(CSprite2D* sprite, const SpriteLayout& layout, float alpha, float offsetX = 0.f)
+	{
+		sprite->SetPosition(D3DXVECTOR3(layout.pos.x + offsetX, layout.pos.y, layout.pos.z));
+		sprite->SetScale(layout.scale);
+		sprite->SetRotation(layout.rot);
+		sprite->SetPatternNo(PATTERN_X, layout.patternY);
+		sprite->SetAlpha(alpha);
+		sprite->Render();
+	}
 }
 
 CGameRdyUI::CGameRdyUI()
 {
-	//手の最大数分(4).
-	for (int i = 0; i < hand_Max; i++) {
-		m_pRightHand[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Hand);			//手の画像.
-		m_pLeftHand[i]  = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Hand);			//手の画像.
-		m_pGamerdy[i]	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);			//テキスト画像.
-	}
-	//テキスト最大数(3).
-	for (int i = 0; i < Text_Max; i++) {
-		m_pTitleBackText[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);		//タイトルに戻るテキスト.
-	}
-	//フレームの最大数.
-	for (int i = 0; i < Frame_Max; i++) {
-		m_pTextFrame[i] = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TextFrame);		//テキストのフレーム.
-	}
-	m_pWhiteBack		= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_WhiteBack);		//白の背景画像.
-	m_pScroll			= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);			//巻物.
-	m_pSelectionFrame	= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_SelectionFrame);	//セレクトフレーム.
-	m_pAllGameRdy		= CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_ScrollRed);		//赤色の巻物.
+	m_pHand = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Hand);
+	m_pText = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Text);
+	m_pTextFrame = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_TextFrame);
+	m_pSelectionFrame = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_SelectionFrame);
+	m_pWhiteBack = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_WhiteBack);
+	m_pScroll = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_Scroll);
+	m_pAllReady = CSpriteManager::GetSprite2D(CSpriteManager::enImagList::Img_ScrollRed);
 }
 
-CGameRdyUI::~CGameRdyUI()
-{
-}
+CGameRdyUI::~CGameRdyUI() = default;	//画像もコントローラーも借りているだけなので、ここでは解放しない.
 
+//更新.
 void CGameRdyUI::Update()
 {
-	//連続でセレクトを動かせないようにするため(バグ防止、後で数値かえるかも).
-	{
-		//セレクトフレームを動かせないなら.
-		if (!m_SelectTimeOver) {
-			++m_SelectchangeTimer;	//タイマー増加.
-			//タイマーが一定のフレーム数を超えたなら.
-			if (m_SelectchangeTimer > SELECT_CHANGE_INTERVAL) {
-				m_SelectTimeOver = true;	//セレクトフレームを動かせるようにする.
-				m_SelectchangeTimer = 0;	//タイマー初期化.
-			}
-		}
+	//選択の連続切り替えを防ぐ待ち時間を減らす.
+	if (m_SelectCooldown > 0) {
+		--m_SelectCooldown;
 	}
 
-	//タイトルに戻る画面が出ているなら.
+	//タイトルに戻る画面が出ている間は、その操作だけを受け付ける.
 	if (m_TitleBackflag) {
-		//セレクトフレームを移動させていいか.
-		if (m_SelectTimeOver) {
-			//左スティックを左に倒したなら.
-			if (m_pController[0]->GetLThumbX() > STICK_DEAD_ZONE) {
-				m_IsYesSelected = true;		//はいを選択中.
-				m_SelectTimeOver = false;	//セレクトフレームを動かせないようにする.
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange); //セレクトチェンジ音.
-			}
-			//左スティックを右に倒したなら.
-			else if (m_pController[0]->GetLThumbX() < -STICK_DEAD_ZONE) {
-				m_IsYesSelected = false;	//いいえを選択中.
-				m_SelectTimeOver = false;	//セレクトフレームを動かせないようにする.
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange); //セレクトチェンジ音.
-			}
-		}
-		//はいを選択中なら.
-		if (m_IsYesSelected) {
-			//Aボタンを押した.
-			if (m_pController[0]->IsDown(CXInput::A, true)) {
-				//タイトルに戻るフラグ.
-				m_TitleSceneChangeflag = true;
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision); //決定音.
-			}
-		}
-		//いいえを選択中なら.
-		else {
-			//Aボタンを押した.
-			if (m_pController[0]->IsDown(CXInput::A, true)) {
-				m_TitleBackflag = false;	//タイトルに戻る描画をしない.
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision); //決定音.
-			}
-		}
-		return;	//リターンで返して以降通らないようにする.
+		UpdateTitleBack();
+		return;
 	}
+	if (TryOpenTitleBack()) return;
+
+	UpdateReadyInput();
+	//全員準備完了の判定は、前のフレームの結果を使う.
+	//(最後の1人が準備完了にしたAボタンで、そのままゲームが始まらないようにするため).
+	UpdateAllReady();
+	UpdateConnection();
+}
+
+//タイトルに戻る画面での選択と決定.
+void CGameRdyUI::UpdateTitleBack()
+{
+	CXInput* pad = m_pController[0];	//タイトルに戻る画面は1Pだけが操作する.
+
+	//スティックで「はい/いいえ」を切り替える.
+	if (m_SelectCooldown == 0) {
+		const float stickX = pad->GetLThumbX();
+		const bool prevYesSelected = m_IsYesSelected;	//変更前の選択を保存.
 
 
-	//準備完了ではないなら.
-	if (!m_Handclapflag[0]) {
-		//トリガー判定.
-		if (m_pController[0]->IsDown(CXInput::B, true)) {
-			m_TitleBackflag = true;		//タイトルに戻る画面を表示する.
-			m_IsYesSelected = false;	//いいえを選択している状態に戻す.
-			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Cancel); //キャンセル音.
-			return;		//以降通らないようにする.
+		if (stickX > STICK_DEAD_ZONE) {
+			m_IsYesSelected = true;		//はい選択中.
+		}
+		else if (stickX < -STICK_DEAD_ZONE) {
+			m_IsYesSelected = false;	//いいえ選択中.
+		}
+		//選択が変わったときだけ、音を鳴らして待ち時間に入る.
+		if (m_IsYesSelected != prevYesSelected) {
+			m_SelectCooldown = SELECT_COOLDOWN_FRAME;
+			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::SelectChange);
 		}
 	}
-	//準備完了状態になる処理.
-	//プレイヤーの最大数分.
-	for (int i = 0; i < hand_Max; i++) {
-		if (!m_Handclapflag[i]) {
-			//Aボタン準備完了.
-			if (m_pController[i]->IsDown(CXInput::A, true)) {
-				m_Handclapflag[i] = true;	//準備完了状態へ.
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Handclap);	//手を叩く音.
-			}
-		}
-		//Bボタンを押すと準備完了解除.
-		else if(m_pController[i]->IsDown(CXInput::B, true)) {
-			//準備完了状態なら.
-			if (m_Handclapflag[i]) {
-				m_Handclapflag[i] = false;	//準備完了解除.
-			}
-		}
-		//準備完了状態なら.
-		if (m_Handclapflag[i]) {
-			//手が一定の位置まで移動していなければ.
-			if (m_LeftHandclap[i] < HANDCLAP_POS) {
-				//手を動かす.
-				m_RightHandclap[i] -= HAND_SPEED;
-				m_LeftHandclap[i]  += HAND_SPEED;
-			}
-		}
-		else {
-			//位置リセット.
-			m_RightHandclap[i]	= 0.f;
-			m_LeftHandclap[i]	= 0.f;
-		}
-		//全員が準備完了なら.
-		if(m_IsAllReady){
-			//SEがまだなっていない.
-			if (!m_AllrdyCutinSEflag) {
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::AllrdyCutin); //カットインSE.
-				m_AllrdyCutinSEflag = true;
-			}
-			//Aボタンが押されれば.
-			if (m_pController[0]->IsDown(CXInput::A, true)) {
-				m_GameMainSceneChangeflag = true;	//ゲームメインへシーンチェンジ.
-			}
-		}
-		else {
-			m_AllrdyCutinSEflag = false;	//SEを再生できるようにする.
-		}
 
-	m_Connectedcnt	= 0;
-	m_Readycnt		= 0;
-	}
-	
-	for (int i = 0; i < hand_Max; i++) {
-		//接続されているコントローラーの数をカウントする.
-		if (m_pController[i]->IsConnect()) {
-			//接続されていればSEを鳴らす.
-			if (!m_ControllerConnectSEflag[i]) {
-				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Connected); //コントローラー接続時のSE.
-				m_ControllerConnectSEflag[i] = true;	//SEを再生済へfalseにする.
-			}
-			++m_Connectedcnt;	//接続されているコントローラーの数をカウントする.
-			//準備完了状態なら.
-			if ( m_Handclapflag[i]) {
-				++m_Readycnt;	//準備完了状態のコントローラーの数をカウントする.
-			}
-		}
-		else {
-			m_ControllerConnectSEflag[i] = false;
-		}
-	}
-	//接続されているコントローラー1Pだけであれば、全員が準備完了状態を解除する.
-	if (m_Connectedcnt == 1) {
-		m_IsAllReady = false;  //全員準備完了.
-	}
-	//接続されているカウンターが0より多いかつ、接続されているコントローラー分と準備完了カウンターが同じであれば.
-	if (m_Connectedcnt > 0 && m_Connectedcnt == m_Readycnt) {
-		if (m_Connectedcnt > 1) {
-			m_IsAllReady = true;  //全員準備完了.
-		}
+	//Aボタンで決定.
+	if (!pad->IsDown(CXInput::A, true)) return;
+
+	XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Decision);
+	//「はい」を選んでいたらタイトルに戻る、そうでなければ画面を閉じる.
+	if (m_IsYesSelected) {
+		m_TitleSceneChangeflag = true;	//はい:タイトルに戻る.
 	}
 	else {
-		m_IsAllReady = false; //まだ揃っていない.
+		m_TitleBackflag = false;		//いいえ:画面を閉じる.
 	}
 }
 
+//1Pが準備完了でないとき、Bボタンでタイトルに戻る画面を開く.
+bool CGameRdyUI::TryOpenTitleBack()
+{
+	if (m_IsReady[0]) return false;	//準備完了中のBは「解除」に使う.
+	if (!m_pController[0]->IsDown(CXInput::B, true)) return false;
+
+	m_TitleBackflag = true;
+	m_IsYesSelected = false;	//誤ってタイトルに戻らないよう、「いいえ」から始める.
+	XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Cancel);
+	return true;
+}
+
+//各プレイヤーの準備完了・解除と、手の動き.
+void CGameRdyUI::UpdateReadyInput()
+{
+	for (int i = 0; i < hand_Max; i++) {
+		CXInput* pad = m_pController[i];
+
+		//Aボタンで準備完了、Bボタンで解除.
+		if (!m_IsReady[i]) {
+			if (pad->IsDown(CXInput::A, true)) {
+				m_IsReady[i] = true;
+				XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Handclap);
+			}
+		}
+		else if (pad->IsDown(CXInput::B, true)) {
+			m_IsReady[i] = false;
+		}
+
+		//準備完了中は手を合わせるまで動かし、解除されたら元の位置に戻す.
+		if (!m_IsReady[i]) {
+			m_ClapOffset[i] = 0.f;
+		}
+		else if (m_ClapOffset[i] < HANDCLAP_POS) {
+			m_ClapOffset[i] += HAND_SPEED;
+		}
+	}
+}
+
+//全員準備完了のときの演出と、ゲーム開始.
+void CGameRdyUI::UpdateAllReady()
+{
+	if (!m_IsAllReady) {
+		m_AllReadySEPlayed = false;	//次に全員が揃ったとき、また鳴らせるようにする.
+		return;
+	}
+	//揃った瞬間に1回だけSEを鳴らす.
+	if (!m_AllReadySEPlayed) {
+		XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::AllrdyCutin);
+		m_AllReadySEPlayed = true;
+	}
+	//1PのAボタンでゲーム開始.
+	if (m_pController[0]->IsDown(CXInput::A, true)) {
+		m_GameMainSceneChangeflag = true;
+	}
+}
+
+//接続数を数え、全員準備完了かを判定する.
+void CGameRdyUI::UpdateConnection()
+{
+	int connectedCount = 0;	//接続されているコントローラーの数.
+	int readyCount = 0;		//そのうち準備完了の数.
+
+	for (int i = 0; i < hand_Max; i++) {
+		if (!IsConnected(i)) {
+			m_WasConnected[i] = false;	//次に接続されたとき、また鳴らせるようにする.
+			continue;
+		}
+		//接続された瞬間に1回だけSEを鳴らす.
+		if (!m_WasConnected[i]) {
+			XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Connected);
+			m_WasConnected[i] = true;
+		}
+		++connectedCount;
+		if (m_IsReady[i]) {
+			++readyCount;
+		}
+	}
+	//2人以上が接続していて、その全員が準備完了なら開始できる.
+	m_IsAllReady = (connectedCount >= 2 && connectedCount == readyCount);
+}
+//描画.
 void CGameRdyUI::Draw()
 {
-	//各関数呼び出し.
-	DrawRightHand();
-	DrawLeftHand();
-	DrawGameRdy();
-	DrawTitleBack();
-	AllGameRdy();
+	DrawHands();
+	DrawReadyTexts();
+	if (m_TitleBackflag) {
+		DrawTitleBack();
+	}
+	if (m_IsAllReady) {
+		DrawAllReady();
+	}
 }
-void CGameRdyUI::TitleBackUpdate()
+
+//準備完了したプレイヤーの手.
+void CGameRdyUI::DrawHands()
 {
+	for (int i = 0; i < hand_Max; i++) {
+		if (!m_IsReady[i] || !IsConnected(i)) continue;
+
+		const PlayerLayout& layout = PLAYER_LAYOUTS[i];
+		DrawSprite(m_pHand, RIGHT_HAND_LAYOUT, ALPHA_OPAQUE, layout.rightHandX - m_ClapOffset[i]);	//右手は左へ.
+		DrawSprite(m_pHand, LEFT_HAND_LAYOUT, ALPHA_OPAQUE, layout.leftHandX + m_ClapOffset[i]);	//左手は右へ.
+	}
 }
-void CGameRdyUI::GameRdyHandUpdate()
+
+//手を合わせ終わったプレイヤーの「準備完了」.
+void CGameRdyUI::DrawReadyTexts()
 {
-}
-//右手.
-void CGameRdyUI::DrawRightHand()
-{
-	//プレイヤー1のボタンが押されたなら.
-	if (m_Handclapflag[0]) {
-		m_pRightHand[0]->SetAlpha(ALPHA_OFF);
-		m_pRightHand[0]->SetPosition(D3DXVECTOR3(PLAYER1_RIGHTHAND_POS.x + m_RightHandclap[0], PLAYER1_RIGHTHAND_POS.y, PLAYER1_RIGHTHAND_POS.z));
-		m_pRightHand[0]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pRightHand[0]->SetPatternNo(PATTERN_NONE, RIGHT_HAND_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[0]->IsConnect()) {
-			m_pRightHand[0]->SetAlpha(ALPHA_CONNECTED); //α値を戻す.
-		}
-		m_pRightHand[0]->Render();
-	}
-	//プレイヤー2のボタンが押されたなら.
-	if (m_Handclapflag[1]) {
-		m_pRightHand[1]->SetAlpha(ALPHA_OFF);
-		m_pRightHand[1]->SetPosition(D3DXVECTOR3(PLAYER2_RIGHTHAND_POS.x + m_RightHandclap[1], PLAYER2_RIGHTHAND_POS.y, PLAYER2_RIGHTHAND_POS.z));
-		m_pRightHand[1]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pRightHand[1]->SetPatternNo(PATTERN_NONE, RIGHT_HAND_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[1]->IsConnect()) {
-			m_pRightHand[1]->SetAlpha(ALPHA_CONNECTED); //α値を戻す.
-		}
-		m_pRightHand[1]->Render();
-	}
-	//プレイヤー3のボタンが押されたなら.
-	if (m_Handclapflag[2]) {
-		m_pRightHand[2]->SetAlpha(ALPHA_OFF);
-		m_pRightHand[2]->SetPosition(D3DXVECTOR3(PLAYER3_RIGHTHAND_POS.x + m_RightHandclap[2], PLAYER3_RIGHTHAND_POS.y, PLAYER3_RIGHTHAND_POS.z));
-		m_pRightHand[2]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pRightHand[2]->SetPatternNo(PATTERN_NONE, RIGHT_HAND_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[2]->IsConnect()) {
-			m_pRightHand[2]->SetAlpha(ALPHA_CONNECTED); //α値を戻す.
-		}
-		m_pRightHand[2]->Render();
-	}
-	//プレイヤー4のボタンが押されたなら..
-	if (m_Handclapflag[3]) {
-		m_pRightHand[3]->SetAlpha(ALPHA_OFF);
-		m_pRightHand[3]->SetPosition(D3DXVECTOR3(PLAYER4_RIGHTHAND_POS.x + m_RightHandclap[3], PLAYER4_RIGHTHAND_POS.y, PLAYER4_RIGHTHAND_POS.z));
-		m_pRightHand[3]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pRightHand[3]->SetPatternNo(PATTERN_NONE, RIGHT_HAND_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[3]->IsConnect()) {
-			m_pRightHand[3]->SetAlpha(ALPHA_CONNECTED); //α値を戻す.
-		}
-		m_pRightHand[3]->Render();
+	for (int i = 0; i < hand_Max; i++) {
+		if (!IsClapFinished(i) || !IsConnected(i)) continue;
+		DrawSprite(m_pText, READY_TEXT_LAYOUT, ALPHA_OPAQUE, PLAYER_LAYOUTS[i].readyTextX);
 	}
 }
-//左手.
-void CGameRdyUI::DrawLeftHand()
-{
-	//プレイヤー1のボタンが押されたなら.
-	if (m_Handclapflag[0]) {
-		m_pLeftHand[0]->SetAlpha(ALPHA_OFF);
-		m_pLeftHand[0]->SetPosition(D3DXVECTOR3(PLAYER1_LEFTHAND_POS.x + m_LeftHandclap[0], PLAYER1_LEFTHAND_POS.y, PLAYER1_LEFTHAND_POS.z));
-		m_pLeftHand[0]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pLeftHand[0]->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		//コントローラーが接続されているか.
-		if (m_pController[0]->IsConnect()) {
-			m_pLeftHand[0]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pLeftHand[0]->Render();
-	}
-	//プレイヤー2のボタンが押されたなら.
-	if (m_Handclapflag[1]) {
-		m_pLeftHand[1]->SetAlpha(ALPHA_OFF);
-		m_pLeftHand[1]->SetPosition(D3DXVECTOR3(PLAYER2_LEFTHAND_POS.x + m_LeftHandclap[1], PLAYER2_LEFTHAND_POS.y, PLAYER2_LEFTHAND_POS.z));
-		m_pLeftHand[1]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pLeftHand[1]->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		//コントローラーが接続されているか.
-		if (m_pController[1]->IsConnect()) {
-			m_pLeftHand[1]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pLeftHand[1]->Render();
-	}
-	//プレイヤー3のボタンが押されたなら.
-	if (m_Handclapflag[2]) {
-		m_pLeftHand[2]->SetAlpha(ALPHA_OFF);
-		m_pLeftHand[2]->SetPosition(D3DXVECTOR3(PLAYER3_LEFTHAND_POS.x + m_LeftHandclap[2], PLAYER3_LEFTHAND_POS.y, PLAYER3_LEFTHAND_POS.z));
-		m_pLeftHand[2]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pLeftHand[2]->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		//コントローラーが接続されているか.
-		if (m_pController[2]->IsConnect()) {
-			m_pLeftHand[2]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pLeftHand[2]->Render();
-	}
-	//プレイヤー4のボタンが押されたなら.
-	if (m_Handclapflag[3]) {
-		m_pLeftHand[3]->SetAlpha(ALPHA_OFF);
-		m_pLeftHand[3]->SetPosition(D3DXVECTOR3(PLAYER4_LEFTHAND_POS.x + m_LeftHandclap[3], PLAYER4_LEFTHAND_POS.y, PLAYER4_LEFTHAND_POS.z));
-		m_pLeftHand[3]->SetScale(D3DXVECTOR3(PLAYER_HAND_SCALE));
-		m_pLeftHand[3]->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		//コントローラーが接続されているなら.
-		if (m_pController[3]->IsConnect()) {
-			m_pLeftHand[3]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pLeftHand[3]->Render();
-	}
-}
-//準備完了状態の描画.
-void CGameRdyUI::DrawGameRdy()
-{
-	if (m_LeftHandclap[0] > HAND_REACH_THRESHOLD) {
-		m_pGamerdy[0]->SetAlpha(ALPHA_OFF);
-		m_pGamerdy[0]->SetPosition(D3DXVECTOR3(PLAYER1_GAMEREADY_POS));
-		m_pGamerdy[0]->SetScale(D3DXVECTOR3(PLAYER_GAMEREADY_SCALE));
-		m_pGamerdy[0]->SetRotation(D3DXVECTOR3(PLAYER_GAMEREADY_ROTATION));
-		m_pGamerdy[0]->SetPatternNo(PATTERN_NONE, GAMEREADY_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[0]->IsConnect()) {
-			m_pGamerdy[0]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pGamerdy[0]->Render();
-	}
-	if (m_LeftHandclap[1] > HAND_REACH_THRESHOLD) {
-		m_pGamerdy[1]->SetAlpha(ALPHA_OFF);
-		m_pGamerdy[1]->SetPosition(D3DXVECTOR3(PLAYER2_GAMEREADY_POS.x + m_LeftHandclap[1], PLAYER2_GAMEREADY_POS.y, PLAYER2_GAMEREADY_POS.z));
-		m_pGamerdy[1]->SetScale(D3DXVECTOR3(PLAYER_GAMEREADY_SCALE));
-		m_pGamerdy[1]->SetRotation(D3DXVECTOR3(PLAYER_GAMEREADY_ROTATION));
-		m_pGamerdy[1]->SetPatternNo(PATTERN_NONE, GAMEREADY_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[1]->IsConnect()) {
-			m_pGamerdy[1]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pGamerdy[1]->Render();
-	}
-	//プレイヤー3.
-	if (m_LeftHandclap[2] > HAND_REACH_THRESHOLD) {
-		m_pGamerdy[2]->SetAlpha(ALPHA_OFF);
-		m_pGamerdy[2]->SetPosition(D3DXVECTOR3(PLAYER3_GAMEREADY_POS.x + m_LeftHandclap[2], PLAYER3_GAMEREADY_POS.y, PLAYER3_GAMEREADY_POS.z));
-		m_pGamerdy[2]->SetScale(D3DXVECTOR3(PLAYER_GAMEREADY_SCALE));
-		m_pGamerdy[2]->SetRotation(D3DXVECTOR3(PLAYER_GAMEREADY_ROTATION));
-		m_pGamerdy[2]->SetPatternNo(PATTERN_NONE, GAMEREADY_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[2]->IsConnect()) {
-			m_pGamerdy[2]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pGamerdy[2]->Render();
-	}
-	//プレイヤー4.
-	if (m_LeftHandclap[3] > HAND_REACH_THRESHOLD) {
-		m_pGamerdy[3]->SetAlpha(ALPHA_OFF);
-		m_pGamerdy[3]->SetPosition(D3DXVECTOR3(PLAYER4_GAMEREADY_POS.x + m_LeftHandclap[3], PLAYER4_GAMEREADY_POS.y, PLAYER4_GAMEREADY_POS.z));
-		m_pGamerdy[3]->SetScale(D3DXVECTOR3(PLAYER_GAMEREADY_SCALE));
-		m_pGamerdy[3]->SetRotation(D3DXVECTOR3(PLAYER_GAMEREADY_ROTATION));
-		m_pGamerdy[3]->SetPatternNo(PATTERN_NONE, GAMEREADY_YPATTERNNO);
-		//コントローラーが接続されているか.
-		if (m_pController[3]->IsConnect()) {
-			m_pGamerdy[3]->SetAlpha(ALPHA_CONNECTED);
-		}
-		m_pGamerdy[3]->Render();
-	}
-}
-//タイトルに戻るときのUI.
+
+//タイトルに戻る確認画面.
 void CGameRdyUI::DrawTitleBack()
 {
-	//タイトルに戻る描画を出していいなら.
-	if (m_TitleBackflag) {
-		//白背景.
-		m_pWhiteBack->SetAlpha(ALPHA_TITLEBACK);
-		m_pWhiteBack->SetPosition(D3DXVECTOR3(WHITEBACK_POS));
-		m_pWhiteBack->SetScale(D3DXVECTOR3(WHITEBACK_SCALE));
-		m_pWhiteBack->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		m_pWhiteBack->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-		m_pWhiteBack->Render();
-		//巻物.
-		m_pScroll->SetAlpha(ALPHA_CONNECTED);
-		m_pScroll->SetPosition(D3DXVECTOR3(SCROLL_POS));
-		m_pScroll->SetScale(D3DXVECTOR3(SCROLL_SCALE));
-		m_pScroll->SetRotation(D3DXVECTOR3(SCROLL_ROTATION));
-		m_pScroll->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		m_pScroll->Render();
-		//テキストのフレーム.
-		m_pTextFrame[0]->SetAlpha(ALPHA_CONNECTED);
-		m_pTextFrame[0]->SetPosition(D3DXVECTOR3(TEXT1_POS));
-		m_pTextFrame[0]->SetScale(D3DXVECTOR3(TEXT_SCALE));
-		m_pTextFrame[0]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-		m_pTextFrame[0]->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		m_pTextFrame[0]->Render();
+	DrawSprite(m_pWhiteBack, WHITEBACK_LAYOUT, ALPHA_WHITEBACK);
+	DrawSprite(m_pScroll, SCROLL_LAYOUT, ALPHA_OPAQUE);
 
-		m_pTextFrame[1]->SetAlpha(ALPHA_CONNECTED);
-		m_pTextFrame[1]->SetPosition(D3DXVECTOR3(TEXT2_POS));
-		m_pTextFrame[1]->SetScale(D3DXVECTOR3(TEXT_SCALE));
-		m_pTextFrame[1]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-		m_pTextFrame[1]->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		m_pTextFrame[1]->Render();
-
-		//はいを選択中なら.
-		if (m_IsYesSelected) {
-			//セレクトフレーム.
-			m_pSelectionFrame->SetAlpha(ALPHA_CONNECTED);
-			m_pSelectionFrame->SetPosition(D3DXVECTOR3(TEXT2_POS));
-			m_pSelectionFrame->SetScale(D3DXVECTOR3(SELECTIONFRAME_SCALE));
-			m_pSelectionFrame->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-			m_pSelectionFrame->Render();
-		}
-		//いいえを選択中なら.
-		else {
-			//セレクトフレーム.
-			m_pSelectionFrame->SetAlpha(ALPHA_CONNECTED);
-			m_pSelectionFrame->SetPosition(D3DXVECTOR3(SELECTIONFRAME_POS));
-			m_pSelectionFrame->SetScale(D3DXVECTOR3(SELECTIONFRAME_SCALE));
-			m_pSelectionFrame->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-			m_pSelectionFrame->Render();
-		}
-
-		//テキスト.(タイトルに戻りますか?).
-		m_pTitleBackText[0]->SetAlpha(ALPHA_CONNECTED);
-		m_pTitleBackText[0]->SetPosition(D3DXVECTOR3(TITLEBACK1_TEXT_POS));
-		m_pTitleBackText[0]->SetScale(D3DXVECTOR3(TITLEBACK1_TEXT_SCALE));
-		m_pTitleBackText[0]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-		m_pTitleBackText[0]->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		m_pTitleBackText[0]->Render();
-		//(はい)
-		m_pTitleBackText[1]->SetAlpha(ALPHA_CONNECTED);
-		m_pTitleBackText[1]->SetPosition(D3DXVECTOR3(TITLEBACK2_TEXT_POS));
-		m_pTitleBackText[1]->SetScale(D3DXVECTOR3(TITLEBACK2_TEXT_SCALE));
-		m_pTitleBackText[1]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-		m_pTitleBackText[1]->SetPatternNo(PATTERN_NONE, TITLEBACK2_TEXT_YPATTERNNO);
-		m_pTitleBackText[1]->Render();
-		//(いいえ)
-		m_pTitleBackText[2]->SetAlpha(ALPHA_CONNECTED);
-		m_pTitleBackText[2]->SetPosition(D3DXVECTOR3(TITLEBACK3_TEXT_POS));
-		m_pTitleBackText[2]->SetScale(D3DXVECTOR3(TITLEBACK2_TEXT_SCALE));
-		m_pTitleBackText[2]->SetRotation(D3DXVECTOR3(ROTATION_NONE));
-		m_pTitleBackText[2]->SetPatternNo(PATTERN_NONE, TITLEBACK3_TEXT_YPATTERNNO);
-		m_pTitleBackText[2]->Render();
-
+	for (const SpriteLayout& frame : TEXT_FRAME_LAYOUTS) {
+		DrawSprite(m_pTextFrame, frame, ALPHA_OPAQUE);
+	}
+	//選んでいる方の枠に、セレクトフレームを重ねる.
+	if (m_IsYesSelected) {
+		DrawSprite(m_pSelectionFrame, TEXT_FRAME_LAYOUTS[FRAME_YES], ALPHA_OPAQUE);	//右の枠(はい)に重ねる.
+	}
+	else {
+		DrawSprite(m_pSelectionFrame, TEXT_FRAME_LAYOUTS[FRAME_NO], ALPHA_OPAQUE);	//左の枠(いいえ)に重ねる.
+	}
+	for (const SpriteLayout& text : TITLEBACK_TEXT_LAYOUTS) {
+		DrawSprite(m_pText, text, ALPHA_OPAQUE);
 	}
 }
 
-void CGameRdyUI::AllGameRdy()
+//全員準備完了の表示.
+void CGameRdyUI::DrawAllReady()
 {
-	if (m_IsAllReady) {
-		m_pAllGameRdy->SetAlpha(ALPHA_ALLREADY);
-		m_pAllGameRdy->SetPosition(D3DXVECTOR3(PLAYER_ALLREADY_POS));
-		m_pAllGameRdy->SetScale(D3DXVECTOR3(PLAYER_ALLREADY_SCALE));
-		m_pAllGameRdy->SetRotation(D3DXVECTOR3(PLAYER_ALLREADY_ROTATION));
-		m_pAllGameRdy->SetPatternNo(PATTERN_NONE, PATTERN_NONE);
-		m_pAllGameRdy->Render();
-	}
+	DrawSprite(m_pAllReady, ALL_READY_LAYOUT, ALPHA_ALL_READY);
+}
+
+//==================================================
+//	補助.
+//==================================================
+bool CGameRdyUI::IsConnected(int player) const
+{
+	//SetXInput が呼ばれていない番号でも落ちないよう、nullptr を確認する.
+	return m_pController[player] != nullptr && m_pController[player]->IsConnect();
+}
+
+bool CGameRdyUI::IsClapFinished(int player) const
+{
+	return m_ClapOffset[player] >= HANDCLAP_POS;
 }

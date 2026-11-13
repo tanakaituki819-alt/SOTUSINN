@@ -1,7 +1,20 @@
 #include "CPlayer.h"
 #include <algorithm>
+
+namespace {
+	//回収(お箸を下ろす)
+	constexpr int	LOWER_FRAME = 40;		//お箸を下ろし続ける時間(この間に具材をつかめなければ回収をやめる).
+	constexpr float	LOWER_SPEED = 0.02f;	//お箸を下ろす速さ(1フレームあたり).
+
+	//マヒ
+	constexpr int	PARALYSIS_FRAME = 180;		//マヒが続く時間(60FPSで3秒).
+	constexpr int	PARALYSIS_SKIP_FRAME = 10;		//Bボタン1回で短縮できる時間.
+	constexpr float	SHAKE_SPEED = 0.8f;		//震える速さ(1フレームで進む角度).
+	constexpr float	SHAKE_HEIGHT = 0.06f;	//震える幅.
+}
+
 CPlayer::CPlayer()
-	: MyController		()
+	: MyController()
 {
 
 	m_Rotation.y = D3DXToRadian(90);
@@ -16,8 +29,7 @@ CPlayer::CPlayer()
 		m_pBSphere->CreatSphereForMesh(*CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::Chopsticks));	//スフィアのメッシュを設定.
 		m_pBSphere->SetRadius(0.1f);		//半径を変更.
 	}
-	 m_OldPosition = { 0,0,0 };
-	//KARI = CSpriteManager::GetSprite2D(CSpM::enImagList::Img_Playericon);
+	m_OldPosition = { 0,0,0 };
 }
 
 CPlayer::~CPlayer()
@@ -35,7 +47,7 @@ void CPlayer::Update()
 	if (m_IsParalysis) {
 		m_Status = 3;	//マヒ中.
 	}
-	else if(!m_IsParalysis && m_Status == 3){
+	else if (!m_IsParalysis && m_Status == 3) {
 		m_Status = 1;	//デフォルト状態.
 	}
 	if (m_Status == 0) {
@@ -46,7 +58,7 @@ void CPlayer::Update()
 		}
 	}
 	//コントローラーが接続されていれば.
-	if (MyController->IsConnect()==true) {
+	if (MyController->IsConnect() == true) {
 		m_IsConnected = true;	//コントローラー接続状態に.
 		//回収中じゃないかつマヒ中でないかつ連打対決中でないなら
 		if (!m_IsCollecting && !m_IsParalysis && !m_IsMashBattle) {
@@ -60,65 +72,34 @@ void CPlayer::Update()
 		}
 		D3DXVECTOR3  calPos = { m_Position.x,0,m_OldPosition.z };
 		D3DXVECTOR3  ENDPos = m_Position;
-		float i=atan2(m_Position.z, m_Position.x);
-			//鍋の外に出ないようにする
-			if (!D2CollizionXZ(calPos, 0.1, {0,0,0}, 4)) {
+		float i = atan2(m_Position.z, m_Position.x);
+		//鍋の外に出ないようにする
+		if (!D2CollizionXZ(calPos, 0.1, { 0,0,0 }, 4)) {
 
-				ENDPos.x = cos(i) * (4.0-0.1);
+			ENDPos.x = cos(i) * (4.0 - 0.1);
 
-			};
-			calPos = { m_OldPosition.x,0,m_Position.z };
+		};
+		calPos = { m_OldPosition.x,0,m_Position.z };
 
-			if (!D2CollizionXZ(calPos, 0.1, {0,0,0}, 4)) {
-				ENDPos.z = sin(i) * (4.0-0.1);
+		if (!D2CollizionXZ(calPos, 0.1, { 0,0,0 }, 4)) {
+			ENDPos.z = sin(i) * (4.0 - 0.1);
 
-			};
-			m_Position = ENDPos;
+		};
+		m_Position = ENDPos;
 		//回収中じゃないかつマヒ中でないかつ連打対決中でないなら.
 		if (!m_IsCollecting && !m_IsParalysis && !m_IsMashBattle) {
 			if (MyController->IsDown(CXInput::A, false)) {
 				m_IsCollecting = true;	//回収中へ.
 			}
 		}
-		//具材回収中なら.
-		if (!m_pIngredients) {
-			if (m_IsCollecting && !m_IsMashBattle) {
-				++m_Collectingtime;	//タイム増加.
-				//タイムが指定した時間経過すれば.
-				if (m_Collectingtime > 40) {
-					m_IsCollecting = false;	//回収中解除.
-					m_Collectingtime = 0;	//タイムを初期化.
-				}
-				//タイムが指定した時間を超えていないなら.
-				else {
-					m_Position.y -= 0.02f;	//お箸を下におろす.
-				}
-			}
-		}
-		//マヒ中なら.
+		//お箸を下ろす処理.
+		UpdateLowerChopsticks();
+		//マヒ中の処理.
 		if (m_IsParalysis) {
-			Paralysis();	//マヒ動作.
-			//マヒUIが生成されていなければ.
-			if (!m_pPlayerParalysisUI) {
-
-				m_pPlayerParalysisUI = new CPlayerParalysisUI();		//インスタンス作成.
-			}
-			m_Point3Dto2DConverter = { m_CousorPosition.x,m_CousorPosition.y,0.0 };
-			m_pPlayerParalysisUI->Paralysis(m_Point3Dto2DConverter);//プレイヤーのポジションを渡す.
-			m_pPlayerParalysisUI->Update();
-		}
-		else {
-			//マヒUIが生成されていれば.
-			if (m_pPlayerParalysisUI) {
-				SAFE_DELETE(m_pPlayerParalysisUI);	//破棄.
-			}
+			UpdateParalysis();
 		}
 		//回収中の処理.
 		IngredientsCollecting();
-		//スコア増加(仮).
-		//if (MyController->IsDown(CXInput::A, false)&& MyController->GetPadID() ==0 ) {
-		//	Score++;
-		//}
 		UpdateBSpherePos();	//当たり判定位置を更新.
 
 		m_OldPosition = m_Position;
@@ -132,9 +113,9 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 {
 	//回収状態じゃないかつマヒ状態じゃないなら.
 	if (!m_IsCollecting && !m_IsParalysis) {
-		m_Position.y = 1 ;
+		m_Position.y = 1;
 		D3DXVECTOR3 i = m_Position;
-		i.y = 0.2+0.4;
+		i.y = 0.2 + 0.4;
 		m_Cousor->SetPosition(GetPosition2D(View, Proj, m_Position));
 
 		m_CousorPosition = GetPosition2D(View, Proj, i);	//カーソルのポジションを2D用のポジションに変換する.
@@ -145,18 +126,18 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 		for (int i = 0; i < Chopsticks_Max; i++) {
 			//お箸1本目.
 			if (i == 0) {
-				m_pChopsticks[i]->SetPosition(m_Position.x +0.5f,m_Position.y + 1.f ,m_Position.z);
+				m_pChopsticks[i]->SetPosition(m_Position.x + 0.5f, m_Position.y + 1.f, m_Position.z);
 			}
 			//2本目.
 			else {
 				//お箸の2本目を少しずらして表示する.
-				m_pChopsticks[i]->SetPosition(m_Position.x+ 0.5f,m_Position.y + 1.f ,m_Position.z + 0.2f);
+				m_pChopsticks[i]->SetPosition(m_Position.x + 0.5f, m_Position.y + 1.f, m_Position.z + 0.2f);
 			}
 			m_pChopsticks[i]->SetRotation(D3DXToRadian(90), D3DXToRadian(-45), D3DXToRadian(0));	//角度調整.
 			m_pChopsticks[i]->SetScale(2.f, 2.f, 2.f);
 
 			//プレイヤーの番号に応じて色を変える
-			if (MyController->GetPadID()==0) {
+			if (MyController->GetPadID() == 0) {
 				m_pChopsticks[0]->GetMesh()->SetLightCOLOR256({ 255,0,0 });
 				m_pChopsticks[0]->GetMesh()->SetisCOLOR(true);
 			}
@@ -181,12 +162,9 @@ void CPlayer::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA& Cam
 
 void CPlayer::DrawUI()
 {
-	//マヒ中なら.
+	//マヒ中なら、ボタン案内を表示する.
 	if (m_IsParalysis) {
-		//マヒUIが生成されていれば.
-		if (m_pPlayerParalysisUI != nullptr) {
-			m_pPlayerParalysisUI->Draw();	//マヒUI描画
-		}
+		m_ParalysisUI.Draw();
 	}
 
 	//m_Cousor->SetRotation({ D3DXToRadian(90),0,0 });
@@ -218,25 +196,56 @@ void CPlayer::DrawUI()
 	//コントローラーが接続されているのなら.
 	if (MyController->IsConnect() == true) {
 		P_UI->SetPlayerNo(PlayerNo);
-		P_UI->Draw(Score,m_Status);
+		P_UI->Draw(Score, m_Status);
 	}
 }
-//マヒ状態処理.
-void CPlayer::Paralysis()
+//お箸を下ろす処理(具材をつかむまで、一定時間お箸を下げる).
+void CPlayer::UpdateLowerChopsticks()
 {
-	//Bボタンコントローラーが押されれば時間短縮.
+	if (m_pIngredients != nullptr) return;			//具材をつかんだら持ち上げる処理.
+	if (!m_IsCollecting || m_IsMashBattle) return;	//回収中でない、または連打対決中なら何もしない.
+
+	++m_Collectingtime;
+	//一定時間下ろしても何もつかめなければ回収をやめる.
+	if (m_Collectingtime > LOWER_FRAME) {
+		m_IsCollecting = false;
+		m_Collectingtime = 0;
+		return;
+	}
+	m_Position.y -= LOWER_SPEED;	//お箸を下ろす.
+}
+//マヒ中の処理(Bボタンで時間短縮、震える動き、ボタン案内UI).
+void CPlayer::UpdateParalysis()
+{
+	//Bボタンを押すたびに、マヒの時間を短くする.
 	if (MyController->IsUp(CXInput::B)) {
-		m_ParalysisTimer+= 10;	//タイマー増加.
-		XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Buttonpush); //ボタン押下音.
+		m_ParalysisTimer += PARALYSIS_SKIP_FRAME;
+		XAudio2::GetInstance()->SEPlayHandle(XAudio2::SEList::Buttonpush);	//ボタン押下音.
 	}
-	m_ParalysisTimer++;			//タイマー増加.
-	//タイマーが2秒経過すれば.
-	if (m_ParalysisTimer > 180) {
-		m_IsParalysis = false;   //マヒ解除.
-		m_ParalysisTimer = 0;    //タイマーリセット.
-		return;	//以降通らなくていいのでリターン.
+	++m_ParalysisTimer;
+
+	//時間が経てば、マヒを解除する.
+	if (m_ParalysisTimer > PARALYSIS_FRAME) {
+		EndParalysis();
+		return;
 	}
-	m_Position.y += sinf(m_ParalysisTimer * m_Speed) * m_Amount;	//マヒの動き.
+
+	//震える動き.
+	const float shakeY = sinf(m_ParalysisTimer * SHAKE_SPEED) * SHAKE_HEIGHT;
+	m_Position.y += shakeY - m_ParalysisShakeY;
+	m_ParalysisShakeY = shakeY;
+
+	//ボタンUIは、マヒする直前のカーソルの位置に出す.
+	m_ParalysisUI.SetPlayerPosition({ m_CousorPosition.x, m_CousorPosition.y, 0.f });
+	m_ParalysisUI.Update();
+}
+//マヒを解除する.
+void CPlayer::EndParalysis()
+{
+	m_Position.y -= m_ParalysisShakeY;	//震えでずらしていた分を戻す.
+	m_ParalysisShakeY = 0.f;
+	m_ParalysisTimer = 0;
+	m_IsParalysis = false;
 }
 //マヒ状態にするときに呼び出される.
 void CPlayer::OnTouchRawIngredient()
@@ -246,12 +255,12 @@ void CPlayer::OnTouchRawIngredient()
 
 void CPlayer::IngredientsGetter(CIngredients* Ingredients)
 {
-	if (m_pIngredients!=nullptr) {
+	if (m_pIngredients != nullptr) {
 		m_pIngredients->m_IsCollectingEnd();
 	}
 	m_pIngredients = Ingredients;
 	m_Position = { m_pIngredients->GetPosition() };
-	
+
 	m_IsCollecting = true;	//回収中へ.
 	m_Collectingtime = 0;	//タイマーリセット.
 
@@ -266,7 +275,7 @@ void CPlayer::IngredientsCollecting()
 	}
 	else {
 		//GetIngredients(m_pIngredients);
-		m_IngredientsGetEffectManager->Stato(this, m_pIngredients, { P_UI->GetPosition() .x+ P_UI->GetUIW()/2,P_UI->GetPosition().y+ P_UI->GetUIH() / 2,0});
+		m_IngredientsGetEffectManager->Stato(this, m_pIngredients, { P_UI->GetPosition().x + P_UI->GetUIW() / 2,P_UI->GetPosition().y + P_UI->GetUIH() / 2,0 });
 		m_pIngredients->Setisappear(false);
 		m_pIngredients = nullptr;
 		m_IsCollecting = false;
@@ -296,7 +305,5 @@ void CPlayer::GetIngredients(CIngredients* YASAI)
 	}
 	YASAI->DeadCharStatus();
 	//m_pIngredients = nullptr;
-	
+
 }
-
-
