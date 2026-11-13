@@ -115,11 +115,11 @@ void CIngredients::Update()
 					}
 				}
 				else {
-					if (EffC >= 60) {
-						handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y ,m_Position.z });
-						Effect::SetScale(handle, D3DXVECTOR3(0.4f, 0.4f, 0.4f));
-						EffC = 0;
-					}
+					//if (EffC >= 60) {
+					//	handle = Effect::Play(EFE::NAMI, { m_Position.x ,m_Position.y ,m_Position.z });
+					//	Effect::SetScale(handle, D3DXVECTOR3(0.4f, 0.4f, 0.4f));
+					//	EffC = 0;
+					//}
 				}
 	
 		
