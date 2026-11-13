@@ -1,3 +1,9 @@
+/**************************************************
+*	CStaticObjMesh.h
+*	.obj ファイルを読み込み、DirectX11 で描画するスタティックメッシュクラス.
+*	背面法(反転ハル法)による黒い輪郭線の描画にも対応している.
+*	輪郭を付ける前の元の版は CStaticObjMeshOld に残してある.
+**/
 #pragma once
 #include <vector>
 #include <string>
@@ -50,6 +56,15 @@ public:
 	{
 		D3DXVECTOR4	CameraPos;		//カメラ位置(視点位置).
 		D3DXVECTOR4	vLightDir;		//ライト方向.
+	};
+	//輪郭線用に渡す情報.
+	// シェーダ側 per_outline(b3) と一致させる. コンスタントバッファは16バイト単位なので詰め物を入れる.
+	struct CBUFFER_PER_OUTLINE
+	{
+		float		Width;			//輪郭の太さ(モデル空間での押し出し量).
+		float		TexSize;		//テクスチャ2の画像1枚分の大きさ(ビュー空間での長さ).
+		float		ProjScale[2];	//射影行列の _11 と _22(画面上のズレをビュー空間の長さに戻すため).
+		D3DXVECTOR4	ModelCenter;	//モデルの中心(モデル空間). 画像の中心をここに合わせる.
 	};
 
 	//頂点の構造体.
@@ -157,6 +172,16 @@ public:
 	void SetLightCOLOR(D3DXVECTOR3 COLORE) { 
 		LightCOLOR = COLORE; };
 	void SetLightCOLOR256(D3DXVECTOR3 COLORE);
+
+	//輪郭線を描くかどうかを設定する.
+	// 引数 enable : true で輪郭あり、false で輪郭なし(元の描画と同じ見た目).
+	void SetEnableOutline( bool enable ) { m_EnableOutline = enable; }
+	//輪郭線の太さを設定する.
+	// 引数 width : モデル空間での押し出し量. SetScale の拡大率が掛かるので、モデルの大きさに合わせて調整する.
+	void SetOutlineWidth( float width ) { m_OutlineWidth = width; }
+	//輪郭に貼るテクスチャ2の画像の大きさの倍率を設定する.
+	// 引数 scale : 1.0 で画像1枚がモデルの直径と同じ大きさ. 大きくすると画像が拡大される.
+	void SetOutlineTexScale( float scale ) { m_OutlineTexScale = scale; }
 	//使用前に、ポジションスケールローテーションを設定すること//ちなみにｚには奥行きが入っている
 	D3DXVECTOR3 GetPos2D( D3DXMATRIX& mView, D3DXMATRIX& mProj);
 
@@ -185,6 +210,13 @@ private:
 
 	//レンダリング関数(クラス内でのみ使用する).
 	void RenderMesh( D3DXMATRIX& mWorld, D3DXMATRIX& mView, D3DXMATRIX& mProj );
+
+	//輪郭線の描画に必要なもの(シェーダ,頂点バッファ等)を作成する.
+	// 戻り値 : 成功で S_OK、失敗で E_FAIL.
+	HRESULT CreateOutline();
+	//輪郭線を描画する. RenderMesh の中から、メッシュ用コンスタントバッファ(b0)を設定した後に呼ぶ.
+	// 引数 mProj : 射影行列. 画像の大きさを画面上で正しく合わせるのに使う.
+	void RenderOutline( const D3DXMATRIX& mProj );
 
 
 private:
@@ -225,5 +257,24 @@ private:
 
 	bool isCOLOR;
 	D3DXVECTOR3 LightCOLOR;
+
+	//----- 輪郭線用 -----.
+	ID3D11VertexShader*		m_pOutlineVS;			//輪郭用頂点シェーダ.
+	ID3D11PixelShader*		m_pOutlinePS;			//輪郭用ピクセルシェーダ.
+	ID3D11InputLayout*		m_pOutlineLayout;		//輪郭用頂点レイアウト(座標はスロット0, 平均法線はスロット1).
+	ID3D11Buffer*			m_pCBufferOutline;		//輪郭用コンスタントバッファ.
+	ID3D11Buffer*			m_pOutlineNormalBuffer;	//輪郭用の平均法線の頂点バッファ.
+	ID3D11RasterizerState*	m_pRSCullFront;			//表面を捨てて裏面だけ描くラスタライザステート.
+	std::vector<D3DXVECTOR3> m_OutlineNormals;		//輪郭用の平均法線(m_Model.Vertices と同じ並び).
+	bool					m_EnableOutline;		//輪郭を描くか.
+	float					m_OutlineWidth;			//輪郭の太さ.
+	float					m_OutlineTexScale;		//輪郭に貼る画像の大きさの倍率.
+	D3DXVECTOR3				m_ModelCenter;			//モデルのバウンディングボックスの中心(モデル空間).
+	float					m_ModelRadius;			//モデルの中心から一番遠い角までの距離(モデル空間).
+	ID3D11SamplerState*		m_pSampleClamp;			//輪郭用サンプラ. 画像の外側は端の色を伸ばす(繰り返さない).
 	void Multiply(D3DXVECTOR4* base, D3DXVECTOR4 multiplier);
+
+	ID3D11ShaderResourceView* m_pTexture2;			//テクスチャ2. 輪郭に貼る画像.
+	//テクスチャ2(輪郭に貼る画像)を読み込む. 失敗しても止めずに続行し、輪郭は黒になる.
+	void CreateTexture();
  };

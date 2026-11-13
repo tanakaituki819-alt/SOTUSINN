@@ -60,6 +60,7 @@
     <ClCompile Include="Source\SpriteManager\SpriteTriangle\CSpriteTriangle.cpp" />
     <ClCompile Include="Source\SpriteManager\StaticMesh\CStaticMesh.cpp" />
     <ClCompile Include="Source\SpriteManager\StaticObjMesh\CStaticObjMesh.cpp" />
+    <ClCompile Include="Source\SpriteManager\StaticObjMesh\CStaticObjMeshOld.cpp" />
     <ClCompile Include="Source\SpriteManager\CSpriteManager.cpp" />
     <ClCompile Include="Source\System\WinMain.cpp" />
     <ClCompile Include="Source\System\DirectX\CDirectX9.cpp" />
@@ -132,6 +133,7 @@
     <ClInclude Include="Source\SpriteManager\SpriteTriangle\CSpriteTriangle.h" />
     <ClInclude Include="Source\SpriteManager\StaticMesh\CStaticMesh.h" />
     <ClInclude Include="Source\SpriteManager\StaticObjMesh\CStaticObjMesh.h" />
+    <ClInclude Include="Source\SpriteManager\StaticObjMesh\CStaticObjMeshOld.h" />
     <ClInclude Include="Source\SpriteManager\StaticObjMesh\tiny_obj_loader.h" />
     <ClInclude Include="Source\SpriteManager\CSpriteManager.h" />
     <ClInclude Include="Source\System\MyMacro.h" />

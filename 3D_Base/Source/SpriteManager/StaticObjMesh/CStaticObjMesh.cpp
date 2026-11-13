@@ -72,6 +72,21 @@ CStaticObjMesh::CStaticObjMesh()
 	, m_Scale(1.0f, 1.0f, 1.0f)
 	, isCOLOR(false)
 	, LightCOLOR()
+
+	, m_pOutlineVS(nullptr)
+	, m_pOutlinePS(nullptr)
+	, m_pOutlineLayout(nullptr)
+	, m_pCBufferOutline(nullptr)
+	, m_pOutlineNormalBuffer(nullptr)
+	, m_pRSCullFront(nullptr)
+	, m_OutlineNormals()
+	, m_EnableOutline(false)		//デフォルトで輪郭なし.
+	, m_OutlineWidth(0.03f)		//モデルの大きさに合わせて SetOutlineWidth で調整する.
+	, m_OutlineTexScale(1.0f)
+	, m_ModelCenter(0.0f, 0.0f, 0.0f)
+	, m_ModelRadius(1.0f)
+	, m_pSampleClamp(nullptr)
+	, m_pTexture2(nullptr)		//未初期化のまま PSSetShaderResources に渡すと不正なポインタを使うため必ず nullptr にする.
 {
 }
 
@@ -134,9 +149,19 @@ HRESULT CStaticObjMesh::Init(
 	{
 		return E_FAIL;
 	}
+	//輪郭線用のシェーダ,バッファ作成.
+	if( FAILED( CreateOutline() ) )
+	{
+		return E_FAIL;
+	}
+	//輪郭に貼るテクスチャ2の読み込み.
+	
+	CreateTexture();
+
 	if (CreateMeshForRay()==false) {
 		return E_FAIL;
 	}
+
 	return S_OK;
 }
 
@@ -361,6 +386,14 @@ bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const st
 	m_Model.Vertices.clear();
 	DWORD vertexCounter = 0;
 
+	// 輪郭用の平均法線を作るための作業領域.
+	// この読み込み処理は面ごとに頂点を複製するため、同じ位置の頂点が面の数だけ別々に存在する.
+	// フラットシェードのモデルだとそれぞれ法線の向きが違い、そのまま押し出すと角で輪郭が裂ける.
+	// そこで .obj の頂点番号(vertex_index)ごとに法線を足し合わせ、後で平均した法線を輪郭用に使う.
+	const size_t posCount = attrib.vertices.size() / 3;
+	std::vector<D3DXVECTOR3> normalSum(posCount, D3DXVECTOR3(0.0f, 0.0f, 0.0f));	// 頂点番号ごとの法線の合計.
+	std::vector<int> posIndexOfVertex;	// m_Model.Vertices の各頂点が、どの頂点番号から作られたか.
+
 	for (const auto& shape : shapes) {
 		size_t index_offset = 0;
 		for (size_t f = 0; f < shape.mesh.num_face_vertices.size(); f++) {
@@ -370,6 +403,21 @@ bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const st
 			if (matID < 0 || matID >= (int)m_Model.NumMaterials) matID = 0;
 
 			m_pMaterials[matID].dwNumFace++; // 各マテリアルが持つポリゴン数をカウント
+
+			// 法線が書かれていない .obj 用に、面の法線を三角形の2辺の外積から求めておく.
+			// .obj は反時計回りが表なので (v1-v0)×(v2-v0) が外向きになる.
+			D3DXVECTOR3 faceNormal(0.0f, 1.0f, 0.0f);
+			if (fv >= 3) {
+				D3DXVECTOR3 p[3];
+				for (size_t k = 0; k < 3; k++) {
+					int vi = shape.mesh.indices[index_offset + k].vertex_index;
+					p[k] = D3DXVECTOR3(attrib.vertices[3 * vi + 0], attrib.vertices[3 * vi + 1], attrib.vertices[3 * vi + 2]);
+				}
+				D3DXVECTOR3 e1 = p[1] - p[0];
+				D3DXVECTOR3 e2 = p[2] - p[0];
+				D3DXVec3Cross(&faceNormal, &e1, &e2);
+				D3DXVec3Normalize(&faceNormal, &faceNormal);
+			}
 
 			// 三角形の3頂点を処理
 			for (size_t v = 0; v < fv; v++) {
@@ -403,9 +451,42 @@ bool CStaticObjMesh::LoadObjToMyStructures(const std::string& filename, const st
 				m_Model.Vertices.push_back(vertex);
 				m_Model.MaterialIndices[matID].push_back(vertexCounter);
 				vertexCounter++;
+
+				// 輪郭用: この頂点の法線を頂点番号ごとの合計に足す.
+				// ファイルに法線があればそれを、なければ面の法線を使う.
+				D3DXVECTOR3 n = (idx.normal_index >= 0) ? vertex.Normal : faceNormal;
+				normalSum[idx.vertex_index] += n;
+				posIndexOfVertex.push_back(idx.vertex_index);
 			}
 			index_offset += fv;
 		}
+	}
+
+	// 輪郭用の平均法線を、m_Model.Vertices と同じ並びで作る.
+	m_OutlineNormals.resize(m_Model.Vertices.size());
+	for (size_t i = 0; i < m_OutlineNormals.size(); i++) {
+		D3DXVECTOR3 n = normalSum[posIndexOfVertex[i]];
+		// 法線が打ち消し合って長さ0になると、シェーダの normalize で不正な値になるため上向きで代用する.
+		if (D3DXVec3Length(&n) < 1e-6f) {
+			n = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+		}
+		D3DXVec3Normalize(&m_OutlineNormals[i], &n);
+	}
+
+	// 輪郭の画像を貼るために、モデルの中心と大きさを求める.
+	// 原点がモデルの真ん中にあるとは限らないので、全頂点を囲む箱(バウンディングボックス)の中心を使う.
+	if (!m_Model.Vertices.empty()) {
+		D3DXVECTOR3 vMin = m_Model.Vertices[0].Pos;
+		D3DXVECTOR3 vMax = m_Model.Vertices[0].Pos;
+		for (const auto& v : m_Model.Vertices) {
+			D3DXVec3Minimize(&vMin, &vMin, &v.Pos);
+			D3DXVec3Maximize(&vMax, &vMax, &v.Pos);
+		}
+		m_ModelCenter = (vMin + vMax) * 0.5f;
+		D3DXVECTOR3 half = (vMax - vMin) * 0.5f;
+		m_ModelRadius = D3DXVec3Length(&half);
+		// 大きさ0(点だけのモデル等)だとシェーダで0除算になるため最小値を設ける.
+		if (m_ModelRadius < 1e-4f) { m_ModelRadius = 1e-4f; }
 	}
 
 	// 3. レイ判定用のモデルにもデータを丸ごとコピー
@@ -556,6 +637,17 @@ void CStaticObjMesh::Release()
 	SAFE_RELEASE( m_pPixelShader );
 	SAFE_RELEASE( m_pVertexLayout );
 	SAFE_RELEASE( m_pVertexShader );
+
+	//輪郭線用.
+	SAFE_RELEASE( m_pRSCullFront );
+	SAFE_RELEASE( m_pOutlineNormalBuffer );
+	SAFE_RELEASE( m_pCBufferOutline );
+	SAFE_RELEASE( m_pOutlineLayout );
+	SAFE_RELEASE( m_pOutlinePS );
+	SAFE_RELEASE( m_pOutlineVS );
+	SAFE_RELEASE( m_pSampleClamp );
+	SAFE_RELEASE( m_pTexture2 );
+	m_OutlineNormals.clear();
 
 	m_pContext11 = nullptr;
 	m_pDevice11 = nullptr;
@@ -942,6 +1034,246 @@ void CStaticObjMesh::RenderMesh(
 		// 描画実行
 		m_pContext11->DrawIndexed(indexCount, 0, 0);
 	}
+
+	// 輪郭線を描く.
+	// 通常描画の後に描いても、膨らませた裏面は元のモデルより奥にあるので深度テストで隠れ、
+	// はみ出した縁の部分だけが残る.
+	if (m_EnableOutline) {
+		RenderOutline(mProj);
+	}
+}
+
+//===========================================================
+//	輪郭線の描画に必要なものを作成する.
+//	・平均法線の頂点バッファ(スロット1で使う)
+//	・輪郭用シェーダと頂点レイアウト
+//	・輪郭用コンスタントバッファ
+//	・表面を捨てるラスタライザステート
+//	戻り値 : 成功で S_OK、失敗で E_FAIL.
+//===========================================================
+HRESULT CStaticObjMesh::CreateOutline()
+{
+	//平均法線の頂点バッファを作成.
+	// VERTEX 構造体に法線を追加すると、レイ判定用メッシュ(CreateMeshForRay)のレイアウトも変える必要があるため、
+	// 別の頂点バッファに分けて、描画時にスロット1として渡す.
+	if (m_OutlineNormals.empty()) {
+		return E_FAIL;
+	}
+	D3D11_BUFFER_DESC bd;
+	ZeroMemory(&bd, sizeof(bd));
+	bd.Usage = D3D11_USAGE_DEFAULT;
+	bd.ByteWidth = sizeof(D3DXVECTOR3) * static_cast<UINT>(m_OutlineNormals.size());
+	bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	D3D11_SUBRESOURCE_DATA InitData;
+	ZeroMemory(&InitData, sizeof(InitData));
+	InitData.pSysMem = m_OutlineNormals.data();
+	if (FAILED(m_pDevice11->CreateBuffer(&bd, &InitData, &m_pOutlineNormalBuffer)))
+	{
+		_ASSERT_EXPR(false, _T("輪郭用法線バッファ作成失敗"));
+		return E_FAIL;
+	}
+
+	ID3DBlob* pCompiledShader = nullptr;
+	ID3DBlob* pErrors = nullptr;
+	UINT uCompileFlag = 0;
+#ifdef _DEBUG
+	uCompileFlag = D3D10_SHADER_DEBUG | D3D10_SHADER_SKIP_OPTIMIZATION;
+#endif//#ifdef _DEBUG
+
+	//輪郭用頂点シェーダを作成.
+	if (FAILED(
+		D3DX11CompileFromFile(
+			SHADER_NAME, nullptr, nullptr, "VS_Outline", "vs_5_0",
+			uCompileFlag, 0, nullptr, &pCompiledShader, &pErrors, nullptr)))
+	{
+		_ASSERT_EXPR(false, _T("hlsl読み込み失敗(VS_Outline)"));
+		SAFE_RELEASE(pErrors);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pErrors);
+
+	if (FAILED(
+		m_pDevice11->CreateVertexShader(
+			pCompiledShader->GetBufferPointer(),
+			pCompiledShader->GetBufferSize(),
+			nullptr,
+			&m_pOutlineVS)))
+	{
+		_ASSERT_EXPR(false, _T("輪郭用バーテックスシェーダ作成失敗"));
+		SAFE_RELEASE(pCompiledShader);
+		return E_FAIL;
+	}
+
+	//輪郭用頂点レイアウト.
+	// 座標はスロット0(通常の頂点バッファ VERTEX の先頭)から、
+	// 法線はスロット1(平均法線バッファ)から読む.
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+	UINT numElements = sizeof(layout) / sizeof(layout[0]);
+	if (FAILED(
+		m_pDevice11->CreateInputLayout(
+			layout, numElements,
+			pCompiledShader->GetBufferPointer(),
+			pCompiledShader->GetBufferSize(),
+			&m_pOutlineLayout)))
+	{
+		_ASSERT_EXPR(false, _T("輪郭用頂点インプットレイアウト作成失敗"));
+		SAFE_RELEASE(pCompiledShader);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pCompiledShader);
+
+	//輪郭用ピクセルシェーダを作成.
+	if (FAILED(
+		D3DX11CompileFromFile(
+			SHADER_NAME, nullptr, nullptr, "PS_Outline", "ps_5_0",
+			uCompileFlag, 0, nullptr, &pCompiledShader, &pErrors, nullptr)))
+	{
+		_ASSERT_EXPR(false, _T("hlsl読み込み失敗(PS_Outline)"));
+		SAFE_RELEASE(pErrors);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pErrors);
+
+	if (FAILED(
+		m_pDevice11->CreatePixelShader(
+			pCompiledShader->GetBufferPointer(),
+			pCompiledShader->GetBufferSize(),
+			nullptr,
+			&m_pOutlinePS)))
+	{
+		_ASSERT_EXPR(false, _T("輪郭用ピクセルシェーダ作成失敗"));
+		SAFE_RELEASE(pCompiledShader);
+		return E_FAIL;
+	}
+	SAFE_RELEASE(pCompiledShader);
+
+	//輪郭用コンスタントバッファを作成.
+	D3D11_BUFFER_DESC cb;
+	ZeroMemory(&cb, sizeof(cb));
+	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	cb.ByteWidth = sizeof(CBUFFER_PER_OUTLINE);
+	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	cb.Usage = D3D11_USAGE_DYNAMIC;
+	if (FAILED(m_pDevice11->CreateBuffer(&cb, nullptr, &m_pCBufferOutline)))
+	{
+		_ASSERT_EXPR(false, _T("コンスタントバッファ(輪郭用)作成失敗"));
+		return E_FAIL;
+	}
+
+	//表面を捨てて裏面だけ描くラスタライザステートを作成.
+	// CDirectX11::CreateRasterizer と同じく FrontCounterClockwise = FALSE(時計回りが表).
+	// .obj の座標を変換せずに左手系で描いているため、外向きの面は画面上で時計回りになり「表」と判定される.
+	// よって CULL_FRONT で外側の面を捨てると、膨らませたモデルの内側(裏面)だけが残る.
+	D3D11_RASTERIZER_DESC rdc;
+	ZeroMemory(&rdc, sizeof(rdc));
+	rdc.FillMode = D3D11_FILL_SOLID;
+	rdc.CullMode = D3D11_CULL_FRONT;
+	rdc.FrontCounterClockwise = FALSE;
+	rdc.DepthClipEnable = FALSE;	//CDirectX11 の設定に合わせる.
+	if (FAILED(m_pDevice11->CreateRasterizerState(&rdc, &m_pRSCullFront)))
+	{
+		_ASSERT_EXPR(false, _T("輪郭用ラスタライザステート作成失敗"));
+		return E_FAIL;
+	}
+
+	//輪郭用サンプラを作成.
+	// 画像の外(UV が 0～1 の外)は端の色を伸ばす(CLAMP).
+	// 通常用の WRAP だと、モデルの端で画像の反対側の模様が出てしまうため.
+	D3D11_SAMPLER_DESC samDesc;
+	ZeroMemory(&samDesc, sizeof(samDesc));
+	samDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samDesc.MaxLOD = D3D11_FLOAT32_MAX;
+	if (FAILED(m_pDevice11->CreateSamplerState(&samDesc, &m_pSampleClamp)))
+	{
+		_ASSERT_EXPR(false, _T("輪郭用サンプラ作成失敗"));
+		return E_FAIL;
+	}
+
+	return S_OK;
+}
+
+//===========================================================
+//	輪郭線を描画する.
+//	RenderMesh の中で、メッシュ用コンスタントバッファ(b0: ワールド行列,WVP行列)を設定した後に呼ぶ.
+//	描画後はラスタライザステートを元に戻すので、他の描画には影響しない.
+//===========================================================
+void CStaticObjMesh::RenderOutline( const D3DXMATRIX& mProj )
+{
+	//輪郭の太さと、画像を貼るための情報をシェーダに渡す.
+	D3D11_MAPPED_SUBRESOURCE pData;
+	if (SUCCEEDED(m_pContext11->Map(
+		m_pCBufferOutline, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData)))
+	{
+		CBUFFER_PER_OUTLINE cb = {};
+		cb.Width = m_OutlineWidth;
+
+		//画像1枚分の大きさ = モデルの直径 × 拡縮値 × 倍率.
+		// シェーダではビュー空間(拡縮後)の長さで比べるので、SetScale の値を掛けておく.
+		// 拡縮が軸ごとに違う場合は、はみ出さないよう一番大きい値を使う.
+		float maxScale = std::max(std::max(fabsf(m_Scale.x), fabsf(m_Scale.y)), fabsf(m_Scale.z));
+		cb.TexSize = m_ModelRadius * 2.0f * maxScale * m_OutlineTexScale;
+		if (cb.TexSize < 1e-4f) { cb.TexSize = 1e-4f; }	//0除算よけ.
+
+		cb.ProjScale[0] = mProj._11;
+		cb.ProjScale[1] = mProj._22;
+		cb.ModelCenter = D3DXVECTOR4(m_ModelCenter.x, m_ModelCenter.y, m_ModelCenter.z, 1.0f);
+
+		memcpy_s(pData.pData, pData.RowPitch, (void*)&cb, sizeof(cb));
+		m_pContext11->Unmap(m_pCBufferOutline, 0);
+	}
+	//頂点シェーダ(押し出し,中心の射影)とピクセルシェーダ(UV計算)の両方で使う.
+	m_pContext11->VSSetConstantBuffers(3, 1, &m_pCBufferOutline);
+	m_pContext11->PSSetConstantBuffers(3, 1, &m_pCBufferOutline);
+
+	//今のラスタライザステートを取っておく(描画後に元へ戻すため).
+	ID3D11RasterizerState* pOldRS = nullptr;
+	m_pContext11->RSGetState(&pOldRS);
+	m_pContext11->RSSetState(m_pRSCullFront);
+
+	//輪郭用シェーダと頂点レイアウトをセット.
+	m_pContext11->VSSetShader(m_pOutlineVS, nullptr, 0);
+	m_pContext11->PSSetShader(m_pOutlinePS, nullptr, 0);
+	m_pContext11->IASetInputLayout(m_pOutlineLayout);
+
+	//頂点バッファをセット. スロット0に通常の頂点、スロット1に平均法線.
+	ID3D11Buffer* pBuffers[2] = { m_pVertexBuffer, m_pOutlineNormalBuffer };
+	UINT strides[2] = { sizeof(VERTEX), sizeof(D3DXVECTOR3) };
+	UINT offsets[2] = { 0, 0 };
+	m_pContext11->IASetVertexBuffers(0, 2, pBuffers, strides, offsets);
+	//輪郭に貼る画像(テクスチャ2)とサンプラをセット.
+	// サンプラは通常描画ではテクスチャがあるマテリアルでしかセットされないので、ここで必ずセットする.
+	m_pContext11->PSSetSamplers(0, 1, &m_pSampleClamp);
+	m_pContext11->PSSetShaderResources(1, 1, &m_pTexture2);
+
+	//マテリアルごとのインデックスバッファで全ポリゴンを描く(色は画像から取るのでマテリアル情報は使わない).
+	for (DWORD No = 0; No < m_NumAttr; No++)
+	{
+		DWORD matID = m_AttrID[No];
+		if (m_Model.MaterialIndices[matID].empty()) { continue; }
+		if (m_ppIndexBuffer[matID] == nullptr) { continue; }
+
+		m_pContext11->IASetIndexBuffer(m_ppIndexBuffer[matID], DXGI_FORMAT_R32_UINT, 0);
+		m_pContext11->DrawIndexed(static_cast<UINT>(m_Model.MaterialIndices[matID].size()), 0, 0);
+	}
+
+	//スロット1の頂点バッファを外しておく(他の描画が誤って参照しないように).
+	ID3D11Buffer* pNull = nullptr;
+	UINT zero = 0;
+	m_pContext11->IASetVertexBuffers(1, 1, &pNull, &zero, &zero);
+
+	//サンプラを通常用(WRAP)に戻す. 他のモデルの描画で CLAMP のまま使われないように.
+	m_pContext11->PSSetSamplers(0, 1, &m_pSampleLinear);
+
+	//ラスタライザステートを元に戻す.
+	m_pContext11->RSSetState(pOldRS);
+	SAFE_RELEASE(pOldRS);	//RSGetState で参照カウントが増えているので解放する.
 }
 
 void CStaticObjMesh::Multiply(D3DXVECTOR4* base, D3DXVECTOR4 multiplier)
@@ -950,5 +1282,28 @@ void CStaticObjMesh::Multiply(D3DXVECTOR4* base, D3DXVECTOR4 multiplier)
 	base->y *= multiplier.y;
 	base->z *= multiplier.z;
 	//base->w *= multiplier->w;
+}
+
+//===========================================================
+//	テクスチャ2(輪郭に貼る画像)を読み込む.
+//	読み込みに失敗しても止めずに続行する. その場合 m_pTexture2 は nullptr のままで、輪郭は黒になる.
+//===========================================================
+void CStaticObjMesh::CreateTexture()
+{
+	//同じモデルで2回呼ばれたときに前の画像が残らないよう、先に解放しておく.
+	SAFE_RELEASE(m_pTexture2);
+
+	//テクスチャ作成.
+	// パスの区切りは "\\" と書く. "\" 1つだと "\T" などがエスケープ文字として扱われ、正しいパスにならないため.
+	if (FAILED(D3DX11CreateShaderResourceViewFromFile(
+		m_pDevice11,		//リソースを使用するデバイスのポインタ.
+		_T("Data\\Texture\\KIRAKIRA.png"),			//ファイル名.
+		nullptr, nullptr,
+		&m_pTexture2,		//(out)テクスチャ.
+		nullptr)))
+	{
+		_ASSERT_EXPR(false, _T("テクスチャ作成失敗(Data\\Texture\\KIRAKIRA.png)"));
+		m_pTexture2 = nullptr;
+	}
 }
 

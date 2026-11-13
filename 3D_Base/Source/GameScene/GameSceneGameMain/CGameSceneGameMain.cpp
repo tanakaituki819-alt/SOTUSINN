@@ -28,7 +28,7 @@ CGameSceneGameMain::CGameSceneGameMain(HWND Hwnd, CDirectX9* Dx9, CDirectX11* Dx
 	m_pElectricHotPlate->SetPosition(D3DXVECTOR3(0.f, -4.8f, 1.3f));
 	m_pElectricHotPlate->SetRotation(0, 0, D3DXToRadian(0));
 	m_pElectricHotPlate->SetScale(-45.f, 37.f, 37.f);
-
+	m_pElectricHotPlate->GetMesh()->SetEnableOutline(false);
 	m_pStaticMeshBSphere = CSpriteManager::GetMesh(CSpriteManager::enMeshList::Sphere);
 	m_pBackGround = CSpriteManager::GetSprite3D(CSpriteManager::enImagList::Img_GameMainGround);
 	m_pBackGround->SetScale(D3DXVECTOR3{ 100, 100, 100 });

@@ -5,6 +5,7 @@ CNabe::CNabe()
 	m_Position = { 0,-0.1,0 };
 	m_Scale = { NabeSize ,NabeSize/2,NabeSize };
 	m_pMesh =CSpriteManager::GetObjMesh(CSpriteManager::enMeshObjList::NABE);
+	m_pMesh->SetEnableOutline(false);
 	Water = CSpriteManager::GetSprite3D(CSpMLstiImg::Img_Water);
 }
 

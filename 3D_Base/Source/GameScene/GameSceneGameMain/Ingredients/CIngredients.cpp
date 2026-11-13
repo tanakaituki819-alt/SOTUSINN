@@ -173,7 +173,7 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 	m_pMesh->SetRotation(m_Rotation);
 	m_pMesh->SetScale(m_Scale);
 
-
+	m_pMesh->SetEnableOutline(false);
 
 	//m_pMesh->SetLightCOLOR256({ 247,121,60 });
 	if (m_Boiledc > m_BoiledcMAX/2) {
@@ -185,9 +185,10 @@ void CIngredients::Draw(D3DXMATRIX& View, D3DXMATRIX& Proj, LIGHT& Light, CAMERA
 		}
 
 		m_pMesh->SetisCOLOR(true);
-		if (isBoiled) {
+		if (isBoiled) {//煮えている
 			D3DXVECTOR3 Coler = { 110,50,2 };
 			m_pMesh->SetLightCOLOR256(Coler);
+			m_pMesh->SetEnableOutline(true);
 			if (IngredientsNo == Ingredients::KANI || IngredientsNo == Ingredients::ROBUSTER) {
 				Coler = { 200,100,75 };
 				m_pMesh->SetLightCOLOR256(Coler);

@@ -290,7 +290,7 @@ void CIngredientsmanager::SAVE()
 	//短縮用
 	using  CS = CSpriteManager;
 	using  OL = CSpriteManager::enMeshObjList;
-	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
+	IngredientsSetting[static_cast<int>(Ingredients::none)] = { CS::GetObjMesh(OL::S_NIKU)		,0,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::NIKU)] = { CS::GetObjMesh(OL::S_NIKU)		,1,0.5, {1.5,1.5,1.5}, {0,0,0}								,10,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::NINZIN)] = { CS::GetObjMesh(OL::S_NINZIN)	,1,0.5, {1.f,1.f,1.f}, {0,0,0}								,5,1, };
 	IngredientsSetting[static_cast<int>(Ingredients::DAIKON)] = { CS::GetObjMesh(OL::S_DAIKON)	,1,0.5, {1.2,1.2,1.2}, {0,0,0}								,5,1, };
